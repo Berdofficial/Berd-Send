@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - Money Transfer & Mobile Top-Up</title>
+    <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
@@ -44,7 +44,7 @@
             <div class="logo">BerdSend</div>
         </div>
         <div class="header-right">
-            <select class="lang-select" id="langSwitch">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
                 <option value="en">🇺🇸 English</option>
                 <option value="ht">🇭🇹 Kreyòl</option>
                 <option value="pt">🇧🇷 Português</option>
@@ -52,11 +52,11 @@
             <div class="menu-container">
                 <button class="menu-btn" onclick="toggleMenu()">☰</button>
                 <div id="myDropdown" class="dropdown-menu">
-                    <a href="index.html">Home</a>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Service</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact Us</a>
+                    <a href="index.html" id="menuHome">Home</a>
+                    <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
+                    <a href="terms.html" id="menuTerms">Terms of Service</a>
+                    <a href="about.html" id="menuAbout">About Us</a>
+                    <a href="contact.html" id="menuContact">Contact Us</a>
                 </div>
             </div>
         </div>
@@ -103,12 +103,12 @@
         </div>
 
         <div class="conversion-rate">
-            <span>Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
+            <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
         </div>
 
         <div class="summary-box">
             <div class="summary-row total">
-                <span>Total to Pay:</span>
+                <span id="lblTotalToPay">Total to Pay:</span>
                 <span id="totalCost" style="color: #111;">100.00 USD</span>
             </div>
         </div>
@@ -130,6 +130,105 @@
     <script>
         var currentMode = 'topup';
 
+        // Diksyonè tradiksyon pou paj la
+        const translations = {
+            en: {
+                title: "BerdSend - Money Transfer & Mobile Top-Up",
+                tabTopup: "📱 Mobile Top-Up",
+                tabTransfer: "💸 Money Transfer",
+                lblSender: "Country you are sending from:",
+                lblReceiver: "Recipient country:",
+                lblDeliveryMethodTopup: "Select Mobile Carrier:",
+                lblDeliveryMethodTransfer: "How should they receive it:",
+                lblAmount: "Amount to send:",
+                lblRecipientGets: "Recipient gets approx:",
+                lblTotalToPay: "Total to Pay:",
+                lblPhone: "Recipient phone number:",
+                btnSubmitTopup: "Send Top-Up Now 🚀",
+                btnSubmitTransfer: "Send Money Now 🚀",
+                menuHome: "Home",
+                menuPrivacy: "Privacy Policy",
+                menuTerms: "Terms of Service",
+                menuAbout: "About Us",
+                menuContact: "Contact Us",
+                alertPhone: "Please enter recipient phone number!",
+                alertSuccess: "Transaction recorded successfully!"
+            },
+            ht: {
+                title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
+                tabTopup: "📱 Rechaj Telefòn",
+                tabTransfer: "💸 Transfè Lajan",
+                lblSender: "Peyi w ap voye soti a:",
+                lblReceiver: "Peyi destinasyon an:",
+                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
+                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
+                lblAmount: "Montan pou voye a:",
+                lblRecipientGets: "Moun nan ap resevwa approx:",
+                lblTotalToPay: "Total pou Peye:",
+                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
+                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
+                btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
+                menuHome: "Akèy",
+                menuPrivacy: "Politik Konfidansyalite",
+                menuTerms: "Kondisyon Sèvis",
+                menuAbout: "Konsènan Nou",
+                menuContact: "Kontakte Nou",
+                alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
+                alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
+            },
+            pt: {
+                title: "BerdSend - Transferência e Recarga de Celular",
+                tabTopup: "📱 Recarga de Celular",
+                tabTransfer: "💸 Transferência de Dinheiro",
+                lblSender: "País de origem:",
+                lblReceiver: "País de destino:",
+                lblDeliveryMethodTopup: "Selecionar Operadora:",
+                lblDeliveryMethodTransfer: "Como deseja que recebam:",
+                lblAmount: "Valor a enviar:",
+                lblRecipientGets: "O destinatário recebe aprox:",
+                lblTotalToPay: "Total a Pagar:",
+                lblPhone: "Número de telefone do destinatário:",
+                btnSubmitTopup: "Enviar Recarga Agora 🚀",
+                btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
+                menuHome: "Início",
+                menuPrivacy: "Política de Privacidade",
+                menuTerms: "Termos de Serviço",
+                menuAbout: "Sobre Nós",
+                menuContact: "Contato",
+                alertPhone: "Por favor, insira o número de telefone do destinatário!",
+                alertSuccess: "Transação registrada com sucesso!"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('tabTopup').innerText = t.tabTopup;
+            document.getElementById('tabTransfer').innerText = t.tabTransfer;
+            document.getElementById('lblSender').innerText = t.lblSender;
+            document.getElementById('lblReceiver').innerText = t.lblReceiver;
+            document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
+            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblPhone').innerText = t.lblPhone;
+            document.getElementById('menuHome').innerText = t.menuHome;
+            document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
+            document.getElementById('menuTerms').innerText = t.menuTerms;
+            document.getElementById('menuAbout').innerText = t.menuAbout;
+            document.getElementById('menuContact').innerText = t.menuContact;
+
+            if (currentMode === 'topup') {
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
+            } else {
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
+            }
+        }
+
         function toggleMenu() {
             var menu = document.getElementById("myDropdown");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
@@ -137,16 +236,19 @@
 
         function setMode(mode) {
             currentMode = mode;
+            var lang = localStorage.getItem('berdSendLang') || 'en';
+            var t = translations[lang];
+
             if (mode === 'topup') {
                 document.getElementById('tabTopup').classList.add('active');
                 document.getElementById('tabTransfer').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = "Select Mobile Carrier:";
-                document.getElementById('btnSubmit').innerText = "Send Top-Up Now 🚀";
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
             } else {
                 document.getElementById('tabTransfer').classList.add('active');
                 document.getElementById('tabTopup').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = "How should they receive it:";
-                document.getElementById('btnSubmit').innerText = "Send Money Now 🚀";
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
             }
             populateMethods();
             updateUI();
@@ -182,14 +284,20 @@
         }
 
         window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+
             setMode('topup');
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
             document.getElementById('deliveryMethod').onchange = updateUI;
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('btnSubmit').onclick = function() {
+                var lang = localStorage.getItem('berdSendLang') || 'en';
+                var t = translations[lang];
                 var phone = document.getElementById('phone').value.trim();
-                if (!phone) alert("Please enter recipient phone number!"); else alert("Transaction recorded successfully!");
+                if (!phone) alert(t.alertPhone); else alert(t.alertSuccess);
             };
         };
     </script>
