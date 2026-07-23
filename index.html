@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BerdSend - Money Transfer & Mobile Top-Up</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .menu-container { position: relative; }
+        .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
+        .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
+        .dropdown-menu a:hover { background: #f1f1f1; }
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        .tabs { display: flex; background: #f0f2f5; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #555; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; color: #444; margin-bottom: 6px; font-weight: bold; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 12px; }
+        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
+        .input-box input, .input-box select { background: transparent; border: none; color: #111; font-size: 1rem; width: 100%; outline: none; }
+        .conversion-rate { background: #eaf3ec; border: 1px solid #d4ede5; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #2e7d32; margin-bottom: 15px; }
+        .summary-box { background: #f9fafb; border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #666; }
+        .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
+        .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: #0052a3; }
+        
+        /* Modal Styles pou Paj yo */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 12px; max-width: 450px; width: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #777; }
+        .modal-content h2 { margin-bottom: 15px; color: #0066cc; font-size: 1.25rem; }
+        .modal-content p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 15px; }
+        footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="app-icon">BS</div>
+            <div class="logo">BerdSend</div>
+        </div>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <div class="menu-container">
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                <div id="myDropdown" class="dropdown-menu">
+                    <a onclick="showPage('home')">Home</a>
+                    <a onclick="showPage('privacy')">Privacy Policy</a>
+                    <a onclick="showPage('terms')">Terms of Service</a>
+                    <a onclick="showPage('about')">About Us</a>
+                    <a onclick="showPage('contact')">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="card" id="mainCard">
+        <div class="tabs">
+            <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
+            <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
+        </div>
+
+        <div class="form-group">
+            <label id="lblSender">Country you are sending from:</label>
+            <div class="input-box">
+                <select id="senderCountry">
+                    <option value="USD">🇺🇸 United States (USD - $)</option>
+                    <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblReceiver">Recipient country:</label>
+            <div class="input-box">
+                <select id="receiverCountry">
+                    <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
+                    <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
+            <div class="input-box">
+                <select id="deliveryMethod"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblAmount">Amount to send:</label>
+            <div class="input-box">
+                <input type="number" id="sendAmount" value="100">
+            </div>
+        </div>
+
+        <div class="conversion-rate">
+            <span>Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-row total">
+                <span>Total to Pay:</span>
+                <span id="totalCost" style="color: #111;">100.00 USD</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblPhone">Recipient phone number:</label>
+            <div class="input-box">
+                <input type="tel" id="phone" placeholder="+509 ...">
+            </div>
+        </div>
+
+        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
+    </div>
+
+    <!-- Modal pou afiche enfòmasyon paj yo -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Title</h2>
+            <p id="modalText">Content text goes here...</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 BerdSend. All rights reserved.
+    </footer>
+
+    <script>
+        var currentMode = 'topup';
+
+        function toggleMenu() {
+            var menu = document.getElementById("myDropdown");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'topup') {
+                document.getElementById('tabTopup').classList.add('active');
+                document.getElementById('tabTransfer').classList.remove('active');
+                document.getElementById('lblDeliveryMethod').innerText = "Select Mobile Carrier:";
+                document.getElementById('btnSubmit').innerText = "Send Top-Up Now 🚀";
+            } else {
+                document.getElementById('tabTransfer').classList.add('active');
+                document.getElementById('tabTopup').classList.remove('active');
+                document.getElementById('lblDeliveryMethod').innerText = "How should they receive it:";
+                document.getElementById('btnSubmit').innerText = "Send Money Now 🚀";
+            }
+            populateMethods();
+            updateUI();
+        }
+
+        function populateMethods() {
+            var receiver = document.getElementById('receiverCountry').value;
+            var deliverySelect = document.getElementById('deliveryMethod');
+            if (currentMode === 'topup') {
+                deliverySelect.innerHTML = receiver === 'DOP' ? 
+                    '<option value="claro_do">📶 Claro (Dominican Rep.)</option><option value="altice_do">📶 Altice (Dominican Rep.)</option>' :
+                    '<option value="digicel">📶 Digicel (Haiti - Direct)</option><option value="natcom">📶 Natcom (Haiti - Direct)</option>';
+            } else {
+                deliverySelect.innerHTML = receiver === 'DOP' ? 
+                    '<option value="none">🇩🇴 Santo Domingo Transfer (Coming Soon)</option>' :
+                    '<option value="moncash">📱 MonCash / Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
+            }
+        }
+
+        var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
+        var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
+
+        function updateUI() {
+            var sender = document.getElementById('senderCountry').value;
+            var receiver = document.getElementById('receiverCountry').value;
+            var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
+            var targetCurrency = (receiver === 'DOP') ? 'DOP' : 'HTG';
+            var conversionRate = ((currentMode === 'topup') ? topupRates : transferRates)[sender][targetCurrency];
+            var totalReceive = amountVal * conversionRate;
+            
+            document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
+            document.getElementById('totalCost').innerText = amountVal.toFixed(2) + " " + sender;
+        }
+
+        function showPage(page) {
+            toggleMenu();
+            var modal = document.getElementById('infoModal');
+            var title = document.getElementById('modalTitle');
+            var text = document.getElementById('modalText');
+
+            if (page === 'privacy') {
+                title.innerText = "Privacy Policy";
+                text.innerText = "At BerdSend, your personal data and financial transactions are encrypted and protected with maximum industry-grade security.";
+            } else if (page === 'terms') {
+                title.innerText = "Terms of Service";
+                text.innerText = "By using BerdSend, you agree to our reliable transfer guidelines, service fees, and secure delivery processing terms.";
+            } else if (page === 'about') {
+                title.innerText = "About Us";
+                text.innerText = "BerdSend is a fast, safe, and reliable platform built to easily send money and mobile top-ups to your loved ones.";
+            } else if (page === 'contact') {
+                title.innerText = "Contact Us";
+                text.innerText = "Need assistance with a transfer? Reach out to our dedicated support team anytime at support@berdsend.com.";
+            } else {
+                return;
+            }
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = "none";
+        }
+
+        window.onload = function() {
+            setMode('topup');
+            document.getElementById('senderCountry').onchange = updateUI;
+            document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
+            document.getElementById('deliveryMethod').onchange = updateUI;
+            document.getElementById('sendAmount').oninput = updateUI;
+            document.getElementById('btnSubmit').onclick = function() {
+                var phone = document.getElementById('phone').value.trim();
+                if (!phone) alert("Please enter recipient phone number!"); else alert("Transaction recorded successfully!");
+            };
+        };
+    </script>
+</body>
+</html>
