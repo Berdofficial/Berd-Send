@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">FAQ - BerdSend</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; text-decoration: none; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .container { max-width: 600px; width: 100%; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h1 { color: #0066cc; margin-top: 0; font-size: 1.5rem; margin-bottom: 20px; }
+        .faq-item { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        h3 { color: #222; font-size: 1rem; margin-bottom: 6px; }
+        p { font-size: 0.9rem; color: #555; margin: 0; }
+        a.back-link { color: #0066cc; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold; font-size: 0.9rem; }
+        a.back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="app-icon">BS</div>
+            <a href="index.html" class="logo">BerdSend</a>
+        </div>
+        <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+            <option value="en">🇺🇸 English</option>
+            <option value="ht">🇭🇹 Kreyòl</option>
+            <option value="pt">🇧🇷 Português</option>
+        </select>
+    </header>
+
+    <div class="container">
+        <h1 id="faqTitle">Frequently Asked Questions</h1>
+        
+        <div class="faq-item">
+            <h3 id="q1">How long does a mobile top-up take?</h3>
+            <p id="a1">Mobile top-ups to Digicel and Natcom are processed instantly and usually arrive in a few seconds.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 id="q2">What are the fees for sending money?</h3>
+            <p id="a2">All transfer fees and exchange rates are displayed transparently before you confirm your transaction.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 id="q3">How can I track my transfer?</h3>
+            <p id="a3">You can use our tracking page with your transaction reference code to check your transfer status anytime.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3 id="q4">Is my financial data secure?</h3>
+            <p id="a4">Yes, all personal and financial transactions are encrypted with maximum industry-grade security standards.</p>
+        </div>
+
+        <a href="index.html" class="back-link" id="backHome">&larr; Back to Home</a>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "FAQ - BerdSend",
+                faqTitle: "Frequently Asked Questions",
+                q1: "How long does a mobile top-up take?",
+                a1: "Mobile top-ups to Digicel and Natcom are processed instantly and usually arrive in a few seconds.",
+                q2: "What are the fees for sending money?",
+                a2: "All transfer fees and exchange rates are displayed transparently before you confirm your transaction.",
+                q3: "How can I track my transfer?",
+                a3: "You can use our tracking page with your transaction reference code to check your transfer status anytime.",
+                q4: "Is my financial data secure?",
+                a4: "Yes, all personal and financial transactions are encrypted with maximum industry-grade security standards.",
+                backHome: "← Back to Home"
+            },
+            ht: {
+                title: "Kesyon yo Poze Souvan - BerdSend",
+                faqTitle: "Kesyon yo Poze Souvan (FAQ)",
+                q1: "Konbyen tan yon rechaj telefòn pran?",
+                a1: "Rechaj telefòn pou Digicel ak Natcom fèt an tan reyèl epi yo rive nan kèk segonn.",
+                q2: "Ki frè ki genyen pou voye lajan?",
+                a2: "Tout frè ak pousantaj echanj yo parèt aklè anvan ou konfime tranzaksyon w lan.",
+                q3: "Kouman mwen ka swiv transfè mwen an?",
+                a3: "Ou ka itilize paj suivid nou an ak kòd referans ou a pou tcheke estati a tout lè.",
+                q4: "Èske done finansye mwen yo an sekirite?",
+                a4: "Wi, tout enfòmasyon pèsonèl ak tranzaksyon yo chifre ak pi gwo nivo sekirite ki egziste.",
+                backHome: "← Retounen nan Akèy"
+            },
+            pt: {
+                title: "Perguntas Frequentes - BerdSend",
+                faqTitle: "Perguntas Frequentes",
+                q1: "Quanto tempo leva uma recarga de celular?",
+                a1: "As recargas para Digicel e Natcom são processadas instantaneamente e chegam em poucos segundos.",
+                q2: "Quais são as taxas para enviar dinheiro?",
+                a2: "Todas as taxas de transferência e taxas de câmbio são exibidas de forma transparente antes de confirmar.",
+                q3: "Como posso rastrear minha transferência?",
+                a3: "Você pode usar nossa página de rastreamento com seu código de referência para verificar a qualquer momento.",
+                q4: "Meus dados financeiros estão seguros?",
+                a4: "Sim, todas as transações pessoais e financeiras são criptografadas com padrões máximos de segurança.",
+                backHome: "← Voltar ao Início"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('faqTitle').innerText = t.faqTitle;
+            document.getElementById('q1').innerText = t.q1;
+            document.getElementById('a1').innerText = t.a1;
+            document.getElementById('q2').innerText = t.q2;
+            document.getElementById('a2').innerText = t.a2;
+            document.getElementById('q3').innerText = t.q3;
+            document.getElementById('a3').innerText = t.a3;
+            document.getElementById('q4').innerText = t.q4;
+            document.getElementById('a4').innerText = t.a4;
+            document.getElementById('backHome').innerText = t.backHome;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
+</body>
+</html>
