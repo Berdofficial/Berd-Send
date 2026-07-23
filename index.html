@@ -57,6 +57,8 @@
                     <a href="terms.html" id="menuTerms">Terms of Service</a>
                     <a href="about.html" id="menuAbout">About Us</a>
                     <a href="contact.html" id="menuContact">Contact Us</a>
+                    <a href="faq.html" id="menuFaq">FAQ</a>
+                    <a href="tracking.html" id="menuTracking">Track Transfer</a>
                 </div>
             </div>
         </div>
@@ -130,7 +132,6 @@
     <script>
         var currentMode = 'topup';
 
-        // Diksyonè tradiksyon pou paj la
         const translations = {
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
@@ -151,6 +152,8 @@
                 menuTerms: "Terms of Service",
                 menuAbout: "About Us",
                 menuContact: "Contact Us",
+                menuFaq: "FAQ",
+                menuTracking: "Track Transfer",
                 alertPhone: "Please enter recipient phone number!",
                 alertSuccess: "Transaction recorded successfully!"
             },
@@ -173,6 +176,8 @@
                 menuTerms: "Kondisyon Sèvis",
                 menuAbout: "Konsènan Nou",
                 menuContact: "Kontakte Nou",
+                menuFaq: "FAQ (Kesyon yo Poze)",
+                menuTracking: "Suiv Transfè W",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
                 alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
             },
@@ -195,6 +200,8 @@
                 menuTerms: "Termos de Serviço",
                 menuAbout: "Sobre Nós",
                 menuContact: "Contato",
+                menuFaq: "FAQ",
+                menuTracking: "Rastrear Transferência",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
                 alertSuccess: "Transação registrada com sucesso!"
             }
@@ -219,6 +226,8 @@
             document.getElementById('menuTerms').innerText = t.menuTerms;
             document.getElementById('menuAbout').innerText = t.menuAbout;
             document.getElementById('menuContact').innerText = t.menuContact;
+            document.getElementById('menuFaq').innerText = t.menuFaq;
+            document.getElementById('menuTracking').innerText = t.menuTracking;
 
             if (currentMode === 'topup') {
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
