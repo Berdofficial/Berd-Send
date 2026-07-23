@@ -33,13 +33,6 @@
         .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: #0052a3; }
-        
-        /* Modal Styles pou Paj yo */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #fff; padding: 25px; border-radius: 12px; max-width: 450px; width: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; }
-        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #777; }
-        .modal-content h2 { margin-bottom: 15px; color: #0066cc; font-size: 1.25rem; }
-        .modal-content p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 15px; }
         footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
     </style>
 </head>
@@ -59,11 +52,11 @@
             <div class="menu-container">
                 <button class="menu-btn" onclick="toggleMenu()">☰</button>
                 <div id="myDropdown" class="dropdown-menu">
-                    <a onclick="showPage('home')">Home</a>
-                    <a onclick="showPage('privacy')">Privacy Policy</a>
-                    <a onclick="showPage('terms')">Terms of Service</a>
-                    <a onclick="showPage('about')">About Us</a>
-                    <a onclick="showPage('contact')">Contact Us</a>
+                    <a href="index.html">Home</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact Us</a>
                 </div>
             </div>
         </div>
@@ -130,15 +123,6 @@
         <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
     </div>
 
-    <!-- Modal pou afiche enfòmasyon paj yo -->
-    <div id="infoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Title</h2>
-            <p id="modalText">Content text goes here...</p>
-        </div>
-    </div>
-
     <footer>
         &copy; 2026 BerdSend. All rights reserved.
     </footer>
@@ -195,34 +179,6 @@
             
             document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
             document.getElementById('totalCost').innerText = amountVal.toFixed(2) + " " + sender;
-        }
-
-        function showPage(page) {
-            toggleMenu();
-            var modal = document.getElementById('infoModal');
-            var title = document.getElementById('modalTitle');
-            var text = document.getElementById('modalText');
-
-            if (page === 'privacy') {
-                title.innerText = "Privacy Policy";
-                text.innerText = "At BerdSend, your personal data and financial transactions are encrypted and protected with maximum industry-grade security.";
-            } else if (page === 'terms') {
-                title.innerText = "Terms of Service";
-                text.innerText = "By using BerdSend, you agree to our reliable transfer guidelines, service fees, and secure delivery processing terms.";
-            } else if (page === 'about') {
-                title.innerText = "About Us";
-                text.innerText = "BerdSend is a fast, safe, and reliable platform built to easily send money and mobile top-ups to your loved ones.";
-            } else if (page === 'contact') {
-                title.innerText = "Contact Us";
-                text.innerText = "Need assistance with a transfer? Reach out to our dedicated support team anytime at support@berdsend.com.";
-            } else {
-                return;
-            }
-            modal.style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById('infoModal').style.display = "none";
         }
 
         window.onload = function() {
