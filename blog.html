@@ -1,33 +1,26 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - BerdSend</title>
+    <title id="pageTitle">BerdSend - Blog & News</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .app-logo-img { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; }
-        .nav-links a { color: #555; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
-        .nav-links a:hover { color: #0066cc; }
-        
-        .container { width: 100%; max-width: 800px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        h1 { font-size: 2rem; margin-bottom: 10px; color: #111; }
-        .subtitle { font-size: 1rem; color: #666; margin-bottom: 30px; }
-        
-        .article-card { padding: 20px 0; border-bottom: 1px solid #eee; }
-        .article-card:last-child { border-bottom: none; }
-        .article-date { font-size: 0.8rem; color: #0066cc; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
-        .article-title { font-size: 1.3rem; color: #111; text-decoration: none; display: block; margin-bottom: 8px; font-weight: bold; }
-        .article-title:hover { color: #0066cc; }
-        .article-snippet { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 12px; }
-        .read-more { display: inline-block; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .read-more:hover { text-decoration: underline; }
-
-        footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
+        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .menu-container { position: relative; }
+        .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
+        .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
+        .dropdown-menu a:hover { background: #f1f1f1; }
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        h1 { font-size: 1.4rem; margin-bottom: 15px; color: #0066cc; }
+        p { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 15px; }
+        footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -35,149 +28,114 @@
     <header>
         <a href="index.html" class="logo-container">
             <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
-            <div class="logo">BerdSend</div>
         </a>
-        <div class="nav-links">
-            <a href="index.html">Akèy</a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <div class="menu-container">
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                <div id="myDropdown" class="dropdown-menu">
+                    <a href="index.html" id="menuHome">Home</a>
+                    <a href="blog.html" id="menuBlog">Blog</a>
+                    <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
+                    <a href="terms.html" id="menuTerms">Terms of Service</a>
+                    <a href="about.html" id="menuAbout">About Us</a>
+                    <a href="contact.html" id="menuContact">Contact Us</a>
+                    <a href="faq.html" id="menuFaq">FAQ</a>
+                    <a href="tracking.html" id="menuTracking">Track Transfer</a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <h1>Blog BerdSend</h1>
-        <p class="subtitle">Tout dènye atik sou teknoloji, finans, sekirite ak konsèy pratik pou lavi chak jou.</p>
-
-        <!-- Atik 16 -->
-        <div class="article-card">
-            <div class="article-date">18 Jen 2026</div>
-            <a href="atik-16.html" class="article-title">Kijan pou w kenbe yon bon rapò ak fanmi w lè w ap viv aletranje</a>
-            <p class="article-snippet">Ale viv nan yon lòt peyi pote anpil nouvo opòtinite, men li vini ak yon gwo defi: distans ak moun nou renmen yo ki rete an d Ayiti...</p>
-            <a href="atik-16.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 15 -->
-        <div class="article-card">
-            <div class="article-date">20 Jen 2026</div>
-            <a href="atik-15.html" class="article-title">Kijan pou w prepare w pou voye lajan pandan periy fèt yo</a>
-            <p class="article-snippet">Periy fèt yo se moman espesyal kote tout moun anvi pataje lanmou ak fanmi yo, men se tou moman kote rezo yo pi chaje...</p>
-            <a href="atik-15.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 14 -->
-        <div class="article-card">
-            <div class="article-date">22 Jen 2026</div>
-            <a href="atik-14.html" class="article-title">Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo</a>
-            <p class="article-snippet">Lè w ap voye lajan bay moun ou renmen yo, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi. Aprann poukisa konfyans se fondasyon an...</p>
-            <a href="atik-14.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 13 -->
-        <div class="article-card">
-            <div class="article-date">25 Jen 2026</div>
-            <a href="atik-13.html" class="article-title">Kijan pou w ekonomize lajan chak mwa san w pa santi l</a>
-            <p class="article-snippet">Dekouvri ti chanjman estratejik nan abitid chak jou ou ki ka ede w konstwi yon bèl wonn lajan sou kote san w pa soufri...</p>
-            <a href="atik-13.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 12 -->
-        <div class="article-card">
-            <div class="article-date">28 Jen 2026</div>
-            <a href="atik-12.html" class="article-title">Avni bous elektwonik yo nan peyi d Ayiti</a>
-            <p class="article-snippet">Bous elektwonik yo ap vin tounen yon pisans ekonomik ak yon solisyon endispansab pou jere lajan san depann sèlman sou labank tradisyonèl yo...</p>
-            <a href="atik-12.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 11 -->
-        <div class="article-card">
-            <div class="article-date">1 Jiyè 2026</div>
-            <a href="atik-11.html" class="article-title">Enpòtans edikasyon finansye nan lavi chak jou</a>
-            <p class="article-snippet">Edikasyon finansye se kle ki fè diferans ant yon moun ki toujou gen pwoblèm lajan ak yon moun ki konprann kijan pou fè kòb li grandi...</p>
-            <a href="atik-11.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 10 -->
-        <div class="article-card">
-            <div class="article-date">3 Jiyè 2026</div>
-            <a href="atik-10.html" class="article-title">Wòl teknoloji nan transfè lajan entènasyonal yo</a>
-            <p class="article-snippet">Avansman nan domèn FinTech la ap revolusyone transfè lajan yo, fè l vin pi rapid, pi bon mache, epi aksesib pou tout moun...</p>
-            <a href="atik-10.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 9 -->
-        <div class="article-card">
-            <div class="article-date">5 Jiyè 2026</div>
-            <a href="atik-9.html" class="article-title">Kijan pou n wè avantaj ki genyen nan planifikasyon finansye</a>
-            <p class="article-snippet">Planifikasyon finansye se yon zouti esansyèl ki ede w sispann depanse san kontwòl epi prepare pou lavni fanmi w...</p>
-            <a href="atik-9.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 8 -->
-        <div class="article-card">
-            <div class="article-date">8 Jiyè 2026</div>
-            <a href="atik-8.html" class="article-title">Ki jan teknoloji mobil ap chanje fason nou viv</a>
-            <p class="article-snippet">Telefòn pòtab la pa la sèlman pou apèl ankò; li vin tounen yon òdinatè santral ki dirije prèske tout aspè nan lavi chak jou nou...</p>
-            <a href="atik-8.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 7 -->
-        <div class="article-card">
-            <div class="article-date">10 Jiyè 2026</div>
-            <a href="atik-7.html" class="article-title">Enpòtans sèvis kliyan nan biznis dijital yo</a>
-            <p class="article-snippet">Yon sèvis kliyan ki rapid ak efikas se poto mitan ki kenbe konfyans moun yo epi ki asire yo santi yo akonpaye nan chak etap...</p>
-            <a href="atik-7.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 6 -->
-        <div class="article-card">
-            <div class="article-date">12 Jiyè 2026</div>
-            <a href="atik-6.html" class="article-title">Enpòtans sekirite nan tranzaksyon dijital yo</a>
-            <p class="article-snippet">Nan epòk dijital sa a, sèvis sekirite tankou modpas solid ak chifreman done yo se baz pou pwoteje tèt ou kont nenpòt risk...</p>
-            <a href="atik-6.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 5 -->
-        <div class="article-card">
-            <div class="article-date">15 Jiyè 2026</div>
-            <a href="atik-5.html" class="article-title">Kijan pou w voye lajan an sekirite epi san pèdi tan</a>
-            <p class="article-snippet">Dekouvri etap esansyèl yo ak bon pratik ki pèmèt ou transfere lajan bay moun pa w yo rapidman epi san frè kache...</p>
-            <a href="atik-5.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 4 -->
-        <div class="article-card">
-            <div class="article-date">18 Jiyè 2026</div>
-            <a href="atik-4.html" class="article-title">Teknoloji ak finans: Kijan yo ap transfòme lavi nou</a>
-            <p class="article-snippet">Fason nou jere lajan nou jodi a chanje nèt gras ak aplikasyon mobil ak solisyon dijital ki rann tranzaksyon yo pi likid...</p>
-            <a href="atik-4.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 3 -->
-        <div class="article-card">
-            <div class="article-date">20 Jiyè 2026</div>
-            <a href="atik-3.html" class="article-title">Avantaj ki genyen lè w ap itilize BerdSend pou tranzaksyon w yo</a>
-            <p class="article-snippet">Poukisa anpil moun ap chwazi BerdSend? Aprann plis sou avantaj vitès, sekirite ak fyabilite platfòm lan ap offre...</p>
-            <a href="atik-3.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 2 -->
-        <div class="article-card">
-            <div class="article-date">22 Jiyè 2026</div>
-            <a href="atik-2.html" class="article-title">Gid konplè pou konprann transfè lajan sou entènèt</a>
-            <p class="article-snippet">Tout sa ou bezwen konnen anvan ou fè premye transfè lajan ou sou entènèt pou asire w ke tout bagay fèt kòrèkteman...</p>
-            <a href="atik-2.html" class="read-more">Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 1 -->
-        <div class="article-card">
-            <div class="article-date">24 Jiyè 2026</div>
-            <a href="atik-1.html" class="article-title">Kijan pou w voye lajan bay moun pa w yo san pwoblèm</a>
-            <p class="article-snippet">Voye lajan bay fanmi w vin pi fasil pase anvan. Dekouvri konsèy ak metòd ki pi efikas pou fè l san w pa pèdi tan...</p>
-            <a href="atik-1.html" class="read-more">Li tout atik la →</a>
-        </div>
+    <div class="card">
+        <h1 id="blogTitle">Latest News & Updates</h1>
+        <p id="blogText1">Welcome to the BerdSend blog page! Here you will find helpful tips on sending money safely, exchange rate updates, and news regarding our expansion to new countries.</p>
+        <p id="blogText2">Stay tuned for more guides on how to make your mobile top-ups and transfers faster and easier.</p>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. Tout dwa rezève.
+        &copy; 2026 BerdSend. All rights reserved.
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                title: "BerdSend - Blog & News",
+                blogTitle: "Latest News & Updates",
+                blogText1: "Welcome to the BerdSend blog page! Here you will find helpful tips on sending money safely, exchange rate updates, and news regarding our expansion to new countries.",
+                blogText2: "Stay tuned for more guides on how to make your mobile top-ups and transfers faster and easier.",
+                menuHome: "Home",
+                menuBlog: "Blog",
+                menuPrivacy: "Privacy Policy",
+                menuTerms: "Terms of Service",
+                menuAbout: "About Us",
+                menuContact: "Contact Us",
+                menuFaq: "FAQ",
+                menuTracking: "Track Transfer"
+            },
+            ht: {
+                title: "BerdSend - Blog ak Nouvèl",
+                blogTitle: "Dènye Nouvèl ak Mizajou",
+                blogText1: "Byenveni sou paj blog BerdSend la! La a ou ap jwenn konsèy itil sou fason pou voye lajan an sekirite, mizajou sou pousantaj lajan, ak nouvèl sou ekspansyon nou nan nouvo peyi.",
+                blogText2: "Rete konekte pou plis gid sou fason pou fè rechaj ak transfè ou yo pi rapid ak pi fasil.",
+                menuHome: "Akèy",
+                menuBlog: "Blog",
+                menuPrivacy: "Politik Konfidansyalite",
+                menuTerms: "Kondisyon Sèvis",
+                menuAbout: "Konsènan Nou",
+                menuContact: "Kontakte Nou",
+                menuFaq: "FAQ (Kesyon yo Poze)",
+                menuTracking: "Suiv Transfè W"
+            },
+            pt: {
+                title: "BerdSend - Blog e Notícias",
+                blogTitle: "Últimas Notícias e Atualizações",
+                blogText1: "Bem-vindo à página do blog BerdSend! Aqui você encontrará dicas úteis sobre como enviar dinheiro com segurança, atualizações de taxas de câmbio e notícias sobre nossa expansão para novos países.",
+                blogText2: "Fique atento para mais guias sobre como tornar suas recargas e transferências mais rápidas e fáceis.",
+                menuHome: "Início",
+                menuBlog: "Blog",
+                menuPrivacy: "Política de Privacidade",
+                menuTerms: "Termos de Serviço",
+                menuAbout: "Sobre Nós",
+                menuContact: "Contato",
+                menuFaq: "FAQ",
+                menuTracking: "Rastrear Transferência"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('blogTitle').innerText = t.blogTitle;
+            document.getElementById('blogText1').innerText = t.blogText1;
+            document.getElementById('blogText2').innerText = t.blogText2;
+            document.getElementById('menuHome').innerText = t.menuHome;
+            document.getElementById('menuBlog').innerText = t.menuBlog;
+            document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
+            document.getElementById('menuTerms').innerText = t.menuTerms;
+            document.getElementById('menuAbout').innerText = t.menuAbout;
+            document.getElementById('menuContact').innerText = t.menuContact;
+            document.getElementById('menuFaq').innerText = t.menuFaq;
+            document.getElementById('menuTracking').innerText = t.menuTracking;
+        }
+
+        function toggleMenu() {
+            var menu = document.getElementById("myDropdown");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
 </body>
 </html>
