@@ -18,12 +18,12 @@
         .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f1f1f1; }
         
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; padding-bottom: 40px; }
         .article-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
         .article-date { font-size: 0.75rem; color: #888; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
         h2 { font-size: 1.2rem; margin-bottom: 10px; color: #0066cc; }
         p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 12px; }
-        .read-more { color: #0066cc; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
+        .read-more { display: inline-block; color: #0066cc; text-decoration: none; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
         .read-more:hover { text-decoration: underline; }
         
         footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
@@ -63,7 +63,7 @@
             <div class="article-date" id="date1">June 15, 2026</div>
             <h2 id="art1Title">How to Send Money Safely to Haiti</h2>
             <p id="art1Desc">Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.</p>
-            <a href="#" class="read-more" id="readMore1">Read More &rarr;</a>
+            <a onclick="alertArticle(1)" class="read-more" id="readMore1">Read More &rarr;</a>
         </div>
 
         <!-- Atik 2 -->
@@ -71,7 +71,7 @@
             <div class="article-date" id="date2">June 10, 2026</div>
             <h2 id="art2Title">Understanding Exchange Rates for Mobile Top-Ups</h2>
             <p id="art2Desc">A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.</p>
-            <a href="#" class="read-more" id="readMore2">Read More &rarr;</a>
+            <a onclick="alertArticle(2)" class="read-more" id="readMore2">Read More &rarr;</a>
         </div>
 
         <!-- Atik 3 -->
@@ -79,7 +79,7 @@
             <div class="article-date" id="date3">June 01, 2026</div>
             <h2 id="art3Title">BerdSend Expands Support to New Regions</h2>
             <p id="art3Desc">We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.</p>
-            <a href="#" class="read-more" id="readMore3">Read More &rarr;</a>
+            <a onclick="alertArticle(3)" class="read-more" id="readMore3">Read More &rarr;</a>
         </div>
     </div>
 
@@ -110,7 +110,8 @@
                 menuAbout: "About Us",
                 menuContact: "Contact Us",
                 menuFaq: "FAQ",
-                menuTracking: "Track Transfer"
+                menuTracking: "Track Transfer",
+                msgDetails: "Full article view coming soon!"
             },
             ht: {
                 title: "BerdSend - Blog ak Nouvèl",
@@ -133,7 +134,8 @@
                 menuAbout: "Konsènan Nou",
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
-                menuTracking: "Suiv Transfè W"
+                menuTracking: "Suiv Transfè W",
+                msgDetails: "Detay atik la ap disponib bèlè!"
             },
             pt: {
                 title: "BerdSend - Blog e Notícias",
@@ -156,7 +158,8 @@
                 menuAbout: "Sobre Nós",
                 menuContact: "Contato",
                 menuFaq: "FAQ",
-                menuTracking: "Rastrear Transferência"
+                menuTracking: "Rastrear Transferência",
+                msgDetails: "Detalhes do artigo em breve!"
             }
         };
 
@@ -189,6 +192,12 @@
             document.getElementById('menuContact').innerText = t.menuContact;
             document.getElementById('menuFaq').innerText = t.menuFaq;
             document.getElementById('menuTracking').innerText = t.menuTracking;
+        }
+
+        function alertArticle(id) {
+            var lang = localStorage.getItem('berdSendLang') || 'en';
+            var t = translations[lang];
+            alert(t.msgDetails);
         }
 
         function toggleMenu() {
