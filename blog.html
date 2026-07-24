@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
         .header-right { display: flex; align-items: center; gap: 10px; }
@@ -17,9 +17,15 @@
         .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
         .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f1f1f1; }
-        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
-        h1 { font-size: 1.4rem; margin-bottom: 15px; color: #0066cc; }
-        p { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 15px; }
+        
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; }
+        .article-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        .article-date { font-size: 0.75rem; color: #888; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+        h2 { font-size: 1.2rem; margin-bottom: 10px; color: #0066cc; }
+        p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 12px; }
+        .read-more { color: #0066cc; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
+        .read-more:hover { text-decoration: underline; }
+        
         footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
     </style>
 </head>
@@ -51,10 +57,30 @@
         </div>
     </header>
 
-    <div class="card">
-        <h1 id="blogTitle">Latest News & Updates</h1>
-        <p id="blogText1">Welcome to the BerdSend blog page! Here you will find helpful tips on sending money safely, exchange rate updates, and news regarding our expansion to new countries.</p>
-        <p id="blogText2">Stay tuned for more guides on how to make your mobile top-ups and transfers faster and easier.</p>
+    <div class="container">
+        <!-- Atik 1 -->
+        <div class="article-card">
+            <div class="article-date" id="date1">June 15, 2026</div>
+            <h2 id="art1Title">How to Send Money Safely to Haiti</h2>
+            <p id="art1Desc">Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.</p>
+            <a href="#" class="read-more" id="readMore1">Read More &rarr;</a>
+        </div>
+
+        <!-- Atik 2 -->
+        <div class="article-card">
+            <div class="article-date" id="date2">June 10, 2026</div>
+            <h2 id="art2Title">Understanding Exchange Rates for Mobile Top-Ups</h2>
+            <p id="art2Desc">A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.</p>
+            <a href="#" class="read-more" id="readMore2">Read More &rarr;</a>
+        </div>
+
+        <!-- Atik 3 -->
+        <div class="article-card">
+            <div class="article-date" id="date3">June 01, 2026</div>
+            <h2 id="art3Title">BerdSend Expands Support to New Regions</h2>
+            <p id="art3Desc">We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.</p>
+            <a href="#" class="read-more" id="readMore3">Read More &rarr;</a>
+        </div>
     </div>
 
     <footer>
@@ -65,9 +91,18 @@
         const translations = {
             en: {
                 title: "BerdSend - Blog & News",
-                blogTitle: "Latest News & Updates",
-                blogText1: "Welcome to the BerdSend blog page! Here you will find helpful tips on sending money safely, exchange rate updates, and news regarding our expansion to new countries.",
-                blogText2: "Stay tuned for more guides on how to make your mobile top-ups and transfers faster and easier.",
+                date1: "June 15, 2026",
+                art1Title: "How to Send Money Safely to Haiti",
+                art1Desc: "Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.",
+                readMore1: "Read More →",
+                date2: "June 10, 2026",
+                art2Title: "Understanding Exchange Rates for Mobile Top-Ups",
+                art2Desc: "A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.",
+                readMore2: "Read More →",
+                date3: "June 01, 2026",
+                art3Title: "BerdSend Expands Support to New Regions",
+                art3Desc: "We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.",
+                readMore3: "Read More →",
                 menuHome: "Home",
                 menuBlog: "Blog",
                 menuPrivacy: "Privacy Policy",
@@ -79,9 +114,18 @@
             },
             ht: {
                 title: "BerdSend - Blog ak Nouvèl",
-                blogTitle: "Dènye Nouvèl ak Mizajou",
-                blogText1: "Byenveni sou paj blog BerdSend la! La a ou ap jwenn konsèy itil sou fason pou voye lajan an sekirite, mizajou sou pousantaj lajan, ak nouvèl sou ekspansyon nou nan nouvo peyi.",
-                blogText2: "Rete konekte pou plis gid sou fason pou fè rechaj ak transfè ou yo pi rapid ak pi fasil.",
+                date1: "15 Jen 2026",
+                art1Title: "Kijan pou Voye Lajan an Sekirite an Ayiti",
+                art1Desc: "Dekouvri meyè pratik yo pou sekirize transfè sou Entènèt ou yo, pwoteje enfòmasyon kont ou, epi asire moun ou renmen yo resevwa lajan an san danje.",
+                readMore1: "Li Plis →",
+                date2: "10 Jen 2026",
+                art2Title: "Konprann Pousantaj Echanj pou Rechaj Telefòn",
+                art2Desc: "Yon eksplikasyon konplè sou fason USD ak BRL konvèti an HTG ak DOP, pou ede w jwenn pi bon valè sou chak tranzaksyon.",
+                readMore2: "Li Plis →",
+                date3: "01 Jen 2026",
+                art3Title: "BerdSend Elaji Sipò Li nan Nouvo Rejyon",
+                art3Desc: "Nou ap grandi chak jou! Aprann plis sou dènye mizajou nou yo konsènan nouvo patnè livrezon ak entegrasyon lajan elektwonik.",
+                readMore3: "Li Plis →",
                 menuHome: "Akèy",
                 menuBlog: "Blog",
                 menuPrivacy: "Politik Konfidansyalite",
@@ -93,9 +137,18 @@
             },
             pt: {
                 title: "BerdSend - Blog e Notícias",
-                blogTitle: "Últimas Notícias e Atualizações",
-                blogText1: "Bem-vindo à página do blog BerdSend! Aqui você encontrará dicas úteis sobre como enviar dinheiro com segurança, atualizações de taxas de câmbio e notícias sobre nossa expansão para novos países.",
-                blogText2: "Fique atento para mais guias sobre como tornar suas recargas e transferências mais rápidas e fáceis.",
+                date1: "15 de Junho, 2026",
+                art1Title: "Como Enviar Dinheiro com Segurança para o Haiti",
+                art1Desc: "Descubra as melhores práticas para proteger suas transferências online e garantir que seus entes queridos recebam os fundos com segurança.",
+                readMore1: "Leia Mais →",
+                date2: "10 de Junho, 2026",
+                art2Title: "Entendendo as Taxas de Câmbio para Recargas",
+                art2Desc: "Uma análise completa de como USD e BRL se convertem em HTG e DOP, ajudando você a obter o máximo valor em cada transação.",
+                readMore2: "Leia Mais →",
+                date3: "01 de Junho, 2026",
+                art3Title: "BerdSend Expande Suporte para Novas Regiões",
+                art3Desc: "Estamos crescendo constantemente! Conheça nossas últimas atualizações sobre novos parceiros de entrega e carteiras digitais.",
+                readMore3: "Leia Mais →",
                 menuHome: "Início",
                 menuBlog: "Blog",
                 menuPrivacy: "Política de Privacidade",
@@ -113,9 +166,21 @@
             if (!t) return;
 
             document.getElementById('pageTitle').innerText = t.title;
-            document.getElementById('blogTitle').innerText = t.blogTitle;
-            document.getElementById('blogText1').innerText = t.blogText1;
-            document.getElementById('blogText2').innerText = t.blogText2;
+            document.getElementById('date1').innerText = t.date1;
+            document.getElementById('art1Title').innerText = t.art1Title;
+            document.getElementById('art1Desc').innerText = t.art1Desc;
+            document.getElementById('readMore1').innerText = t.readMore1;
+
+            document.getElementById('date2').innerText = t.date2;
+            document.getElementById('art2Title').innerText = t.art2Title;
+            document.getElementById('art2Desc').innerText = t.art2Desc;
+            document.getElementById('readMore2').innerText = t.readMore2;
+
+            document.getElementById('date3').innerText = t.date3;
+            document.getElementById('art3Title').innerText = t.art3Title;
+            document.getElementById('art3Desc').innerText = t.art3Desc;
+            document.getElementById('readMore3').innerText = t.readMore3;
+
             document.getElementById('menuHome').innerText = t.menuHome;
             document.getElementById('menuBlog').innerText = t.menuBlog;
             document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
