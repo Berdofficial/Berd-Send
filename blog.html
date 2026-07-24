@@ -18,11 +18,12 @@
         .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f1f1f1; }
         
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; padding-bottom: 40px; }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; padding-bottom: 60px; }
         .article-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
         .article-date { font-size: 0.75rem; color: #888; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
-        h2 { font-size: 1.2rem; margin-bottom: 10px; color: #0066cc; }
-        p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 12px; }
+        h2 { font-size: 1.1rem; margin-bottom: 10px; color: #0066cc; }
+        p { font-size: 0.85rem; color: #555; line-height: 1.5; margin-bottom: 12px; }
+        .article-full-content { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee; font-size: 0.85rem; color: #444; line-height: 1.6; }
         .read-more { display: inline-block; color: #0066cc; text-decoration: none; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
         .read-more:hover { text-decoration: underline; }
         
@@ -57,30 +58,8 @@
         </div>
     </header>
 
-    <div class="container">
-        <!-- Atik 1 -->
-        <div class="article-card">
-            <div class="article-date" id="date1">June 15, 2026</div>
-            <h2 id="art1Title">How to Send Money Safely to Haiti</h2>
-            <p id="art1Desc">Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.</p>
-            <a onclick="alertArticle(1)" class="read-more" id="readMore1">Read More &rarr;</a>
-        </div>
-
-        <!-- Atik 2 -->
-        <div class="article-card">
-            <div class="article-date" id="date2">June 10, 2026</div>
-            <h2 id="art2Title">Understanding Exchange Rates for Mobile Top-Ups</h2>
-            <p id="art2Desc">A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.</p>
-            <a onclick="alertArticle(2)" class="read-more" id="readMore2">Read More &rarr;</a>
-        </div>
-
-        <!-- Atik 3 -->
-        <div class="article-card">
-            <div class="article-date" id="date3">June 01, 2026</div>
-            <h2 id="art3Title">BerdSend Expands Support to New Regions</h2>
-            <p id="art3Desc">We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.</p>
-            <a onclick="alertArticle(3)" class="read-more" id="readMore3">Read More &rarr;</a>
-        </div>
+    <div class="container" id="articlesContainer">
+        <!-- 16 Atik yo pral gen la a -->
     </div>
 
     <footer>
@@ -88,21 +67,254 @@
     </footer>
 
     <script>
+        const articlesData = [
+            {
+                id: 1,
+                date: "June 15, 2026",
+                dateHt: "15 Jen 2026",
+                datePt: "15 de Junho, 2026",
+                titleEn: "How to Send Money Safely to Haiti",
+                titleHt: "Kijan pou Voye Lajan an Sekirite an Ayiti",
+                titlePt: "Como Enviar Dinheiro com Segurança para o Haiti",
+                descEn: "Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.",
+                descHt: "Dekouvri meyè pratik yo pou sekirize transfè sou Entènèt ou yo, pwoteje enfòmasyon kont ou, epi asire moun ou renmen yo resevwa lajan an san danje.",
+                descPt: "Descubra as melhores práticas para proteger suas transferências online e garantir que seus entes queridos recebam os fundos com segurança.",
+                fullEn: "Always ensure you use secure networks, never share your password or PIN with anyone, and verify receiver details before confirming transfers.",
+                fullHt: "Toujou itilize rezo ki an sekirite, pa janm pataje modpas ou oswa kòd PIN ou ak okenn moun, epi verifye detay moun k ap resevwa a anvan ou konfime.",
+                fullPt: "Sempre use redes seguras, nunca compartilhe sua senha ou PIN com ninguém e verifique os dados do destinatário antes de confirmar."
+            },
+            {
+                id: 2,
+                date: "June 12, 2026",
+                dateHt: "12 Jen 2026",
+                datePt: "12 de Junho, 2026",
+                titleEn: "Understanding Exchange Rates for Mobile Top-Ups",
+                titleHt: "Konprann Pousantaj Echanj pou Rechaj Telefòn",
+                titlePt: "Entendendo as Taxas de Câmbio para Recargas",
+                descEn: "A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.",
+                descHt: "Yon eksplikasyon konplè sou fason USD ak BRL konvèti an HTG ak DOP, pou ede w jwenn pi bon valè sou chak tranzaksyon.",
+                descPt: "Uma análise completa de como USD e BRL se convertem em HTG e DOP, ajudando você a obter o máximo valor em cada transação.",
+                fullEn: "Exchange rates fluctuate daily based on market conditions. We strive to provide competitive rates with zero hidden fees for all mobile top-ups.",
+                fullHt: "Pousantaj echanj yo chanje chak jou selon mache a. Nou fè efò pou ba ou pi bon pousantaj san okenn frè kache pou tout rechaj telefòn yo.",
+                fullPt: "As taxas de câmbio flutuam diariamente. Buscamos oferecer taxas competitivas sem taxas ocultas para todas as recargas de celular."
+            },
+            {
+                id: 3,
+                date: "June 10, 2026",
+                dateHt: "10 Jen 2026",
+                datePt: "10 de Junho, 2026",
+                titleEn: "BerdSend Expands Support to New Regions",
+                titleHt: "BerdSend Elaji Sipò Li nan Nouvo Rejyon",
+                titlePt: "BerdSend Expande Suporte para Novas Regiões",
+                descEn: "We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.",
+                descHt: "Nou ap grandi chak jou! Aprann plis sou dènye mizajou nou yo konsènan nouvo patnè livrezon ak entegrasyon lajan elektwonik.",
+                descPt: "Estamos crescendo constantemente! Conheça nossas últimas atualizações sobre novos parceiros de entrega e carteiras digitais.",
+                fullEn: "Our new partnerships allow users to send support directly to remote areas with faster processing times and enhanced tracking features.",
+                fullHt: "Nouvo patnè nou yo pèmèt itilizatè yo voye sipò dirèkteman nan zòn ki elwanye yo ak yon vitès ki pi rapid ak pi bon opsyon swivi.",
+                fullPt: "Nossas novas parcerias permitem enviar suporte diretamente para áreas remotas com tempos de processamento mais rápidos."
+            },
+            {
+                id: 4,
+                date: "June 08, 2026",
+                dateHt: "08 Jen 2026",
+                datePt: "08 de Junho, 2026",
+                titleEn: "Top 5 Tips for Fast Cash Pickups",
+                titleHt: "Top 5 Konsèy pou Ranmase Lajan pi Vit",
+                titlePt: "Top 5 Dicas para Retirada Rápida de Dinheiro",
+                descEn: "Make sure your recipient has the correct ID and transaction reference number ready to avoid any delays at local payout locations.",
+                descHt: "Asire w moun k ap resevwa a gen bon pyès idantifikasyon ak nimewo referans tranzaksyon an pou evite nenpòt reta nan pwen peman yo.",
+                descPt: "Certifique-se de que seu destinatário tenha o documento de identidade correto e o número de referência da transação.",
+                fullEn: "Double-checking spelling names matching government-issued IDs ensures instant verification and payout without extra verification steps.",
+                fullHt: "Verifye si non ki sou kont la matche egzakteman ak pyès idantifikasyon ofisyèl la pou pèmèt yon peman imedya san pwoblèm.",
+                fullPt: "Verificar se os nomes correspondem aos documentos de identidade oficiais garante a liberação imediata sem etapas extras."
+            },
+            {
+                id: 5,
+                date: "June 05, 2026",
+                dateHt: "05 Jen 2026",
+                datePt: "05 de Junho, 2026",
+                titleEn: "Why Two-Factor Authentication Matters",
+                titleHt: "Poukisa Otantifikasyon De Faktè Enpòtan Anpil",
+                titlePt: "Por Que a Autenticação de Dois Fatores Importa",
+                descEn: "Add an extra layer of security to your BerdSend account by enabling 2FA for all your future login sessions and transfers.",
+                descHt: "Ajoute yon nivo sekirite anplis sou kont BerdSend ou an nan aktive 2FA pou tout pwochen koneksyon ak transfè w yo.",
+                descPt: "Adicione uma camada extra de segurança à sua conta BerdSend ativando o 2FA para todas as suas futuras sessões.",
+                fullEn: "Two-factor authentication prevents unauthorized access even if your password is compromised. It takes less than a minute to set up.",
+                fullHt: "Otantifikasyon de faktè anpeche aksè san otorizasyon menm si yon moun ta jwenn modpas ou. Li pran mwens pase yon minit pou konfigure l.",
+                fullPt: "A autenticação de dois fatores impede o acesso não autorizado, mesmo que sua senha seja comprometida. Leva menos de um minuto."
+            },
+            {
+                id: 6,
+                date: "June 03, 2026",
+                dateHt: "03 Jen 2026",
+                datePt: "03 de Junho, 2026",
+                titleEn: "Supporting Family Abroad: A Guide",
+                titleHt: "Sipòte Fanmi Lòt Bo Dlo: Yon Gid Pratik",
+                titlePt: "Apoiando a Família no Exterior: Um Guia",
+                descEn: "Explore budgeting tips and smart strategies for managing regular remittances to support your relatives back home efficiently.",
+                descHt: "Eksplore konsèy bidjè ak estrateji entelijan pou jere voye lajan regilyèman pou ede fanmi w lakay yo yon fason efikas.",
+                descPt: "Explore dicas de orçamento e estratégias inteligentes para gerenciar remessas regulares para apoiar seus parentes.",
+                fullEn: "Consistent planning and using lower-fee platforms like BerdSend can save you substantial amounts over the course of a year.",
+                fullHt: "Planifikasyon ki konsistan ak itilizasyon platfòm ki pa pran anpil frè tankou BerdSend ka ekonomize w anpil lajan sou ane a.",
+                fullPt: "O planejamento consistente e o uso de plataformas de baixa taxa como BerdSend podem economizar quantias substanciais."
+            },
+            {
+                id: 7,
+                date: "May 28, 2026",
+                dateHt: "28 Me 2026",
+                datePt: "28 de Maio, 2026",
+                titleEn: "Mobile Wallet vs Bank Deposit: Which is Better?",
+                titleHt: "Bous Elektwonik kont Depo Bankè: Kiyès ki Pi Bon?",
+                titlePt: "Carteira Móvel vs Depósito Bancário: Qual é Melhor?",
+                descEn: "Compare the speed, accessibility, and convenience of sending money directly to a mobile wallet versus traditional bank accounts.",
+                descHt: "Konpare vitès, aksè ak konvenyans pou voye lajan dirèkteman nan yon bous elektwonik konpare ak kont labank tradisyonèl yo.",
+                descPt: "Compare a velocidade, a acessibilidade e a conveniência de enviar dinheiro diretamente para uma carteira móvel.",
+                fullEn: "Mobile wallets are typically instant and accessible via smartphone apps, whereas bank transfers might take 1 to 2 business days.",
+                fullHt: "Bous elektwonik yo anjeneral rapid epi aksesib sou telefòn, alòske transfè bankè yo ka pran 1 a 2 jou travay.",
+                fullPt: "As carteiras móveis costumam ser instantâneas e acessíveis via smartphone, enquanto transferências bancárias podem levar dias."
+            },
+            {
+                id: 8,
+                date: "May 25, 2026",
+                dateHt: "25 Me 2026",
+                datePt: "25 de Maio, 2026",
+                titleEn: "How to Track Your Transfer in Real-Time",
+                titleHt: "Kijan pou Suiv Transfè W an Dirèk (Real-Time)",
+                titlePt: "Como Rastrear Sua Transferência em Tempo Real",
+                descEn: "Learn how to use our tracking portal to check the exact status of your remittance from the moment you send it until it's delivered.",
+                descHt: "Aprann kijan pou itilize pòtal swivi nou an pou tcheke egzakteman eta transfè w la depi moman ou voye l jiska lè li rive.",
+                descPt: "Aprenda a usar nosso portal de rastreamento para verificar o status exato da sua remessa desde o envio até a entrega.",
+                fullEn: "Simply enter your unique transaction tracking code on the tracking page to see instant updates on your transfer progress.",
+                fullHt: "Jis antre kòd swivi inik tranzaksyon w lan sou paj swivi a pou w wè mizajou an dirèk sou avansman an.",
+                fullPt: "Basta digitar seu código exclusivo de rastreamento de transação na página de rastreamento para ver atualizações instantâneas."
+            },
+            {
+                id: 9,
+                date: "May 20, 2026",
+                dateHt: "20 Me 2026",
+                datePt: "20 de Maio, 2026",
+                titleEn: "Avoiding Common Online Transfer Scams",
+                titleHt: "Evite Fwòd Komen nan Transfè sou Entènèt",
+                titlePt: "Evitando Golpes Comuns de Transferência Online",
+                descEn: "Stay vigilant against phishing links and fraudulent requests. BerdSend will never ask for your full password or banking PIN.",
+                descHt: "Rete veyatif kont lyen anchas (phishing) ak demann fwod. BerdSend pap janm mande w modpas konplè w oswa kòd PIN bankè w.",
+                descPt: "Fique atento a links de phishing e solicitações fraudulentas. A BerdSend nunca pedirá sua senha completa ou PIN bancário.",
+                fullEn: "Always verify official communication channels and report any suspicious activities to our customer support team immediately.",
+                fullHt: "Toujou verifye chanèl kominikasyon ofisyèl yo epi rapòte nenpòt aktivite sispèk bay ekip sipò nou an imedyatman.",
+                fullPt: "Sempre verifique os canais oficiais de comunicação e relate qualquer atividade suspeita à nossa equipe de suporte."
+            },
+            {
+                id: 10,
+                date: "May 15, 2026",
+                dateHt: "15 Me 2026",
+                datePt: "15 de Maio, 2026",
+                titleEn: "Celebrating Haitian Heritage Month with BerdSend",
+                titleHt: "Fete Mwa Eritaj Ayisyen an ak BerdSend",
+                titlePt: "Celebrando o Mês da Herança Haitiana com a BerdSend",
+                descEn: "Discover special promotional rates and zero-fee transfer windows designed to celebrate culture and connect families this month.",
+                descHt: "Dekouvri pousantaj pwomosyonèl espesyal ak jou san frè transfè ki fèt espesyalman pou fete kilti nou an ak konekte fanmi yo mwa sa a.",
+                descPt: "Descubra taxas promocionais especiais e janelas de transferência sem taxa projetadas para celebrar a cultura este mês.",
+                fullEn: "We honor our roots by giving back to our community with discounted rates and special community outreach programs.",
+                fullHt: "Nou onore ras nou lè nou bay kominote nou an sipò ak tarif redwi ak pwogram espesyal pou ede devlopman.",
+                fullPt: "Honramos nossas raízes retribuindo à nossa comunidade com taxas com desconto e programas especiais de apoio."
+            },
+            {
+                id: 11,
+                date: "May 10, 2026",
+                dateHt: "10 Me 2026",
+                datePt: "10 de Maio, 2026",
+                titleEn: "Understanding Fees: What You Need to Know",
+                titleHt: "Konprann Frè yo: Sa ou Dwe Konnen",
+                titlePt: "Entendendo as Taxas: O Que Você Precisa Saber",
+                descEn: "Transparency is our priority. Read our clear breakdown of transaction fees and how we maintain low costs for international transfers.",
+                descHt: "Transparans se priyorite nou. Li eksplikasyon klè sou frè tranzaksyon nou yo ak kijan nou kenbe pri yo ba pou transfè entènasyonal yo.",
+                descPt: "A transparência é nossa prioridade. Leia nossa análise clara sobre as taxas de transação e como mantemos os custos baixos.",
+                fullEn: "No hidden charges, no unexpected deductions. The amount you see when sending is exactly what gets processed.",
+                fullHt: "Pa gen frè kache, pa gen dediksyon san w pa konnen. Kantite lajan ou wè lè w ap voye a se egzakteman sa k ap trete.",
+                fullPt: "Sem cobranças ocultas, sem deduções inesperadas. O valor que você vê ao enviar é exatamente o que é processado."
+            },
+            {
+                id: 12,
+                date: "May 05, 2026",
+                dateHt: "05 Me 2026",
+                datePt: "05 de Maio, 2026",
+                titleEn: "Tips for First-Time Digital Senders",
+                titleHt: "Konsèy pou Moun k ap Voye Lajan sou Entènèt pou Premye Fwa",
+                titlePt: "Dicas para Quem Envia Digitalmente pela Primeira Vez",
+                descEn: "New to digital money transfers? Follow this simple step-by-step guide to set up your profile and complete your very first transfer.",
+                descHt: "Èske ou nouvo nan transfè lajan sou Entènèt? Swiv gid senp etap pa etap sa a pou mete kanpe profil ou epi fè premye transfè w.",
+                descPt: "Novo em transferências de dinheiro digitais? Siga este guia passo a passo simples para configurar seu perfil e fazer sua primeira transferência.",
+                fullEn: "Setting up your account takes under two minutes. Just provide valid ID and link your preferred funding source.",
+                fullHt: "Kreye kont ou pran mwens pase de minit. Jis bay yon pyès idantifikasyon valab epi konekte sous lajan ou pi pito a.",
+                fullPt: "Configurar sua conta leva menos de dois minutos. Basta fornecer um documento de identidade válido e vincular sua fonte de fundos."
+            },
+            {
+                id: 13,
+                date: "May 01, 2026",
+                dateHt: "01 Me 2026",
+                datePt: "01 de Maio, 2026",
+                titleEn: "Expanding Our Customer Support Hours",
+                titleHt: "Elaji Lè Sèvis Kliyan Nou yo pou Sèvi Ou Pi Byen",
+                titlePt: "Expandindo Nossos Horários de Suporte ao Cliente",
+                descEn: "We are now offering extended support hours to assist you with your transactions across different time zones more effectively.",
+                descHt: "Kounye a nou ofri è siplemantè pou sèvis kliyan an pou ede w pi byen ak tranzaksyon ou yo nan diferan zòn lè.",
+                descPt: "Agora oferecemos horário de suporte estendido para ajudá-lo com suas transações em diferentes fusos horários de forma mais eficaz.",
+                fullEn: "Our dedicated support team is available via chat and email to resolve any questions or processing inquiries quickly.",
+                fullHt: "Ekip sipò devwe nou an disponib sou chat ak imèl pou rezoud nenpòt kesyon oswa demann tranzaksyon rapidman.",
+                fullPt: "Nossa equipe de suporte dedicada está disponível via chat e e-mail para resolver qualquer dúvida ou consulta de processamento."
+            },
+            {
+                id: 14,
+                date: "April 25, 2026",
+                dateHt: "25 Avril 2026",
+                datePt: "25 de Abril, 2026",
+                titleEn: "The Future of Cross-Border Payments",
+                titleHt: "Avni Pèman Transfontatye yo ak Teknoloji",
+                titlePt: "O Futuro dos Pagamentos Transfronteiriços",
+                descEn: "Discover how technological innovations are reshaping international remittances, making them faster, safer, and cheaper than ever.",
+                descHt: "Dekouvri kijan inovasyon teknolojik yo ap chanje fason transfè entènasyonal yo fèt, pou fè yo pi rapid, pi an sekirite epi pi bon mache.",
+                descPt: "Descubra como as inovações tecnológicas estão remodelando as remessas internacionais, tornando-as mais rápidas e baratas.",
+                fullEn: "Blockchain compliance, instant clearing networks, and mobile-first platforms are driving the next generation of financial services.",
+                fullHt: "Sistèm konfòmite avanse, rezo konpansasyon an dirèk, ak platfòm mobil yo ap pote pwochen jenerasyon sèvis finansye yo.",
+                fullPt: "A conformidade de segurança, as redes de compensação instantânea e as plataformas móveis estão impulsionando os serviços financeiros."
+            },
+            {
+                id: 15,
+                date: "April 20, 2026",
+                dateHt: "20 Avril 2026",
+                datePt: "20 de Abril, 2026",
+                titleEn: "How to Keep Your Account Secure",
+                titleHt: "Kijan pou Kenbe Kont Ou An Sekirite Toutan",
+                titlePt: "Como Manter Sua Conta Segura",
+                descEn: "Simple hygiene habits for your digital finances, from updating passwords regularly to securing your personal devices.",
+                descHt: "Bonjan abitid pou sekirite finans dijital ou, depi chanje modpas ou regilyèman jis nan pwoteje aparèy ou yo.",
+                descPt: "Hábitos simples de higiene para suas finanças digitais, desde atualizar senhas regularmente até proteger seus dispositivos.",
+                fullEn: "Never log into your BerdSend account from public or unsecured Wi-Fi networks without using a trusted VPN.",
+                fullHt: "Pa janm konekte sou kont BerdSend ou sou rezo Wi-Fi piblik ki pa an sekirite san w pa itilize yon VPN ou fè konfyans.",
+                fullPt: "Nunca faça login na sua conta BerdSend em redes Wi-Fi públicas ou não seguras sem usar uma VPN confiável."
+            },
+            {
+                id: 16,
+                date: "April 15, 2026",
+                dateHt: "15 Avril 2026",
+                datePt: "15 de Abril, 2026",
+                titleEn: "Thank You for Choosing BerdSend",
+                titleHt: "Mèsi paske w Chwazi BerdSend kòm Patnè W",
+                titlePt: "Obrigado por Escolher a BerdSend",
+                descEn: "A special note of gratitude to our growing community of users who trust us with their most important remittances every day.",
+                descHt: "Yon nòt remèsiman espesyal pou tout kominote itilizatè nou yo k ap grandi chak jou epi k ap mete konfyans yo nan nou.",
+                descPt: "Uma nota especial de gratidão à nossa crescente comunidade de usuários que confiam em nós com suas remessas mais importantes.",
+                fullEn: "Your trust drives our continuous improvement. We promise to keep delivering fast, reliable, and secure transfer solutions.",
+                fullHt: "Konfyans ou ban nou fòs pou nou toujou amelyore. Nou pwomèt pou n kontinye bay solisyon transfè ki rapid, serye ak an sekirite.",
+                fullPt: "Sua confiança impulsiona nossa melhoria contínua. Prometemos continuar entregando soluções de transferência rápidas e seguras."
+            }
+        ];
+
         const translations = {
             en: {
                 title: "BerdSend - Blog & News",
-                date1: "June 15, 2026",
-                art1Title: "How to Send Money Safely to Haiti",
-                art1Desc: "Discover the best practices to secure your online transfers, protect your account details, and ensure your loved ones receive funds securely.",
-                readMore1: "Read More →",
-                date2: "June 10, 2026",
-                art2Title: "Understanding Exchange Rates for Mobile Top-Ups",
-                art2Desc: "A complete breakdown of how USD and BRL convert to HTG and DOP, helping you get the maximum value for every transaction.",
-                readMore2: "Read More →",
-                date3: "June 01, 2026",
-                art3Title: "BerdSend Expands Support to New Regions",
-                art3Desc: "We are constantly growing! Learn about our latest updates regarding new delivery partners and expanded digital wallet integration.",
-                readMore3: "Read More →",
+                readMore: "Read More →",
+                readLess: "Read Less ←",
                 menuHome: "Home",
                 menuBlog: "Blog",
                 menuPrivacy: "Privacy Policy",
@@ -110,23 +322,12 @@
                 menuAbout: "About Us",
                 menuContact: "Contact Us",
                 menuFaq: "FAQ",
-                menuTracking: "Track Transfer",
-                msgDetails: "Full article view coming soon!"
+                menuTracking: "Track Transfer"
             },
             ht: {
                 title: "BerdSend - Blog ak Nouvèl",
-                date1: "15 Jen 2026",
-                art1Title: "Kijan pou Voye Lajan an Sekirite an Ayiti",
-                art1Desc: "Dekouvri meyè pratik yo pou sekirize transfè sou Entènèt ou yo, pwoteje enfòmasyon kont ou, epi asire moun ou renmen yo resevwa lajan an san danje.",
-                readMore1: "Li Plis →",
-                date2: "10 Jen 2026",
-                art2Title: "Konprann Pousantaj Echanj pou Rechaj Telefòn",
-                art2Desc: "Yon eksplikasyon konplè sou fason USD ak BRL konvèti an HTG ak DOP, pou ede w jwenn pi bon valè sou chak tranzaksyon.",
-                readMore2: "Li Plis →",
-                date3: "01 Jen 2026",
-                art3Title: "BerdSend Elaji Sipò Li nan Nouvo Rejyon",
-                art3Desc: "Nou ap grandi chak jou! Aprann plis sou dènye mizajou nou yo konsènan nouvo patnè livrezon ak entegrasyon lajan elektwonik.",
-                readMore3: "Li Plis →",
+                readMore: "Li Plis →",
+                readLess: "Fèmen ←",
                 menuHome: "Akèy",
                 menuBlog: "Blog",
                 menuPrivacy: "Politik Konfidansyalite",
@@ -134,23 +335,12 @@
                 menuAbout: "Konsènan Nou",
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
-                menuTracking: "Suiv Transfè W",
-                msgDetails: "Detay atik la ap disponib bèlè!"
+                menuTracking: "Suiv Transfè W"
             },
             pt: {
                 title: "BerdSend - Blog e Notícias",
-                date1: "15 de Junho, 2026",
-                art1Title: "Como Enviar Dinheiro com Segurança para o Haiti",
-                art1Desc: "Descubra as melhores práticas para proteger suas transferências online e garantir que seus entes queridos recebam os fundos com segurança.",
-                readMore1: "Leia Mais →",
-                date2: "10 de Junho, 2026",
-                art2Title: "Entendendo as Taxas de Câmbio para Recargas",
-                art2Desc: "Uma análise completa de como USD e BRL se convertem em HTG e DOP, ajudando você a obter o máximo valor em cada transação.",
-                readMore2: "Leia Mais →",
-                date3: "01 de Junho, 2026",
-                art3Title: "BerdSend Expande Suporte para Novas Regiões",
-                art3Desc: "Estamos crescendo constantemente! Conheça nossas últimas atualizações sobre novos parceiros de entrega e carteiras digitais.",
-                readMore3: "Leia Mais →",
+                readMore: "Leia Mais →",
+                readLess: "Ler Menos ←",
                 menuHome: "Início",
                 menuBlog: "Blog",
                 menuPrivacy: "Política de Privacidade",
@@ -158,10 +348,45 @@
                 menuAbout: "Sobre Nós",
                 menuContact: "Contato",
                 menuFaq: "FAQ",
-                menuTracking: "Rastrear Transferência",
-                msgDetails: "Detalhes do artigo em breve!"
+                menuTracking: "Rastrear Transferência"
             }
         };
+
+        function renderArticles(lang) {
+            const container = document.getElementById('articlesContainer');
+            container.innerHTML = '';
+            const t = translations[lang];
+
+            articlesData.forEach(art => {
+                let dateText = art.date;
+                let titleText = art.titleEn;
+                let descText = art.descEn;
+                let fullText = art.fullEn;
+
+                if (lang === 'ht') {
+                    dateText = art.dateHt;
+                    titleText = art.titleHt;
+                    descText = art.descHt;
+                    fullText = art.fullHt;
+                } else if (lang === 'pt') {
+                    dateText = art.datePt;
+                    titleText = art.titlePt;
+                    descText = art.descPt;
+                    fullText = art.fullPt;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'article-card';
+                card.innerHTML = `
+                    <div class="article-date">${dateText}</div>
+                    <h2>${titleText}</h2>
+                    <p>${descText}</p>
+                    <div id="artFull-${art.id}" class="article-full-content">${fullText}</div>
+                    <a onclick="toggleArticle(${art.id})" class="read-more" id="readBtn-${art.id}">${t.readMore}</a>
+                `;
+                container.appendChild(card);
+            });
+        }
 
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
@@ -169,20 +394,7 @@
             if (!t) return;
 
             document.getElementById('pageTitle').innerText = t.title;
-            document.getElementById('date1').innerText = t.date1;
-            document.getElementById('art1Title').innerText = t.art1Title;
-            document.getElementById('art1Desc').innerText = t.art1Desc;
-            document.getElementById('readMore1').innerText = t.readMore1;
-
-            document.getElementById('date2').innerText = t.date2;
-            document.getElementById('art2Title').innerText = t.art2Title;
-            document.getElementById('art2Desc').innerText = t.art2Desc;
-            document.getElementById('readMore2').innerText = t.readMore2;
-
-            document.getElementById('date3').innerText = t.date3;
-            document.getElementById('art3Title').innerText = t.art3Title;
-            document.getElementById('art3Desc').innerText = t.art3Desc;
-            document.getElementById('readMore3').innerText = t.readMore3;
+            renderArticles(lang);
 
             document.getElementById('menuHome').innerText = t.menuHome;
             document.getElementById('menuBlog').innerText = t.menuBlog;
@@ -194,10 +406,19 @@
             document.getElementById('menuTracking').innerText = t.menuTracking;
         }
 
-        function alertArticle(id) {
+        function toggleArticle(id) {
             var lang = localStorage.getItem('berdSendLang') || 'en';
             var t = translations[lang];
-            alert(t.msgDetails);
+            var fullDiv = document.getElementById('artFull-' + id);
+            var btn = document.getElementById('readBtn-' + id);
+
+            if (fullDiv.style.display === "block") {
+                fullDiv.style.display = "none";
+                btn.innerText = t.readMore;
+            } else {
+                fullDiv.style.display = "block";
+                btn.innerText = t.readLess;
+            }
         }
 
         function toggleMenu() {
