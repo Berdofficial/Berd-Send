@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
+    <title id="pageTitle">BerdSend - Transfè Lajan an Sekirite</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
+        
         .header-right { display: flex; align-items: center; gap: 10px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .menu-container { position: relative; }
@@ -17,22 +19,58 @@
         .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
         .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f1f1f1; }
-        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
-        .tabs { display: flex; background: #f0f2f5; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #555; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
-        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.85rem; color: #444; margin-bottom: 6px; font-weight: bold; }
-        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 12px; }
-        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
-        .input-box input, .input-box select { background: transparent; border: none; color: #111; font-size: 1rem; width: 100%; outline: none; }
-        .conversion-rate { background: #eaf3ec; border: 1px solid #d4ede5; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #2e7d32; margin-bottom: 15px; }
-        .summary-box { background: #f9fafb; border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #666; }
-        .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
-        .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
-        .btn-submit:hover { background: #0052a3; }
-        footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
+        
+        .container { width: 100%; max-width: 800px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: center; }
+        h1 { font-size: 2.2rem; margin-bottom: 15px; color: #111; }
+        p { font-size: 1.1rem; color: #555; margin-bottom: 25px; line-height: 1.5; }
+        
+        .btn-primary { display: inline-block; background-color: #0066cc; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; }
+        .btn-primary:hover { background-color: #0052a3; }
+
+        /* Estil pou Bannè Cookie */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #111;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            text-align: left;
+        }
+        .cookie-banner p {
+            margin: 0;
+            max-width: 600px;
+            line-height: 1.4;
+            color: #fff;
+        }
+        .cookie-banner a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+        .cookie-btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .cookie-btn:hover {
+            background-color: #0052a3;
+        }
+
+        footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -63,89 +101,31 @@
         </div>
     </header>
 
-    <div class="card" id="mainCard">
-        <div class="tabs">
-            <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
-            <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
-        </div>
+    <div class="container">
+        <h1 id="mainTitle">Voye Lajan san Pwoblèm ak BerdSend</h1>
+        <p id="mainDesc">Solisyon ki pi rapid, pi an sekirite, epi pi fasil pou transfere lajan bay moun ou renmen yo san frè kache.</p>
+        <a href="tracking.html" class="btn-primary" id="btnAction">Suiv yon Transfè</a>
+    </div>
 
-        <div class="form-group">
-            <label id="lblSender">Country you are sending from:</label>
-            <div class="input-box">
-                <select id="senderCountry">
-                    <option value="USD">🇺🇸 United States (USD - $)</option>
-                    <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label id="lblReceiver">Recipient country:</label>
-            <div class="input-box">
-                <select id="receiverCountry">
-                    <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
-                    <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
-            <div class="input-box">
-                <select id="deliveryMethod"></select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label id="lblAmount">Amount to send:</label>
-            <div class="input-box">
-                <input type="number" id="sendAmount" value="100">
-            </div>
-        </div>
-
-        <div class="conversion-rate">
-            <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
-        </div>
-
-        <div class="summary-box">
-            <div class="summary-row total">
-                <span id="lblTotalToPay">Total to Pay:</span>
-                <span id="totalCost" style="color: #111;">100.00 USD</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label id="lblPhone">Recipient phone number:</label>
-            <div class="input-box">
-                <input type="tel" id="phone" placeholder="+509 ...">
-            </div>
-        </div>
-
-        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
+    <!-- Bannè Cookie -->
+    <div id="cookieBanner" class="cookie-banner" style="display: none;">
+        <p id="cookieText">Sit sa a itilize cookies pou amelyore eksperyans ou. Lè w kontinye navige sou li, ou aksepte Politik Konfidansyalite nou an.</p>
+        <button class="cookie-btn" id="cookieBtn" onclick="acceptCookies()">Aksepte</button>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. All rights reserved.
+        &copy; 2026 BerdSend. Tout dwa rezève.
     </footer>
 
     <script>
-        var currentMode = 'topup';
-
         const translations = {
             en: {
-                title: "BerdSend - Money Transfer & Mobile Top-Up",
-                tabTopup: "📱 Mobile Top-Up",
-                tabTransfer: "💸 Money Transfer",
-                lblSender: "Country you are sending from:",
-                lblReceiver: "Recipient country:",
-                lblDeliveryMethodTopup: "Select Mobile Carrier:",
-                lblDeliveryMethodTransfer: "How should they receive it:",
-                lblAmount: "Amount to send:",
-                lblRecipientGets: "Recipient gets approx:",
-                lblTotalToPay: "Total to Pay:",
-                lblPhone: "Recipient phone number:",
-                btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Money Now 🚀",
+                title: "BerdSend - Secure Money Transfer",
+                mainTitle: "Send Money Seamlessly with BerdSend",
+                mainDesc: "The fastest, most secure, and easiest solution to transfer money to your loved ones without hidden fees.",
+                btnAction: "Track a Transfer",
+                cookieText: "This site uses cookies to improve your experience. By continuing to browse, you accept our Privacy Policy.",
+                cookieBtn: "Accept",
                 menuHome: "Home",
                 menuBlog: "Blog",
                 menuPrivacy: "Privacy Policy",
@@ -153,24 +133,15 @@
                 menuAbout: "About Us",
                 menuContact: "Contact Us",
                 menuFaq: "FAQ",
-                menuTracking: "Track Transfer",
-                alertPhone: "Please enter recipient phone number!",
-                alertSuccess: "Transaction recorded successfully!"
+                menuTracking: "Track Transfer"
             },
             ht: {
-                title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
-                tabTopup: "📱 Rechaj Telefòn",
-                tabTransfer: "💸 Transfè Lajan",
-                lblSender: "Peyi w ap voye soti a:",
-                lblReceiver: "Peyi destinasyon an:",
-                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
-                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
-                lblAmount: "Montan pou voye a:",
-                lblRecipientGets: "Moun nan ap resevwa approx:",
-                lblTotalToPay: "Total pou Peye:",
-                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
-                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
-                btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
+                title: "BerdSend - Transfè Lajan an Sekirite",
+                mainTitle: "Voye Lajan san Pwoblèm ak BerdSend",
+                mainDesc: "Solisyon ki pi rapid, pi an sekirite, epi pi fasil pou transfere lajan bay moun ou renmen yo san frè kache.",
+                btnAction: "Suiv yon Transfè",
+                cookieText: "Sit sa a itilize cookies pou amelyore eksperyans ou. Lè w kontinye navige sou li, ou aksepte Politik Konfidansyalite nou an.",
+                cookieBtn: "Aksepte",
                 menuHome: "Akèy",
                 menuBlog: "Blog",
                 menuPrivacy: "Politik Konfidansyalite",
@@ -178,24 +149,15 @@
                 menuAbout: "Konsènan Nou",
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
-                menuTracking: "Suiv Transfè W",
-                alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
+                menuTracking: "Suiv Transfè W"
             },
             pt: {
-                title: "BerdSend - Transferência e Recarga de Celular",
-                tabTopup: "📱 Recarga de Celular",
-                tabTransfer: "💸 Transferência de Dinheiro",
-                lblSender: "País de origem:",
-                lblReceiver: "País de destino:",
-                lblDeliveryMethodTopup: "Selecionar Operadora:",
-                lblDeliveryMethodTransfer: "Como deseja que recebam:",
-                lblAmount: "Valor a enviar:",
-                lblRecipientGets: "O destinatário recebe aprox:",
-                lblTotalToPay: "Total a Pagar:",
-                lblPhone: "Número de telefone do destinatário:",
-                btnSubmitTopup: "Enviar Recarga Agora 🚀",
-                btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
+                title: "BerdSend - Transferência de Dinheiro Segura",
+                mainTitle: "Envie Dinheiro com Facilidade com BerdSend",
+                mainDesc: "A solução mais rápida, segura e fácil para transferir dinheiro para seus entes queridos sem taxas ocultas.",
+                btnAction: "Rastrear Transferência",
+                cookieText: "Este site usa cookies para melhorar sua experiência. Ao continuar navegando, você aceita nossa Política de Privacidade.",
+                cookieBtn: "Aceitar",
                 menuHome: "Início",
                 menuBlog: "Blog",
                 menuPrivacy: "Política de Privacidade",
@@ -203,9 +165,7 @@
                 menuAbout: "Sobre Nós",
                 menuContact: "Contato",
                 menuFaq: "FAQ",
-                menuTracking: "Rastrear Transferência",
-                alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                alertSuccess: "Transação registrada com sucesso!"
+                menuTracking: "Rastrear Transferência"
             }
         };
 
@@ -215,14 +175,12 @@
             if (!t) return;
 
             document.getElementById('pageTitle').innerText = t.title;
-            document.getElementById('tabTopup').innerText = t.tabTopup;
-            document.getElementById('tabTransfer').innerText = t.tabTransfer;
-            document.getElementById('lblSender').innerText = t.lblSender;
-            document.getElementById('lblReceiver').innerText = t.lblReceiver;
-            document.getElementById('lblAmount').innerText = t.lblAmount;
-            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
-            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
-            document.getElementById('lblPhone').innerText = t.lblPhone;
+            document.getElementById('mainTitle').innerText = t.mainTitle;
+            document.getElementById('mainDesc').innerText = t.mainDesc;
+            document.getElementById('btnAction').innerText = t.btnAction;
+            document.getElementById('cookieText').innerText = t.cookieText;
+            document.getElementById('cookieBtn').innerText = t.cookieBtn;
+
             document.getElementById('menuHome').innerText = t.menuHome;
             document.getElementById('menuBlog').innerText = t.menuBlog;
             document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
@@ -231,14 +189,6 @@
             document.getElementById('menuContact').innerText = t.menuContact;
             document.getElementById('menuFaq').innerText = t.menuFaq;
             document.getElementById('menuTracking').innerText = t.menuTracking;
-
-            if (currentMode === 'topup') {
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
-            } else {
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
-            }
         }
 
         function toggleMenu() {
@@ -246,71 +196,19 @@
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        function setMode(mode) {
-            currentMode = mode;
-            var lang = localStorage.getItem('berdSendLang') || 'en';
-            var t = translations[lang];
-
-            if (mode === 'topup') {
-                document.getElementById('tabTopup').classList.add('active');
-                document.getElementById('tabTransfer').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
-            } else {
-                document.getElementById('tabTransfer').classList.add('active');
-                document.getElementById('tabTopup').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
-            }
-            populateMethods();
-            updateUI();
-        }
-
-        function populateMethods() {
-            var receiver = document.getElementById('receiverCountry').value;
-            var deliverySelect = document.getElementById('deliveryMethod');
-            if (currentMode === 'topup') {
-                deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="claro_do">📶 Claro (Dominican Rep.)</option><option value="altice_do">📶 Altice (Dominican Rep.)</option>' :
-                    '<option value="digicel">📶 Digicel (Haiti - Direct)</option><option value="natcom">📶 Natcom (Haiti - Direct)</option>';
-            } else {
-                deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="none">🇩🇴 Santo Domingo Transfer (Coming Soon)</option>' :
-                    '<option value="moncash">📱 MonCash / Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
-            }
-        }
-
-        var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
-        var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
-
-        function updateUI() {
-            var sender = document.getElementById('senderCountry').value;
-            var receiver = document.getElementById('receiverCountry').value;
-            var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
-            var targetCurrency = (receiver === 'DOP') ? 'DOP' : 'HTG';
-            var conversionRate = ((currentMode === 'topup') ? topupRates : transferRates)[sender][targetCurrency];
-            var totalReceive = amountVal * conversionRate;
-            
-            document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
-            document.getElementById('totalCost').innerText = amountVal.toFixed(2) + " " + sender;
+        function acceptCookies() {
+            localStorage.setItem('berdSendCookieAccepted', 'true');
+            document.getElementById('cookieBanner').style.display = 'none';
         }
 
         window.onload = function() {
-            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
             changeLanguage(savedLang);
 
-            setMode('topup');
-            document.getElementById('senderCountry').onchange = updateUI;
-            document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
-            document.getElementById('deliveryMethod').onchange = updateUI;
-            document.getElementById('sendAmount').oninput = updateUI;
-            document.getElementById('btnSubmit').onclick = function() {
-                var lang = localStorage.getItem('berdSendLang') || 'en';
-                var t = translations[lang];
-                var phone = document.getElementById('phone').value.trim();
-                if (!phone) alert(t.alertPhone); else alert(t.alertSuccess);
-            };
+            if (!localStorage.getItem('berdSendCookieAccepted')) {
+                document.getElementById('cookieBanner').style.display = 'flex';
+            }
         };
     </script>
 </body>
