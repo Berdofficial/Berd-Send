@@ -21,15 +21,25 @@
         footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
     </style>
 </head>
-<body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <div class="app-icon">BS</div>
-            <div class="logo">BerdSend</div>
+    <body>
+<!-- Kòmansman Header (Logo ak Lang) -->
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #ffffff; border-bottom: 1px solid #eaeaea; font-family: sans-serif;">
+    <div class="logo">
+        <a href="index.html" style="text-decoration: none; font-size: 22px; font-weight: bold; color: #111111; display: flex; align-items: center;">
+            <img src="logo.jpg" alt="BerdSend Logo" style="height: 40px; width: auto; vertical-align: middle; margin-right: 10px;">
+            Berd<span style="color: #2563eb;">Send</span>
         </a>
-        <a href="blog.html" class="back-blog">⬅️ Retounen nan Blog la</a>
-    </header>
+    </div>
+    <div class="language-selector">
+        <select onchange="location = this.value;" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #d1d5db; background-color: #f9fafb; font-size: 14px; cursor: pointer;">
+            <option value="ht" selected>🇭🇹 Kreyòl</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="es">🇩🇴 Español</option>
+        </select>
+    </div>
+</header>
+<!-- Fen Header -->
 
     <div class="article-container">
         <div class="article-date">24 Jiyè 2026</div>
