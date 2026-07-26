@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - Privacy Policy</title>
+    <title id="pageTitle">BerdSend - Privacy Policy</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* Header ak Logo Style */
         header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
 
-        /* Container pou Paj Privacy Policy la */
         .privacy-container { width: 100%; max-width: 800px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); line-height: 1.6; }
         h1 { color: #111; margin-bottom: 15px; }
         h2 { color: #0066cc; margin-top: 25px; margin-bottom: 10px; font-size: 1.3rem; }
@@ -35,49 +35,187 @@
         <a href="index.html" class="logo-container">
             <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
         </a>
-        <a href="index.html" class="back-home-btn">← Home</a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Home</a>
+        </div>
     </header>
 
     <div class="privacy-container">
-        <h1>Privacy Policy</h1>
-        <p><strong>Effective date:</strong> July 22, 2026</p>
-        <p><strong>Business Name:</strong> BerdSend</p>
-        <p><strong>Location:</strong> Columbus, Ohio, United States</p>
+        <h1 id="txtTitle">Privacy Policy</h1>
+        <p><strong id="lblEff">Effective date:</strong> <span id="valEff">July 22, 2026</span></p>
+        <p><strong id="lblBiz">Business Name:</strong> BerdSend</p>
+        <p><strong id="lblLoc">Location:</strong> Columbus, Ohio, United States</p>
 
-        <h2>1. Information We Collect</h2>
-        <p>We may collect personal information that you voluntarily provide to us when you use our website, register, or contact us. This may include:</p>
+        <h2 id="s1Title">1. Information We Collect</h2>
+        <p id="s1Body">We may collect personal information that you voluntarily provide to us when you use our website, register, or contact us. This may include:</p>
         <ul>
-            <li>Full name</li>
-            <li>Email address and contact information</li>
-            <li>Billing or payout details necessary for processing transactions</li>
+            <li id="s1i1">Full name</li>
+            <li id="s1i2">Email address and contact information</li>
+            <li id="s1i3">Billing or payout details necessary for processing transactions</li>
         </ul>
 
-        <h2>2. How We Use Your Information</h2>
-        <p>We use the information we collect to:</p>
+        <h2 id="s2Title">2. How We Use Your Information</h2>
+        <p id="s2Body">We use the information we collect to:</p>
         <ul>
-            <li>Provide, operate, and maintain our digital services and platform features.</li>
-            <li>Process and manage transactions, payouts, and user requests.</li>
-            <li>Communicate with you, including customer support and updates.</li>
-            <li>Comply with legal obligations and enforce our terms of service.</li>
+            <li id="s2i1">Provide, operate, and maintain our digital services and platform features.</li>
+            <li id="s2i2">Process and manage transactions, payouts, and user requests.</li>
+            <li id="s2i3">Communicate with you, including customer support and updates.</li>
+            <li id="s2i4">Comply with legal obligations and enforce our terms of service.</li>
         </ul>
 
-        <h2>3. Information Sharing and Disclosure</h2>
-        <p>We do not sell, trade, or rent your personal information to third parties. We may share data only with trusted partners, service providers (such as payment processors), or regulatory authorities strictly as required to operate our services or comply with the law.</p>
+        <h2 id="s3Title">3. Information Sharing and Disclosure</h2>
+        <p id="s3Body">We do not sell, trade, or rent your personal information to third parties. We may share data only with trusted partners, service providers (such as payment processors), or regulatory authorities strictly as required to operate our services or comply with the law.</p>
 
-        <h2>4. Data Security</h2>
-        <p>We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+        <h2 id="s4Title">4. Data Security</h2>
+        <p id="s4Body">We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
 
-        <h2>5. Contact Us</h2>
-        <p>If you have any questions or concerns about this Privacy Policy, you can reach us at:</p>
+        <h2 id="s5Title">5. Contact Us</h2>
+        <p id="s5Body">If you have any questions or concerns about this Privacy Policy, you can reach us at:</p>
         <ul>
-            <li><strong>Email:</strong> topberd@gmail.com</li>
-            <li><strong>Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
+            <li><strong id="lblEmail">Email:</strong> topberd@gmail.com</li>
+            <li><strong id="lblAddress">Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
         </ul>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. All rights reserved.
+        &copy; 2026 BerdSend. <span id="txtRights">All rights reserved.</span>
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "BerdSend - Privacy Policy",
+                backHomeBtn: "← Home",
+                txtTitle: "Privacy Policy",
+                lblEff: "Effective date:",
+                valEff: "July 22, 2026",
+                lblBiz: "Business Name:",
+                lblLoc: "Location:",
+                s1Title: "1. Information We Collect",
+                s1Body: "We may collect personal information that you voluntarily provide to us when you use our website, register, or contact us. This may include:",
+                s1i1: "Full name",
+                s1i2: "Email address and contact information",
+                s1i3: "Billing or payout details necessary for processing transactions",
+                s2Title: "2. How We Use Your Information",
+                s2Body: "We use the information we collect to:",
+                s2i1: "Provide, operate, and maintain our digital services and platform features.",
+                s2i2: "Process and manage transactions, payouts, and user requests.",
+                s2i3: "Communicate with you, including customer support and updates.",
+                s2i4: "Comply with legal obligations and enforce our terms of service.",
+                s3Title: "3. Information Sharing and Disclosure",
+                s3Body: "We do not sell, trade, or rent your personal information to third parties. We may share data only with trusted partners, service providers (such as payment processors), or regulatory authorities strictly as required to operate our services or comply with the law.",
+                s4Title: "4. Data Security",
+                s4Body: "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.",
+                s5Title: "5. Contact Us",
+                s5Body: "If you have any questions or concerns about this Privacy Policy, you can reach us at:",
+                lblEmail: "Email:",
+                lblAddress: "Address:",
+                txtRights: "All rights reserved."
+            },
+            ht: {
+                pageTitle: "BerdSend - Politik Konfidansyalite",
+                backHomeBtn: "← Akèy",
+                txtTitle: "Politik Konfidansyalite",
+                lblEff: "Dat li antre nan aplikasyon:",
+                valEff: "22 Jiyè 2026",
+                lblBiz: "Non Antrepriz la:",
+                lblLoc: "Emplasman:",
+                s1Title: "1. Enfòmasyon Nou Kolekte",
+                s1Body: "Nou ka kolekte enfòmasyon pèsonèl ou bay volontèman lè w ap itilize sit entènèt nou an, lè w ap enskri, oswa lè w kontakte nou. Sa ka gen ladan l:",
+                s1i1: "Non konplè",
+                s1i2: "Adrès imèl ak enfòmasyon pou kontakte w",
+                s1i3: "Detay sou faktirasyon oswa peman ki nesesè pou trete tranzaksyon yo",
+                s2Title: "2. Kijan Nou Itilize Enfòmasyon W yo",
+                s2Body: "Nou itilize enfòmasyon nou kolekte yo pou:",
+                s2i1: "Founi, opere, ak kenbe sèvis dijital nou yo ak fonksyon platfòm lan.",
+                s2i2: "Trete epi jere tranzaksyon yo, peman yo, ak demann itilizatè yo.",
+                s2i3: "Kominike avèk ou, gen ladan sipò kliyan ak mizajou yo.",
+                s2i4: "Konfòme ak obligasyon legal yo epi fè respekte kondisyon sèvis nou yo.",
+                s3Title: "3. Pataje ak Divilge Enfòmasyon",
+                s3Body: "Nou pa vann, pa fè echanj, epi nou pa lwe enfòmasyon pèsonèl ou bay okenn lòt moun. Nou ka pataje done yo sèlman ak patnè nou fè konfyans yo, founisè sèvis yo (tankou processeur peman yo), oswa otorite reglemantasyon yo sèlman jan sa nesesè pou opere sèvis nou yo oswa konfòme ak lalwa.",
+                s4Title: "4. Sekirite Done yo",
+                s4Body: "Nou mete an plas mezi sekirite teknik ak òganizasyonèl ki apwopriye pou pwoteje enfòmasyon pèsonèl ou yo anba aksè san otorizasyon, modifikasyon, divilge, oswa destruksyon.",
+                s5Title: "5. Kontakte Nou",
+                s5Body: "Si ou gen nenpòt kesyon oswa enkyetid konsènan Politik Konfidansyalite sa a, ou ka jwenn nou nan:",
+                lblEmail: "Imèl:",
+                lblAddress: "Adrès:",
+                txtRights: "Tout dwa rezève."
+            },
+            pt: {
+                pageTitle: "BerdSend - Política de Privacidade",
+                backHomeBtn: "← Início",
+                txtTitle: "Política de Privacidade",
+                lblEff: "Data de vigência:",
+                valEff: "22 de Julho de 2026",
+                lblBiz: "Nome da Empresa:",
+                lblLoc: "Localização:",
+                s1Title: "1. Informações que Coletamos",
+                s1Body: "Podemos coletar informações pessoais que você fornece voluntariamente ao usar nosso site, registrar-se ou entrar em contato. Isso pode incluir:",
+                s1i1: "Nome completo",
+                s1i2: "Endereço de e-mail e informações de contato",
+                s1i3: "Detalhes de faturamento necessários para processar transações",
+                s2Title: "2. Como Usamos suas Informações",
+                s2Body: "Usamos as informações coletadas para:",
+                s2i1: "Fornecer, operar e manter nossos serviços digitais e recursos da plataforma.",
+                s2i2: "Processar e gerenciar transações, pagamentos e solicitações de usuários.",
+                s2i3: "Comunicar-se com você, incluindo suporte ao cliente e atualizações.",
+                s2i4: "Cumprir obrigações legais e aplicar nossos termos de serviço.",
+                s3Title: "3. Compartilhamento e Divulgação de Informações",
+                s3Body: "Não vendemos nem alugamos suas informações pessoais a terceiros. Podemos compartilhar dados apenas com parceiros confiáveis, provedores de serviços ou autoridades regulatórias estritamente conforme necessário para operar nossos serviços.",
+                s4Title: "4. Segurança dos Dados",
+                s4Body: "Implementamos medidas de segurança técnicas e organizacionais adequadas para proteger suas informações pessoais contra acesso não autorizado, alteração ou destruição.",
+                s5Title: "5. Entre em Contato",
+                s5Body: "Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato:",
+                lblEmail: "E-mail:",
+                lblAddress: "Endereço:",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('lblEff').innerText = t.lblEff;
+            document.getElementById('valEff').innerText = t.valEff;
+            document.getElementById('lblBiz').innerText = t.lblBiz;
+            document.getElementById('lblLoc').innerText = t.lblLoc;
+            document.getElementById('s1Title').innerText = t.s1Title;
+            document.getElementById('s1Body').innerText = t.s1Body;
+            document.getElementById('s1i1').innerText = t.s1i1;
+            document.getElementById('s1i2').innerText = t.s1i2;
+            document.getElementById('s1i3').innerText = t.s1i3;
+            document.getElementById('s2Title').innerText = t.s2Title;
+            document.getElementById('s2Body').innerText = t.s2Body;
+            document.getElementById('s2i1').innerText = t.s2i1;
+            document.getElementById('s2i2').innerText = t.s2i2;
+            document.getElementById('s2i3').innerText = t.s2i3;
+            document.getElementById('s2i4').innerText = t.s2i4;
+            document.getElementById('s3Title').innerText = t.s3Title;
+            document.getElementById('s3Body').innerText = t.s3Body;
+            document.getElementById('s4Title').innerText = t.s4Title;
+            document.getElementById('s4Body').innerText = t.s4Body;
+            document.getElementById('s5Title').innerText = t.s5Title;
+            document.getElementById('s5Body').innerText = t.s5Body;
+            document.getElementById('lblEmail').innerText = t.lblEmail;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
 </body>
 </html>
