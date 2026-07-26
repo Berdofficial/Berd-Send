@@ -10,7 +10,7 @@
         
         header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
+        .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; gap: 10px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
@@ -34,6 +34,10 @@
         .read-more:hover { text-decoration: underline; }
 
         footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
+
+        @media (min-width: 768px) {
+            .app-logo-img { width: 130px !important; height: auto !important; max-width: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -44,21 +48,21 @@
         </a>
         <div class="header-right">
             <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
-                <option value="en">🇺🇸 English</option>
                 <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="en">🇺🇸 English</option>
                 <option value="pt">🇧🇷 Português</option>
             </select>
             <div class="menu-container">
                 <button class="menu-btn" onclick="toggleMenu()">☰</button>
                 <div id="myDropdown" class="dropdown-menu">
-                    <a href="index.html" id="menuHome">Home</a>
+                    <a href="index.html" id="menuHome">Akèy</a>
                     <a href="blog.html" id="menuBlog">Blog</a>
-                    <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
-                    <a href="terms.html" id="menuTerms">Terms of Service</a>
-                    <a href="about.html" id="menuAbout">About Us</a>
-                    <a href="contact.html" id="menuContact">Contact Us</a>
-                    <a href="faq.html" id="menuFaq">FAQ</a>
-                    <a href="tracking.html" id="menuTracking">Track Transfer</a>
+                    <a href="privacy.html" id="menuPrivacy">Politik Konfidansyalite</a>
+                    <a href="terms.html" id="menuTerms">Kondisyon Sèvis</a>
+                    <a href="about.html" id="menuAbout">Konsènan Nou</a>
+                    <a href="contact.html" id="menuContact">Kontakte Nou</a>
+                    <a href="faq.html" id="menuFaq">FAQ (Kesyon yo Poze)</a>
+                    <a href="tracking.html" id="menuTracking">Suiv Transfè W</a>
                 </div>
             </div>
         </div>
@@ -70,153 +74,43 @@
 
         <!-- Atik 16 -->
         <div class="article-card">
-            <div class="article-date">18 Jen 2026</div>
-            <a href="atik-16.html" class="article-title">Kijan pou w kenbe yon bon rapò ak fanmi w lè w ap viv aletranje</a>
-            <p class="article-snippet">Ale viv nan yon lòt peyi pote anpil nouvo opòtinite, men li vini ak yon gwo defi: distans ak moun nou renmen yo ki rete an d Ayiti...</p>
+            <div class="article-date" id="art16Date">18 Jen 2026</div>
+            <a href="atik-16.html" class="article-title" id="art16Title">Kijan pou w kenbe yon bon rapò ak fanmi w lè w ap viv aletranje</a>
+            <p class="article-snippet" id="art16Snippet">Ale viv nan yon lòt peyi pote anpil nouvo opòtinite, men li vini ak yon gwo defi: distans ak moun nou renmen yo...</p>
             <a href="atik-16.html" class="read-more" data-read>Li tout atik la →</a>
         </div>
 
         <!-- Atik 15 -->
         <div class="article-card">
-            <div class="article-date">20 Jen 2026</div>
-            <a href="atik-15.html" class="article-title">Kijan pou w prepare w pou voye lajan pandan periy fèt yo</a>
-            <p class="article-snippet">Periy fèt yo se moman espesyal kote tout moun anvi pataje lanmou ak fanmi yo, men se tou moman kote rezo yo pi chaje...</p>
+            <div class="article-date" id="art15Date">20 Jen 2026</div>
+            <a href="atik-15.html" class="article-title" id="art15Title">Kijan pou w prepare w pou voye lajan pandan periy fèt yo</a>
+            <p class="article-snippet" id="art15Snippet">Periy fèt yo se moman espesyal kote tout moun anvi pataje lanmou ak fanmi yo, men se tou moman kote rezo yo pi chaje...</p>
             <a href="atik-15.html" class="read-more" data-read>Li tout atik la →</a>
         </div>
 
         <!-- Atik 14 -->
         <div class="article-card">
-            <div class="article-date">22 Jen 2026</div>
-            <a href="atik-14.html" class="article-title">Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo</a>
-            <p class="article-snippet">Lè w ap voye lajan bay moun ou renmen yo, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi. Aprann poukisa konfyans se fondasyon an...</p>
+            <div class="article-date" id="art14Date">22 Jen 2026</div>
+            <a href="atik-14.html" class="article-title" id="art14Title">Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo</a>
+            <p class="article-snippet" id="art14Snippet">Lè w ap voye lajan bay moun ou renmen yo, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi...</p>
             <a href="atik-14.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 13 -->
-        <div class="article-card">
-            <div class="article-date">25 Jen 2026</div>
-            <a href="atik-13.html" class="article-title">Kijan pou w ekonomize lajan chak mwa san w pa santi l</a>
-            <p class="article-snippet">Dekouvri ti chanjman estratejik nan abitid chak jou ou ki ka ede w konstwi yon bèl wonn lajan sou kote san w pa soufri...</p>
-            <a href="atik-13.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 12 -->
-        <div class="article-card">
-            <div class="article-date">28 Jen 2026</div>
-            <a href="atik-12.html" class="article-title">Avni bous elektwonik yo nan peyi d Ayiti</a>
-            <p class="article-snippet">Bous elektwonik yo ap vin tounen yon pisans ekonomik ak yon solisyon endispansab pou jere lajan san depann sèlman sou labank tradisyonèl yo...</p>
-            <a href="atik-12.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 11 -->
-        <div class="article-card">
-            <div class="article-date">1 Jiyè 2026</div>
-            <a href="atik-11.html" class="article-title">Enpòtans edikasyon finansye nan lavi chak jou</a>
-            <p class="article-snippet">Edikasyon finansye se kle ki fè diferans ant yon moun ki toujou gen pwoblèm lajan ak yon moun ki konprann kijan pou fè kòb li grandi...</p>
-            <a href="atik-11.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 10 -->
-        <div class="article-card">
-            <div class="article-date">3 Jiyè 2026</div>
-            <a href="atik-10.html" class="article-title">Wòl teknoloji nan transfè lajan entènasyonal yo</a>
-            <p class="article-snippet">Avansman nan domèn FinTech la ap revolusyone transfè lajan yo, fè l vin pi rapid, pi bon mache, epi aksesib pou tout moun...</p>
-            <a href="atik-10.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 9 -->
-        <div class="article-card">
-            <div class="article-date">5 Jiyè 2026</div>
-            <a href="atik-9.html" class="article-title">Kijan pou n wè avantaj ki genyen nan planifikasyon finansye</a>
-            <p class="article-snippet">Planifikasyon finansye se yon zouti esansyèl ki ede w sispann depanse san kontwòl epi prepare pou lavni fanmi w...</p>
-            <a href="atik-9.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 8 -->
-        <div class="article-card">
-            <div class="article-date">8 Jiyè 2026</div>
-            <a href="atik-8.html" class="article-title">Ki jan teknoloji mobil ap chanje fason nou viv</a>
-            <p class="article-snippet">Telefòn pòtab la pa la sèlman pou apèl ankò; li vin tounen yon òdinatè santral ki dirije prèske tout aspè nan lavi chak jou nou...</p>
-            <a href="atik-8.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 7 -->
-        <div class="article-card">
-            <div class="article-date">10 Jiyè 2026</div>
-            <a href="atik-7.html" class="article-title">Enpòtans sèvis kliyan nan biznis dijital yo</a>
-            <p class="article-snippet">Yon sèvis kliyan ki rapid ak efikas se poto mitan ki kenbe konfyans moun yo epi ki asire yo santi yo akonpaye nan chak etap...</p>
-            <a href="atik-7.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 6 -->
-        <div class="article-card">
-            <div class="article-date">12 Jiyè 2026</div>
-            <a href="atik-6.html" class="article-title">Enpòtans sekirite nan tranzaksyon dijital yo</a>
-            <p class="article-snippet">Nan epòk dijital sa a, sèvis sekirite tankou modpas solid ak chifreman done yo se baz pou pwoteje tèt ou kont nenpòt risk...</p>
-            <a href="atik-6.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 5 -->
-        <div class="article-card">
-            <div class="article-date">15 Jiyè 2026</div>
-            <a href="atik-5.html" class="article-title">Kijan pou w voye lajan an sekirite epi san pèdi tan</a>
-            <p class="article-snippet">Dekouvri etap esansyèl yo ak bon pratik ki pèmèt ou transfere lajan bay moun pa w yo rapidman epi san frè kache...</p>
-            <a href="atik-5.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 4 -->
-        <div class="article-card">
-            <div class="article-date">18 Jiyè 2026</div>
-            <a href="atik-4.html" class="article-title">Teknoloji ak finans: Kijan yo ap transfòme lavi nou</a>
-            <p class="article-snippet">Fason nou jere lajan nou jodi a chanje nèt gras ak aplikasyon mobil ak solisyon dijital ki rann tranzaksyon yo pi likid...</p>
-            <a href="atik-4.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 3 -->
-        <div class="article-card">
-            <div class="article-date">20 Jiyè 2026</div>
-            <a href="atik-3.html" class="article-title">Avantaj ki genyen lè w ap itilize BerdSend pou tranzaksyon w yo</a>
-            <p class="article-snippet">Poukisa anpil moun ap chwazi BerdSend? Aprann plis sou avantaj vitès, sekirite ak fyabilite platfòm lan ap offre...</p>
-            <a href="atik-3.html" class="read-more" data-read>Li tout atik la →</a>
-        </div>
-
-        <!-- Atik 2 -->
-        <div class="article-card">
-            <div class="article-date">22 Jiyè 2026</div>
-            <a href="atik-2.html" class="article-title">Gid konplè pou konprann transfè lajan sou entènèt</a>
-            <p class="article-snippet">Tout sa ou bezwen konnen anvan ou fè premye transfè lajan ou sou entènèt pou asire w ke tout bagay fèt kòrèkteman...</p>
-            <a href="atik-2.html" class="read-more" data-read>Li tout atik la →</a>
         </div>
 
         <!-- Atik 1 -->
         <div class="article-card">
-            <div class="article-date">24 Jiyè 2026</div>
-            <a href="atik-1.html" class="article-title">Kijan pou w voye lajan bay moun pa w yo san pwoblèm</a>
-            <p class="article-snippet">Voye lajan bay fanmi w vin pi fasil pase anvan. Dekouvri konsèy ak metòd ki pi efikas pou fè l san w pa pèdi tan...</p>
+            <div class="article-date" id="art1Date">24 Jiyè 2026</div>
+            <a href="atik-1.html" class="article-title" id="art1Title">Kijan pou w voye lajan bay moun pa w yo san pwoblèm</a>
+            <p class="article-snippet" id="art1Snippet">Voye lajan bay fanmi w vin pi fasil pase anvan. Dekouvri konsèy ak metòd ki pi efikas pou fè l san w pa pèdi tan...</p>
             <a href="atik-1.html" class="read-more" data-read>Li tout atik la →</a>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. Tout dwa rezève.
+        &copy; 2026 BerdSend. <span id="txtRights">Tout dwa rezève.</span>
     </footer>
 
     <script>
         const translations = {
-            en: {
-                title: "Blog - BerdSend",
-                mainTitle: "BerdSend Blog",
-                mainSubtitle: "All the latest articles on technology, finance, security, and practical tips for everyday life.",
-                readMore: "Read full article →",
-                menuHome: "Home",
-                menuBlog: "Blog",
-                menuPrivacy: "Privacy Policy",
-                menuTerms: "Terms of Service",
-                menuAbout: "About Us",
-                menuContact: "Contact Us",
-                menuFaq: "FAQ",
-                menuTracking: "Track Transfer"
-            },
             ht: {
                 title: "Blog - BerdSend",
                 mainTitle: "Blog BerdSend",
@@ -229,7 +123,39 @@
                 menuAbout: "Konsènan Nou",
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
-                menuTracking: "Suiv Transfè W"
+                menuTracking: "Suiv Transfè W",
+                txtRights: "Tout dwa rezève.",
+                art16Title: "Kijan pou w kenbe yon bon rapò ak fanmi w lè w ap viv aletranje",
+                art16Snippet: "Ale viv nan yon lòt peyi pote anpil nouvo opòtinite, men li vini ak yon gwo defi: distans ak moun nou renmen yo...",
+                art15Title: "Kijan pou w prepare w pou voye lajan pandan periy fèt yo",
+                art15Snippet: "Periy fèt yo se moman espesyal kote tout moun anvi pataje lanmou ak fanmi yo, men se tou moman kote rezo yo pi chaje...",
+                art14Title: "Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo",
+                art14Snippet: "Lè w ap voye lajan bay moun ou renmen yo, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi...",
+                art1Title: "Kijan pou w voye lajan bay moun pa w yo san pwoblèm",
+                art1Snippet: "Voye lajan bay fanmi w vin pi fasil pase anvan. Dekouvri konsèy ak metòd ki pi efikas pou fè l san w pa pèdi tan..."
+            },
+            en: {
+                title: "Blog - BerdSend",
+                mainTitle: "BerdSend Blog",
+                mainSubtitle: "All the latest articles on technology, finance, security, and practical tips for everyday life.",
+                readMore: "Read full article →",
+                menuHome: "Home",
+                menuBlog: "Blog",
+                menuPrivacy: "Privacy Policy",
+                menuTerms: "Terms of Service",
+                menuAbout: "About Us",
+                menuContact: "Contact Us",
+                menuFaq: "FAQ",
+                menuTracking: "Track Transfer",
+                txtRights: "All rights reserved.",
+                art16Title: "How to maintain a strong connection with your family while living abroad",
+                art16Snippet: "Moving abroad brings many opportunities, but comes with a challenge: distance from loved ones...",
+                art15Title: "How to prepare for sending money during holiday seasons",
+                art15Snippet: "Holidays are special moments to share love with family, but networks get busy. Here is how to plan ahead...",
+                art14Title: "Why trust matters in money transfer services",
+                art14Snippet: "When sending money to loved ones, you trust a company with your hard-earned funds. Learn why trust is key...",
+                art1Title: "How to send money smoothly to your family",
+                art1Snippet: "Sending money home is easier than ever. Discover effective tips to complete transfers without delay..."
             },
             pt: {
                 title: "Blog - BerdSend",
@@ -243,7 +169,16 @@
                 menuAbout: "Sobre Nós",
                 menuContact: "Contato",
                 menuFaq: "FAQ",
-                menuTracking: "Rastrear Transferência"
+                menuTracking: "Rastrear Transferência",
+                txtRights: "Todos os direitos reservados.",
+                art16Title: "Como manter uma boa conexão com sua família morando no exterior",
+                art16Snippet: "Morar no exterior traz oportunidades, mas também o desafio da distância da família...",
+                art15Title: "Como se preparar para enviar dinheiro durante as festas",
+                art15Snippet: "As festas são momentos especiais para compartilhar amor, mas as redes ficam congestionadas...",
+                art14Title: "Por que a confiança é essencial em serviços de transferência",
+                art14Snippet: "Ao enviar dinheiro para quem você ama, você confia o fruto do seu trabalho. Entenda a importância...",
+                art1Title: "Como enviar dinheiro para sua família sem complicações",
+                art1Snippet: "Enviar dinheiro para a família está mais fácil do que nunca. Descubra as melhores dicas práticas..."
             }
         };
 
@@ -268,6 +203,24 @@
             document.getElementById('menuContact').innerText = t.menuContact;
             document.getElementById('menuFaq').innerText = t.menuFaq;
             document.getElementById('menuTracking').innerText = t.menuTracking;
+            document.getElementById('txtRights').innerText = t.txtRights;
+
+            if (document.getElementById('art16Title')) {
+                document.getElementById('art16Title').innerText = t.art16Title;
+                document.getElementById('art16Snippet').innerText = t.art16Snippet;
+            }
+            if (document.getElementById('art15Title')) {
+                document.getElementById('art15Title').innerText = t.art15Title;
+                document.getElementById('art15Snippet').innerText = t.art15Snippet;
+            }
+            if (document.getElementById('art14Title')) {
+                document.getElementById('art14Title').innerText = t.art14Title;
+                document.getElementById('art14Snippet').innerText = t.art14Snippet;
+            }
+            if (document.getElementById('art1Title')) {
+                document.getElementById('art1Title').innerText = t.art1Title;
+                document.getElementById('art1Snippet').innerText = t.art1Snippet;
+            }
         }
 
         function toggleMenu() {
