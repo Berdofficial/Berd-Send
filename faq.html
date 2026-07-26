@@ -8,9 +8,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; text-decoration: none; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .container { max-width: 600px; width: 100%; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         h1 { color: #0066cc; margin-top: 0; font-size: 1.5rem; margin-bottom: 20px; }
@@ -19,15 +18,18 @@
         p { font-size: 0.9rem; color: #555; margin: 0; }
         a.back-link { color: #0066cc; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold; font-size: 0.9rem; }
         a.back-link:hover { text-decoration: underline; }
+
+        @media (min-width: 768px) {
+            .app-logo-img { width: 130px !important; height: auto !important; max-width: none !important; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <div class="app-icon">BS</div>
-            <a href="index.html" class="logo">BerdSend</a>
-        </div>
+        <a href="index.html" class="logo-container">
+            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+        </a>
         <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
             <option value="en">🇺🇸 English</option>
             <option value="ht">🇭🇹 Kreyòl</option>
