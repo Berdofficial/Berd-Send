@@ -220,6 +220,21 @@
             </div>
         </div>
 
+        <!-- Enfòmasyon Moun k ap Voye a (Enskripsyon Kliyan) -->
+        <div class="form-group">
+            <label id="lblFullName">Your Full Name:</label>
+            <div class="input-box">
+                <input type="text" id="fullName" placeholder="e.g. Jean Fleurymond">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblEmail">Your Email Address:</label>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="example@email.com">
+            </div>
+        </div>
+
         <div class="form-group">
             <label id="lblPhone">Recipient phone number:</label>
             <div class="input-box">
@@ -295,6 +310,8 @@
                 lblAmount: "Amount to send:",
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
+                lblFullName: "Your Full Name:",
+                lblEmail: "Your Email Address:",
                 lblPhone: "Recipient phone number:",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
@@ -319,7 +336,7 @@
                 menuContact: "Contact Us",
                 menuFaq: "FAQ",
                 menuTracking: "Track Transfer",
-                alertPhone: "Please enter recipient phone number!",
+                alertFillAll: "Please fill in your Name, Email, and Recipient Phone Number!",
                 alertSuccess: "Transaction recorded successfully!"
             },
             ht: {
@@ -333,6 +350,8 @@
                 lblAmount: "Montan pou voye a:",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
+                lblFullName: "Non konplè w:",
+                lblEmail: "Adrès imèl ou:",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
@@ -357,7 +376,7 @@
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
                 menuTracking: "Suiv Transfè W",
-                alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
+                alertFillAll: "Tanpri antre Non w, Imèl ou ak Nimewo telefòn moun nan!",
                 alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
             },
             pt: {
@@ -371,6 +390,8 @@
                 lblAmount: "Valor a enviar:",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
+                lblFullName: "Seu Nome Completo:",
+                lblEmail: "Seu Endereço de E-mail:",
                 lblPhone: "Número de telefone do destinatário:",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
@@ -395,7 +416,7 @@
                 menuContact: "Contato",
                 menuFaq: "FAQ",
                 menuTracking: "Rastrear Transferência",
-                alertPhone: "Por favor, insira o número de telefone do destinatário!",
+                alertFillAll: "Por favor, preencha seu Nome, E-mail e Telefone do destinatário!",
                 alertSuccess: "Transação registrada com sucesso!"
             }
         };
@@ -413,6 +434,8 @@
             document.getElementById('lblAmount').innerText = t.lblAmount;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblFullName').innerText = t.lblFullName;
+            document.getElementById('lblEmail').innerText = t.lblEmail;
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('cookieText').innerText = t.cookieText;
             document.getElementById('btnAcceptCookies').innerText = t.btnAcceptCookies;
@@ -535,11 +558,38 @@
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
             document.getElementById('deliveryMethod').onchange = updateUI;
             document.getElementById('sendAmount').oninput = updateUI;
+            
             document.getElementById('btnSubmit').onclick = function() {
                 var lang = localStorage.getItem('berdSendLang') || 'en';
                 var t = translations[lang];
+                
+                var fullName = document.getElementById('fullName').value.trim();
+                var email = document.getElementById('email').value.trim();
                 var phone = document.getElementById('phone').value.trim();
-                if (!phone) alert(t.alertPhone); else alert(t.alertSuccess);
+
+                if (!fullName || !email || !phone) {
+                    alert(t.alertFillAll);
+                    return;
+                }
+
+                // Konsève enfòmasyon kliyan an ak tranzaksyon an
+                var userData = {
+                    senderName: fullName,
+                    senderEmail: email,
+                    recipientPhone: phone,
+                    amountSent: document.getElementById('sendAmount').value,
+                    senderCountry: document.getElementById('senderCountry').value,
+                    receiverCountry: document.getElementById('receiverCountry').value,
+                    mode: currentMode,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Anrejistre an lokal pou teste oswa voye l bay backend
+                var existingUsers = JSON.parse(localStorage.getItem('berdSendUsers') || '[]');
+                existingUsers.push(userData);
+                localStorage.setItem('berdSendUsers', JSON.stringify(existingUsers));
+
+                alert(t.alertSuccess);
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
