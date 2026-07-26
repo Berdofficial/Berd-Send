@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - Terms of Service</title>
+    <title id="pageTitle">BerdSend - Terms of Service</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* Header ak Logo Style */
         header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
 
-        /* Container pou Paj Terms of Service la */
         .terms-container { width: 100%; max-width: 800px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); line-height: 1.6; }
         h1 { color: #111; margin-bottom: 15px; }
         h2 { color: #0066cc; margin-top: 25px; margin-bottom: 10px; font-size: 1.3rem; }
@@ -35,38 +35,127 @@
         <a href="index.html" class="logo-container">
             <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
         </a>
-        <a href="index.html" class="back-home-btn">← Home</a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Home</a>
+        </div>
     </header>
 
     <div class="terms-container">
-        <h1>Terms of Service</h1>
-        <p><strong>Effective date:</strong> July 22, 2026</p>
-        <p><strong>Business Name:</strong> BerdSend</p>
-        <p><strong>Location:</strong> Columbus, Ohio, United States</p>
+        <h1 id="txtTitle">Terms of Service</h1>
+        <p><strong id="lblEff">Effective date:</strong> <span id="valEff">July 22, 2026</span></p>
 
-        <h2>1. Acceptance of Terms</h2>
-        <p>By accessing or using the BerdSend website and services, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, you are not authorized to use our platform.</p>
+        <h2 id="s1Title">1. Acceptance of Terms</h2>
+        <p id="s1Body">By accessing and using BerdSend, you agree to be bound by these Terms of Service and all applicable laws and regulations.</p>
 
-        <h2>2. Description of Services</h2>
-        <p>BerdSend provides digital solutions, platform support, and payout management tools. We reserve the right to modify, suspend, or discontinue any part of our services at any time without prior notice.</p>
+        <h2 id="s2Title">2. Services Offered</h2>
+        <p id="s2Body">BerdSend provides digital transfer management, mobile top-ups, and transaction support tools. We reserve the right to modify or discontinue any service at any time.</p>
 
-        <h2>3. User Responsibilities</h2>
-        <p>When using our services, you agree not to engage in any unlawful activity, violate any local or international regulations, or attempt to compromise the security of our platform.</p>
+        <h2 id="s3Title">3. User Responsibilities</h2>
+        <p id="s3Body">Users must provide accurate transaction information. BerdSend is not responsible for delayed or incorrect transfers caused by inaccurate details provided by the user.</p>
 
-        <h2>4. Limitation of Liability</h2>
-        <p>BerdSend shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our website or services.</p>
-
-        <h2>5. Contact Information</h2>
-        <p>If you have any questions regarding these Terms, please contact us at:</p>
+        <h2 id="s4Title">4. Contact Us</h2>
+        <p id="s4Body">If you have any questions regarding these Terms, please reach out via:</p>
         <ul>
-            <li><strong>Email:</strong> topberd@gmail.com</li>
-            <li><strong>Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
+            <li><strong id="lblEmail">Email:</strong> topberd@gmail.com</li>
+            <li><strong id="lblAddress">Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
         </ul>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. All rights reserved.
+        &copy; 2026 BerdSend. <span id="txtRights">All rights reserved.</span>
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "BerdSend - Terms of Service",
+                backHomeBtn: "← Home",
+                txtTitle: "Terms of Service",
+                lblEff: "Effective date:",
+                valEff: "July 22, 2026",
+                s1Title: "1. Acceptance of Terms",
+                s1Body: "By accessing and using BerdSend, you agree to be bound by these Terms of Service and all applicable laws and regulations.",
+                s2Title: "2. Services Offered",
+                s2Body: "BerdSend provides digital transfer management, mobile top-ups, and transaction support tools. We reserve the right to modify or discontinue any service at any time.",
+                s3Title: "3. User Responsibilities",
+                s3Body: "Users must provide accurate transaction information. BerdSend is not responsible for delayed or incorrect transfers caused by inaccurate details provided by the user.",
+                s4Title: "4. Contact Us",
+                s4Body: "If you have any questions regarding these Terms, please reach out via:",
+                lblEmail: "Email:",
+                lblAddress: "Address:",
+                txtRights: "All rights reserved."
+            },
+            ht: {
+                pageTitle: "BerdSend - Kondisyon Sèvis",
+                backHomeBtn: "← Akèy",
+                txtTitle: "Kondisyon Sèvis yo",
+                lblEff: "Dat li antre nan aplikasyon:",
+                valEff: "22 Jiyè 2026",
+                s1Title: "1. Akseptasyon Kondisyon yo",
+                s1Body: "Lè w sèvi ak BerdSend, ou aksepte pou w respekte Kondisyon Sèvis sa yo ansanm ak tout lwa ak regleman ki aplikab yo.",
+                s2Title: "2. Sèvis Nou Offri yo",
+                s2Body: "BerdSend bay sèvis jesyon transfè dijital, rechaj telefòn, ak asistans tranzaksyon. Nou rezève dwa pou modifye oswa sispann nenpòt sèvis nenpòt ki lè.",
+                s3Title: "3. Responsablite Itilizatè yo",
+                s3Body: "Itilizatè yo dwe bay enfòmasyon ki egzak sou tranzaksyon yo. BerdSend pa fekont pou transfè ki an reta oswa ki mal fèt akoz movèz enfòmasyon itilizatè a bay.",
+                s4Title: "4. Kontakte Nou",
+                s4Body: "Si ou gen nenpòt kesyon konsènan Kondisyon sa yo, tanpri kontakte nou nan:",
+                lblEmail: "Imèl:",
+                lblAddress: "Adrès:",
+                txtRights: "Tout dwa rezève."
+            },
+            pt: {
+                pageTitle: "BerdSend - Termos de Serviço",
+                backHomeBtn: "← Início",
+                txtTitle: "Termos de Serviço",
+                lblEff: "Data de vigência:",
+                valEff: "22 de Julho de 2026",
+                s1Title: "1. Aceitação dos Termos",
+                s1Body: "Ao acessar e usar o BerdSend, você concorda em cumprir estes Termos de Serviço e todas as leis e regulamentos aplicáveis.",
+                s2Title: "2. Serviços Oferecidos",
+                s2Body: "O BerdSend oferece gerenciamento de transferências digitais, recargas de celular e suporte a transações. Reservamo-nos o direito de alterar ou descontinuar serviços.",
+                s3Title: "3. Responsabilidades do Usuário",
+                s3Body: "Os usuários devem fornecer informações exatas. O BerdSend não se responsabiliza por atrasos causados por dados incorretos fornecidos pelo usuário.",
+                s4Title: "4. Entre em Contato",
+                s4Body: "Se você tiver dúvidas sobre estes Termos, entre em contato:",
+                lblEmail: "E-mail:",
+                lblAddress: "Endereço:",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('lblEff').innerText = t.lblEff;
+            document.getElementById('valEff').innerText = t.valEff;
+            document.getElementById('s1Title').innerText = t.s1Title;
+            document.getElementById('s1Body').innerText = t.s1Body;
+            document.getElementById('s2Title').innerText = t.s2Title;
+            document.getElementById('s2Body').innerText = t.s2Body;
+            document.getElementById('s3Title').innerText = t.s3Title;
+            document.getElementById('s3Body').innerText = t.s3Body;
+            document.getElementById('s4Title').innerText = t.s4Title;
+            document.getElementById('s4Body').innerText = t.s4Body;
+            document.getElementById('lblEmail').innerText = t.lblEmail;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
 </body>
 </html>
