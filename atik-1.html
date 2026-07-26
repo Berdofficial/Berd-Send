@@ -18,25 +18,7 @@
 </head>
 <body>
 
-    <!-- Kòmansman Header (Logo ak Lang) -->
-    <a href="../index.html" class="back-home-btn">← Akèy</a>
-    <header style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #ffffff; border-bottom: 1px solid #eaeaea;">
-        <div class="logo">
-            <a href="index.html" style="text-decoration: none; font-size: 22px; font-weight: bold; color: #111111; display: flex; align-items: center;">
-                <img src="logo.jpg" alt="BerdSend Logo" style="height: 40px; width: auto; vertical-align: middle; margin-right: 10px;">
-                Berd<span style="color: #2563eb;">Send</span>
-            </a>
-        </div>
-        <div class="language-selector">
-            <select onchange="location = this.value;" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #d1d5db; background-color: #f9fafb; font-size: 14px; cursor: pointer;">
-                <option value="ht" selected>🇭🇹 Kreyòl</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="es">🇩🇴 Español</option>
-            </select>
-        </div>
-    </header>
-    <!-- Fen Header -->
-
+    
     <div class="article-container">
         <div class="article-date">24 Jiyè 2026</div>
         <h1>Kijan pou w kenbe yon bon rapò ak fanmi w lè w ap viv aletranje</h1>
@@ -60,6 +42,26 @@
     <footer>
         <p>&copy; 2026 BerdSend. Tout dwa rezève.</p>
     </footer>
-
+document.addEventListener("DOMContentLoaded", function() {
+    const headerHTML = `
+        <header style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #ffffff; border-bottom: 1px solid #eaeaea;">
+            <a href="../index.html" class="back-home-btn" style="display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd;">← Akèy</a>
+            <div class="logo">
+                <a href="../index.html" style="text-decoration: none;">
+                    <img src="../logo.jpg" alt="BerdSend Logo" style="height: 45px; width: auto; vertical-align: middle;">
+                </a>
+            </div>
+            <div class="language-selector">
+                <select onchange="location = this.value;" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #ddd;">
+                    <option value="ht" selected>🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </header>
+    `;
+    
+    document.body.insertAdjacentHTML('afterbegin', headerHTML);
+});
 </body>
 </html>
