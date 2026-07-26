@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - About Us</title>
+    <title id="pageTitle">BerdSend - About Us</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* Header ak Logo Style */
         header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
 
-        /* Container pou Paj About Us la */
         .about-container { width: 100%; max-width: 800px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); line-height: 1.6; }
         h1 { color: #111; margin-bottom: 15px; }
         h2 { color: #0066cc; margin-top: 25px; margin-bottom: 10px; font-size: 1.3rem; }
@@ -35,31 +35,117 @@
         <a href="index.html" class="logo-container">
             <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
         </a>
-        <a href="index.html" class="back-home-btn">← Home</a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Home</a>
+        </div>
     </header>
 
     <div class="about-container">
-        <h1>About Us</h1>
-        <p><strong>Business Name:</strong> BerdSend</p>
-        <p><strong>Location:</strong> Columbus, Ohio, United States</p>
+        <h1 id="txtTitle">About Us</h1>
+        <p><strong id="lblBiz">Business Name:</strong> BerdSend</p>
+        <p><strong id="lblLoc">Location:</strong> Columbus, Ohio, United States</p>
 
-        <h2>Who We Are</h2>
-        <p>BerdSend is an independent digital services and platform support provider dedicated to delivering seamless digital management solutions, transaction assistance, and reliable technical tools for our users and partners.</p>
+        <h2 id="txtWhoTitle">Who We Are</h2>
+        <p id="txtWhoBody">BerdSend is an independent digital services and platform support provider dedicated to delivering seamless digital management solutions, transaction assistance, and reliable technical tools for our users and partners.</p>
 
-        <h2>Our Mission</h2>
-        <p>Our mission is to simplify digital operations and payout workflows through secure, fast, and transparent infrastructure.</p>
+        <h2 id="txtMissionTitle">Our Mission</h2>
+        <p id="txtMissionBody">Our mission is to simplify digital operations and payout workflows through secure, fast, and transparent infrastructure.</p>
 
-        <h2>Contact Us</h2>
-        <p>If you would like to get in touch with us for inquiries or support, reach out via:</p>
+        <h2 id="txtContactTitle">Contact Us</h2>
+        <p id="txtContactBody">If you would like to get in touch with us for inquiries or support, reach out via:</p>
         <ul>
-            <li><strong>Email:</strong> topberd@gmail.com</li>
-            <li><strong>Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
+            <li><strong id="lblEmail">Email:</strong> topberd@gmail.com</li>
+            <li><strong id="lblAddress">Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
         </ul>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. All rights reserved.
+        &copy; 2026 BerdSend. <span id="txtRights">All rights reserved.</span>
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "BerdSend - About Us",
+                backHomeBtn: "← Home",
+                txtTitle: "About Us",
+                lblBiz: "Business Name:",
+                lblLoc: "Location:",
+                txtWhoTitle: "Who We Are",
+                txtWhoBody: "BerdSend is an independent digital services and platform support provider dedicated to delivering seamless digital management solutions, transaction assistance, and reliable technical tools for our users and partners.",
+                txtMissionTitle: "Our Mission",
+                txtMissionBody: "Our mission is to simplify digital operations and payout workflows through secure, fast, and transparent infrastructure.",
+                txtContactTitle: "Contact Us",
+                txtContactBody: "If you would like to get in touch with us for inquiries or support, reach out via:",
+                lblEmail: "Email:",
+                lblAddress: "Address:",
+                txtRights: "All rights reserved."
+            },
+            ht: {
+                pageTitle: "BerdSend - Sijè Nou",
+                backHomeBtn: "← Akèy",
+                txtTitle: "Kiyès Nou Ye",
+                lblBiz: "Non Antrepriz la:",
+                lblLoc: "Emplasman:",
+                txtWhoTitle: "Moun Nou Ye",
+                txtWhoBody: "BerdSend se yon founisè sèvis dijital endepandan ki dedye pou bay solisyon jesyon dijital ki fasil, asistans nan tranzaksyon, ak zouti teknik serye pou itilizatè nou yo ak patnè nou yo.",
+                txtMissionTitle: "Misyon Nou",
+                txtMissionBody: "Misyon nou se senplifye operasyon dijital yo ak transfè yo atravè yon enfrastrikti ki an sekirite, rapid, ak transparant.",
+                txtContactTitle: "Kontakte Nou",
+                txtContactBody: "Si ou ta renmen kontakte nou pou kesyon oswa sipò, ou ka jwenn nou nan:",
+                lblEmail: "Imèl:",
+                lblAddress: "Adrès:",
+                txtRights: "Tout dwa rezève."
+            },
+            pt: {
+                pageTitle: "BerdSend - Sobre Nós",
+                backHomeBtn: "← Início",
+                txtTitle: "Sobre Nós",
+                lblBiz: "Nome da Empresa:",
+                lblLoc: "Localização:",
+                txtWhoTitle: "Quem Somos",
+                txtWhoBody: "A BerdSend é uma provedora independente de serviços digitais e suporte dedicada a oferecer soluções simples de gestão digital, assistência em transações e ferramentas técnicas confiáveis.",
+                txtMissionTitle: "Nossa Missão",
+                txtMissionBody: "Nossa missão é simplificar as operações digitais e fluxos de pagamentos por meio de uma infraestrutura segura, rápida e transparente.",
+                txtContactTitle: "Entre em Contato",
+                txtContactBody: "Se desejar entrar em contato conosco para dúvidas ou suporte, utilize os canais:",
+                lblEmail: "E-mail:",
+                lblAddress: "Endereço:",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('lblBiz').innerText = t.lblBiz;
+            document.getElementById('lblLoc').innerText = t.lblLoc;
+            document.getElementById('txtWhoTitle').innerText = t.txtWhoTitle;
+            document.getElementById('txtWhoBody').innerText = t.txtWhoBody;
+            document.getElementById('txtMissionTitle').innerText = t.txtMissionTitle;
+            document.getElementById('txtMissionBody').innerText = t.txtMissionBody;
+            document.getElementById('txtContactTitle').innerText = t.txtContactTitle;
+            document.getElementById('txtContactBody').innerText = t.txtContactBody;
+            document.getElementById('lblEmail').innerText = t.lblEmail;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
 </body>
 </html>
