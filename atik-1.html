@@ -8,7 +8,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* Header ak Logo Style */
         header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
@@ -33,7 +32,7 @@
 
     <header>
         <a href="index.html" class="logo-container">
-            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            <img src="logo.jpg?v=2" alt="BerdSend Logo" class="app-logo-img">
         </a>
         <div class="header-right">
             <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
@@ -103,7 +102,7 @@
                 p1: "A vida no exterior pode ser agitada. Entre trabalho, estudos e tarefas diárias, é fácil deixar o tempo passar sem falar com quem mais importa.",
                 h1Title: "1. Crie uma rotina para ligar",
                 p2: "É fácil esquecer quando se está ocupado. Defina um dia e horário fixo na semana para conversar com sua família no WhatsApp ou por telefone.",
-                h2Title: "2. Apoie antes que eles peçam",
+                h2Title: "3. Apoie antes que eles peçam",
                 p3: "Uma das melhores formas de demonstrar carinho é enviar uma recarga de celular ou uma transferência surpresa para ajudar nas despesas diárias.",
                 h3Title: "3. Compartilhe momentos do seu dia",
                 p4: "Envie fotos ou pequenos vídeos do seu cotidiano. Isso faz com que sua família se sinta mais próxima, mesmo à distância.",
@@ -130,11 +129,11 @@
             document.getElementById('txtRights').innerText = t.txtRights;
         }
 
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
             changeLanguage(savedLang);
-        };
+        });
     </script>
 </body>
 </html>
