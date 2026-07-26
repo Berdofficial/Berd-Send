@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - Contact Us</title>
+    <title id="pageTitle">BerdSend - Contact Us</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
         
-        /* Header ak Logo Style */
         header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 65px !important; width: auto !important; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
         .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
 
-        /* Container pou Paj Kontak la */
         .contact-container { width: 100%; max-width: 800px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); line-height: 1.6; }
         h1 { color: #111; margin-bottom: 15px; }
         h2 { color: #0066cc; margin-top: 25px; margin-bottom: 10px; font-size: 1.3rem; }
@@ -35,25 +35,95 @@
         <a href="index.html" class="logo-container">
             <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
         </a>
-        <a href="index.html" class="back-home-btn">← Home</a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Home</a>
+        </div>
     </header>
 
     <div class="contact-container">
-        <h1>Contact Us</h1>
-        <p><strong>Business Name:</strong> BerdSend</p>
-        <p><strong>Location:</strong> Columbus, Ohio, United States</p>
+        <h1 id="txtTitle">Contact Us</h1>
+        <p><strong id="lblBiz">Business Name:</strong> BerdSend</p>
+        <p><strong id="lblLoc">Location:</strong> Columbus, Ohio, United States</p>
 
-        <h2>Get in Touch</h2>
-        <p>If you have any questions, inquiries, or need support with our services, please feel free to reach out to us using the information below:</p>
+        <h2 id="txtTouchTitle">Get in Touch</h2>
+        <p id="txtTouchBody">If you have any questions, inquiries, or need support with our services, please feel free to reach out to us using the information below:</p>
         <ul>
-            <li><strong>Email:</strong> topberd@gmail.com</li>
-            <li><strong>Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
+            <li><strong id="lblEmail">Email:</strong> topberd@gmail.com</li>
+            <li><strong id="lblAddress">Address:</strong> 3539 Orchard Lake Dr, Columbus, OH 43219</li>
         </ul>
     </div>
 
     <footer>
-        &copy; 2026 BerdSend. All rights reserved.
+        &copy; 2026 BerdSend. <span id="txtRights">All rights reserved.</span>
     </footer>
 
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "BerdSend - Contact Us",
+                backHomeBtn: "← Home",
+                txtTitle: "Contact Us",
+                lblBiz: "Business Name:",
+                lblLoc: "Location:",
+                txtTouchTitle: "Get in Touch",
+                txtTouchBody: "If you have any questions, inquiries, or need support with our services, please feel free to reach out to us using the information below:",
+                lblEmail: "Email:",
+                lblAddress: "Address:",
+                txtRights: "All rights reserved."
+            },
+            ht: {
+                pageTitle: "BerdSend - Kontakte Nou",
+                backHomeBtn: "← Akèy",
+                txtTitle: "Kontakte Nou",
+                lblBiz: "Non Antrepriz la:",
+                lblLoc: "Emplasman:",
+                txtTouchTitle: "Antre nan Kontak ak Nou",
+                txtTouchBody: "Si ou gen nenpòt kesyon, mande enfòmasyon oswa ou bezwen sipò ak sèvis nou yo, tanpri pa ezite kontakte nou ak enfòmasyon ki anba yo:",
+                lblEmail: "Imèl:",
+                lblAddress: "Adrès:",
+                txtRights: "Tout dwa rezève."
+            },
+            pt: {
+                pageTitle: "BerdSend - Fale Conosco",
+                backHomeBtn: "← Início",
+                txtTitle: "Fale Conosco",
+                lblBiz: "Nome da Empresa:",
+                lblLoc: "Localização:",
+                txtTouchTitle: "Entre em Contato",
+                txtTouchBody: "Se você tiver dúvidas, solicitações ou precisar de suporte com nossos serviços, sinta-se à vontade para nos contatar usando as informações abaixo:",
+                lblEmail: "E-mail:",
+                lblAddress: "Endereço:",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('lblBiz').innerText = t.lblBiz;
+            document.getElementById('lblLoc').innerText = t.lblLoc;
+            document.getElementById('txtTouchTitle').innerText = t.txtTouchTitle;
+            document.getElementById('txtTouchBody').innerText = t.txtTouchBody;
+            document.getElementById('lblEmail').innerText = t.lblEmail;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
 </body>
 </html>
