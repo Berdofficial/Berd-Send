@@ -3,60 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sa w dwe konnen sou to echanj lajan ak fason li afekte kòb ou voye - BerdSend</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; }
-        .article-container { width: 100%; max-width: 700px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .article-date { font-size: 0.85rem; color: #0066cc; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
-        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
-        p { font-size: 1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
-        h2 { font-size: 1.3rem; color: #222; margin-top: 25px; margin-bottom: 10px; }
-        .back-blog { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .back-blog:hover { text-decoration: underline; }
-        footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
-    </style>
+    <title>Atik 4: Kijan pou w Voye Lajan Fasil - Berd-Send</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo-container">
-            <div class="app-icon">BS</div>
-            <div class="logo">BerdSend</div>
-        </a>
-        <a href="blog.html" class="back-blog">⬅️ Retounen nan Blog la</a>
+        <div class="header-container">
+            <!-- Logo Berd-Send -->
+            <a href="index.html" class="logo-link">
+                <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
+            </a>
+
+            <!-- Meni Navigasyon -->
+            <nav>
+                <a href="index.html">Akèy</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Konta</a>
+            </nav>
+
+            <!-- Sèlektè Lang -->
+            <div class="language-selector">
+                <select id="language-select" onchange="location = this.value;">
+                    <option value="#" selected>🇭🇹 Kreyòl</option>
+                    <option value="#">🇺🇸 English</option>
+                    <option value="#">🇫🇷 Français</option>
+                    <option value="#">🇪🇸 Español</option>
+                    <option value="#">🇧🇷 Português</option>
+                </select>
+            </div>
+        </div>
     </header>
 
-    <div class="article-container">
-        <div class="article-date">18 Jiyè 2026</div>
-        <h1>Sa w dwe konnen sou to echanj lajan ak fason li afekte kòb ou voye</h1>
-        
-        <p>Lè w ap fè tranzaksyon entènasyonal, kit se voye lajan bay fanmi w oswa peye pou sèvis, youn nan eleman ki pi enpòtan ki detèmine valè tranzaksyon an se "to echanj la". Anpil moun pa toujou konprann kòman mekanis sa a fonksyone, sa ki ka pafwa lakòz sipriz sou kantite lajan moun k ap resevwa a jwenn vre.</p>
+    <main class="article-container">
+        <article>
+            <h1>Atik 4: Kijan pou w Voye Lajan Fasil</h1>
+            <p class="meta">Pibliye pa <strong>Berd-Send</strong> | Dat: 2026</p>
 
-        <p>Nan atik sa a, nou pral demistifye konsèp to echanj la epi ba ou konsèy sou fason pou w tire pwofi maksimòm nan chak transfè ou fè.</p>
+            <!-- Bèl imaj ki gen rapò ak voye lajan fasil ak telefòn/òdinatè -->
+            <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1200&auto=format&fit=crop" alt="Kijan pou w Voye Lajan Fasil ak Berd-Send" class="article-img">
 
-        <h2>1. Kisa yon to echanj ye egzakteman?</h2>
-        <p>To echanj la se valè yon lajan lè yo konpare l ak yon lòt lajan. Pa egzanp, konbyen Goud Ayisyen (HTG) ou ka jwenn pou yon Dola Ameriken (USD). Valè sa a pa fiks; li chanje chak jou baze sou mache finansye entènasyonal yo, kondisyon ekonomik yo, ak fòs lajan chak peyi.</p>
+            <p>Voye lajan bay moun ou renmen yo pa dwe janm yon bagay ki konplike. Ak Berd-Send, ou ka fè yon transfè an kèk klick sèlman depi kote w ye a.</p>
 
-        <h2>2. Poukisa to a konn varye chak jou?</h2>
-        <p>Fluctuations yo rive akòz divès faktè tankou enflasyon, demann sou mache a, ak politik ekonomik gouvènman yo. Lè demann pou yon lajan wo, valè li konn monte; lè li ba, valè li ka desann. Sa vle di kantite lajan fanmi w ap resevwa pou menm 100 dola a ka pa menm semèn sa a ak semèn pase a.</p>
+            <h2>Etap 1: Kreye oswa Konekte sou Kont Ou</h2>
+            <p>Antre sou sit entènèt la oswa louvri aplikasyon an, epi konekte sou kont Berd-Send ou an an sekirite.</p>
 
-        <h2>3. Enpòtans pou w chwazi yon platfòm transparan</h2>
-        <p>Gen kèk konpayi ki sèvi ak to echanj ki ba anpil epi ki kache frè siplemantè sou non "tranzaksyon gratis". Lè w ap itilize yon platfòm serye ak transparan tankou BerdSend, nou montre w egzakteman ki to k ap aplike a anvan w konfime voye a, konsa ou konnen vèman kisa w ap fè.</p>
+            <h2>Etap 2: Antre Enstriman ak Kantite Lajan an</h2>
+            <p>Chwazi peyi kote w ap voye lajan an, epi ekri presizeman kantite lajan ou vle voye a. Ou ap wè tout tarif ak frè yo byen klè anvan w konfime.</p>
 
-        <h2>4. Kijan pou w pwofite meyè moman yo</h2>
-        <p>Malgre li difisil pou predi egzakteman ki jou to a ap monte oswa desann, toujou pran tan pou w gade konparezon yo anvan w fè gwo transfè. Si w remake to a estab oswa favorab, se moman ideyal la pou voye sipò w.</p>
+            <h2>Etap 3: Antre Enfòmasyon Moun k ap Resevwa a</h2>
+            <p>Mete non konplè, nimewo telefòn, oswa kont bankè benefisyè a pou n ka asire lajan an rive nan bon men.</p>
 
-        <h2>Konklizyon</h2>
-        <p>Konprann to echanj la ba ou plis kontwòl sou finans ou. Avèk yon bon konesans ak bon zouti yo, chak dola ou voye ap pote plis valè pou moun ou renmen yo.</p>
-    </div>
+            <h2>Etap 4: Konfime epi Voye</h2>
+            <p>Verifye tout enfòmasyon yo yon dènye fwa epi klike sou "Voye". Lajan an ap disponib pou benefisyè a an tan reyèl!</p>
+
+            <div class="callout">
+                <h3>Eske w pare pou w voye premye transfè w la?</h3>
+                <p>Eseye <strong>Berd-Send</strong> jodi a epi eksperimante fason ki pi fasil pou w voye lajan!</p>
+            </div>
+        </article>
+    </main>
 
     <footer>
-        &copy; 2026 BerdSend. Tout dwa rezève.
+        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
     </footer>
 
 </body>
