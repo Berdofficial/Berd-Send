@@ -3,60 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enpòtans sekirite nan tranzaksyon dijital yo - BerdSend</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; }
-        .article-container { width: 100%; max-width: 700px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .article-date { font-size: 0.85rem; color: #0066cc; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
-        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
-        p { font-size: 1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
-        h2 { font-size: 1.3rem; color: #222; margin-top: 25px; margin-bottom: 10px; }
-        .back-blog { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .back-blog:hover { text-decoration: underline; }
-        footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
-    </style>
+    <title>Atik 6: Frè ak Tarifikasyon ki Aseptab - Berd-Send</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo-container">
-            <div class="app-icon">BS</div>
-            <div class="logo">BerdSend</div>
-        </a>
-        <a href="blog.html" class="back-blog">⬅️ Retounen nan Blog la</a>
+        <div class="header-container">
+            <!-- Logo Berd-Send -->
+            <a href="index.html" class="logo-link">
+                <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
+            </a>
+
+            <!-- Meni Navigasyon -->
+            <nav>
+                <a href="index.html">Akèy</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Konta</a>
+            </nav>
+
+            <!-- Sèlektè Lang -->
+            <div class="language-selector">
+                <select id="language-select" onchange="location = this.value;">
+                    <option value="#" selected>🇭🇹 Kreyòl</option>
+                    <option value="#">🇺🇸 English</option>
+                    <option value="#">🇫🇷 Français</option>
+                    <option value="#">🇪🇸 Español</option>
+                    <option value="#">🇧🇷 Português</option>
+                </select>
+            </div>
+        </div>
     </header>
 
-    <div class="article-container">
-        <div class="article-date">12 Jiyè 2026</div>
-        <h1>Enpòtans sekirite nan tranzaksyon dijital yo</h1>
-        
-        <p>Lè n ap fè tranzaksyon sou entènèt, kit se voye lajan, achte sèvis, oswa fè bousye sou aparèy mobil nou, sekirite se premye bagay nou dwe pran an konsiderasyon. Nan epòk dijital sa a, kote teknoloji ap avanse chak jou, se konsa tou risk ki gen rapò ak done pèsonèl yo ap evolye.</p>
+    <main class="article-container">
+        <article>
+            <h1>Atik 6: Frè ak Tarifikasyon ki Aseptab</h1>
+            <p class="meta">Pibliye pa <strong>Berd-Send</strong> | Dat: 2026</p>
 
-        <p>Nan atik sa a, nou pral wè kijan ou ka pwoteje tèt ou epi asire w ke tout tranzaksyon ou fè yo fèt anba yon pwoteksyon total.</p>
+            <!-- Bèl imaj ki gen rapò ak frè ak ekonomi -->
+            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop" alt="Frè ak Tarifikasyon Berd-Send" class="article-img">
 
-        <h2>1. Sèvi ak modpas ki solid</h2>
-        <p>Premye mwayèn defans lan sou nenpòt platfòm se modpas ou. Evite itilize modpas ki fasil pou devine tankou dat nesans oswa non moun ou konnen. Yon bon modpas dwe gen yon melanj lèt majiskil, miniskil, chif, ak senbòl.</p>
+            <p>Yon bon sèvis transfè lajan dwe transparan sou tarif li yo. Ak Berd-Send, ou toujou konnen presizeman konbyen lajan w ap peye anvan menm ou voye transfè a.</p>
 
-        <h2>2. Chwazi platfòm ki sèvi ak chifreman (Encryption)</h2>
-        <p>Toujou tcheke si sit entènèt w ap itilize a gen sekirite nesesè a (tankou lyen ki kòmanse avèk https://). Sa vle di enfòmasyon ou yo chifre epi pwoteje kont je kirye. Platfòm serye tankou BerdSend mete sekirite itilizatè yo an premye.</p>
+            <h2>1. Pa Gen Frè Kache</h2>
+            <p>Kontrèman ak lòt sèvis yo, sa w wè sou ekran an se egzakteman sa w ap peye. Nou pa mete okenn sipriz oswa frè siplemantè dèyè do w.</p>
 
-        <h2>3. Pa janm pataje kòd sekrè ou ak okenn moun</h2>
-        <p>Kòd PIN ou, modpas ou, oswa nimewo verifikasyon ki vin sou telefòn ou (OTP) se pou ou menm sèl. Okenn reprezantan ki serye pap janm mande w kòd sekrè sa yo pa telefòn oswa pa mesaj.</p>
+            <h2>2. Pi Bon Tò Chanjman sou Mache a</h2>
+            <p>Nou travay pou ofri w pi bon pousantaj konvèsyon lè w ap voye lajan an deviz etranjè, pou moun k ap resevwa lajan an ka jwenn plis nan men l.</p>
 
-        <h2>4. Swiv tranzaksyon ou yo regilyèman</h2>
-        <p>Pran abitid tcheke istwa tranzaksyon ou yo sou kont ou yo. Si w remake nenpòt aktivite nòmal, ou ka pran aksyon touswit epi kontakte sipò kliyan an.</p>
+            <h2>3. Tarif ki Adaptab ak Kantite Lajan an</h2>
+            <p>Nou gen estructur tarif ki fèt pou pèmèt ou ekonomize plis sou gwo kou piti transfè ou fè yo.</p>
 
-        <h2>Konklizyon</h2>
-        <p>Sekirite sou entènèt se yon responsablite pataje. Lè w swiv règ sekirite sa yo, ou ka fè tout tranzaksyon ou yo ak konfyans total epi san okenn enkyetid.</p>
-    </div>
+            <div class="callout">
+                <h3>Vle wè konbyen lajan ou ka ekonomize?</h3>
+                <p>Gade tarif nou yo jodi a epi voye lajan ou an ak <strong>Berd-Send</strong> pou pi bon pri!</p>
+            </div>
+
+            <!-- Bouton pou tounen sou paj prensipal blog la -->
+            <div class="back-to-blog">
+                <a href="blog.html" class="back-btn">&larr; Tounen nan paj Blog prensipal la</a>
+            </div>
+        </article>
+    </main>
 
     <footer>
-        &copy; 2026 BerdSend. Tout dwa rezève.
+        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
     </footer>
 
 </body>
