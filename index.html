@@ -75,62 +75,25 @@
         .summary-box { background: #f9fafb; border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; }
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #666; }
         .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
+        
+        /* Kaz pou chwa pwomosyon */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+        }
+        .checkbox-group input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
         .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: #0052a3; }
-
-        /* Seksyon Enskripsyon Imèl (Newsletter / Sign Up) */
-        .signup-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-        .signup-card h3 {
-            font-size: 1rem;
-            color: #003366;
-            margin-bottom: 6px;
-        }
-        .signup-card p {
-            font-size: 0.82rem;
-            color: #666;
-            margin-bottom: 12px;
-        }
-        .signup-input-group {
-            display: flex;
-            gap: 8px;
-        }
-        .signup-input-group input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .signup-input-group input:focus {
-            border-color: #0066cc;
-        }
-        .signup-btn {
-            background-color: #2e7d32;
-            color: white;
-            border: none;
-            padding: 0 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.2s;
-        }
-        .signup-btn:hover { background-color: #235d26; }
-        #signupMessage {
-            font-size: 0.8rem;
-            margin-top: 8px;
-            font-weight: bold;
-        }
         
         /* Bannè Cookie */
         .cookie-banner {
@@ -322,6 +285,14 @@
             </div>
         </div>
 
+        <!-- Chan Imèl Obligatwa pou Itilizatè a -->
+        <div class="form-group">
+            <label id="lblUserEmail">Your Email Address (Required):</label>
+            <div class="input-box">
+                <input type="email" id="userEmail" placeholder="eg: name@example.com">
+            </div>
+        </div>
+
         <div class="form-group">
             <label id="lblPhone">Recipient phone number:</label>
             <div class="input-box">
@@ -329,18 +300,13 @@
             </div>
         </div>
 
-        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
-    </div>
+        <!-- Opsyon o chwa pou Pwomosyon / SMS -->
+        <label class="checkbox-group">
+            <input type="checkbox" id="promoCheckbox" checked>
+            <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
+        </label>
 
-    <!-- Seksyon Enskripsyon Imèl pou Itilizatè yo (Kolekte Imèl) -->
-    <div class="signup-card">
-        <h3 id="signupTitle">Rete Konekte ak BerdSend</h3>
-        <p id="signupDesc">Enskri ak imèl ou pou resevwa òf espesyal ak nouvèl sou nou an.</p>
-        <div class="signup-input-group">
-            <input type="email" id="userEmail" placeholder="Antre imèl ou la...">
-            <button class="signup-btn" id="signupBtn" onclick="registerEmail()">Enskri</button>
-        </div>
-        <p id="signupMessage"></p>
+        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
     </div>
 
     <!-- Bannè Cookie -->
@@ -404,7 +370,9 @@
                 lblAmount: "Amount to send:",
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
+                lblUserEmail: "Your Email Address (Required):",
                 lblPhone: "Recipient phone number:",
+                lblPromo: "Send me promotional offers and updates (Optional)",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 adv1Title: "🎉 First Transfer Free",
@@ -413,12 +381,6 @@
                 adv2Desc: "Get <strong>$10 mobile top-up</strong> instantly when a friend signs up and uses our service.",
                 adv3Title: "🔒 Total Security",
                 adv3Desc: "Guaranteed maximum protection for all your transactions and data.",
-                signupTitle: "Stay Connected with BerdSend",
-                signupDesc: "Sign up with your email to receive special offers and updates.",
-                signupPlaceholder: "Enter your email here...",
-                signupButton: "Sign Up",
-                signupSuccess: "Thank you! Your email has been registered.",
-                signupError: "Please enter a valid email address!",
                 cookieText: "We use cookies to improve your browsing experience. Please select your preference:",
                 btnAcceptCookies: "Accept",
                 btnRejectCookies: "Reject",
@@ -440,8 +402,9 @@
                 menuContact: "Contact Us",
                 menuFaq: "FAQ",
                 menuTracking: "Track Transfer",
+                alertEmail: "Please enter your valid email address to proceed!",
                 alertPhone: "Please enter recipient phone number!",
-                alertSuccess: "Transaction recorded successfully!"
+                alertSuccess: "Transaction recorded successfully! Email registered."
             },
             ht: {
                 title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
@@ -454,7 +417,9 @@
                 lblAmount: "Montan pou voye a:",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
+                lblUserEmail: "Adrès Imèl Ou (Obligatwa):",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
+                lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 adv1Title: "🎉 Premye Transfè Gratis",
@@ -463,12 +428,6 @@
                 adv2Desc: "Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.",
                 adv3Title: "🔒 Sekirite Total",
                 adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.",
-                signupTitle: "Rete Konekte ak BerdSend",
-                signupDesc: "Enskri ak imèl ou pou resevwa òf espesyal ak nouvèl sou nou an.",
-                signupPlaceholder: "Antre imèl ou la...",
-                signupButton: "Enskri",
-                signupSuccess: "Mèsi anpil! Imèl ou anrejistre avèk siksè.",
-                signupError: "Tanpri antre yon adrès imèl ki valab!",
                 cookieText: "Nou itilize cookies pou amelyore eksperyans ou sou sit la. Tanpri chwazi preferans ou:",
                 btnAcceptCookies: "Aksepte",
                 btnRejectCookies: "Rejte",
@@ -490,8 +449,9 @@
                 menuContact: "Kontakte Nou",
                 menuFaq: "FAQ (Kesyon yo Poze)",
                 menuTracking: "Suiv Transfè W",
+                alertEmail: "Tanpri antre yon adrès imèl ki valab pou kontinye!",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
+                alertSuccess: "Tranzaksyon an anrejistre avèk siksè! Imèl ou anrejistre."
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -504,7 +464,9 @@
                 lblAmount: "Valor a enviar:",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
+                lblUserEmail: "Seu E-mail (Obrigatório):",
                 lblPhone: "Número de telefone do destinatário:",
+                lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 adv1Title: "🎉 Primeira Transferência Grátis",
@@ -513,12 +475,6 @@
                 adv2Desc: "Ganhe <strong>$10 de recarga</strong> instantaneamente quando um amigo se cadastrar.",
                 adv3Title: "🔒 Segurança Total",
                 adv3Desc: "Proteção máxima garantida para todas as suas transações e dados.",
-                signupTitle: "Fique Conectado com o BerdSend",
-                signupDesc: "Inscreva-se com seu e-mail para receber ofertas especiais e atualizações.",
-                signupPlaceholder: "Digite seu e-mail...",
-                signupButton: "Inscrever",
-                signupSuccess: "Obrigado! Seu e-mail foi registrado com sucesso.",
-                signupError: "Por favor, insira um e-mail válido!",
                 cookieText: "Usamos cookies para melhorar sua experiência. Por favor, escolha sua preferência:",
                 btnAcceptCookies: "Aceitar",
                 btnRejectCookies: "Rejeitar",
@@ -540,8 +496,9 @@
                 menuContact: "Contato",
                 menuFaq: "FAQ",
                 menuTracking: "Rastrear Transferência",
+                alertEmail: "Por favor, digite seu e-mail válido para continuar!",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                alertSuccess: "Transação registrada com sucesso!"
+                alertSuccess: "Transação registrada com sucesso! E-mail salvo."
             }
         };
 
@@ -557,33 +514,6 @@
             }, 5000);
         }
 
-        // Fonksyon pou anrejistre imèl itilizatè yo
-        function registerEmail() {
-            const lang = localStorage.getItem('berdSendLang') || 'en';
-            const t = translations[lang];
-            const emailInput = document.getElementById('userEmail');
-            const msg = document.getElementById('signupMessage');
-            const emailVal = emailInput.value.trim();
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailVal)) {
-                msg.style.color = "red";
-                msg.innerText = t.signupError;
-                return;
-            }
-
-            // Sere imèl yo nan LocalStorage pou kounye a (oswa ou ka konekte l ak backend pita)
-            let savedEmails = JSON.parse(localStorage.getItem('berdSendSubscribers') || '[]');
-            if (!savedEmails.includes(emailVal)) {
-                savedEmails.push(emailVal);
-                localStorage.setItem('berdSendSubscribers', JSON.stringify(savedEmails));
-            }
-
-            msg.style.color = "#2e7d32";
-            msg.innerText = t.signupSuccess;
-            emailInput.value = "";
-        }
-
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
             const t = translations[lang];
@@ -597,7 +527,9 @@
             document.getElementById('lblAmount').innerText = t.lblAmount;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblUserEmail').innerText = t.lblUserEmail;
             document.getElementById('lblPhone').innerText = t.lblPhone;
+            document.getElementById('lblPromo').innerText = t.lblPromo;
             
             document.getElementById('adv1Title').innerText = t.adv1Title;
             document.getElementById('adv1Desc').innerHTML = t.adv1Desc;
@@ -605,11 +537,6 @@
             document.getElementById('adv2Desc').innerHTML = t.adv2Desc;
             document.getElementById('adv3Title').innerText = t.adv3Title;
             document.getElementById('adv3Desc').innerHTML = t.adv3Desc;
-
-            document.getElementById('signupTitle').innerText = t.signupTitle;
-            document.getElementById('signupDesc').innerText = t.signupDesc;
-            document.getElementById('userEmail').placeholder = t.signupPlaceholder;
-            document.getElementById('signupBtn').innerText = t.signupButton;
 
             document.getElementById('cookieText').innerText = t.cookieText;
             document.getElementById('btnAcceptCookies').innerText = t.btnAcceptCookies;
@@ -734,11 +661,32 @@
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
             document.getElementById('deliveryMethod').onchange = updateUI;
             document.getElementById('sendAmount').oninput = updateUI;
+            
             document.getElementById('btnSubmit').onclick = function() {
                 var lang = localStorage.getItem('berdSendLang') || 'en';
                 var t = translations[lang];
+                
+                var email = document.getElementById('userEmail').value.trim();
                 var phone = document.getElementById('phone').value.trim();
-                if (!phone) alert(t.alertPhone); else alert(t.alertSuccess);
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert(t.alertEmail);
+                    return;
+                }
+                if (!phone) {
+                    alert(t.alertPhone);
+                    return;
+                }
+
+                // Sere imèl la otomatikman nan lis abònen yo lè li fè tranzaksyon an
+                let savedEmails = JSON.parse(localStorage.getItem('berdSendSubscribers') || '[]');
+                if (!savedEmails.includes(email)) {
+                    savedEmails.push(email);
+                    localStorage.setItem('berdSendSubscribers', JSON.stringify(savedEmails));
+                }
+
+                alert(t.alertSuccess);
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
