@@ -4,96 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
+    <!-- Enpòte yon bèl font Google Font ki pwofesyonèl -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 70px; }
-        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
-        .header-right { display: flex; align-items: center; gap: 10px; }
-        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
-        .menu-container { position: relative; }
-        .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px; }
-        .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
-        .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
-        .dropdown-menu a:hover { background: #f1f1f1; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 70px; }
+        
+        /* Elaji layout la pou òdinatè ak yon vlope ki pi laj sou gwo ekran */
+        .wrapper {
+            width: 100%;
+            max-width: 600px; /* Ogmante lajè pou òdinatè pa parèt twò sere */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Seksyon Banyè Orizontal kap wate chak 5 segonn */
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 44px; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
+        .menu-container { position: relative; }
+        .menu-btn { background: none; border: none; color: #333; font-size: 24px; cursor: pointer; padding: 5px; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; }
+        .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
+        .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
+
+        /* Seksyon Banyè Orizontal pi gwo, pi bèl stil ak yon dire 8 segonn */
         .banner-slider-container {
             width: 100%;
-            max-width: 480px;
-            background: linear-gradient(135deg, #004080, #0066cc);
+            background: linear-gradient(135deg, #003366, #0056b3, #007bff);
             color: #ffffff;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2);
-            margin-bottom: 15px;
+            padding: 22px 25px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0, 86, 179, 0.25);
+            margin-bottom: 20px;
             text-align: center;
-            min-height: 85px;
+            min-height: 110px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
         .banner-slide {
             display: none;
-            animation: fadeIn 0.8s ease-in-out;
+            animation: fadeIn 0.9s ease-in-out;
         }
         .banner-slide.active {
             display: block;
         }
         .banner-slide h4 {
-            font-size: 1rem;
-            color: #ffd700;
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffeb3b;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 0.3px;
         }
         .banner-slide p {
-            font-size: 0.85rem;
-            color: #f0f4f8;
-            line-height: 1.4;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #f8fafc;
+            line-height: 1.5;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
         .banner-slide strong {
-            color: #ffd700;
+            color: #ffeb3b;
+            font-weight: 700;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-bottom: 15px; }
-        .tabs { display: flex; background: #f0f2f5; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #555; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
-        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.85rem; color: #444; margin-bottom: 6px; font-weight: bold; }
-        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 12px; }
-        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
-        .input-box input, .input-box select { background: transparent; border: none; color: #111; font-size: 1rem; width: 100%; outline: none; }
-        .conversion-rate { background: #eaf3ec; border: 1px solid #d4ede5; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #2e7d32; margin-bottom: 15px; }
-        .summary-box { background: #f9fafb; border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #666; }
-        .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
+        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 22px; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
+        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; }
+        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
+        .input-box input, .input-box select { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; }
+        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.95rem; color: #166534; margin-bottom: 18px; font-weight: 500; }
+        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 18px; font-size: 0.9rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
+        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1.05rem; }
         
-        /* Kaz pou chwa pwomosyon */
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            color: #555;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #475569;
             cursor: pointer;
+            font-weight: 500;
         }
         .checkbox-group input {
             cursor: pointer;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
         }
 
-        .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
         .btn-submit:hover { background: #0052a3; }
+        .btn-submit:active { transform: scale(0.99); }
         
         /* Bannè Cookie */
         .cookie-banner {
@@ -103,44 +122,44 @@
             width: 100%;
             background-color: #ffffff;
             color: #003366;
-            padding: 15px 20px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 2px solid #0066cc;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
             z-index: 9999;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             flex-wrap: wrap;
             gap: 15px;
         }
         .cookie-banner p {
             margin: 0;
-            max-width: 500px;
-            line-height: 1.4;
-            color: #333;
-            font-size: 0.85rem;
+            max-width: 600px;
+            line-height: 1.5;
+            color: #334155;
+            font-size: 0.9rem;
         }
         .cookie-buttons {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .cookie-btn {
             border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
+            padding: 10px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
+            font-weight: 700;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
         .btn-accept { background-color: #0066cc; color: white; }
         .btn-accept:hover { background-color: #0052a3; }
-        .btn-reject { background-color: #e5e7eb; color: #333; }
-        .btn-reject:hover { background-color: #d1d5db; }
+        .btn-reject { background-color: #f1f5f9; color: #334155; }
+        .btn-reject:hover { background-color: #e2e8f0; }
         .btn-customize { background-color: transparent; color: #0066cc; border: 1px solid #0066cc; }
-        .btn-customize:hover { background-color: #e6f0fa; }
+        .btn-customize:hover { background-color: #f0f6ff; }
 
         /* Ti Fenèt Modal pou Cookie */
         .modal-overlay {
@@ -156,157 +175,162 @@
         .modal-content {
             background: #ffffff;
             width: 100%;
-            max-width: 420px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             text-align: left;
         }
         .modal-content h3 {
-            margin-bottom: 15px;
-            color: #003366;
-            font-size: 1.1rem;
+            margin-bottom: 18px;
+            color: #0f172a;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
         .preference-option {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            color: #444;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #334155;
         }
         .preference-option input {
-            margin-top: 3px;
+            margin-top: 4px;
             cursor: pointer;
+            width: 16px;
+            height: 16px;
         }
         .modal-buttons {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
-        footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
-        </a>
-        <div class="header-right">
-            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
-                <option value="en">🇺🇸 English</option>
-                <option value="ht">🇭🇹 Kreyòl</option>
-                <option value="pt">🇧🇷 Português</option>
-            </select>
-            <div class="menu-container">
-                <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                <div id="myDropdown" class="dropdown-menu">
-                    <a href="index.html" id="menuHome">Home</a>
-                    <a href="blog.html" id="menuBlog">Blog</a>
-                    <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
-                    <a href="terms.html" id="menuTerms">Terms of Service</a>
-                    <a href="about.html" id="menuAbout">About Us</a>
-                    <a href="contact.html" id="menuContact">Contact Us</a>
-                    <a href="faq.html" id="menuFaq">FAQ</a>
-                    <a href="tracking.html" id="menuTracking">Track Transfer</a>
+    <div class="wrapper">
+        <header>
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            </a>
+            <div class="header-right">
+                <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="pt">🇧🇷 Português</option>
+                </select>
+                <div class="menu-container">
+                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                    <div id="myDropdown" class="dropdown-menu">
+                        <a href="index.html" id="menuHome">Home</a>
+                        <a href="blog.html" id="menuBlog">Blog</a>
+                        <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
+                        <a href="terms.html" id="menuTerms">Terms of Service</a>
+                        <a href="about.html" id="menuAbout">About Us</a>
+                        <a href="contact.html" id="menuContact">Contact Us</a>
+                        <a href="faq.html" id="menuFaq">FAQ</a>
+                        <a href="tracking.html" id="menuTracking">Track Transfer</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Orizontal Slider Banyè (Chak 5 segonn li chanje) -->
-    <div class="banner-slider-container">
-        <div class="banner-slide active">
-            <h4 id="adv1Title">🎉 Premye Transfè Gratis</h4>
-            <p id="adv1Desc">Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!</p>
-        </div>
-        <div class="banner-slide">
-            <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
-            <p id="adv2Desc">Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.</p>
-        </div>
-        <div class="banner-slide">
-            <h4 id="adv3Title">🔒 Sekirite Total</h4>
-            <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.</p>
-        </div>
-    </div>
-
-    <!-- Kat Kalkilatris la -->
-    <div class="card" id="mainCard">
-        <div class="tabs">
-            <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
-            <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
-        </div>
-
-        <div class="form-group">
-            <label id="lblSender">Country you are sending from:</label>
-            <div class="input-box">
-                <select id="senderCountry">
-                    <option value="USD">🇺🇸 United States (USD - $)</option>
-                    <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
-                </select>
+        <!-- Orizontal Slider Banyè (Chak 8 segonn li chanje, pi gwo tèks ak bèl estil) -->
+        <div class="banner-slider-container">
+            <div class="banner-slide active">
+                <h4 id="adv1Title">🎉 Premye Transfè Gratis</h4>
+                <p id="adv1Desc">Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!</p>
+            </div>
+            <div class="banner-slide">
+                <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
+                <p id="adv2Desc">Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.</p>
+            </div>
+            <div class="banner-slide">
+                <h4 id="adv3Title">🔒 Sekirite Total</h4>
+                <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.</p>
             </div>
         </div>
 
-        <div class="form-group">
-            <label id="lblReceiver">Recipient country:</label>
-            <div class="input-box">
-                <select id="receiverCountry">
-                    <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
-                    <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
-                </select>
+        <!-- Kat Kalkilatris la -->
+        <div class="card" id="mainCard">
+            <div class="tabs">
+                <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
+                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
-            <div class="input-box">
-                <select id="deliveryMethod"></select>
+            <div class="form-group">
+                <label id="lblSender">Country you are sending from:</label>
+                <div class="input-box">
+                    <select id="senderCountry">
+                        <option value="USD">🇺🇸 United States (USD - $)</option>
+                        <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label id="lblAmount">Amount to send:</label>
-            <div class="input-box">
-                <input type="number" id="sendAmount" value="100">
+            <div class="form-group">
+                <label id="lblReceiver">Recipient country:</label>
+                <div class="input-box">
+                    <select id="receiverCountry">
+                        <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
+                        <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="conversion-rate">
-            <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
-        </div>
-
-        <div class="summary-box">
-            <div class="summary-row total">
-                <span id="lblTotalToPay">Total to Pay:</span>
-                <span id="totalCost" style="color: #111;">100.00 USD</span>
+            <div class="form-group">
+                <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
+                <div class="input-box">
+                    <select id="deliveryMethod"></select>
+                </div>
             </div>
-        </div>
 
-        <!-- Chan Imèl Obligatwa pou Itilizatè a -->
-        <div class="form-group">
-            <label id="lblUserEmail">Your Email Address (Required):</label>
-            <div class="input-box">
-                <input type="email" id="userEmail" placeholder="eg: name@example.com">
+            <div class="form-group">
+                <label id="lblAmount">Amount to send:</label>
+                <div class="input-box">
+                    <input type="number" id="sendAmount" value="100">
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label id="lblPhone">Recipient phone number:</label>
-            <div class="input-box">
-                <input type="tel" id="phone" placeholder="+509 ...">
+            <div class="conversion-rate">
+                <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #166534;">0 HTG</strong>
             </div>
+
+            <div class="summary-box">
+                <div class="summary-row total">
+                    <span id="lblTotalToPay">Total to Pay:</span>
+                    <span id="totalCost" style="color: #0f172a;">100.00 USD</span>
+                </div>
+            </div>
+
+            <!-- Chan Imèl Obligatwa pou Itilizatè a -->
+            <div class="form-group">
+                <label id="lblUserEmail">Your Email Address (Required):</label>
+                <div class="input-box">
+                    <input type="email" id="userEmail" placeholder="eg: name@example.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblPhone">Recipient phone number:</label>
+                <div class="input-box">
+                    <input type="tel" id="phone" placeholder="+509 ...">
+                </div>
+            </div>
+
+            <!-- Opsyon o chwa pou Pwomosyon / SMS -->
+            <label class="checkbox-group">
+                <input type="checkbox" id="promoCheckbox" checked>
+                <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
+            </label>
+
+            <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
         </div>
-
-        <!-- Opsyon o chwa pou Pwomosyon / SMS -->
-        <label class="checkbox-group">
-            <input type="checkbox" id="promoCheckbox" checked>
-            <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
-        </label>
-
-        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
     </div>
 
     <!-- Bannè Cookie -->
@@ -327,21 +351,21 @@
                 <input type="checkbox" id="prefEssential" checked disabled>
                 <div>
                     <strong id="lblEssential">Essential Cookies</strong>
-                    <p id="descEssential" style="color: #666; font-size: 0.8rem;">Required for the website to function properly.</p>
+                    <p id="descEssential" style="color: #64748b; font-size: 0.85rem;">Required for the website to function properly.</p>
                 </div>
             </div>
             <div class="preference-option">
                 <input type="checkbox" id="prefAnalytics" checked>
                 <div>
                     <strong id="lblAnalytics">Analytics Cookies</strong>
-                    <p id="descAnalytics" style="color: #666; font-size: 0.8rem;">Help us understand how visitors interact with the website.</p>
+                    <p id="descAnalytics" style="color: #64748b; font-size: 0.85rem;">Help us understand how visitors interact with the website.</p>
                 </div>
             </div>
             <div class="preference-option">
                 <input type="checkbox" id="prefMarketing" checked>
                 <div>
                     <strong id="lblMarketing">Marketing Cookies</strong>
-                    <p id="descMarketing" style="color: #666; font-size: 0.8rem;">Used to deliver relevant advertisements and offers.</p>
+                    <p id="descMarketing" style="color: #64748b; font-size: 0.85rem;">Used to deliver relevant advertisements and offers.</p>
                 </div>
             </div>
             <div class="modal-buttons">
@@ -502,7 +526,7 @@
             }
         };
 
-        // Otomatik wasyon banyè yo chak 5 segonn
+        // Kanpe pou 8 segonn sou chak banyè (8000 milisègond)
         let currentSlide = 0;
         function startBannerSlider() {
             const slides = document.querySelectorAll('.banner-slide');
@@ -511,7 +535,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 5000);
+            }, 8000);
         }
 
         function changeLanguage(lang) {
@@ -679,7 +703,6 @@
                     return;
                 }
 
-                // Sere imèl la otomatikman nan lis abònen yo lè li fè tranzaksyon an
                 let savedEmails = JSON.parse(localStorage.getItem('berdSendSubscribers') || '[]');
                 if (!savedEmails.includes(email)) {
                     savedEmails.push(email);
