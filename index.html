@@ -18,7 +18,7 @@
         .header-right { display: flex; align-items: center; gap: 10px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        /* Bouton Login nan anlè toujou */
+        /* Bouton Login / Dekonekte nan anlè */
         .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
         .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -135,9 +135,9 @@
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <!-- 2. Bouton Login lan toujou rete anlè -->
-                <div class="auth-header-trigger" id="authHeaderTrigger" onclick="openAuthModal()">
-                    <div class="header-avatar-icon">👤</div>
+                <!-- 2. Bouton Login / Dekonekte nan anlè a -->
+                <div class="auth-header-trigger" id="authHeaderTrigger" onclick="handleAuthHeaderClick()">
+                    <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
                 </div>
 
@@ -354,7 +354,8 @@
                 lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
-                btnHeaderLogin: "Konekte",
+                btnLogin: "Konekte",
+                btnLogout: "Dekonekte",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
@@ -385,7 +386,8 @@
                 lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
                 lblFeeText: "Transfer Fee (10% VIP Discount):",
                 lblPromo: "Send me promotional offers and updates (Optional)",
-                btnHeaderLogin: "Login",
+                btnLogin: "Login",
+                btnLogout: "Logout",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
@@ -416,7 +418,8 @@
                 lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
                 lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
-                btnHeaderLogin: "Entrar",
+                btnLogin: "Entrar",
+                btnLogout: "Sair",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
@@ -450,7 +453,6 @@
             document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
             document.getElementById('lblFeeText').innerText = t.lblFeeText;
             document.getElementById('lblPromo').innerText = t.lblPromo;
-            document.getElementById('btnHeaderLogin').innerText = t.btnHeaderLogin;
             
             document.getElementById('authModalTitle').innerText = t.authTitle;
             document.getElementById('authModalDesc').innerText = t.authDesc;
@@ -469,11 +471,28 @@
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
                 document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
             }
+
+            updateProfileUI();
         }
 
         function toggleMenu() {
             var menu = document.getElementById("myDropdown");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function handleAuthHeaderClick() {
+            let savedContact = localStorage.getItem('berdUserContact');
+            if (savedContact) {
+                // Si itilizatè a te konekte, klike la a ap dekonekte l (logout)
+                localStorage.removeItem('berdUserName');
+                localStorage.removeItem('berdUserContact');
+                localStorage.removeItem('berdUserPassword');
+                localStorage.removeItem('berdLastActiveTime');
+                updateProfileUI();
+            } else {
+                // Si li pa te konekte, louvri modal la
+                openAuthModal();
+            }
         }
 
         function openAuthModal() {
@@ -509,13 +528,19 @@
         function updateProfileUI() {
             let savedName = localStorage.getItem('berdUserName');
             let savedContact = localStorage.getItem('berdUserContact');
+            let lang = localStorage.getItem('berdSendLang') || 'ht';
+            let t = translations[lang] || translations['ht'];
 
             if (savedName && savedContact) {
+                // Mizajou badj anba a
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
-                document.getElementById('authHeaderTrigger').style.display = "flex"; // Bouton anlè a ap rete toujou
+
+                // Mizajou bouton anlè a pou l vin "Dekonekte"
+                document.getElementById('btnHeaderLogin').innerText = t.btnLogout;
+                document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
 
                 let namePart = savedName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
                 let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
@@ -527,8 +552,10 @@
                     document.getElementById('vipBadgeDisplay').style.display = "block";
                 }
             } else {
+                // Si li dekonekte
                 document.getElementById('userProfileBadge').style.display = "none";
-                document.getElementById('authHeaderTrigger').style.display = "flex";
+                document.getElementById('btnHeaderLogin').innerText = t.btnLogin;
+                document.getElementById('headerAvatarIcon').innerText = "👤";
                 document.getElementById('userReferralDisplay').style.display = "none";
             }
         }
