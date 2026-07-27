@@ -3,57 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo - BerdSend</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .app-icon { width: 35px; height: 35px; background: #0066cc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #0066cc; }
-        .article-container { width: 100%; max-width: 700px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .article-date { font-size: 0.85rem; color: #0066cc; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
-        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
-        p { font-size: 1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
-        h2 { font-size: 1.3rem; color: #222; margin-top: 25px; margin-bottom: 10px; }
-        .back-blog { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        .back-blog:hover { text-decoration: underline; }
-        footer { margin-top: 30px; text-align: center; color: #777; font-size: 0.8rem; }
-    </style>
+    <title>Atik 14: Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo - Berd-Send</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo-container">
-            <div class="app-icon">BS</div>
-            <div class="logo">BerdSend</div>
-        </a>
-        <a href="blog.html" class="back-blog">⬅️ Retounen nan Blog la</a>
+        <div class="header-container">
+            <!-- Logo Berd-Send -->
+            <a href="index.html" class="logo-link">
+                <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
+            </a>
+
+            <!-- Meni Navigasyon -->
+            <nav>
+                <a href="index.html">Akèy</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Konta</a>
+            </nav>
+
+            <!-- Sèlektè Lang -->
+            <div class="language-selector">
+                <select id="language-select" onchange="location = this.value;">
+                    <option value="#" selected>🇭🇹 Kreyòl</option>
+                    <option value="#">🇺🇸 English</option>
+                    <option value="#">🇫🇷 Français</option>
+                    <option value="#">🇪🇸 Español</option>
+                    <option value="#">🇧🇷 Português</option>
+                </select>
+            </div>
+        </div>
     </header>
 
-    <div class="article-container">
-        <div class="article-date">22 Jen 2026</div>
-        <h1>Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo</h1>
-        
-        <p>Lè w ap voye lajan bay fanmi w oswa moun ou renmen yo ki nan lòt peyi, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi. Se poutèt sa, konfyans se pa sèlman yon opsyon nan domèn sa a; li se fondasyon absoli kote tout relasyon an poze.</p>
+    <main class="article-container">
+        <article>
+            <h1>Atik 14: Poukisa konfyans enpòtan anpil nan sèvis transfè lajan yo</h1>
+            <p class="meta">Pibliye pa <strong>Berd-Send</strong> | Dat: 2026</p>
 
-        <p>Nan atik sa a, nou pral wè kisa ki fè konfyans tèlman enpòtan ak kijan platfòm yo bati l sou tèm long la.</p>
+            <!-- Bèl imaj ki gen rapò ak konfyans nan sèvis finansyè -->
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop" alt="Poukisa konfyans enpòtan nan transfè lajan" class="article-img">
 
-        <h2>1. Sekirite done ak lajan w</h2>
-        <p>Yon platfòm ki gen konfyans dwe garanti ke ni enfòmasyon pèsonèl ou ni lajan w ap transfere a pwoteje kont tout kalite risk. Sèvi ak teknoloji chifreman avanse se yon prèv angajman sa a.</p>
+            <p>Lè w ap voye lajan bay fanmi w oswa moun ou renmen yo ki nan lòt peyi, ou ap konfye yon pati nan fwi travay di ou bay yon konpayi. Se poutèt sa, konfyans se pa sèlman yon opsyon nan domèn sa a; li se fondasyon absoli kote tout relasyon an poze.</p>
 
-        <h2>2. Transparans san kache-kache</h2>
-        <p>Pa gen anyen ki kraze konfyans pi vit pase frè siplemantè ou dekouvri apre w fin fè tranzaksyon an. Konpayi serye yo montre tout bagay klè depi nan kòmansman: to echanj la, frè yo, ak tan egzak kòb la ap rive.</p>
+            <p>Nan atik sa a, nou pral wè kisa ki fè konfyans tèlman enpòtan ak kijan platfòm yo bati l sou tèm long la.</p>
 
-        <h2>3. Kenbe pwomès yo sou vitès la</h2>
-        <p>Lè w di yon moun kòb la ap rive an segond, ou dwe kenbe pawòl sa a. Respekte angajman yo fè itilizatè yo santi yo an sekirite ak satisfè chak fwa yo itilize sèvis la.</p>
+            <h2>1. Sekirite done ak lajan w</h2>
+            <p>Yon platfòm ki gen konfyans dwe garanti ke ni enfòmasyon pèsonèl ou ni lajan w ap transfere a pwoteje kont tout kalite risk. Sèvi ak teknoloji chifreman avanse se yon prèv angajman sa a.</p>
 
-        <h2>Konklizyon</h2>
-        <p>Konfyans se yon repitasyon ki pran tan pou bati. Nan BerdSend, nou mete sekirite, transparans, ak respè pou itilizatè nou yo an premye pou w ka voye lajan ou ak kè poze total.</p>
-    </div>
+            <h2>2. Transparans san kache-kache</h2>
+            <p>Pa gen anyen ki kraze konfyans pi vit pase frè siplemantè ou dekouvri apre w fin fè tranzaksyon an. Konpayi serye yo montre tout bagay klè depi nan kòmansman: to echanj la, frè yo, ak tan egzak kòb la ap rive.</p>
+
+            <h2>3. Kenbe pwomès yo sou vitès la</h2>
+            <p>Lè w di yon moun kòb la ap rive an segond, ou dwe kenbe pawòl sa a. Respekte angajman yo fè itilizatè yo santi yo an sekirite ak satisfè chak fwa yo itilize sèvis la.</p>
+
+            <h2>Konklizyon</h2>
+            <p>Konfyans se yon repitasyon ki pran tan pou bati. Nan Berd-Send, nou mete sekirite, transparans, ak respè pou itilizatè nou yo an premye pou w ka voye lajan ou ak kè poze total.</p>
+
+            <div class="callout">
+                <h3>Vle fè tranzaksyon an tout konfyans?</h3>
+                <p>Konte sou <strong>Berd-Send</strong> pou voye lajan ou bay moun ou renmen yo san okenn traka!</p>
+            </div>
+
+            <!-- Bouton pou tounen sou paj prensipal blog la -->
+            <div class="back-to-blog">
+                <a href="blog.html" class="back-btn">&larr; Tounen nan paj Blog prensipal la</a>
+            </div>
+        </article>
+    </main>
 
     <footer>
-        &copy; 2026 BerdSend. Tout dwa rezève.
+        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
     </footer>
 
 </body>
