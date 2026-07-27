@@ -3,90 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracking & Suivi de Transfert - BerdSend</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; color: #333; }
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        .logo { height: 50px; width: auto; border-radius: 6px; }
-        .lang-select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
-        .content { max-width: 800px; margin: 30px auto; }
-        .lang-block { display: none; }
-        .lang-block.active { display: block; }
-        h1 { color: #0d6efd; }
-    </style>
+    <title>Atik 17: Kouman pou Swiv yon Transfè sou Berd-Send - Berd-Send</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html">
-            <img src="logo.jpg" alt="BerdSend Logo" class="logo">
-        </a>
-        <select id="languageSelector" class="lang-select" onchange="switchLanguage(this.value)">
-            <option value="ht">Kreyòl</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="pt">Português</option>
-        </select>
+        <div class="header-container">
+            <!-- Logo Berd-Send -->
+            <a href="index.html" class="logo-link">
+                <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
+            </a>
+
+            <!-- Meni Navigasyon -->
+            <nav>
+                <a href="index.html">Akèy</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Konta</a>
+            </nav>
+
+            <!-- Sèlektè Lang -->
+            <div class="language-selector">
+                <select id="language-select" onchange="location = this.value;">
+                    <option value="#" selected>🇭🇹 Kreyòl</option>
+                    <option value="#">🇺🇸 English</option>
+                    <option value="#">🇫🇷 Français</option>
+                    <option value="#">🇪🇸 Español</option>
+                    <option value="#">🇧🇷 Português</option>
+                </select>
+            </div>
+        </div>
     </header>
 
-    <div class="content">
-        <!-- KREYOL -->
-        <article data-lang="ht" class="lang-block active">
-            <h1>Kouman pou Swiv yon Transfè sou BerdSend (Tracking)</h1>
-            <p>Sou BerdSend, nou konprann kijan li enpòtan pou w konnen egzakteman kote lajan w oswa pakèt ou ye. Se poutèt sa nou mete yon sistèm <strong>Tracking an tan reyèl</strong> anplaz.</p>
-            <h3>Etap pou swiv yon transfè:</h3>
+    <main class="article-container">
+        <article>
+            <h1>Atik 17: Kouman pou Swiv yon Transfè sou Berd-Send</h1>
+            <p class="meta">Pibliye pa <strong>Berd-Send</strong> | Dat: 20 Jen 2026</p>
+
+            <!-- Bèl imaj ki gen rapò ak swivi transfè ak teknoloji -->
+            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop" alt="Swivi transfè sou Berd-Send" class="article-img">
+
+            <p>Sou Berd-Send, nou konprann kijan li enpòtan pou w konnen egzakteman kote lajan w oswa pakèt ou ye. Se poutèt sa nou mete yon sistèm <strong>Tracking an tan reyèl</strong> anplaz pou ba w tout kontwòl la.</p>
+
+            <h2>Etap pou swiv yon transfè:</h2>
             <ol>
                 <li>Ale sou paj <a href="tracking.html">Tracking BerdSend</a> an.</li>
                 <li>Antre nimewo swivi (Tracking ID) ou te resevwa pa SMS oswa imèl.</li>
                 <li>Klike sou bouton <strong>"Swiv / Track"</strong> la pou w wè tout etap livrezon an.</li>
             </ol>
-        </article>
 
-        <!-- ENGLISH -->
-        <article data-lang="en" class="lang-block">
-            <h1>How to Track Your Transfer on BerdSend</h1>
-            <p>At BerdSend, we know how important it is to keep an eye on your funds or packages. That is why we provide a real-time <strong>Tracking System</strong>.</p>
-            <h3>Steps to track:</h3>
-            <ol>
-                <li>Go to the <a href="tracking.html">BerdSend Tracking</a> page.</li>
-                <li>Enter your unique Tracking ID sent via SMS or email.</li>
-                <li>Click <strong>"Track"</strong> to see live status updates.</li>
-            </ol>
-        </article>
+            <div class="callout">
+                <h3>Vle verifye yon kòd kounye a?</h3>
+                <p>Ale sou [paj tracking](tracking.html) nou an pou w wè sitiyasyon transfè ou an dirèk!</p>
+            </div>
 
-        <!-- FRANCAIS -->
-        <article data-lang="fr" class="lang-block">
-            <h1>Comment Suivre un Transfert sur BerdSend</h1>
-            <p>Chez BerdSend, la transparence est notre priorité. Grâce à notre outil de <strong>Suivi en temps réel</strong>, vous pouvez vérifier le statut de votre transaction à tout moment.</p>
-            <h3>Étapes à suivre :</h3>
-            <ol>
-                <li>Rendez-vous sur la page <a href="tracking.html">Suivi BerdSend</a>.</li>
-                <li>Entrez votre numéro de suivi (Tracking ID).</li>
-                <li>Cliquez sur <strong>"Suivre"</strong> pour voir les détails.</li>
-            </ol>
+            <!-- Bouton pou tounen sou paj prensipal blog la -->
+            <div class="back-to-blog">
+                <a href="blog.html" class="back-btn">&larr; Tounen nan paj Blog prensipal la</a>
+            </div>
         </article>
+    </main>
 
-        <!-- PORTUGUES -->
-        <article data-lang="pt" class="lang-block">
-            <h1>Como Rastrear sua Transferência no BerdSend</h1>
-            <p>No BerdSend, garantimos total transparência. Use nosso sistema de <strong>Rastreamento em tempo real</strong> para acompanhar o envio do seu dinheiro ou encomenda.</p>
-            <h3>Passos para rastrear:</h3>
-            <ol>
-                <li>Acesse a página de <a href="tracking.html">Rastreamento BerdSend</a>.</li>
-                <li>Insira o seu código de rastreio (Tracking ID).</li>
-                <li>Clique em <strong>"Rastrear"</strong> para ver a atualização.</li>
-            </ol>
-        </article>
-    </div>
+    <footer>
+        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
+    </footer>
 
-    <script>
-        function switchLanguage(lang) {
-            document.querySelectorAll('.lang-block').forEach(el => {
-                el.classList.remove('active');
-            });
-            const selected = document.querySelector(`[data-lang="${lang}"]`);
-            if (selected) selected.classList.add('active');
-        }
-    </script>
 </body>
 </html>
