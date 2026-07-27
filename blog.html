@@ -3,631 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Blog - BerdSend</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-        body {
-            background-color: #f9f9f9;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        header {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            border-bottom: 1px solid #eee;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        .app-logo-img {
-            height: 65px !important;
-            width: auto !important;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .lang-select {
-            background: #fff;
-            border: 1px solid #ddd;
-            color: #333;
-            padding: 6px 10px;
-            border-radius: 6px;
-            outline: none;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .menu-container {
-            position: relative;
-        }
-        .menu-btn {
-            background: none;
-            border: none;
-            color: #333;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 40px;
-            background: #fff;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
-            border-radius: 6px;
-            overflow: hidden;
-            width: 190px;
-            z-index: 1000;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 15px;
-            color: #333;
-            text-decoration: none;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .dropdown-menu a:hover {
-            background: #f1f1f1;
-        }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #111;
-        }
-        .subtitle {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .article-card {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .article-card:last-child {
-            border-bottom: none;
-        }
-        .article-date {
-            font-size: 0.8rem;
-            color: #0066cc;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-        .article-title {
-            font-size: 1.3rem;
-            color: #111;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        .article-title:hover {
-            color: #0066cc;
-        }
-        .article-snippet {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-        .read-more {
-            display: inline-block;
-            color: #0066cc;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .read-more:hover {
-            text-decoration: underline;
-        }
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #777;
-            font-size: 0.8rem;
-        }
-        @media (min-width: 768px) {
-            .app-logo-img {
-                width: 130px !important;
-                height: auto !important;
-                max-width: none !important;
-            }
-        }
-    </style>
+    <title>Blog - Berd-Send</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo-container">
-            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
-        </a>
-        <div class="header-right">
-            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
-                <option value="ht">🇭🇹 Kreyòl</option>
-                <option value="en">🇺🇸 English</option>
-                <option value="pt">🇧🇷 Português</option>
-            </select>
-            <div class="menu-container">
-                <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                <div id="myDropdown" class="dropdown-menu">
-                    <a href="index.html" id="menuHome">Akèy</a>
-                    <a href="blog.html" id="menuBlog">Blog</a>
-                    <a href="privacy.html" id="menuPrivacy">Politik Konfidansyalite</a>
-                    <a href="terms.html" id="menuTerms">Kondisyon Sèvis</a>
-                    <a href="contact.html" id="menuContact">Kontakte Nou</a>
-                    <a href="faq.html" id="menuFaq">Kèstyon yo poze souvan</a>
-                </div>
-            </div>
-        </div>
+        <nav>
+            <a href="index.html">Akèy</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="contact.html">Konta</a>
+        </nav>
     </header>
 
-    <div class="container">
-        <h1 id="blogHeader">Blog & Nouvèl</h1>
-        <p class="subtitle" id="blogSub">Rete enfòme ak dènye konsèy ak enfòmasyon sou transfè lajan.</p>
+    <main class="blog-container">
+        <h1>Tout Atik ak Konsèy sou Berd-Send</h1>
+        <p class="subtitle">Detounen tout dènye enfòmasyon ak gid nou yo sou finans, e-commerce, ak teknoloji.</p>
 
-        <!-- Atik 17 -->
-        <div class="article-card">
-            <div class="article-date" id="date17">Mèkredi, 20 Novanm 2024</div>
-            <a href="atik-17.html" class="article-title" id="title17">Kòman pou w suiv yon transfè lajan sou Entènèt?</a>
-            <p class="article-snippet" id="snip17">Dekouvri fason pou w suiv vèsman ou yo an tan reyèl ak nimewo swivi a pou w gen lapè nan tèt ou.</p>
-            <a href="atik-17.html" class="read-more" id="more17">Li plis &rarr;</a>
+        <div class="blog-grid">
+            <!-- Atik 1 - 17 -->
+            <article class="blog-card">
+                <h2><a href="atik-1.html">Atik 1: Sèvis Transfè Lajan Berd-Send</a></h2>
+                <p>Kijan Berd-Send ap fasilite transfè lajan w yo an sekirite.</p>
+                <a href="atik-1.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-2.html">Atik 2: Sekirite nan Tranzaksyon Dijital</a></h2>
+                <p>Konsèy enpòtan pou pwoteje kont ak lajan w sou entènèt.</p>
+                <a href="atik-2.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-3.html">Atik 3: Avantañ Sèvi ak Berd-Send</a></h2>
+                <p>Poukisa ou dwe chwazi Berd-Send pou tout transfè w yo.</p>
+                <a href="atik-3.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-4.html">Atik 4: Kijan pou w Voye Lajan Fasil</a></h2>
+                <p>Etap pa etap pou fè yon transfè san traka ak Berd-Send.</p>
+                <a href="atik-4.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-5.html">Atik 5: Swivi sou Transfè w yo</a></h2>
+                <p>Kijan pou w verifye kote transfè lajan w lan ye an tan reyèl.</p>
+
+                <a href="atik-5.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-6.html">Atik 6: Frè ak Tarifikasyon ki Aseptab</a></h2>
+                <p>Konprann bon tarif ak pi bon opsyon nou ofri yo.</p>
+                <a href="atik-6.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-7.html">Atik 7: Sipò Kliyan 24/7</a></h2>
+                <p>Ekip sipò nou an toujou disponib pou reponn kesyon w yo.</p>
+                <a href="atik-7.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-8.html">Atik 8: Konsèy sou Finans Pèsonèl</a></h2>
+                <p>Kijan pou w jere lajan w anvan ak apre chak transfè.</p>
+                <a href="atik-8.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-9.html">Atik 9: Transfè Entènasyonal Fasil</a></h2>
+                <p>Voye lajan bay fanmi w ak zanmi w toupatou sou lafrik ak karayib la.</p>
+                <a href="atik-9.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-10.html">Atik 10: Aplike Sou Entènèt ak Berd-Send</a></h2>
+                <p>Sèvi ak aplikasyon mobil ak sit nou an pou jere lajan w.</p>
+
+                <a href="atik-10.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-11.html">Atik 11: Pwoteje Tèt ou Kont Fo Sit</a></h2>
+                <p>Kijan pou w konnen ou sou vre sit Berd-Send lan.</p>
+                <a href="atik-11.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-12.html">Atik 12: Economize sou Frè Enpòtan</a></h2>
+                <p>Metòd pou w peye mwens sou chak tranzaksyon finansyè.</p>
+                <a href="atik-12.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-13.html">Atik 13: Solisyon Finansyè pou Biznis</a></h2>
+                <p>Kijan ti biznis yo ka sèvi ak Berd-Send pou pèman yo.</p>
+                <a href="atik-13.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-14.html">Atik 14: Kijan pou w Resevwa Lajan</a></h2>
+                <p>Solisyon rapid pou moun ki bezwen retire lajan an sekirite.</p>
+                <a href="atik-14.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-15.html">Atik 15: Nouveote sou Platfòm nan</a></h2>
+                <p>Gade dènye fonksyon ak amelyorasyon ki te fèt sou sit la.</p>
+                <a href="atik-15.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-16.html">Atik 16: Peye Sèvis ak Fakti anlann</a></h2>
+                <p>Fasilite pèman fakti ak sèvis ou yo san deplase.</p>
+                <a href="atik-16.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-17.html">Atik 17: Gid Konplè pou Nouvo Itilizatè</a></h2>
+                <p>Tout sa w bezwen konnen lè w ap kreye kont ou pou premye fwa.</p>
+                <a href="atik-17.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <!-- Atik 18 - 35 -->
+            <article class="blog-card">
+                <h2><a href="atik-18.html">Atik 18: Kijan pou w Fè Lajan sou Entènèt an 2026</a></h2>
+                <p>Pi bon fason ak opòtinite pou devlope yon revni sou entènèt an 2026.</p>
+                <a href="atik-18.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-19.html">Atik 19: Kijan pou w Kreye yon Sit Wèb Pwofesyonèl</a></h2>
+                <p>Gid esansyèl pou monte sit wèb biznis ou ak bon kalite ak sekirite.</p>
+                <a href="atik-19.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-20.html">Atik 20: Kijan pou w Jere Finans ou Pi Byen nan Lane 2026</a></h2>
+                <p>Konsèy pratik sou bidjè, fon d'ijans, ak automatizasyon transfè yo.</p>
+                <a href="atik-20.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-21.html">Atik 21: Kijan pou w Kreye ak Jere yon Store sou Amazon</a></h2>
+                <p>Etap kle pou anrejistre mak ou ak vann pwodui sou Amazon an 2026.</p>
+                <a href="atik-21.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-22.html">Atik 22: Kijan pou w Kòmanse Vann sou Walmart Marketplace</a></h2>
+                <p>Dekouvri kijan pou w ba biznis ou aksè ak kliyan Walmart an 2026.</p>
+                <a href="atik-22.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-23.html">Atik 23: Kijan pou w Fè Lajan ak Pwogram Afilye Amazon</a></h2>
+                <p>Gid pou fèt komisyon lè w rekòmande pwodui Amazon sou sit ak rezo sosial.</p>
+                <a href="atik-23.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-24.html">Atik 24: Kijan pou w Travay ak Reyisi nan yon Call Center</a></h2>
+                <p>Konpetans ak konsèy pou w jwenn travay epi reyisi nan sèvis kliyan.</p>
+                <a href="atik-24.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-25.html">Atik 25: Kijan pou w Kreye yon Store sou Shopify</a></h2>
+                <p>Etap senp pou monte ak lanse pwòp boutique e-commerce ou sou Shopify.</p>
+                <a href="atik-25.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-26.html">Atik 26: Ki Kote pou w Jwenn Founisè pou Pwodui E-Commerce</a></h2>
+                <p>Dekouvri pi bon platfòm ak fason pou w kontakte manifakti ak grosist.</p>
+                <a href="atik-26.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-27.html">Atik 27: Kijan pou w Kreye yon Biznis Dropshipping ki Gen Siksè</a></h2>
+                <p>Lanse yon boutique san ou pa gen pwòp stock pwodui pa w.</p>
+                <a href="atik-27.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-28.html">Atik 28: Kijan pou w Fè Lajan ak Kreyasyon Kontni sou TikTok</a></h2>
+                <p>Monetize pwofil ou ak videyo kout, TikTok Shop, ak afilyasyon.</p>
+                <a href="atik-28.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-29.html">Atik 29: Kijan pou w Vann Pwodui Dijital (Ebooks, Kou, Templates)</a></h2>
+                <p>Kreye ak vann pwodui dijital pou fòme yon revni pasif entènasyonal.</p>
+                <a href="atik-29.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-30.html">Atik 30: Kijan pou w Vin Freelancer epi Vann Sèvis ou</a></h2>
+                <p>Fè lajan sou Fiverr ak Upwork ak konpetans teknolojik oswa kreyatif ou.</p>
+                <a href="atik-30.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-31.html">Atik 31: Kijan pou w Vin yon Kreyatè UGC (User Generated Content)</a></h2>
+                <p>Filme videyo pou gwo mak yo epi touche san w pa bezwen anpil abòne.</p>
+                <a href="atik-31.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-32.html">Atik 32: Kijan pou w Sèvi ak Entèlijans Artifisyèl (IA) nan Biznis</a></h2>
+                <p>Automatize kontni, piblisite, ak sèvis kliyan nan biznis ou an 2026.</p>
+                <a href="atik-32.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-33.html">Atik 33: Kijan pou w Vin yon Asistan Virtiyèl (VA)</a></h2>
+                <p>Travay depi lakay ou pou antreprenè ak konpayi atravè mond lan.</p>
+                <a href="atik-33.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-34.html">Atik 34: Kijan pou w Kreye yon Ajans Social Media Marketing (SMMA)</a></h2>
+                <p>Jere rezo sosyal ak piblisite pou ti biznis yo epi touche chak mwa.</p>
+                <a href="atik-34.html" class="read-more">Li plis &rarr;</a>
+            </article>
+
+            <article class="blog-card">
+                <h2><a href="atik-35.html">Atik 35: High-Ticket Affiliate Marketing an 2026</a></h2>
+                <p>Kijan pou w fè gwo komisyon sou entènèt ak pwogram afilyasyon pwofesyonèl.</p>
+                <a href="atik-35.html" class="read-more">Li plis &rarr;</a>
+            </article>
         </div>
-
-        <!-- Atik 16 -->
-        <div class="article-card">
-            <div class="article-date" id="date16">Lendi, 18 Novanm 2024</div>
-            <a href="atik-16.html" class="article-title" id="title16">Èske transfè lajan sou Entènèt yo ansekirite?</a>
-            <p class="article-snippet" id="snip16">Aprann kijan teknoloji chifreman ak sistèm sekirite avanse yo pwoteje lajan ou ak done pèsonèl ou yo.</p>
-            <a href="atik-16.html" class="read-more" id="more16">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 15 -->
-        <div class="article-card">
-            <div class="article-date" id="date15">Mouvèdi, 15 Novanm 2024</div>
-            <a href="atik-15.html" class="article-title" id="title15">Konsèy pou evite fwod lè w ap voye lajan</a>
-            <p class="article-snippet" id="snip15">Konsèy esansyèl pou w pa tonbe nan pyèj moun k ap fè eskanmòt ak fo sit sou entènèt.</p>
-            <a href="atik-15.html" class="read-more" id="more15">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 14 -->
-        <div class="article-card">
-            <div class="article-date" id="date14">Mardi, 12 Novanm 2024</div>
-            <a href="atik-14.html" class="article-title" id="title14">Wòl transfè lajan yo nan ekonomi Ayiti a</a>
-            <p class="article-snippet" id="snip14">Kijan lajan dyaspora a voye ap ede fanmi yo ak devlopman biznis lokal yo an Ayiti.</p>
-            <a href="atik-14.html" class="read-more" id="more14">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 13 -->
-        <div class="article-card">
-            <div class="article-date" id="date13">Dimanch, 10 Novanm 2024</div>
-            <a href="atik-13.html" class="article-title" id="title13">Kisa ki to de chanj la e kijan li fèt?</a>
-            <p class="article-snippet" id="snip13">Konprann kijan to de chanj la fonksyone epi fason li enfliyanse kantite lajan moun k ap resevwa a ap jwenn.</p>
-            <a href="atik-13.html" class="read-more" id="more13">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 12 -->
-        <div class="article-card">
-            <div class="article-date" id="date12">Vandredi, 08 Novanm 2024</div>
-            <a href="atik-12.html" class="article-title" id="title12">Kijan pou w voye lajan sou yon kont bankè dirèkteman?</a>
-            <p class="article-snippet" id="snip12">Gid etap pa etap pou fè transfè dirèk nan kont bankè san w pa bezwen deplase.</p>
-            <a href="atik-12.html" class="read-more" id="more12">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 11 -->
-        <div class="article-card">
-            <div class="article-date" id="date11">Mèkredi, 06 Novanm 2024</div>
-            <a href="atik-11.html" class="article-title" id="title11">Avantaj ki genyen nan itilize yon aplikasyon mobil pou voye lajan</a>
-            <p class="article-snippet" id="snip11">Rapide, fasil, ak disponib 24/7: dekouvri poukisa aplikasyon mobil yo se pi bon opsyon an.</p>
-            <a href="atik-11.html" class="read-more" id="more11">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 10 -->
-        <div class="article-card">
-            <div class="article-date" id="date10">Lendi, 04 Novanm 2024</div>
-            <a href="atik-10.html" class="article-title" id="title10">Transfè Lajan Entènasyonal: Kisa ou dwe konnen anvan w voye?</a>
-            <p class="article-snippet" id="snip10">Tout detay sou frè yo, to de chanj, ak dokiman ki nesesè pou yon transfè san traka.</p>
-            <a href="atik-10.html" class="read-more" id="more10">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 9 -->
-        <div class="article-card">
-            <div class="article-date" id="date9">Samdi, 02 Novanm 2024</div>
-            <a href="atik-9.html" class="article-title" id="title9">Kijan pou w chwazi pi bon sèvis transfè lajan pou bezwen w yo</a>
-            <p class="article-snippet" id="snip9">Konparezon ant vitès, pri, ak fasilite pou w fè pi bon chwa a.</p>
-            <a href="atik-9.html" class="read-more" id="more9">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 8 -->
-        <div class="article-card">
-            <div class="article-date" id="date8">Mouvèdi, 31 Oktòb 2024</div>
-            <a href="atik-8.html" class="article-title" id="title8">Kisa pou w fè si transfè lajan w lan pran reta?</a>
-            <p class="article-snippet" id="snip8">Rezon ki ka fè yon transfè pran tan ak etap pou w swiv pou rezoud pwoblèm nan.</p>
-            <a href="atik-8.html" class="read-more" id="more8">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 7 -->
-        <div class="article-card">
-            <div class="article-date" id="date7">Mardi, 29 Oktòb 2024</div>
-            <a href="atik-7.html" class="article-title" id="title7">Empa teknoloji sou transfè lajan mondyal yo</a>
-            <p class="article-snippet" id="snip7">Kijan dijitalizasyon an ap rann sèvis finansyè yo pi entelijan ak aksyonab pou tout moun.</p>
-            <a href="atik-7.html" class="read-more" id="more7">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 6 -->
-        <div class="article-card">
-            <div class="article-date" id="date6">Dimanch, 27 Oktòb 2024</div>
-            <a href="atik-6.html" class="article-title" id="title6">Kijan pou w ede fanmi w jere lajan ou voye ba yo pi byen</a>
-            <p class="article-snippet" id="snip6">Strateji ak konsèy pou asire lajan w voye a sèvi nan pwojè k ap dire lontan.</p>
-            <a href="atik-6.html" class="read-more" id="more6">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 5 -->
-        <div class="article-card">
-            <div class="article-date" id="date5">Vandredi, 25 Oktòb 2024</div>
-            <a href="atik-5.html" class="article-title" id="title5">Sèvi ak woulman dijital pou transfè lajan an sekirite</a>
-            <p class="article-snippet" id="snip5">Avantaj wallet dijital yo pou voye ak resevwa lajan san kouri okenn risk.</p>
-            <a href="atik-5.html" class="read-more" id="more5">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 4 -->
-        <div class="article-card">
-            <div class="article-date" id="date4">Mèkredi, 23 Oktòb 2024</div>
-            <a href="atik-4.html" class="article-title" id="title4">Aksyon pou pwoteje kont ou kont aksè san pèmisyon</a>
-            <p class="article-snippet" id="snip4">Konfigirasyon sekirite enpòtan tankou otantifikasyon 2 etap pou pwoteje lajan w.</p>
-            <a href="atik-4.html" class="read-more" id="more4">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 3 -->
-        <div class="article-card">
-            <div class="article-date" id="date3">Lendi, 21 Oktòb 2024</div>
-            <a href="atik-3.html" class="article-title" id="title3">Poukisa to de chanj ka varye pandan jounen an?</a>
-            <p class="article-snippet" id="snip3">Eskplikasyon sou mache finansyè entènasyonal yo ak sa k fè to chanj lan deplase.</p>
-            <a href="atik-3.html" class="read-more" id="more3">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 2 -->
-        <div class="article-card">
-            <div class="article-date" id="date2">Samdi, 19 Oktòb 2024</div>
-            <a href="atik-2.html" class="article-title" id="title2">Kijan pou w benefisye pi bon to transfè pou Brezil ak Ayiti</a>
-            <p class="article-snippet" id="snip2">Konsèy pratik pou voye plis lajan pandan w ap peye mwens frè sou chanj lan.</p>
-            <a href="atik-2.html" class="read-more" id="more2">Li plis &rarr;</a>
-        </div>
-
-        <!-- Atik 1 -->
-        <div class="article-card">
-            <div class="article-date" id="date1">Mouvèdi, 17 Oktòb 2024</div>
-            <a href="atik-1.html" class="article-title" id="title1">Byenvini sou Blog BerdSend la!</a>
-            <p class="article-snippet" id="snip1">Misyon nou se fasilite transfè lajan w yo ansekirite e ak pi bon pousantaj sou mache a.</p>
-            <a href="atik-1.html" class="read-more" id="more1">Li plis &rarr;</a>
-        </div>
-
-    </div>
+    </main>
 
     <footer>
-        <p>&copy; 2024 BerdSend. Tout dwa rezève.</p>
+        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
     </footer>
 
-    <script>
-        function toggleMenu() {
-            var dropdown = document.getElementById("myDropdown");
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            } else {
-                dropdown.style.display = "block";
-            }
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-menu");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === "block") {
-                        openDropdown.style.display = "none";
-                    }
-                }
-            }
-        }
-
-        const translations = {
-            ht: {
-                pageTitle: "Blog - BerdSend",
-                blogHeader: "Blog & Nouvèl",
-                blogSub: "Rete enfòme ak dènye konsèy ak enfòmasyon sou transfè lajan.",
-                menuHome: "Akèy",
-                menuBlog: "Blog",
-                menuPrivacy: "Politik Konfidansyalite",
-                menuTerms: "Kondisyon Sèvis",
-                menuContact: "Kontakte Nou",
-                menuFaq: "Kèstyon yo poze souvan",
-                readMore: "Li plis &rarr;",
-
-                date17: "Mèkredi, 20 Novanm 2024",
-                title17: "Kòman pou w suiv yon transfè lajan sou Entènèt?",
-                snip17: "Dekouvri fason pou w suiv vèsman ou yo an tan reyèl ak nimewo swivi a pou w gen lapè nan tèt ou.",
-
-                date16: "Lendi, 18 Novanm 2024",
-                title16: "Èske transfè lajan sou Entènèt yo ansekirite?",
-                snip16: "Aprann kijan teknoloji chifreman ak sistèm sekirite avanse yo pwoteje lajan ou ak done pèsonèl ou yo.",
-
-                date15: "Mouvèdi, 15 Novanm 2024",
-                title15: "Konsèy pou evite fwod lè w ap voye lajan",
-                snip15: "Konsèy esansyèl pou w pa tonbe nan pyèj moun k ap fè eskanmòt ak fo sit sou entènèt.",
-
-                date14: "Mardi, 12 Novanm 2024",
-                title14: "Wòl transfè lajan yo nan ekonomi Ayiti a",
-                snip14: "Kijan lajan dyaspora a voye ap ede fanmi yo ak devlopman biznis lokal yo an Ayiti.",
-
-                date13: "Dimanch, 10 Novanm 2024",
-                title13: "Kisa ki to de chanj la e kijan li fèt?",
-                snip13: "Konprann kijan to de chanj la fonksyone epi fason li enfliyanse kantite lajan moun k ap resevwa a ap jwenn.",
-
-                date12: "Vandredi, 08 Novanm 2024",
-                title12: "Kijan pou w voye lajan sou yon kont bankè dirèkteman?",
-                snip12: "Gid etap pa etap pou fè transfè dirèk nan kont bankè san w pa bezwen deplase.",
-
-                date11: "Mèkredi, 06 Novanm 2024",
-                title11: "Avantaj ki genyen nan itilize yon aplikasyon mobil pou voye lajan",
-                snip11: "Rapide, fasil, ak disponib 24/7: dekouvri poukisa aplikasyon mobil yo se pi bon opsyon an.",
-
-                date10: "Lendi, 04 Novanm 2024",
-                title10: "Transfè Lajan Entènasyonal: Kisa ou dwe konnen anvan w voye?",
-                snip10: "Tout detay sou frè yo, to de chanj, ak dokiman ki nesesè pou yon transfè san traka.",
-
-                date9: "Samdi, 02 Novanm 2024",
-                title9: "Kijan pou w chwazi pi bon sèvis transfè lajan pou bezwen w yo",
-                snip9: "Konparezon ant vitès, pri, ak fasilite pou w fè pi bon chwa a.",
-
-                date8: "Mouvèdi, 31 Oktòb 2024",
-                title8: "Kisa pou w fè si transfè lajan w lan pran reta?",
-                snip8: "Rezon ki ka fè yon transfè pran tan ak etap pou w swiv pou rezoud pwoblèm nan.",
-
-                date7: "Mardi, 29 Oktòb 2024",
-                title7: "Empa teknoloji sou transfè lajan mondyal yo",
-                snip7: "Kijan dijitalizasyon an ap rann sèvis finansyè yo pi entelijan ak aksyonab pou tout moun.",
-
-                date6: "Dimanch, 27 Oktòb 2024",
-                title6: "Kijan pou w ede fanmi w jere lajan ou voye ba yo pi byen",
-                snip6: "Strateji ak konsèy pou asire lajan w voye a sèvi nan pwojè k ap dire lontan.",
-
-                date5: "Vandredi, 25 Oktòb 2024",
-                title5: "Sèvi ak woulman dijital pou transfè lajan an sekirite",
-                snip5: "Avantaj wallet dijital yo pou voye ak resevwa lajan san kouri okenn risk.",
-
-                date4: "Mèkredi, 23 Oktòb 2024",
-                title4: "Aksyon pou pwoteje kont ou kont aksè san pèmisyon",
-                snip4: "Konfigirasyon sekirite enpòtan tankou otantifikasyon 2 etap pou pwoteje lajan w.",
-
-                date3: "Lendi, 21 Oktòb 2024",
-                title3: "Poukisa to de chanj ka varye pandan jounen an?",
-                snip3: "Eskplikasyon sou mache finansyè entènasyonal yo ak sa k fè to chanj lan deplase.",
-
-                date2: "Samdi, 19 Oktòb 2024",
-                title2: "Kijan pou w benefisye pi bon to transfè pou Brezil ak Ayiti",
-                snip2: "Konsèy pratik pou voye plis lajan pandan w ap peye mwens frè sou chanj lan.",
-
-                date1: "Mouvèdi, 17 Oktòb 2024",
-                title1: "Byenvini sou Blog BerdSend la!",
-                snip1: "Misyon nou se fasilite transfè lajan w yo ansekirite e ak pi bon pousantaj sou mache a."
-            },
-            en: {
-                pageTitle: "Blog - BerdSend",
-                blogHeader: "Blog & News",
-                blogSub: "Stay informed with the latest tips and information on money transfers.",
-                menuHome: "Home",
-                menuBlog: "Blog",
-                menuPrivacy: "Privacy Policy",
-                menuTerms: "Terms of Service",
-                menuContact: "Contact Us",
-                menuFaq: "FAQ",
-                readMore: "Read more &rarr;",
-
-                date17: "Wednesday, November 20, 2024",
-                title17: "How to track an online money transfer?",
-                snip17: "Discover how to track your transfers in real-time with your tracking number for peace of mind.",
-
-                date16: "Monday, November 18, 2024",
-                title16: "Are online money transfers safe?",
-                snip16: "Learn how encryption technology and advanced security systems protect your money and personal data.",
-
-                date15: "Thursday, November 15, 2024",
-                title15: "Tips to avoid fraud when sending money",
-                snip15: "Essential tips to avoid scams and fake websites online.",
-
-                date14: "Tuesday, November 12, 2024",
-                title14: "The role of remittances in Haiti's economy",
-                snip14: "How diaspora money transfers support families and local business growth in Haiti.",
-
-                date13: "Sunday, November 10, 2024",
-                title13: "What is an exchange rate and how is it calculated?",
-                snip13: "Understand how exchange rates work and how they affect the amount the recipient receives.",
-
-                date12: "Friday, November 08, 2024",
-                title12: "How to send money directly to a bank account?",
-                snip12: "Step-by-step guide to making direct bank transfers conveniently.",
-
-                date11: "Wednesday, November 06, 2024",
-                title11: "Benefits of using a mobile app to send money",
-                snip11: "Fast, easy, and available 24/7: discover why mobile apps are the best option.",
-
-                date10: "Monday, November 04, 2024",
-                title10: "International Money Transfers: What you need to know before sending",
-                snip10: "All details about fees, exchange rates, and required documents for a smooth transfer.",
-
-                date9: "Saturday, November 02, 2024",
-                title9: "How to choose the best money transfer service for your needs",
-                snip9: "Comparison between speed, cost, and ease of use to make the right choice.",
-
-                date8: "Thursday, October 31, 2024",
-                title8: "What to do if your money transfer is delayed?",
-                snip8: "Reasons why a transfer might take time and steps to resolve the issue.",
-
-                date7: "Tuesday, October 29, 2024",
-                title7: "The impact of technology on global money transfers",
-                snip7: "How digitalization makes financial services smarter and more accessible for everyone.",
-
-                date6: "Sunday, October 27, 2024",
-                title6: "How to help your family manage money better",
-                snip6: "Strategies and tips to ensure remittances contribute to long-term projects.",
-
-                date5: "Friday, October 25, 2024",
-                title5: "Using digital wallets for secure money transfers",
-                snip5: "Benefits of digital wallets for sending and receiving money safely.",
-
-                date4: "Wednesday, October 23, 2024",
-                title4: "Steps to protect your account against unauthorized access",
-                snip4: "Important security settings like 2-factor authentication to protect your funds.",
-
-                date3: "Monday, October 21, 2024",
-                title3: "Why exchange rates fluctuate during the day?",
-                snip3: "Explanation of international financial markets and why exchange rates change.",
-
-                date2: "Saturday, October 19, 2024",
-                title2: "How to get the best transfer rates for Brazil and Haiti",
-                snip2: "Practical tips to send more money while paying lower exchange fees.",
-
-                date1: "Thursday, October 17, 2024",
-                title1: "Welcome to the BerdSend Blog!",
-                snip1: "Our mission is to make money transfers safe and simple with competitive rates."
-            },
-            pt: {
-                pageTitle: "Blog - BerdSend",
-                blogHeader: "Blog & Notícias",
-                blogSub: "Fique informado com as últimas dicas e informações sobre transferências de dinheiro.",
-                menuHome: "Início",
-                menuBlog: "Blog",
-                menuPrivacy: "Política de Privacidade",
-                menuTerms: "Termos de Serviço",
-                menuContact: "Fale Conosco",
-                menuFaq: "Perguntas Frequentes",
-                readMore: "Leia mais &rarr;",
-
-                date17: "Quarta-feira, 20 de Novembro de 2024",
-                title17: "Como rastrear uma transferência de dinheiro online?",
-                snip17: "Descubra como rastrear seus envios em tempo real com seu número de rastreamento.",
-
-                date16: "Segunda-feira, 18 de Novembro de 2024",
-                title16: "As transferências de dinheiro online são seguras?",
-                snip16: "Saiba como a tecnologia de criptografia e sistemas de segurança protegem seu dinheiro.",
-
-                date15: "Quinta-feira, 15 de Novembro de 2024",
-                title15: "Dicas para evitar fraudes ao enviar dinheiro",
-                snip15: "Dicas essenciais para não cair em golpes e sites falsos na internet.",
-
-                date14: "Terça-feira, 12 de Novembro de 2024",
-                title14: "O papel das remessas na economia do Haiti",
-                snip14: "Como o envio de dinheiro da diáspora ajuda as famílias e negócios locais no Haiti.",
-
-                date13: "Domingo, 10 de Novembro de 2024",
-                title13: "O que é taxa de câmbio e como ela funciona?",
-                snip13: "Entenda como a taxa de câmbio é calculada e como afeta o valor recebido.",
-
-                date12: "Sexta-feira, 08 de Novembro de 2024",
-                title12: "Como enviar dinheiro diretamente para uma conta bancária?",
-                snip12: "Guia passo a passo para fazer transferências bancárias diretas com facilidade.",
-
-                date11: "Quarta-feira, 06 de Novembro de 2024",
-                title11: "Vantagens de usar um aplicativo móvel para enviar dinheiro",
-                snip11: "Rápido, fácil e disponível 24/7: descubra por que os aplicativos são a melhor opção.",
-
-                date10: "Segunda-feira, 04 de Novembro de 2024",
-                title10: "Transferências Internacionais: O que você precisa saber antes de enviar",
-                snip10: "Detalhes sobre taxas, câmbio e documentos necessários para uma transferência tranquila.",
-
-                date9: "Sábado, 02 de Novembro de 2024",
-                title9: "Como escolher o melhor serviço de transferência para você",
-                snip9: "Comparação entre velocidade, custo e facilidade para fazer a melhor escolha.",
-
-                date8: "Quinta-feira, 31 de Outubro de 2024",
-                title8: "O que fazer se sua transferência de dinheiro atrasar?",
-                snip8: "Razões pelas quais um envio pode demorar e etapas para resolver o problema.",
-
-                date7: "Terça-feira, 29 de Outubro de 2024",
-                title7: "O impacto da tecnologia nas transferências globais",
-                snip7: "Como a digitalização torna os serviços financeiros mais acessíveis a todos.",
-
-                date6: "Domingo, 27 de Outubro de 2024",
-                title6: "Como ajudar sua família a gerenciar melhor o dinheiro enviado",
-                snip6: "Estratégias para garantir que as remessas sirvam para projetos sustentáveis.",
-
-                date5: "Sexta-feira, 25 de Outubro de 2024",
-                title5: "Uso de carteiras digitais para transferências seguras",
-                snip5: "Vantagens das carteiras digitais para enviar e receber dinheiro sem riscos.",
-
-                date4: "Quarta-feira, 23 de Outubro de 2024",
-                title4: "Ações para proteger sua conta contra acessos não autorizados",
-                snip4: "Configurações de segurança importantes como autenticação em 2 etapas.",
-
-                date3: "Segunda-feira, 21 de Outubro de 2024",
-                title3: "Por que as taxas de câmbio variam durante o dia?",
-                snip3: "Explicação sobre o mercado financeiro e os motivos das variações cambiais.",
-
-                date2: "Sábado, 19 de Outubro de 2024",
-                title2: "Como conseguir as melhores taxas de transferência para Brasil e Haiti",
-                snip2: "Dicas práticas para enviar mais dinheiro pagando menos taxas de câmbio.",
-
-                date1: "Quinta-feira, 17 de Outubro de 2024",
-                title1: "Bem-vindo ao Blog do BerdSend!",
-                snip1: "Nossa missão é facilitar suas transferências com segurança e melhores taxas."
-            }
-        };
-
-        function changeLanguage(lang) {
-            const data = translations[lang];
-            if (!data) return;
-
-            document.getElementById('pageTitle').innerText = data.pageTitle;
-            document.getElementById('blogHeader').innerText = data.blogHeader;
-            document.getElementById('blogSub').innerText = data.blogSub;
-            document.getElementById('menuHome').innerText = data.menuHome;
-            document.getElementById('menuBlog').innerText = data.menuBlog;
-            document.getElementById('menuPrivacy').innerText = data.menuPrivacy;
-            document.getElementById('menuTerms').innerText = data.menuTerms;
-            document.getElementById('menuContact').innerText = data.menuContact;
-            document.getElementById('menuFaq').innerText = data.menuFaq;
-
-            for (let i = 1; i <= 17; i++) {
-                if (document.getElementById(`date${i}`)) {
-                    document.getElementById(`date${i}`).innerText = data[`date${i}`];
-                    document.getElementById(`title${i}`).innerText = data[`title${i}`];
-                    document.getElementById(`snip${i}`).innerText = data[`snip${i}`];
-                    document.getElementById(`more${i}`).innerHTML = data.readMore;
-                }
-            }
-        }
-    </script>
 </body>
 </html>
