@@ -4,23 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
-    <!-- Enpòte font Inter la -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 70px; }
         
-        .wrapper {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
 
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .app-logo-img { height: 54px; object-fit: contain; border-radius: 8px; }
+        .app-logo-img { height: 48px; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; gap: 12px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
@@ -29,6 +22,26 @@
         .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; }
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
+
+        /* Badj Pwofil Itilizatè a */
+        .user-profile-badge {
+            width: 100%;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .profile-info { display: flex; align-items: center; gap: 15px; }
+        .profile-avatar { width: 45px; height: 45px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+        .profile-details h5 { font-size: 1rem; color: #0f172a; font-weight: 700; }
+        .profile-details p { font-size: 0.85rem; color: #64748b; }
+        .btn-logout { background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .btn-logout:hover { background: #e2e8f0; }
 
         .banner-slider-container {
             width: 100%;
@@ -73,29 +86,12 @@
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
         .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1.05rem; }
         
-        .promo-applied-msg {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1e40af;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            display: none;
-        }
+        .promo-applied-msg { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
 
-        .referral-box {
-            background: #fdf4ff;
-            border: 1px solid #f5d0fe;
-            padding: 14px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #86198f;
-            margin-bottom: 18px;
-            display: none;
-        }
+        .referral-box { background: #fdf4ff; border: 1px solid #f5d0fe; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #86198f; margin-bottom: 18px; display: none; }
         .referral-box strong { font-size: 1.05rem; color: #701a75; }
+
+        .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #b45309; margin-top: 10px; display: none; font-weight: 600; }
 
         .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #475569; cursor: pointer; font-weight: 500; }
         .checkbox-group input { cursor: pointer; width: 18px; height: 18px; }
@@ -112,12 +108,10 @@
         .btn-reject { background-color: #f1f5f9; color: #334155; }
         .btn-customize { background-color: transparent; color: #0066cc; border: 1px solid #0066cc; }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 450px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; }
-        .modal-content h3 { margin-bottom: 18px; color: #0f172a; font-size: 1.2rem; font-weight: 700; }
-        .preference-option { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; font-size: 0.9rem; color: #334155; }
-        .preference-option input { margin-top: 4px; cursor: pointer; width: 16px; height: 16px; }
-        .modal-buttons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; }
+        .modal-content h3 { margin-bottom: 12px; color: #0f172a; font-size: 1.2rem; font-weight: 700; }
+        .modal-content p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
 
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; }
     </style>
@@ -151,6 +145,18 @@
             </div>
         </header>
 
+        <!-- Bèl Badj Pwofil la (Sèlman vizib si itilizatè a deja konekte/enskri) -->
+        <div id="userProfileBadge" class="user-profile-badge" style="display: none;">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatarText">BS</div>
+                <div class="profile-details">
+                    <h5 id="profileNameDisplay">Non Itilizatè</h5>
+                    <p id="profileContactDisplay">imel@example.com</p>
+                </div>
+            </div>
+            <button class="btn-logout" id="btnLogout" onclick="logoutUser()">Dekonekte</button>
+        </div>
+
         <!-- Banyè slider -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
@@ -158,12 +164,12 @@
                 <p id="adv1Desc">Itilize yon kòd pwomosyon epi jwenn <strong>$5</strong> sou premye rechaj ou!</p>
             </div>
             <div class="banner-slide">
-                <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
-                <p id="adv2Desc">Jwenn <strong>$10</strong> lè yon zanmi fè yon rechaj ak kòd ou.</p>
+                <h4 id="adv2Title">🎁 Pwomosyon 7 Premye Jou yo: $10</h4>
+                <p id="adv2Desc">Nan premye 7 jou yo w ap jwenn <strong>$10</strong> pa envitasyon, apre sa <strong>$5</strong> pa envitasyon!</p>
             </div>
             <div class="banner-slide">
-                <h4 id="adv3Title">🔒 Sekirite Total</h4>
-                <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak done w yo.</p>
+                <h4 id="adv3Title">👑 Envite 20 Zanmi = Badj VIP</h4>
+                <p id="adv3Desc">Jwenn yon badj VIP pou <strong>10% rabè</strong> sou frè MonCash ak Natcash!</p>
             </div>
         </div>
 
@@ -208,9 +214,8 @@
                 </div>
             </div>
 
-            <!-- Chan Kòd Pwomosyon (Sèlman pou Rechaj Mobil) -->
             <div class="form-group" id="promoCodeGroup">
-                <label id="lblPromoCode">Promo Code (Mobile Top-Up only):</label>
+                <label id="lblPromoCode">Promo Code (Mobile Top-Up only - Get $5 off):</label>
                 <div class="input-box">
                     <input type="text" id="promoCodeInput" placeholder="eg: BERD5 or FRIEND10">
                 </div>
@@ -222,17 +227,29 @@
             </div>
 
             <div class="summary-box">
+                <div class="summary-row" id="feeRow" style="display:none;">
+                    <span id="lblFeeText">Transfer Fee (10% VIP Discount):</span>
+                    <span id="feeAmount">--</span>
+                </div>
                 <div class="summary-row total">
                     <span id="lblTotalToPay">Total to Pay:</span>
                     <span id="totalCost" style="color: #0f172a;">100.00 USD</span>
                 </div>
             </div>
 
-            <!-- Chan Imèl Obligatwa -->
+            <!-- Chan Non Itilizatè -->
             <div class="form-group">
-                <label id="lblUserEmail">Your Email Address (Required):</label>
+                <label id="lblUserName">Full Name (Non ou):</label>
                 <div class="input-box">
-                    <input type="email" id="userEmail" placeholder="eg: name@example.com">
+                    <input type="text" id="userName" placeholder="eg: Jean Fleury">
+                </div>
+            </div>
+
+            <!-- Chan Imèl oswa Nimewo Telefòn -->
+            <div class="form-group">
+                <label id="lblUserContact">Your Email or Phone Number (Obligatwa):</label>
+                <div class="input-box">
+                    <input type="text" id="userContact" placeholder="eg: name@example.com oswa +509...">
                 </div>
             </div>
 
@@ -243,10 +260,12 @@
                 </div>
             </div>
 
-            <!-- Bwat pou Montre Kòd Pwomosyon Itilizatè a apre enskripsyon -->
             <div id="userReferralDisplay" class="referral-box">
-                <span id="lblYourCodeText">Kòd pwomosyon ou pou bay zanmi ($10 pou ou):</span><br>
+                <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
+                <div id="vipBadgeDisplay" class="vip-badge-box">
+                    👑 <strong>Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash / Natcash.
+                </div>
             </div>
 
             <label class="checkbox-group">
@@ -258,45 +277,28 @@
         </div>
     </div>
 
+    <!-- Modal Verifikasyon Idantite (Apre 5è tan inaktivite) -->
+    <div id="verifyModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
+            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 5 èdtan. Tanpri antre imèl ou oswa nimewo telefòn ou an to konfime idantite w epi kontinye.</p>
+            <div class="form-group">
+                <div class="input-box">
+                    <input type="text" id="verifyInputContact" placeholder="Antre imèl oswa telefòn ou...">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn-submit" onclick="confirmIdentity()">Verifye Idantite 🔓</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bannè Cookie -->
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
         <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
         <div class="cookie-buttons">
-            <button class="cookie-btn btn-accept" id="btnAcceptCookies" onclick="handleCookie('accept')">Accept</button>
-            <button class="cookie-btn btn-reject" id="btnRejectCookies" onclick="handleCookie('reject')">Reject</button>
-            <button class="cookie-btn btn-customize" id="btnCustomizeCookies" onclick="openModal()">Customize</button>
-        </div>
-    </div>
-
-    <!-- Modal pou Chwazi Cookie -->
-    <div id="cookieModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 id="modalTitle">Cookie Preferences</h3>
-            <div class="preference-option">
-                <input type="checkbox" id="prefEssential" checked disabled>
-                <div>
-                    <strong id="lblEssential">Essential Cookies</strong>
-                    <p id="descEssential" style="color: #64748b; font-size: 0.85rem;">Required for the website to function properly.</p>
-                </div>
-            </div>
-            <div class="preference-option">
-                <input type="checkbox" id="prefAnalytics" checked>
-                <div>
-                    <strong id="lblAnalytics">Analytics Cookies</strong>
-                    <p id="descAnalytics" style="color: #64748b; font-size: 0.85rem;">Help us understand how visitors interact with the website.</p>
-                </div>
-            </div>
-            <div class="preference-option">
-                <input type="checkbox" id="prefMarketing" checked>
-                <div>
-                    <strong id="lblMarketing">Marketing Cookies</strong>
-                    <p id="descMarketing" style="color: #64748b; font-size: 0.85rem;">Used to deliver relevant advertisements and offers.</p>
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="cookie-btn btn-reject" id="btnCloseModal" onclick="closeModal()">Cancel</button>
-                <button class="cookie-btn btn-accept" id="btnSavePreferences" onclick="savePreferences()">Save Preferences</button>
-            </div>
+            <button class="cookie-btn btn-accept" onclick="handleCookie('accept')">Accept</button>
+            <button class="cookie-btn btn-reject" onclick="handleCookie('reject')">Reject</button>
         </div>
     </div>
 
@@ -308,56 +310,6 @@
         var currentMode = 'topup';
 
         const translations = {
-            en: {
-                title: "BerdSend - Money Transfer & Mobile Top-Up",
-                tabTopup: "📱 Mobile Top-Up",
-                tabTransfer: "💸 Money Transfer",
-                lblSender: "Country you are sending from:",
-                lblReceiver: "Recipient country:",
-                lblDeliveryMethodTopup: "Select Mobile Carrier:",
-                lblDeliveryMethodTransfer: "How should they receive it:",
-                lblAmount: "Amount to send:",
-                lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
-                lblRecipientGets: "Recipient gets approx:",
-                lblTotalToPay: "Total to Pay:",
-                lblUserEmail: "Your Email Address (Required):",
-                lblPhone: "Recipient phone number:",
-                lblYourCodeText: "Your referral code to share with friends ($10 reward for you):",
-                lblPromo: "Send me promotional offers and updates (Optional)",
-                btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Money Now 🚀",
-                adv1Title: "🎉 Mobile Top-Up: $5 Off",
-                adv1Desc: "Use a promo code on your mobile top-up and get <strong>$5</strong> discount!",
-                adv2Title: "🎁 Invite a Friend",
-                adv2Desc: "Get <strong>$10</strong> when your friend uses your promo code for top-up.",
-                adv3Title: "🔒 Total Security",
-                adv3Desc: "Maximum protection for all your transactions and data.",
-                cookieText: "We use cookies to improve your browsing experience. Please select your preference:",
-                btnAcceptCookies: "Accept",
-                btnRejectCookies: "Reject",
-                btnCustomizeCookies: "Customize",
-                modalTitle: "Cookie Preferences",
-                lblEssential: "Essential Cookies",
-                descEssential: "Required for the website to function properly.",
-                lblAnalytics: "Analytics Cookies",
-                descAnalytics: "Help us understand how visitors interact with the website.",
-                lblMarketing: "Marketing Cookies",
-                descMarketing: "Used to deliver relevant advertisements and offers.",
-                btnCloseModal: "Cancel",
-                btnSavePreferences: "Save Preferences",
-                menuHome: "Home",
-                menuBlog: "Blog",
-                menuPrivacy: "Privacy Policy",
-                menuTerms: "Terms of Service",
-                menuAbout: "About Us",
-                menuContact: "Contact Us",
-                menuFaq: "FAQ",
-                menuTracking: "Track Transfer",
-                alertEmail: "Please enter your valid email address to proceed!",
-                alertPhone: "Please enter recipient phone number!",
-                alertSuccess: "Transaction registered successfully! Your personal promo code has been generated.",
-                promoApplied: "✅ Promo code applied! You get $5 off on this mobile top-up."
-            },
             ht: {
                 title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
                 tabTopup: "📱 Rechaj Telefòn",
@@ -370,43 +322,45 @@
                 lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
-                lblUserEmail: "Adrès Imèl Ou (Obligatwa):",
+                lblUserName: "Non a Konplè:",
+                lblUserContact: "Imèl ou oswa Nimewo Telefòn (Obligatwa):",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
-                lblYourCodeText: "Kòd pwomosyon w pou bay zanmi ($10 pou ou lè yo itilize l):",
+                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
+                lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
-                adv1Title: "🎉 Rechaj Mobil: $5 Rabè",
-                adv1Desc: "Itilize yon kòd pwomosyon sou rechaj mobil lan pou jwenn <strong>$5</strong> rabè!",
-                adv2Title: "🎁 Envite yon Zanmi",
-                adv2Desc: "Jwenn <strong>$10</strong> lè yon zanmi sèvi ak kòd ou pou yon rechaj.",
-                adv3Title: "🔒 Sekirite Total",
-                adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak done w yo.",
-                cookieText: "Nou itilize cookies pou amelyore eksperyans ou sou sit la. Tanpri chwazi preferans ou:",
-                btnAcceptCookies: "Aksepte",
-                btnRejectCookies: "Rejte",
-                btnCustomizeCookies: "Chwazi",
-                modalTitle: "Preferans Cookie",
-                lblEssential: "Cookie Esansyèl",
-                descEssential: "Obligatwa pou sit la fonksyone kòrèkteman.",
-                lblAnalytics: "Cookie Analitik",
-                descAnalytics: "Ede nou konprann fason vizitè yo ap itilize sit la.",
-                lblMarketing: "Cookie Maketing",
-                descMarketing: "Itilize pou ba ou piblisite ak òf ki ap konvnab.",
-                btnCloseModal: "Anile",
-                btnSavePreferences: "Anrejistre Preferans yo",
-                menuHome: "Akèy",
-                menuBlog: "Blog",
-                menuPrivacy: "Politik Konfidansyalite",
-                menuTerms: "Kondisyon Sèvis",
-                menuAbout: "Konsènan Nou",
-                menuContact: "Kontakte Nou",
-                menuFaq: "FAQ",
-                menuTracking: "Suiv Transfè W",
-                alertEmail: "Tanpri antre yon adrès imèl ki valab pou kontinye!",
+                alertContact: "Tanpri antre non ou ak yon imèl oswa telefòn ki valab!",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                alertSuccess: "Tranzaksyon an anrejistre avèk siksè! Kòd pwomosyon pèsonèl ou a pare.",
-                promoApplied: "✅ Kòd la valide! Ou jwenn $5 rabè sou rechaj mobil sa a."
+                alertSuccess: "Tranzaksyon an anrejistre avèk siksè! Pwofil ou anrejistre.",
+                verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
+                verifyDesc: "Plis pase 5 èdtan pase depi dènye aktivite w. Tanpri re-antre kontak ou pou debloke sesyon an."
+            },
+            en: {
+                title: "BerdSend - Money Transfer & Mobile Top-Up",
+                tabTopup: "📱 Mobile Top-Up",
+                tabTransfer: "💸 Money Transfer",
+                lblSender: "Country you are sending from:",
+                lblReceiver: "Recipient country:",
+                lblDeliveryMethodTopup: "Select Mobile Carrier:",
+                lblDeliveryMethodTransfer: "How should they receive it:",
+                lblAmount: "Amount to send:",
+                lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
+                lblRecipientGets: "Recipient gets approx:",
+                lblTotalToPay: "Total to Pay:",
+                lblUserName: "Full Name:",
+                lblUserContact: "Your Email or Phone Number (Required):",
+                lblPhone: "Recipient phone number:",
+                lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
+                lblFeeText: "Transfer Fee (10% VIP Discount):",
+                lblPromo: "Send me promotional offers and updates (Optional)",
+                btnSubmitTopup: "Send Top-Up Now 🚀",
+                btnSubmitTransfer: "Send Money Now 🚀",
+                alertContact: "Please enter your full name and a valid email or phone number!",
+                alertPhone: "Please enter recipient phone number!",
+                alertSuccess: "Transaction registered successfully! Your profile is saved.",
+                verifyTitle: "🔒 Identity Verification Required",
+                verifyDesc: "More than 5 hours have passed since your last activity. Please re-enter your contact to unlock."
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -420,61 +374,25 @@
                 lblPromoCode: "Código Promocional (Apenas Recarga - $5 de desconto):",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
-                lblUserEmail: "Seu E-mail (Obrigatório):",
+                lblUserName: "Nome Completo:",
+                lblUserContact: "Seu E-mail ou Telefone (Obrigatório):",
                 lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código de indicação ($10 de bônus para você):",
+                lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
+                lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
-                adv1Title: "🎉 Recarga de Celular: $5 de Desconto",
-                adv1Desc: "Use um código promocional na recarga e ganhe <strong>$5</strong> de desconto!",
-                adv2Title: "🎁 Convide um Amigo",
-                adv2Desc: "Ganhe <strong>$10</strong> quando seu amigo usar seu código na recarga.",
-                adv3Title: "🔒 Segurança Total",
-                adv3Desc: "Proteção máxima garantida para todas as transações e dados.",
-                cookieText: "Usamos cookies para melhorar sua experiência. Por favor, escolha sua preferência:",
-                btnAcceptCookies: "Aceitar",
-                btnRejectCookies: "Rejeitar",
-                btnCustomizeCookies: "Personalizar",
-                modalTitle: "Preferências de Cookies",
-                lblEssential: "Cookies Essenciais",
-                descEssential: "Necessários para o funcionamento adequado do site.",
-                lblAnalytics: "Cookies Analíticos",
-                descAnalytics: "Nos ajudam a entender como os visitantes interagem com o site.",
-                lblMarketing: "Cookies de Marketing",
-                descMarketing: "Usados para fornecer anúncios e ofertas relevantes.",
-                btnCloseModal: "Cancelar",
-                btnSavePreferences: "Salvar Preferências",
-                menuHome: "Início",
-                menuBlog: "Blog",
-                menuPrivacy: "Política de Privacidade",
-                menuTerms: "Termos de Serviço",
-                menuAbout: "Sobre Nós",
-                menuContact: "Contato",
-                menuFaq: "FAQ",
-                menuTracking: "Rastrear Transferência",
-                alertEmail: "Por favor, digite seu e-mail válido para continuar!",
+                alertContact: "Por favor, digite seu nome e um contato válido!",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                alertSuccess: "Transação registrada com sucesso! Seu código promocional foi gerado.",
-                promoApplied: "✅ Código aplicado! Você ganhou $5 de desconto nesta recarga."
+                alertSuccess: "Transação registrada com sucesso! Seu perfil foi salvo.",
+                verifyTitle: "🔒 Verificação de Identidade Necessária",
+                verifyDesc: "Mais de 5 horas se passaram. Por favor, confirme seu contato para desbloquear."
             }
         };
 
-        let currentSlide = 0;
-        function startBannerSlider() {
-            const slides = document.querySelectorAll('.banner-slide');
-            if (slides.length === 0) return;
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 8000);
-        }
-
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
-            const t = translations[lang];
-            if (!t) return;
+            const t = translations[lang] || translations['en'];
 
             document.getElementById('pageTitle').innerText = t.title;
             document.getElementById('tabTopup').innerText = t.tabTopup;
@@ -485,41 +403,15 @@
             document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
-            document.getElementById('lblUserEmail').innerText = t.lblUserEmail;
+            document.getElementById('lblUserName').innerText = t.lblUserName;
+            document.getElementById('lblUserContact').innerText = t.lblUserContact;
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
+            document.getElementById('lblFeeText').innerText = t.lblFeeText;
             document.getElementById('lblPromo').innerText = t.lblPromo;
             
-            document.getElementById('adv1Title').innerText = t.adv1Title;
-            document.getElementById('adv1Desc').innerHTML = t.adv1Desc;
-            document.getElementById('adv2Title').innerText = t.adv2Title;
-            document.getElementById('adv2Desc').innerHTML = t.adv2Desc;
-            document.getElementById('adv3Title').innerText = t.adv3Title;
-            document.getElementById('adv3Desc').innerHTML = t.adv3Desc;
-
-            document.getElementById('cookieText').innerText = t.cookieText;
-            document.getElementById('btnAcceptCookies').innerText = t.btnAcceptCookies;
-            document.getElementById('btnRejectCookies').innerText = t.btnRejectCookies;
-            document.getElementById('btnCustomizeCookies').innerText = t.btnCustomizeCookies;
-            
-            document.getElementById('modalTitle').innerText = t.modalTitle;
-            document.getElementById('lblEssential').innerText = t.lblEssential;
-            document.getElementById('descEssential').innerText = t.descEssential;
-            document.getElementById('lblAnalytics').innerText = t.lblAnalytics;
-            document.getElementById('descAnalytics').innerText = t.descAnalytics;
-            document.getElementById('lblMarketing').innerText = t.lblMarketing;
-            document.getElementById('descMarketing').innerText = t.descMarketing;
-            document.getElementById('btnCloseModal').innerText = t.btnCloseModal;
-            document.getElementById('btnSavePreferences').innerText = t.btnSavePreferences;
-
-            document.getElementById('menuHome').innerText = t.menuHome;
-            document.getElementById('menuBlog').innerText = t.menuBlog;
-            document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
-            document.getElementById('menuTerms').innerText = t.menuTerms;
-            document.getElementById('menuAbout').innerText = t.menuAbout;
-            document.getElementById('menuContact').innerText = t.menuContact;
-            document.getElementById('menuFaq').innerText = t.menuFaq;
-            document.getElementById('menuTracking').innerText = t.menuTracking;
+            document.getElementById('verifyTitle').innerText = t.verifyTitle;
+            document.getElementById('verifyDesc').innerText = t.verifyDesc;
 
             if (currentMode === 'topup') {
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
@@ -538,8 +430,7 @@
         function setMode(mode) {
             currentMode = mode;
             var lang = localStorage.getItem('berdSendLang') || 'en';
-            var t = translations[lang];
-
+            var t = translations[lang] || translations['en'];
             var promoGroup = document.getElementById('promoCodeGroup');
 
             if (mode === 'topup') {
@@ -547,13 +438,13 @@
                 document.getElementById('tabTransfer').classList.remove('active');
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
                 document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
-                promoGroup.style.display = "block"; // Se sèlman pou rechaj mobil
+                promoGroup.style.display = "block";
             } else {
                 document.getElementById('tabTransfer').classList.add('active');
                 document.getElementById('tabTopup').classList.remove('active');
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
                 document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
-                promoGroup.style.display = "none"; // Retire kòd pwomosyon pou transfè lajan
+                promoGroup.style.display = "none";
             }
             populateMethods();
             updateUI();
@@ -569,8 +460,9 @@
             } else {
                 deliverySelect.innerHTML = receiver === 'DOP' ? 
                     '<option value="none">🇩🇴 Santo Domingo Transfer (Coming Soon)</option>' :
-                    '<option value="moncash">📱 MonCash / Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
+                    '<option value="moncash">📱 MonCash (Mobile Wallet)</option><option value="natcash">📱 Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
             }
+            updateUI();
         }
 
         var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
@@ -582,16 +474,13 @@
             var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
             var promoInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
             var promoMsg = document.getElementById('promoAppliedMsg');
+            var deliveryMethod = document.getElementById('deliveryMethod').value;
             
-            var lang = localStorage.getItem('berdSendLang') || 'en';
-            var t = translations[lang];
-
             let discount = 0;
             if (currentMode === 'topup' && promoInput.length > 0) {
-                // Si itilizatè mete yon kòd, l ap benefisye $5 rabè sou valè li dwe peye a (oswa sou total la)
                 discount = 5.0;
                 promoMsg.style.display = "block";
-                promoMsg.innerText = t.promoApplied;
+                promoMsg.innerText = "✅ Kòd la valide! Ou jwenn $5 rabè sou rechaj mobil sa a.";
             } else {
                 promoMsg.style.display = "none";
             }
@@ -600,44 +489,94 @@
             var conversionRate = ((currentMode === 'topup') ? topupRates : transferRates)[sender][targetCurrency];
             var totalReceive = amountVal * conversionRate;
             
-            var totalCostVal = amountVal - (currentMode === 'topup' ? discount : 0);
+            var baseFee = 0;
+            var feeRow = document.getElementById('feeRow');
+            var feeAmountEl = document.getElementById('feeAmount');
+
+            if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
+                baseFee = amountVal * 0.05; 
+                let userContact = localStorage.getItem('berdUserContact') || '';
+                let referralsCount = parseInt(localStorage.getItem('referralCount_' + userContact) || '0');
+                
+                if (referralsCount >= 20) {
+                    baseFee = baseFee * 0.90;
+                    feeRow.style.display = "flex";
+                    feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender + " (VIP 10%)";
+                } else {
+                    feeRow.style.display = "flex";
+                    feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender;
+                }
+            } else {
+                feeRow.style.display = "none";
+            }
+
+            var totalCostVal = amountVal + baseFee - (currentMode === 'topup' ? discount : 0);
             if (totalCostVal < 0) totalCostVal = 0;
 
             document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
             document.getElementById('totalCost').innerText = totalCostVal.toFixed(2) + " " + sender;
         }
 
-        function handleCookie(choice) {
-            localStorage.setItem('berdSendCookieChoice', choice);
-            document.getElementById('cookieBanner').style.display = 'none';
+        // Tcheke sesyon ak verifikasyon 5 èdtan an
+        function checkSessionTimeout() {
+            let lastActive = localStorage.getItem('berdLastActiveTime');
+            let savedContact = localStorage.getItem('berdUserContact');
+            let savedName = localStorage.getItem('berdUserName');
+
+            if (savedContact && savedName) {
+                // Montre badj pwofil la
+                document.getElementById('userProfileBadge').style.display = "flex";
+                document.getElementById('profileNameDisplay').innerText = savedName;
+                document.getElementById('profileContactDisplay').innerText = savedContact;
+                document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
+                
+                document.getElementById('userName').value = savedName;
+                document.getElementById('userContact').value = savedContact;
+
+                // Tcheke si 5è tan (5 * 3600 * 1000 ms) pase
+                if (lastActive) {
+                    let currentTime = new Date().getTime();
+                    let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
+                    if (hoursPassed >= 5) {
+                        document.getElementById('verifyModal').style.display = "flex";
+                    }
+                }
+            } else {
+                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+            }
         }
 
-        function openModal() {
-            document.getElementById('cookieModal').style.display = 'flex';
+        function confirmIdentity() {
+            let inputVal = document.getElementById('verifyInputContact').value.trim();
+            let savedContact = localStorage.getItem('berdUserContact');
+
+            if (inputVal && inputVal === savedContact) {
+                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+                document.getElementById('verifyModal').style.display = "none";
+                document.getElementById('verifyInputContact').value = "";
+            } else {
+                alert("Kontak la pa matche ak pwofil ki anrejistre a!");
+            }
         }
 
-        function closeModal() {
-            document.getElementById('cookieModal').style.display = 'none';
-        }
-
-        function savePreferences() {
-            var analytics = document.getElementById('prefAnalytics').checked;
-            var marketing = document.getElementById('prefMarketing').checked;
-            localStorage.setItem('berdSendCookieChoice', 'customized');
-            localStorage.setItem('cookieAnalytics', analytics);
-            localStorage.setItem('cookieMarketing', marketing);
-            
-            document.getElementById('cookieModal').style.display = 'none';
-            document.getElementById('cookieBanner').style.display = 'none';
+        function logoutUser() {
+            localStorage.removeItem('berdUserContact');
+            localStorage.removeItem('berdUserName');
+            localStorage.removeItem('berdLastActiveTime');
+            document.getElementById('userProfileBadge').style.display = "none";
+            document.getElementById('userName').value = "";
+            document.getElementById('userContact').value = "";
+            document.getElementById('userReferralDisplay').style.display = "none";
+            alert("Ou dekonekte ak siksè.");
         }
 
         window.onload = function() {
-            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
             changeLanguage(savedLang);
 
             setMode('topup');
-            startBannerSlider();
+            checkSessionTimeout();
 
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
@@ -646,15 +585,15 @@
             document.getElementById('promoCodeInput').oninput = updateUI;
             
             document.getElementById('btnSubmit').onclick = function() {
-                var lang = localStorage.getItem('berdSendLang') || 'en';
-                var t = translations[lang];
+                var lang = localStorage.getItem('berdSendLang') || 'ht';
+                var t = translations[lang] || translations['ht'];
                 
-                var email = document.getElementById('userEmail').value.trim();
+                var name = document.getElementById('userName').value.trim();
+                var contact = document.getElementById('userContact').value.trim();
                 var phone = document.getElementById('phone').value.trim();
                 
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    alert(t.alertEmail);
+                if (!name || !contact) {
+                    alert(t.alertContact);
                     return;
                 }
                 if (!phone) {
@@ -662,26 +601,45 @@
                     return;
                 }
 
-                let savedEmails = JSON.parse(localStorage.getItem('berdSendSubscribers') || '[]');
-                if (!savedEmails.includes(email)) {
-                    savedEmails.push(email);
-                    localStorage.setItem('berdSendSubscribers', JSON.stringify(savedEmails));
-                }
+                // Anrejistre pwofil la nan localStorage
+                localStorage.setItem('berdUserName', name);
+                localStorage.setItem('berdUserContact', contact);
+                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
 
-                // Jenere yon kòd pwomosyon inik pou itilizatè a (pa egzanp: BERD + 4 premye lèt imèl la oswa o aza)
-                let usernamePart = email.split('@')[0].toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
-                let uniquePromoCode = "BERD-" + usernamePart + Math.floor(100 + Math.random() * 900);
+                // Afiche badj pwofil la
+                document.getElementById('userProfileBadge').style.display = "flex";
+                document.getElementById('profileNameDisplay').innerText = name;
+                document.getElementById('profileContactDisplay').innerText = contact;
+                document.getElementById('profileAvatarText').innerText = name.slice(0, 2).toUpperCase();
 
+                // Jenere kòd parèy (referral)
+                let namePart = name.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+                let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
+
+                let currentRefs = parseInt(localStorage.getItem('referralCount_' + contact) || '0');
                 document.getElementById('assignedPromoCode').innerText = uniquePromoCode;
                 document.getElementById('userReferralDisplay').style.display = "block";
 
+                let vipBadgeDisplay = document.getElementById('vipBadgeDisplay');
+                if (currentRefs >= 20) {
+                    vipBadgeDisplay.style.display = "block";
+                } else {
+                    vipBadgeDisplay.style.display = "none";
+                }
+
                 alert(t.alertSuccess);
+                updateUI();
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
                 document.getElementById('cookieBanner').style.display = 'flex';
             }
         };
+
+        function handleCookie(choice) {
+            localStorage.setItem('berdSendCookieChoice', choice);
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
     </script>
 </body>
 </html>
