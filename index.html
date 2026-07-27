@@ -10,7 +10,7 @@
 
     <header>
         <div class="header-container">
-            <!-- Logo Berd-Send -->
+            <!-- Logo Berd-Send (Retabli nan gwosè nòmal orijinal li) -->
             <a href="index.html" class="logo-link">
                 <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
             </a>
@@ -260,11 +260,7 @@
             return;
         }
 
-        let fee = 0;
-        let finalReceive = amount;
-
         if (service === 'recharge') {
-            finalReceive = amount; // Egzanp kalkil rechaj
             result.style.color = "#198754";
             result.textContent = "Montan pou rechaj la: $" + amount + " USD (Premye transfè w la GRATIS!)";
         } else {
