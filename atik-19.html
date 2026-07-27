@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Kijan pou w kòmanse yon biznis anliy pandan w ap viv aletranje - BerdSend</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 60px; width: auto; object-fit: contain; border-radius: 8px; }
+        
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
+
+        .article-container { width: 100%; max-width: 700px; background: #fff; padding: 30px; margin: 0 auto; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .article-date { font-size: 0.85rem; color: #0066cc; font-weight: bold; margin-bottom: 10px; display: block; }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
+        p { font-size: 1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
+        h2 { font-size: 1.3rem; color: #0066cc; margin-top: 25px; margin-bottom: 10px; }
+
+        footer { margin-top: auto; text-align: center; color: #777; font-size: 0.8rem; padding: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-container">
+            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+        </a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Akèy</a>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <span class="article-date" id="txtDate">26 Janvye 2026</span>
+        <h1 id="txtTitle">Kijan pou w kòmanse yon biznis anliy pandan w ap viv aletranje</h1>
+        
+        <p id="p1">Lavi aletranje ofri anpil opòtinite, men genyen yon sous redevans adisyonèl se pi bon fason pou w jwenn libète finansyè epi ede fanmi w pi byen nan peyi w.</p>
+        
+        <h2 id="h1Title">1. Idantifye konpetans ou ak sa moun bezwen</h2>
+        <p id="p2">Eske w konn fè tradiksyon, kreye sit entènèt, jere paj rezo sosyo, oswa vann pwodui dijital? Chwazi yon sèvis oswa yon pwodui ki mande ti kòb pou kòmanse men ki ka rapòte w kòb rapid.</p>
+        
+        <h2 id="h2Title">2. Sèvi ak platfòm ki deja egziste yo</h2>
+        <p id="p3">Ou pa bezwen depanse gwo kòb pou kreye yon gwo sit nan kòmansman an. Ou ka sèvi ak platfòm tankou Shopify, Etsy, oswa rezo sosyo yo (Instagram, Facebook, TikTok) pou montre sa w ap vann yo.</p>
+
+        <h2 id="h3Title">3. Prepare yon sistèm pou w resevwa ak voye lajan</h2>
+        <p id="p4">Sèvi ak kont bankè dijital ak sèvis transfè ki ansekirite pou w ka resevwa peman nan men kliyan w yo fasil epi voye yon pati nan benefis yo bay fanmi w san traka.</p>
+    </div>
+
+    <footer>
+        &copy; 2026 BerdSend. <span id="txtRights">Tout dwa rezève.</span>
+    </footer>
+
+    <script>
+        const translations = {
+            ht: {
+                pageTitle: "Kijan pou w kòmanse yon biznis anliy pandan w ap viv aletranje - BerdSend",
+                backHomeBtn: "← Akèy",
+                txtDate: "26 Janvye 2026",
+                txtTitle: "Kijan pou w kòmanse yon biznis anliy pandan w ap viv aletranje",
+                p1: "Lavi aletranje ofri anpil opòtinite, men genyen yon sous redevans adisyonèl se pi bon fason pou w jwenn libète finansyè epi ede fanmi w pi byen nan peyi w.",
+                h1Title: "1. Idantifye konpetans ou ak sa moun bezwen",
+                p2: "Eske w konn fè tradiksyon, kreye sit entènèt, jere paj rezo sosyo, oswa vann pwodui dijital? Chwazi yon sèvis oswa yon pwodui ki mande ti kòb pou kòmanse men ki ka rapòte w kòb rapid.",
+                h2Title: "2. Sèvi ak platfòm ki deja egziste yo",
+                p3: "Ou pa bezwen depanse gwo kòb pou kreye yon gwo sit nan kòmansman an. Ou ka sèvi ak platfòm tankou Shopify, Etsy, oswa rezo sosyo yo (Instagram, Facebook, TikTok) pou montre sa w ap vann yo.",
+                h3Title: "3. Prepare yon sistèm pou w resevwa ak voye lajan",
+                p4: "Sèvi ak kont bankè dijital ak sèvis transfè ki ansekirite pou w ka resevwa peman nan men kliyan w yo fasil epi voye yon pati nan benefis yo bay fanmi w san traka.",
+                txtRights: "Tout dwa rezève."
+            },
+            en: {
+                pageTitle: "How to start an online business while living abroad - BerdSend",
+                backHomeBtn: "← Home",
+                txtDate: "January 26, 2026",
+                txtTitle: "How to start an online business while living abroad",
+                p1: "Living abroad provides great opportunities, but building an additional income stream is the best way to gain financial freedom and better support your family back home.",
+                h1Title: "1. Identify your skills and market demand",
+                p2: "Do you offer translation, website creation, social media management, or digital products? Choose a service or product with low upfront costs that can quickly generate income.",
+                h2Title: "2. Leverage existing digital platforms",
+                p3: "You don't need to spend thousands building a website right away. Use platforms like Shopify, Etsy, or social media (Instagram, Facebook, TikTok) to showcase your offerings.",
+                h3Title: "3. Set up smooth payment and transfer solutions",
+                p4: "Use reliable digital banking accounts and money transfer services to receive payments from customers easily and seamlessly send profits back to your loved ones.",
+                txtRights: "All rights reserved."
+            },
+            pt: {
+                pageTitle: "Como iniciar um negócio online morando no exterior - BerdSend",
+                backHomeBtn: "← Início",
+                txtDate: "26 de Janeiro de 2026",
+                txtTitle: "Como iniciar um negócio online morando no exterior",
+                p1: "Morar no exterior traz muitas oportunidades, mas criar uma fonte de renda extra é o melhor caminho para conquistar a liberdade financeira e ajudar sua família.",
+                h1Title: "1. Identifique suas habilidades e demandas do mercado",
+                p2: "Você sabe fazer traduções, criar sites, gerenciar redes sociais ou vender produtos digitais? Escolha um serviço de baixo custo inicial e com retorno rápido.",
+                h2Title: "2. Utilize plataformas existentes",
+                p3: "Não é necessário investir muito criando um site do zero no início. Use plataformas como Shopify, Etsy ou redes sociais para divulgar seus produtos.",
+                h3Title: "3. Configure meios práticos para receber e transferir",
+                p4: "Utilize contas bancárias digitais e serviços de transferência seguros para receber dos seus clientes e enviar remessas com tranquilidade.",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtDate').innerText = t.txtDate;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('p1').innerText = t.p1;
+            document.getElementById('h1Title').innerText = t.h1Title;
+            document.getElementById('p2').innerText = t.p2;
+            document.getElementById('h2Title').innerText = t.h2Title;
+            document.getElementById('p3').innerText = t.p3;
+            document.getElementById('h3Title').innerText = t.h3Title;
+            document.getElementById('p4').innerText = t.p4;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Kijan pou w voye lajan rapid san w pa peye twòp frè - BerdSend</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        header { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 60px; width: auto; object-fit: contain; border-radius: 8px; }
+        
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .back-home-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 12px; background-color: #f0f2f5; color: #0066cc; text-decoration: none; font-weight: bold; font-size: 0.9rem; border-radius: 6px; border: 1px solid #ddd; }
+
+        .article-container { width: 100%; max-width: 700px; background: #fff; padding: 30px; margin: 0 auto; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .article-date { font-size: 0.85rem; color: #0066cc; font-weight: bold; margin-bottom: 10px; display: block; }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #111; line-height: 1.3; }
+        p { font-size: 1rem; color: #444; line-height: 1.7; margin-bottom: 15px; }
+        h2 { font-size: 1.3rem; color: #0066cc; margin-top: 25px; margin-bottom: 10px; }
+
+        footer { margin-top: auto; text-align: center; color: #777; font-size: 0.8rem; padding: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-container">
+            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+        </a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <a href="index.html" class="back-home-btn" id="backHomeBtn">← Akèy</a>
+        </div>
+    </header>
+
+    <div class="article-container">
+        <span class="article-date" id="txtDate">22 Janvye 2026</span>
+        <h1 id="txtTitle">Kijan pou w voye lajan rapid san w pa peye twòp frè</h1>
+        
+        <p id="p1">Lè w ap voye lajan bay fanmi w oswa zanmi w nan peyi w, de bagay ki pi enpòtan yo se vitès ak pri frè yo. Peye gwo frè transfè kapab diminye kantite lajan moun k ap resevwa a ap jwenn nan men l.</p>
+        
+        <h2 id="h1Title">1. Konpare to de chanj yo ak frè kache yo</h2>
+        <p id="p2">Anpil sèvis ka di yo pa chaje okenn frè, men yo ka gen yon to de chanj ki pi ba anpil pase valè mache a. Toujou verifye konbyen lajan egzakteman moun nan ap resevwa nan monnen lokal li a.</p>
+        
+        <h2 id="h2Title">2. Sèvi ak aplikasyon dijital yo pito</h2>
+        <p id="p3">Agans fizik tradisyonèl yo konn gen plis depozisyon ak frè fonksyonman, sa ki rann transfè yo pi chè. Aplikasyon mobil yo pèmèt ou fè transfè sou entènèt dirèkteman ak pi ba frè.</p>
+
+        <h2 id="h3Title">3. Fè transfè yo ak kont bankè oswa kart debit</h2>
+        <p id="p4">Itilize yon kèt kredi pou voye lajan ka fè bank ou chaje w frè adisyonèl sou kach. Chwazi peye ak yon kont bankè oswa yon kèt debit pou w evite depans anplis.</p>
+    </div>
+
+    <footer>
+        &copy; 2026 BerdSend. <span id="txtRights">Tout dwa rezève.</span>
+    </footer>
+
+    <script>
+        const translations = {
+            ht: {
+                pageTitle: "Kijan pou w voye lajan rapid san w pa peye twòp frè - BerdSend",
+                backHomeBtn: "← Akèy",
+                txtDate: "22 Janvye 2026",
+                txtTitle: "Kijan pou w voye lajan rapid san w pa peye twòp frè",
+                p1: "Lè w ap voye lajan bay fanmi w oswa zanmi w nan peyi w, de bagay ki pi enpòtan yo se vitès ak pri frè yo. Peye gwo frè transfè kapab diminye kantite lajan moun k ap resevwa a ap jwenn nan men l.",
+                h1Title: "1. Konpare to de chanj yo ak frè kache yo",
+                p2: "Anpil sèvis ka di yo pa chaje okenn frè, men yo ka gen yon to de chanj ki pi ba anpil pase valè mache a. Toujou verifye konbyen lajan egzakteman moun nan ap resevwa nan monnen lokal li a.",
+                h2Title: "2. Sèvi ak aplikasyon dijital yo pito",
+                p3: "Agans fizik tradisyonèl yo konn gen plis depozisyon ak frè fonksyonman, sa ki rann transfè yo pi chè. Aplikasyon mobil yo pèmèt ou fè transfè sou entènèt dirèkteman ak pi ba frè.",
+                h3Title: "3. Fè transfè yo ak kont bankè oswa kart debit",
+                p4: "Itilize yon kèt kredi pou voye lajan ka fè bank ou chaje w frè adisyonèl sou kach. Chwazi peye ak yon kont bankè oswa yon kèt debit pou w evite depans anplis.",
+                txtRights: "Tout dwa rezève."
+            },
+            en: {
+                pageTitle: "How to send money fast without paying high fees - BerdSend",
+                backHomeBtn: "← Home",
+                txtDate: "January 22, 2026",
+                txtTitle: "How to send money fast without paying high fees",
+                p1: "When sending money to family or friends back home, speed and transfer fees are top priorities. Paying high transfer fees reduces the actual amount your recipient receives.",
+                h1Title: "1. Compare exchange rates and hidden fees",
+                p2: "Many services claim zero transaction fees, but offer a lower exchange rate than the market. Always check how much money the recipient actually gets in local currency.",
+                h2Title: "2. Use digital transfer applications",
+                p3: "Traditional agent locations often have higher operational overhead, making transfers costlier. Mobile apps allow direct online transfers with significantly lower fees.",
+                h3Title: "3. Pay via bank account or debit card",
+                p4: "Using a credit card to send money may incur extra cash advance charges from your bank. Pay with a debit card or bank account instead to avoid unexpected costs.",
+                txtRights: "All rights reserved."
+            },
+            pt: {
+                pageTitle: "Como enviar dinheiro rápido sem pagar altas taxas - BerdSend",
+                backHomeBtn: "← Início",
+                txtDate: "22 de Janeiro de 2026",
+                txtTitle: "Como enviar dinheiro rápido sem pagar altas taxas",
+                p1: "Ao enviar dinheiro para familiares ou amigos no exterior, a velocidade e o custo das taxas são essenciais. Altas taxas reduzem o valor final recebido.",
+                h1Title: "1. Compare taxas de câmbio e custos ocultos",
+                p2: "Muitos serviços anunciam taxa zero, mas aplicam uma cotação de câmbio desfavorável. Sempre verifique o valor exato que o destinatário receberá.",
+                h2Title: "2. Opte por aplicativos digitais",
+                p3: "Agências físicas tradicionais possuem custos operacionais maiores, encarecendo os envios. Aplicativos móveis oferecem envios diretos com custos reduzidos.",
+                h3Title: "3. Realize pagamentos por conta bancária ou débito",
+                p4: "Usar cartão de crédito para remessas pode gerar cobranças adicionais de taxa de saque do seu banco. Prefira conta bancária ou cartão de débito para economizar.",
+                txtRights: "Todos os direitos reservados."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('backHomeBtn').innerText = t.backHomeBtn;
+            document.getElementById('txtDate').innerText = t.txtDate;
+            document.getElementById('txtTitle').innerText = t.txtTitle;
+            document.getElementById('p1').innerText = t.p1;
+            document.getElementById('h1Title').innerText = t.h1Title;
+            document.getElementById('p2').innerText = t.p2;
+            document.getElementById('h2Title').innerText = t.h2Title;
+            document.getElementById('p3').innerText = t.p3;
+            document.getElementById('h3Title').innerText = t.h3Title;
+            document.getElementById('p4').innerText = t.p4;
+            document.getElementById('txtRights').innerText = t.txtRights;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
