@@ -1,247 +1,611 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berd-Send - Transfè Lajan an Ayiti an Sekirite</title>
-    <link rel="stylesheet" href="style.css">
+    <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 70px; }
+        header { width: 100%; max-width: 480px; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 20px; margin-bottom: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 40px; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 10px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+        .menu-container { position: relative; }
+        .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 40px; background: #fff; box-shadow: 0px 4px 12px rgba(0,0,0,0.15); border-radius: 6px; overflow: hidden; width: 190px; z-index: 1000; }
+        .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
+        .dropdown-menu a:hover { background: #f1f1f1; }
+
+        /* Seksyon Bwat Avantaj yo (Non-white Background ak bèl koulè) */
+        .advantages-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .advantage-box {
+            background: linear-gradient(135deg, #004080, #0066cc);
+            color: #ffffff;
+            padding: 16px 18px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2);
+            border-left: 5px solid #ffd700;
+        }
+        .advantage-box h4 {
+            font-size: 0.95rem;
+            color: #ffd700;
+            margin-bottom: 4px;
+        }
+        .advantage-box p {
+            font-size: 0.82rem;
+            color: #f0f4f8;
+            line-height: 1.4;
+        }
+        .advantage-box strong {
+            color: #ffd700;
+        }
+
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        .tabs { display: flex; background: #f0f2f5; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #555; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; color: #444; margin-bottom: 6px; font-weight: bold; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 12px; }
+        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1); }
+        .input-box input, .input-box select { background: transparent; border: none; color: #111; font-size: 1rem; width: 100%; outline: none; }
+        .conversion-rate { background: #eaf3ec; border: 1px solid #d4ede5; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #2e7d32; margin-bottom: 15px; }
+        .summary-box { background: #f9fafb; border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #666; }
+        .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
+        .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: #0052a3; }
+        
+        /* Bannè Cookie ki fèt an Ble ak Blan */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            color: #003366;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #0066cc;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            z-index: 9999;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .cookie-banner p {
+            margin: 0;
+            max-width: 500px;
+            line-height: 1.4;
+            color: #333;
+            font-size: 0.85rem;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .cookie-btn {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .btn-accept { background-color: #0066cc; color: white; }
+        .btn-accept:hover { background-color: #0052a3; }
+        .btn-reject { background-color: #e5e7eb; color: #333; }
+        .btn-reject:hover { background-color: #d1d5db; }
+        .btn-customize { background-color: transparent; color: #0066cc; border: 1px solid #0066cc; }
+        .btn-customize:hover { background-color: #e6f0fa; }
+
+        /* Estil pou Modèl Chwazi Preferans (Preferences Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            text-align: left;
+        }
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: #003366;
+            font-size: 1.1rem;
+        }
+        .preference-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: #444;
+        }
+        .preference-option input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        footer { margin-top: 25px; text-align: center; color: #777; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
 
     <header>
-        <div class="header-container">
-            <!-- Logo Berd-Send (Menm gwosè ak estil rès paj yo) -->
-            <a href="index.html" class="logo-link">
-                <img src="logo.jpg" alt="Berd-Send Logo" class="site-logo">
-            </a>
-
-            <!-- Meni Navigasyon -->
-            <nav>
-                <a href="index.html">Akèy</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Konta</a>
-            </nav>
-
-            <!-- Sèlektè Lang -->
-            <div class="language-selector">
-                <select id="language-select" onchange="location = this.value;">
-                    <option value="#" selected>🇭🇹 Kreyòl</option>
-                    <option value="#">🇺🇸 English</option>
-                    <option value="#">🇫🇷 Français</option>
-                    <option value="#">🇪🇸 Español</option>
-                    <option value="#">🇧🇷 Português</option>
-                </select>
+        <a href="index.html" class="logo-container">
+            <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+        </a>
+        <div class="header-right">
+            <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="ht">🇭🇹 Kreyòl</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+            <div class="menu-container">
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+                <div id="myDropdown" class="dropdown-menu">
+                    <a href="index.html" id="menuHome">Home</a>
+                    <a href="blog.html" id="menuBlog">Blog</a>
+                    <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
+                    <a href="terms.html" id="menuTerms">Terms of Service</a>
+                    <a href="about.html" id="menuAbout">About Us</a>
+                    <a href="contact.html" id="menuContact">Contact Us</a>
+                    <a href="faq.html" id="menuFaq">FAQ</a>
+                    <a href="tracking.html" id="menuTracking">Track Transfer</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Seksyon Bwat Avantaj yo (Yon bwat pa chak avantaj) -->
+    <!-- 3 Bwat Rektangilè pou Avantaj yo (Background ki pa blan) -->
     <div class="advantages-container">
         <div class="advantage-box">
-            <h3>🎉 Premye Transfè Gratis</h3>
-            <p>Fè premye voye lajan w an Ayiti san okenn frè siplemantè. Nou ofri l pou ou!</p>
+            <h4 id="adv1Title">🎉 Premye Transfè Gratis</h4>
+            <p id="adv1Desc">Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!</p>
         </div>
-
         <div class="advantage-box">
-            <h3>🎁 Envite yon Zanmi</h3>
-            <p>Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis nou an.</p>
+            <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
+            <p id="adv2Desc">Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.</p>
         </div>
-
         <div class="advantage-box">
-            <h3>🔒 Sekirite Total</h3>
-            <p>Berd-Send garanti ou yon pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo.</p>
+            <h4 id="adv3Title">🔒 Sekirite Total</h4>
+            <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.</p>
         </div>
     </div>
 
-    <style>
-    /* Estil pou bwat avantaj separe yo */
-    .advantages-container {
-        max-width: 600px;
-        margin: 20px auto;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+    <div class="card" id="mainCard">
+        <div class="tabs">
+            <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
+            <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
+        </div>
 
-    .advantage-box {
-        background: #ffffff;
-        border-left: 5px solid #0d6efd;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-        transition: transform 0.2s;
-    }
-
-    .advantage-box:hover {
-        transform: translateY(-2px);
-    }
-
-    .advantage-box h3 {
-        color: #0d6efd;
-        margin-bottom: 8px;
-        font-size: 18px;
-    }
-
-    .advantage-box p {
-        color: #333333;
-        font-size: 15px;
-        line-height: 1.4;
-        margin: 0;
-    }
-
-    .advantage-box strong {
-        color: #0d6efd;
-    }
-
-    /* Estil pou kalkilatris la ak seksyon pwomo yo */
-    .calculator-section, .promo-section {
-        background: #ffffff;
-        padding: 30px;
-        margin: 20px auto;
-        max-width: 600px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .calculator-section h2, .promo-section h2 {
-        color: #0d6efd;
-        margin-bottom: 15px;
-        text-align: center;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-
-    .calc-btn, .promo-btn {
-        width: 100%;
-        padding: 12px;
-        background-color: #0d6efd;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .calc-btn:hover, .promo-btn:hover {
-        background-color: #0b5ed7;
-    }
-
-    #calc-result, #promo-message {
-        margin-top: 15px;
-        font-weight: bold;
-        text-align: center;
-        font-size: 18px;
-    }
-
-    .promo-section {
-        background: #f8f9fa;
-    }
-
-    .promo-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 15px;
-    }
-    </style>
-
-    <main class="main-content">
-        <section class="hero" style="text-align: center; padding: 10px 20px 20px 20px;">
-            <h1>Voye Lajan an Ayiti an Sekirite ak Berd-Send</h1>
-            <p>Solisyon ki pi rapid, pi fasil, epi pi transparan pou voye sipò bay moun ou renmen yo.</p>
-            <a href="blog.html" class="cta-btn" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #0d6efd; color: #fff; text-decoration: none; border-radius: 5px;">Gade Atik yo ak Blog nou an</a>
-        </section>
-
-        <!-- Seksyon Kalkilatris Transfè ak Rechaj -->
-        <section class="calculator-section">
-            <h2>Kalkile Transfè ou ak Rechaj</h2>
-            <div class="form-group">
-                <label for="send-amount">Konbyen ou vle voye ($ USD)?</label>
-                <input type="number" id="send-amount" placeholder="Eg: 100">
-            </div>
-
-            <div class="form-group">
-                <label for="service-type">Chwazi Sèvis la:</label>
-                <select id="service-type">
-                    <option value="cash">Lajan Kach (Gourdes / USD)</option>
-                    <option value="wallet">Bous Elektwonik (MonCash / Natcash)</option>
-                    <option value="recharge">Rechaj Mobil (Digicel / Natcom)</option>
+        <div class="form-group">
+            <label id="lblSender">Country you are sending from:</label>
+            <div class="input-box">
+                <select id="senderCountry">
+                    <option value="USD">🇺🇸 United States (USD - $)</option>
+                    <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
                 </select>
             </div>
+        </div>
 
-            <button type="button" class="calc-btn" onclick="calculateTransfer()">Kalkile Frè ak Montan</button>
-            <p id="calc-result"></p>
-        </section>
-
-        <!-- Seksyon Pwomo Kòd pou $10 Rechaj Mobil -->
-        <section class="promo-section">
-            <h2>Aktive Pwomo Kòd Ou</h2>
-            <p style="text-align: center;">Èske w gen yon kòd pwomosyon? Antre l anba a pou w jwenn <strong>$10 pou rechaj mobil</strong> touswit!</p>
-            
-            <div class="promo-form">
-                <input type="text" id="promo-code-input" class="form-group input" placeholder="Antre pwomo kòd ou la...">
-                <button type="button" class="promo-btn" onclick="applyPromoCode()">Aktive</button>
+        <div class="form-group">
+            <label id="lblReceiver">Recipient country:</label>
+            <div class="input-box">
+                <select id="receiverCountry">
+                    <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
+                    <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
+                </select>
             </div>
-            <p id="promo-message"></p>
-        </section>
-    </main>
+        </div>
 
-    <script>
-    function calculateTransfer() {
-        const amount = parseFloat(document.getElementById('send-amount').value);
-        const service = document.getElementById('service-type').value;
-        const result = document.getElementById('calc-result');
+        <div class="form-group">
+            <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
+            <div class="input-box">
+                <select id="deliveryMethod"></select>
+            </div>
+        </div>
 
-        if(isNaN(amount) || amount <= 0) {
-            result.style.color = "red";
-            result.textContent = "Tanpri antre yon montan valab!";
-            return;
-        }
+        <div class="form-group">
+            <label id="lblAmount">Amount to send:</label>
+            <div class="input-box">
+                <input type="number" id="sendAmount" value="100">
+            </div>
+        </div>
 
-        result.style.color = "#198754";
-        if (service === 'recharge') {
-            result.textContent = "Montan pou rechaj la: $" + amount + " USD (Premye transfè w la GRATIS!)";
-        } else {
-            result.textContent = "Transfè $" + amount + " USD ap rive an sekirite (Frè: $0 - 1ye fwa gratis!)";
-        }
-    }
+        <div class="conversion-rate">
+            <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #2e7d32;">0 HTG</strong>
+        </div>
 
-    function applyPromoCode() {
-        const input = document.getElementById('promo-code-input').value.trim();
-        const message = document.getElementById('promo-message');
-        
-        if(input === "") {
-            message.style.color = "red";
-            message.textContent = "Tanpri antre yon pwomo kòd valab!";
-        } else {
-            message.style.color = "green";
-            message.textContent = "Felisitasyon! Kòd '" + input + "' la anrejistre. $10 pou rechaj mobil ou a ap disponib sou kont ou!";
-            document.getElementById('promo-code-input').value = "";
-        }
-    }
-    </script>
+        <div class="summary-box">
+            <div class="summary-row total">
+                <span id="lblTotalToPay">Total to Pay:</span>
+                <span id="totalCost" style="color: #111;">100.00 USD</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lblPhone">Recipient phone number:</label>
+            <div class="input-box">
+                <input type="tel" id="phone" placeholder="+509 ...">
+            </div>
+        </div>
+
+        <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
+    </div>
+
+    <!-- Bannè Cookie (Ble ak Blan) -->
+    <div id="cookieBanner" class="cookie-banner" style="display: none;">
+        <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
+        <div class="cookie-buttons">
+            <button class="cookie-btn btn-accept" id="btnAcceptCookies" onclick="handleCookie('accept')">Accept</button>
+            <button class="cookie-btn btn-reject" id="btnRejectCookies" onclick="handleCookie('reject')">Reject</button>
+            <button class="cookie-btn btn-customize" id="btnCustomizeCookies" onclick="openModal()">Customize</button>
+        </div>
+    </div>
+
+    <!-- Ti Fenèt (Modal) pou Chwazi Aksè yo -->
+    <div id="cookieModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modalTitle">Cookie Preferences</h3>
+            
+            <div class="preference-option">
+                <input type="checkbox" id="prefEssential" checked disabled>
+                <div>
+                    <strong id="lblEssential">Essential Cookies</strong>
+                    <p id="descEssential" style="color: #666; font-size: 0.8rem;">Required for the website to function properly.</p>
+                </div>
+            </div>
+
+            <div class="preference-option">
+                <input type="checkbox" id="prefAnalytics" checked>
+                <div>
+                    <strong id="lblAnalytics">Analytics Cookies</strong>
+                    <p id="descAnalytics" style="color: #666; font-size: 0.8rem;">Help us understand how visitors interact with the website.</p>
+                </div>
+            </div>
+
+            <div class="preference-option">
+                <input type="checkbox" id="prefMarketing" checked>
+                <div>
+                    <strong id="lblMarketing">Marketing Cookies</strong>
+                    <p id="descMarketing" style="color: #666; font-size: 0.8rem;">Used to deliver relevant advertisements and offers.</p>
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="cookie-btn btn-reject" id="btnCloseModal" onclick="closeModal()">Cancel</button>
+                <button class="cookie-btn btn-accept" id="btnSavePreferences" onclick="savePreferences()">Save Preferences</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
-        <p>&copy; 2026 Berd-Send. Tout dwa rezève.</p>
+        &copy; 2026 BerdSend. All rights reserved.
     </footer>
 
+    <script>
+        var currentMode = 'topup';
+
+        const translations = {
+            en: {
+                title: "BerdSend - Money Transfer & Mobile Top-Up",
+                tabTopup: "📱 Mobile Top-Up",
+                tabTransfer: "💸 Money Transfer",
+                lblSender: "Country you are sending from:",
+                lblReceiver: "Recipient country:",
+                lblDeliveryMethodTopup: "Select Mobile Carrier:",
+                lblDeliveryMethodTransfer: "How should they receive it:",
+                lblAmount: "Amount to send:",
+                lblRecipientGets: "Recipient gets approx:",
+                lblTotalToPay: "Total to Pay:",
+                lblPhone: "Recipient phone number:",
+                btnSubmitTopup: "Send Top-Up Now 🚀",
+                btnSubmitTransfer: "Send Money Now 🚀",
+                adv1Title: "🎉 First Transfer Free",
+                adv1Desc: "Send money to Haiti for the first time with zero extra fees on us!",
+                adv2Title: "🎁 Invite a Friend",
+                adv2Desc: "Get <strong>$10 mobile top-up</strong> instantly when a friend signs up and uses our service.",
+                adv3Title: "🔒 Total Security",
+                adv3Desc: "Guaranteed maximum protection for all your transactions and data.",
+                cookieText: "We use cookies to improve your browsing experience. Please select your preference:",
+                btnAcceptCookies: "Accept",
+                btnRejectCookies: "Reject",
+                btnCustomizeCookies: "Customize",
+                modalTitle: "Cookie Preferences",
+                lblEssential: "Essential Cookies",
+                descEssential: "Required for the website to function properly.",
+                lblAnalytics: "Analytics Cookies",
+                descAnalytics: "Help us understand how visitors interact with the website.",
+                lblMarketing: "Marketing Cookies",
+                descMarketing: "Used to deliver relevant advertisements and offers.",
+                btnCloseModal: "Cancel",
+                btnSavePreferences: "Save Preferences",
+                menuHome: "Home",
+                menuBlog: "Blog",
+                menuPrivacy: "Privacy Policy",
+                menuTerms: "Terms of Service",
+                menuAbout: "About Us",
+                menuContact: "Contact Us",
+                menuFaq: "FAQ",
+                menuTracking: "Track Transfer",
+                alertPhone: "Please enter recipient phone number!",
+                alertSuccess: "Transaction recorded successfully!"
+            },
+            ht: {
+                title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
+                tabTopup: "📱 Rechaj Telefòn",
+                tabTransfer: "💸 Transfè Lajan",
+                lblSender: "Peyi w ap voye soti a:",
+                lblReceiver: "Peyi destinasyon an:",
+                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
+                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
+                lblAmount: "Montan pou voye a:",
+                lblRecipientGets: "Moun nan ap resevwa approx:",
+                lblTotalToPay: "Total pou Peye:",
+                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
+                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
+                btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
+                adv1Title: "🎉 Premye Transfè Gratis",
+                adv1Desc: "Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!",
+                adv2Title: "🎁 Envite yon Zanmi",
+                adv2Desc: "Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.",
+                adv3Title: "🔒 Sekirite Total",
+                adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.",
+                cookieText: "Nou itilize cookies pou amelyore eksperyans ou sou sit la. Tanpri chwazi preferans ou:",
+                btnAcceptCookies: "Aksepte",
+                btnRejectCookies: "Rejte",
+                btnCustomizeCookies: "Chwazi",
+                modalTitle: "Preferans Cookie",
+                lblEssential: "Cookie Esansyèl",
+                descEssential: "Obligatwa pou sit la fonksyone kòrèkteman.",
+                lblAnalytics: "Cookie Analitik",
+                descAnalytics: "Ede nou konprann fason vizitè yo ap itilize sit la.",
+                lblMarketing: "Cookie Maketing",
+                descMarketing: "Itilize pou ba ou piblisite ak òf ki ap konvnab.",
+                btnCloseModal: "Anile",
+                btnSavePreferences: "Anrejistre Preferans yo",
+                menuHome: "Akèy",
+                menuBlog: "Blog",
+                menuPrivacy: "Politik Konfidansyalite",
+                menuTerms: "Kondisyon Sèvis",
+                menuAbout: "Konsènan Nou",
+                menuContact: "Kontakte Nou",
+                menuFaq: "FAQ (Kesyon yo Poze)",
+                menuTracking: "Suiv Transfè W",
+                alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
+                alertSuccess: "Tranzaksyon an anrejistre avèk siksè!"
+            },
+            pt: {
+                title: "BerdSend - Transferência e Recarga de Celular",
+                tabTopup: "📱 Recarga de Celular",
+                tabTransfer: "💸 Transferência de Dinheiro",
+                lblSender: "País de origem:",
+                lblReceiver: "País de destino:",
+                lblDeliveryMethodTopup: "Selecionar Operadora:",
+                lblDeliveryMethodTransfer: "Como deseja que recebam:",
+                lblAmount: "Valor a enviar:",
+                lblRecipientGets: "O destinatário recebe aprox:",
+                lblTotalToPay: "Total a Pagar:",
+                lblPhone: "Número de telefone do destinatário:",
+                btnSubmitTopup: "Enviar Recarga Agora 🚀",
+                btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
+                adv1Title: "🎉 Primeira Transferência Grátis",
+                adv1Desc: "Envie dinheiro para o Haiti pela primeira vez sem nenhuma taxa extra!",
+                adv2Title: "🎁 Convide um Amigo",
+                adv2Desc: "Ganhe <strong>$10 de recarga</strong> instantaneamente quando um amigo se cadastrar.",
+                adv3Title: "🔒 Segurança Total",
+                adv3Desc: "Proteção máxima garantida para todas as suas transações e dados.",
+                cookieText: "Usamos cookies para melhorar sua experiência. Por favor, escolha sua preferência:",
+                btnAcceptCookies: "Aceitar",
+                btnRejectCookies: "Rejeitar",
+                btnCustomizeCookies: "Personalizar",
+                modalTitle: "Preferências de Cookies",
+                lblEssential: "Cookies Essenciais",
+                descEssential: "Necessários para o funcionamento adequado do site.",
+                lblAnalytics: "Cookies Analíticos",
+                descAnalytics: "Nos ajudam a entender como os visitantes interagem com o site.",
+                lblMarketing: "Cookies de Marketing",
+                descMarketing: "Usados para fornecer anúncios e ofertas relevantes.",
+                btnCloseModal: "Cancelar",
+                btnSavePreferences: "Salvar Preferências",
+                menuHome: "Início",
+                menuBlog: "Blog",
+                menuPrivacy: "Política de Privacidade",
+                menuTerms: "Termos de Serviço",
+                menuAbout: "Sobre Nós",
+                menuContact: "Contato",
+                menuFaq: "FAQ",
+                menuTracking: "Rastrear Transferência",
+                alertPhone: "Por favor, insira o número de telefone do destinatário!",
+                alertSuccess: "Transação registrada com sucesso!"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang];
+            if (!t) return;
+
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('tabTopup').innerText = t.tabTopup;
+            document.getElementById('tabTransfer').innerText = t.tabTransfer;
+            document.getElementById('lblSender').innerText = t.lblSender;
+            document.getElementById('lblReceiver').innerText = t.lblReceiver;
+            document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
+            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblPhone').innerText = t.lblPhone;
+            
+            document.getElementById('adv1Title').innerText = t.adv1Title;
+            document.getElementById('adv1Desc').innerHTML = t.adv1Desc;
+            document.getElementById('adv2Title').innerText = t.adv2Title;
+            document.getElementById('adv2Desc').innerHTML = t.adv2Desc;
+            document.getElementById('adv3Title').innerText = t.adv3Title;
+            document.getElementById('adv3Desc').innerHTML = t.adv3Desc;
+
+            document.getElementById('cookieText').innerText = t.cookieText;
+            document.getElementById('btnAcceptCookies').innerText = t.btnAcceptCookies;
+            document.getElementById('btnRejectCookies').innerText = t.btnRejectCookies;
+            document.getElementById('btnCustomizeCookies').innerText = t.btnCustomizeCookies;
+            
+            document.getElementById('modalTitle').innerText = t.modalTitle;
+            document.getElementById('lblEssential').innerText = t.lblEssential;
+            document.getElementById('descEssential').innerText = t.descEssential;
+            document.getElementById('lblAnalytics').innerText = t.lblAnalytics;
+            document.getElementById('descAnalytics').innerText = t.descAnalytics;
+            document.getElementById('lblMarketing').innerText = t.lblMarketing;
+            document.getElementById('descMarketing').innerText = t.descMarketing;
+            document.getElementById('btnCloseModal').innerText = t.btnCloseModal;
+            document.getElementById('btnSavePreferences').innerText = t.btnSavePreferences;
+
+            document.getElementById('menuHome').innerText = t.menuHome;
+            document.getElementById('menuBlog').innerText = t.menuBlog;
+            document.getElementById('menuPrivacy').innerText = t.menuPrivacy;
+            document.getElementById('menuTerms').innerText = t.menuTerms;
+            document.getElementById('menuAbout').innerText = t.menuAbout;
+            document.getElementById('menuContact').innerText = t.menuContact;
+            document.getElementById('menuFaq').innerText = t.menuFaq;
+            document.getElementById('menuTracking').innerText = t.menuTracking;
+
+            if (currentMode === 'topup') {
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
+            } else {
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
+            }
+        }
+
+        function toggleMenu() {
+            var menu = document.getElementById("myDropdown");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            var lang = localStorage.getItem('berdSendLang') || 'en';
+            var t = translations[lang];
+
+            if (mode === 'topup') {
+                document.getElementById('tabTopup').classList.add('active');
+                document.getElementById('tabTransfer').classList.remove('active');
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
+            } else {
+                document.getElementById('tabTransfer').classList.add('active');
+                document.getElementById('tabTopup').classList.remove('active');
+                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
+                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
+            }
+            populateMethods();
+            updateUI();
+        }
+
+        function populateMethods() {
+            var receiver = document.getElementById('receiverCountry').value;
+            var deliverySelect = document.getElementById('deliveryMethod');
+            if (currentMode === 'topup') {
+                deliverySelect.innerHTML = receiver === 'DOP' ? 
+                    '<option value="claro_do">📶 Claro (Dominican Rep.)</option><option value="altice_do">📶 Altice (Dominican Rep.)</option>' :
+                    '<option value="digicel">📶 Digicel (Haiti - Direct)</option><option value="natcom">📶 Natcom (Haiti - Direct)</option>';
+            } else {
+                deliverySelect.innerHTML = receiver === 'DOP' ? 
+                    '<option value="none">🇩🇴 Santo Domingo Transfer (Coming Soon)</option>' :
+                    '<option value="moncash">📱 MonCash / Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
+            }
+        }
+
+        var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
+        var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
+
+        function updateUI() {
+            var sender = document.getElementById('senderCountry').value;
+            var receiver = document.getElementById('receiverCountry').value;
+            var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
+            var targetCurrency = (receiver === 'DOP') ? 'DOP' : 'HTG';
+            var conversionRate = ((currentMode === 'topup') ? topupRates : transferRates)[sender][targetCurrency];
+            var totalReceive = amountVal * conversionRate;
+            
+            document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
+            document.getElementById('totalCost').innerText = amountVal.toFixed(2) + " " + sender;
+        }
+
+        function handleCookie(choice) {
+            localStorage.setItem('berdSendCookieChoice', choice);
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        function openModal() {
+            document.getElementById('cookieModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('cookieModal').style.display = 'none';
+        }
+
+        function savePreferences() {
+            var analytics = document.getElementById('prefAnalytics').checked;
+            var marketing = document.getElementById('prefMarketing').checked;
+            localStorage.setItem('berdSendCookieChoice', 'customized');
+            localStorage.setItem('cookieAnalytics', analytics);
+            localStorage.setItem('cookieMarketing', marketing);
+            
+            document.getElementById('cookieModal').style.display = 'none';
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'en';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+
+            setMode('topup');
+            document.getElementById('senderCountry').onchange = updateUI;
+            document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
+            document.getElementById('deliveryMethod').onchange = updateUI;
+            document.getElementById('sendAmount').oninput = updateUI;
+            document.getElementById('btnSubmit').onclick = function() {
+                var lang = localStorage.getItem('berdSendLang') || 'en';
+                var t = translations[lang];
+                var phone = document.getElementById('phone').value.trim();
+                if (!phone) alert(t.alertPhone); else alert(t.alertSuccess);
+            };
+
+            if (!localStorage.getItem('berdSendCookieChoice')) {
+                document.getElementById('cookieBanner').style.display = 'flex';
+            }
+        };
+    </script>
 </body>
 </html>
