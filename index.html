@@ -18,38 +18,51 @@
         .dropdown-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f1f1f1; }
 
-        /* Seksyon Bwat Avantaj yo (Non-white Background ak bèl koulè) */
-        .advantages-container {
+        /* Seksyon Banyè Orizontal kap wate chak 5 segonn */
+        .banner-slider-container {
             width: 100%;
             max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        .advantage-box {
             background: linear-gradient(135deg, #004080, #0066cc);
             color: #ffffff;
-            padding: 16px 18px;
+            padding: 16px 20px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2);
-            border-left: 5px solid #ffd700;
+            margin-bottom: 15px;
+            text-align: center;
+            min-height: 85px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        .advantage-box h4 {
-            font-size: 0.95rem;
+        .banner-slide {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .banner-slide.active {
+            display: block;
+        }
+        .banner-slide h4 {
+            font-size: 1rem;
             color: #ffd700;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
-        .advantage-box p {
-            font-size: 0.82rem;
+        .banner-slide p {
+            font-size: 0.85rem;
             color: #f0f4f8;
             line-height: 1.4;
         }
-        .advantage-box strong {
+        .banner-slide strong {
             color: #ffd700;
         }
 
-        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 25px 20px; width: 100%; max-width: 480px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-bottom: 15px; }
         .tabs { display: flex; background: #f0f2f5; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #555; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
         .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -64,8 +77,62 @@
         .summary-row.total { border-top: 1px solid #eee; padding-top: 8px; margin-bottom: 0; color: #111; font-weight: bold; font-size: 0.95rem; }
         .btn-submit { width: 100%; padding: 14px; background: #0066cc; border: none; border-radius: 8px; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: #0052a3; }
+
+        /* Seksyon Enskripsyon Imèl (Newsletter / Sign Up) */
+        .signup-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .signup-card h3 {
+            font-size: 1rem;
+            color: #003366;
+            margin-bottom: 6px;
+        }
+        .signup-card p {
+            font-size: 0.82rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .signup-input-group {
+            display: flex;
+            gap: 8px;
+        }
+        .signup-input-group input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .signup-input-group input:focus {
+            border-color: #0066cc;
+        }
+        .signup-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .signup-btn:hover { background-color: #235d26; }
+        #signupMessage {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: bold;
+        }
         
-        /* Bannè Cookie ki fèt an Ble ak Blan */
+        /* Bannè Cookie */
         .cookie-banner {
             position: fixed;
             bottom: 0;
@@ -112,7 +179,7 @@
         .btn-customize { background-color: transparent; color: #0066cc; border: 1px solid #0066cc; }
         .btn-customize:hover { background-color: #e6f0fa; }
 
-        /* Estil pou Modèl Chwazi Preferans (Preferences Modal) */
+        /* Ti Fenèt Modal pou Cookie */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -187,22 +254,23 @@
         </div>
     </header>
 
-    <!-- 3 Bwat Rektangilè pou Avantaj yo (Background ki pa blan) -->
-    <div class="advantages-container">
-        <div class="advantage-box">
+    <!-- Orizontal Slider Banyè (Chak 5 segonn li chanje) -->
+    <div class="banner-slider-container">
+        <div class="banner-slide active">
             <h4 id="adv1Title">🎉 Premye Transfè Gratis</h4>
             <p id="adv1Desc">Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!</p>
         </div>
-        <div class="advantage-box">
+        <div class="banner-slide">
             <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
             <p id="adv2Desc">Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.</p>
         </div>
-        <div class="advantage-box">
+        <div class="banner-slide">
             <h4 id="adv3Title">🔒 Sekirite Total</h4>
             <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.</p>
         </div>
     </div>
 
+    <!-- Kat Kalkilatris la -->
     <div class="card" id="mainCard">
         <div class="tabs">
             <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
@@ -264,7 +332,18 @@
         <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
     </div>
 
-    <!-- Bannè Cookie (Ble ak Blan) -->
+    <!-- Seksyon Enskripsyon Imèl pou Itilizatè yo (Kolekte Imèl) -->
+    <div class="signup-card">
+        <h3 id="signupTitle">Rete Konekte ak BerdSend</h3>
+        <p id="signupDesc">Enskri ak imèl ou pou resevwa òf espesyal ak nouvèl sou nou an.</p>
+        <div class="signup-input-group">
+            <input type="email" id="userEmail" placeholder="Antre imèl ou la...">
+            <button class="signup-btn" id="signupBtn" onclick="registerEmail()">Enskri</button>
+        </div>
+        <p id="signupMessage"></p>
+    </div>
+
+    <!-- Bannè Cookie -->
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
         <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
         <div class="cookie-buttons">
@@ -274,11 +353,10 @@
         </div>
     </div>
 
-    <!-- Ti Fenèt (Modal) pou Chwazi Aksè yo -->
+    <!-- Modal pou Chwazi Cookie -->
     <div id="cookieModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="modalTitle">Cookie Preferences</h3>
-            
             <div class="preference-option">
                 <input type="checkbox" id="prefEssential" checked disabled>
                 <div>
@@ -286,7 +364,6 @@
                     <p id="descEssential" style="color: #666; font-size: 0.8rem;">Required for the website to function properly.</p>
                 </div>
             </div>
-
             <div class="preference-option">
                 <input type="checkbox" id="prefAnalytics" checked>
                 <div>
@@ -294,7 +371,6 @@
                     <p id="descAnalytics" style="color: #666; font-size: 0.8rem;">Help us understand how visitors interact with the website.</p>
                 </div>
             </div>
-
             <div class="preference-option">
                 <input type="checkbox" id="prefMarketing" checked>
                 <div>
@@ -302,7 +378,6 @@
                     <p id="descMarketing" style="color: #666; font-size: 0.8rem;">Used to deliver relevant advertisements and offers.</p>
                 </div>
             </div>
-
             <div class="modal-buttons">
                 <button class="cookie-btn btn-reject" id="btnCloseModal" onclick="closeModal()">Cancel</button>
                 <button class="cookie-btn btn-accept" id="btnSavePreferences" onclick="savePreferences()">Save Preferences</button>
@@ -338,6 +413,12 @@
                 adv2Desc: "Get <strong>$10 mobile top-up</strong> instantly when a friend signs up and uses our service.",
                 adv3Title: "🔒 Total Security",
                 adv3Desc: "Guaranteed maximum protection for all your transactions and data.",
+                signupTitle: "Stay Connected with BerdSend",
+                signupDesc: "Sign up with your email to receive special offers and updates.",
+                signupPlaceholder: "Enter your email here...",
+                signupButton: "Sign Up",
+                signupSuccess: "Thank you! Your email has been registered.",
+                signupError: "Please enter a valid email address!",
                 cookieText: "We use cookies to improve your browsing experience. Please select your preference:",
                 btnAcceptCookies: "Accept",
                 btnRejectCookies: "Reject",
@@ -382,6 +463,12 @@
                 adv2Desc: "Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.",
                 adv3Title: "🔒 Sekirite Total",
                 adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.",
+                signupTitle: "Rete Konekte ak BerdSend",
+                signupDesc: "Enskri ak imèl ou pou resevwa òf espesyal ak nouvèl sou nou an.",
+                signupPlaceholder: "Antre imèl ou la...",
+                signupButton: "Enskri",
+                signupSuccess: "Mèsi anpil! Imèl ou anrejistre avèk siksè.",
+                signupError: "Tanpri antre yon adrès imèl ki valab!",
                 cookieText: "Nou itilize cookies pou amelyore eksperyans ou sou sit la. Tanpri chwazi preferans ou:",
                 btnAcceptCookies: "Aksepte",
                 btnRejectCookies: "Rejte",
@@ -426,6 +513,12 @@
                 adv2Desc: "Ganhe <strong>$10 de recarga</strong> instantaneamente quando um amigo se cadastrar.",
                 adv3Title: "🔒 Segurança Total",
                 adv3Desc: "Proteção máxima garantida para todas as suas transações e dados.",
+                signupTitle: "Fique Conectado com o BerdSend",
+                signupDesc: "Inscreva-se com seu e-mail para receber ofertas especiais e atualizações.",
+                signupPlaceholder: "Digite seu e-mail...",
+                signupButton: "Inscrever",
+                signupSuccess: "Obrigado! Seu e-mail foi registrado com sucesso.",
+                signupError: "Por favor, insira um e-mail válido!",
                 cookieText: "Usamos cookies para melhorar sua experiência. Por favor, escolha sua preferência:",
                 btnAcceptCookies: "Aceitar",
                 btnRejectCookies: "Rejeitar",
@@ -452,6 +545,45 @@
             }
         };
 
+        // Otomatik wasyon banyè yo chak 5 segonn
+        let currentSlide = 0;
+        function startBannerSlider() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000);
+        }
+
+        // Fonksyon pou anrejistre imèl itilizatè yo
+        function registerEmail() {
+            const lang = localStorage.getItem('berdSendLang') || 'en';
+            const t = translations[lang];
+            const emailInput = document.getElementById('userEmail');
+            const msg = document.getElementById('signupMessage');
+            const emailVal = emailInput.value.trim();
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailVal)) {
+                msg.style.color = "red";
+                msg.innerText = t.signupError;
+                return;
+            }
+
+            // Sere imèl yo nan LocalStorage pou kounye a (oswa ou ka konekte l ak backend pita)
+            let savedEmails = JSON.parse(localStorage.getItem('berdSendSubscribers') || '[]');
+            if (!savedEmails.includes(emailVal)) {
+                savedEmails.push(emailVal);
+                localStorage.setItem('berdSendSubscribers', JSON.stringify(savedEmails));
+            }
+
+            msg.style.color = "#2e7d32";
+            msg.innerText = t.signupSuccess;
+            emailInput.value = "";
+        }
+
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
             const t = translations[lang];
@@ -473,6 +605,11 @@
             document.getElementById('adv2Desc').innerHTML = t.adv2Desc;
             document.getElementById('adv3Title').innerText = t.adv3Title;
             document.getElementById('adv3Desc').innerHTML = t.adv3Desc;
+
+            document.getElementById('signupTitle').innerText = t.signupTitle;
+            document.getElementById('signupDesc').innerText = t.signupDesc;
+            document.getElementById('userEmail').placeholder = t.signupPlaceholder;
+            document.getElementById('signupBtn').innerText = t.signupButton;
 
             document.getElementById('cookieText').innerText = t.cookieText;
             document.getElementById('btnAcceptCookies').innerText = t.btnAcceptCookies;
@@ -591,6 +728,8 @@
             changeLanguage(savedLang);
 
             setMode('topup');
+            startBannerSlider();
+
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
             document.getElementById('deliveryMethod').onchange = updateUI;
