@@ -93,12 +93,71 @@
         animation-play-state: paused;
     }
 
+    /* Estil pou kalkilatris la ak seksyon yo */
+    .calculator-section {
+        background: #ffffff;
+        padding: 30px;
+        margin: 20px auto;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .calculator-section h2 {
+        color: #0d6efd;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .calc-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .calc-btn:hover {
+        background-color: #0b5ed7;
+    }
+
+    #calc-result {
+        margin-top: 15px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 18px;
+        color: #198754;
+    }
+
     /* Estil pou seksyon Pwomo Kòd la */
     .promo-section {
         background: #f8f9fa;
-        padding: 40px 20px;
+        padding: 30px 20px;
         text-align: center;
-        margin: 30px auto;
+        margin: 20px auto;
         max-width: 600px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -113,12 +172,12 @@
         display: flex;
         justify-content: center;
         gap: 10px;
-        margin-top: 20px;
+        margin-top: 15px;
         flex-wrap: wrap;
     }
 
     .promo-input {
-        padding: 12px 15px;
+        padding: 10px 15px;
         font-size: 16px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -127,7 +186,7 @@
     }
 
     .promo-btn {
-        padding: 12px 20px;
+        padding: 10px 20px;
         font-size: 16px;
         background-color: #0d6efd;
         color: white;
@@ -149,13 +208,34 @@
     </style>
 
     <main class="main-content">
-        <section class="hero">
+        <section class="hero" style="text-align: center; padding: 30px 20px;">
             <h1>Voye Lajan an Ayiti an Sekirite ak Berd-Send</h1>
             <p>Solisyon ki pi rapid, pi fasil, epi pi transparan pou voye sipò bay moun ou renmen yo.</p>
-            <a href="blog.html" class="cta-btn">Gade Atik yo ak Blog nou an</a>
+            <a href="blog.html" class="cta-btn" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #0d6efd; color: #fff; text-decoration: none; border-radius: 5px;">Gade Atik yo ak Blog nou an</a>
         </section>
 
-        <!-- Nouvo Seksyon Pwomo Kòd pou $10 Rechaj Mobil -->
+        <!-- Seksyon Kalkilatris Transfè ak Rechaj -->
+        <section class="calculator-section">
+            <h2>Kalkile Transfè ou ak Rechaj</h2>
+            <div class="form-group">
+                <label for="send-amount">Konbyen ou vle voye ($ USD)?</label>
+                <input type="number" id="send-amount" placeholder="Eg: 100">
+            </div>
+
+            <div class="form-group">
+                <label for="service-type">Chwazi Sèvis la:</label>
+                <select id="service-type">
+                    <option value="cash">Lajan Kach (Gourdes / USD)</option>
+                    <option value="wallet">Bous Elektwonik (MonCash / Natcash)</option>
+                    <option value="recharge">Rechaj Mobil (Digicel / Natcom)</option>
+                </select>
+            </div>
+
+            <button type="button" class="calc-btn" onclick="calculateTransfer()">Kalkile Frè ak Montan</button>
+            <p id="calc-result"></p>
+        </section>
+
+        <!-- Seksyon Pwomo Kòd pou $10 Rechaj Mobil -->
         <section class="promo-section">
             <h2>Aktive Pwomo Kòd Ou</h2>
             <p>Èske w gen yon kòd pwomosyon oubyen yon kòd paanaj? Antre l anba a pou w jwenn <strong>$10 pou rechaj mobil</strong> touswit!</p>
@@ -169,6 +249,30 @@
     </main>
 
     <script>
+    function calculateTransfer() {
+        const amount = parseFloat(document.getElementById('send-amount').value);
+        const service = document.getElementById('service-type').value;
+        const result = document.getElementById('calc-result');
+
+        if(isNaN(amount) || amount <= 0) {
+            result.style.color = "red";
+            result.textContent = "Tanpri antre yon montan valab!";
+            return;
+        }
+
+        let fee = 0;
+        let finalReceive = amount;
+
+        if (service === 'recharge') {
+            finalReceive = amount; // Egzanp kalkil rechaj
+            result.style.color = "#198754";
+            result.textContent = "Montan pou rechaj la: $" + amount + " USD (Premye transfè w la GRATIS!)";
+        } else {
+            result.style.color = "#198754";
+            result.textContent = "Transfè $" + amount + " USD ap rive an sekirite (Frè: $0 - 1ye fwa gratis!)";
+        }
+    }
+
     function applyPromoCode() {
         const input = document.getElementById('promo-code-input').value.trim();
         const message = document.getElementById('promo-message');
