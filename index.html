@@ -18,7 +18,7 @@
         .header-right { display: flex; align-items: center; gap: 10px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        /* Ikon tèt moun nan ak Bouton Konekte ansanm anlè a dwat */
+        /* Ikon tèt moun nan ak Bouton Konekte ant lang lan ak twa ba yo */
         .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
         .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -106,7 +106,6 @@
         .btn-submit:hover { background: #0052a3; }
         .btn-submit:active { transform: scale(0.99); }
         
-        /* Modal Style pou Login / Register */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; }
         .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; }
@@ -131,18 +130,20 @@
                 <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
             </a>
             <div class="header-right">
-                <!-- Bouton ak Ikon Tèt Moun (Avatar) toupre chwa lang lan -->
-                <div class="auth-header-trigger" id="authHeaderTrigger" onclick="openAuthModal()">
-                    <div class="header-avatar-icon">👤</div>
-                    <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
-                </div>
-
+                <!-- 1. Chwa Lang lan -->
                 <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
                     <option value="ht">🇭🇹 Kreyòl</option>
                     <option value="en">🇺🇸 English</option>
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
+                <!-- 2. Bouton ak Ikon Tèt Moun (Ant Lang lan ak Twa Ba yo) -->
+                <div class="auth-header-trigger" id="authHeaderTrigger" onclick="openAuthModal()">
+                    <div class="header-avatar-icon">👤</div>
+                    <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
+                </div>
+
+                <!-- 3. Twa Ba yo (Meni an) -->
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
                     <div id="myDropdown" class="dropdown-menu">
