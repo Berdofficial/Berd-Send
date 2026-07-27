@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
-    <!-- Enpòte yon bèl font Google Font ki pwofesyonèl -->
+    <!-- Enpòte font Inter la -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 70px; }
         
-        /* Elaji layout la pou òdinatè ak yon vlope ki pi laj sou gwo ekran */
         .wrapper {
             width: 100%;
-            max-width: 600px; /* Ogmante lajè pou òdinatè pa parèt twò sere */
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,7 +20,10 @@
 
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .app-logo-img { height: 44px; object-fit: contain; border-radius: 8px; }
+        
+        /* Agrandisman logo a (nou pase l de 44px a 54px) */
+        .app-logo-img { height: 54px; object-fit: contain; border-radius: 8px; }
+        
         .header-right { display: flex; align-items: center; gap: 12px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
         .menu-container { position: relative; }
@@ -30,7 +32,7 @@
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Seksyon Banyè Orizontal pi gwo, pi bèl stil ak yon dire 8 segonn */
+        /* Seksyon Banyè Orizontal ak tèks kout, klè epi dire 8 segonn */
         .banner-slider-container {
             width: 100%;
             background: linear-gradient(135deg, #003366, #0056b3, #007bff);
@@ -240,19 +242,19 @@
             </div>
         </header>
 
-        <!-- Orizontal Slider Banyè (Chak 8 segonn li chanje, pi gwo tèks ak bèl estil) -->
+        <!-- Orizontal Slider Banyè (Tèks kout, klè, dire 8 segonn) -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
                 <h4 id="adv1Title">🎉 Premye Transfè Gratis</h4>
-                <p id="adv1Desc">Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!</p>
+                <p id="adv1Desc">Voye lajan w san okenn frè siplemantè sou premye tranzaksyon an!</p>
             </div>
             <div class="banner-slide">
                 <h4 id="adv2Title">🎁 Envite yon Zanmi</h4>
-                <p id="adv2Desc">Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.</p>
+                <p id="adv2Desc">Jwenn <strong>$10</strong> lè yon zanmi enskri epi itilize sèvis la.</p>
             </div>
             <div class="banner-slide">
                 <h4 id="adv3Title">🔒 Sekirite Total</h4>
-                <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.</p>
+                <p id="adv3Desc">Pwoteksyon maksimòm pou tout tranzaksyon ak done w yo.</p>
             </div>
         </div>
 
@@ -308,7 +310,7 @@
                 </div>
             </div>
 
-            <!-- Chan Imèl Obligatwa pou Itilizatè a -->
+            <!-- Chan Imèl Obligatwa -->
             <div class="form-group">
                 <label id="lblUserEmail">Your Email Address (Required):</label>
                 <div class="input-box">
@@ -400,11 +402,11 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 adv1Title: "🎉 First Transfer Free",
-                adv1Desc: "Send money to Haiti for the first time with zero extra fees on us!",
+                adv1Desc: "Send money with zero extra fees on your first transaction!",
                 adv2Title: "🎁 Invite a Friend",
-                adv2Desc: "Get <strong>$10 mobile top-up</strong> instantly when a friend signs up and uses our service.",
+                adv2Desc: "Get <strong>$10</strong> when a friend signs up and uses our service.",
                 adv3Title: "🔒 Total Security",
-                adv3Desc: "Guaranteed maximum protection for all your transactions and data.",
+                adv3Desc: "Maximum protection for all your transactions and data.",
                 cookieText: "We use cookies to improve your browsing experience. Please select your preference:",
                 btnAcceptCookies: "Accept",
                 btnRejectCookies: "Reject",
@@ -447,11 +449,11 @@
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 adv1Title: "🎉 Premye Transfè Gratis",
-                adv1Desc: "Fè premye voye lajan w san okenn frè siplemantè. Nou ofri l pou ou!",
+                adv1Desc: "Voye lajan w san okenn frè siplemantè sou premye tranzaksyon an!",
                 adv2Title: "🎁 Envite yon Zanmi",
-                adv2Desc: "Jwenn <strong>$10 pou rechaj mobil</strong> touswit lè yon zanmi enskri epi itilize sèvis la.",
+                adv2Desc: "Jwenn <strong>$10</strong> lè yon zanmi enskri epi itilize sèvis la.",
                 adv3Title: "🔒 Sekirite Total",
-                adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak enfòmasyon w yo an Ayiti.",
+                adv3Desc: "Pwoteksyon maksimòm pou tout tranzaksyon ak done w yo.",
                 cookieText: "Nou itilize cookies pou amelyore eksperyans ou sou sit la. Tanpri chwazi preferans ou:",
                 btnAcceptCookies: "Aksepte",
                 btnRejectCookies: "Rejte",
@@ -494,11 +496,11 @@
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 adv1Title: "🎉 Primeira Transferência Grátis",
-                adv1Desc: "Envie dinheiro para o Haiti pela primeira vez sem nenhuma taxa extra!",
+                adv1Desc: "Envie dinheiro sem nenhuma taxa extra na sua primeira transação!",
                 adv2Title: "🎁 Convide um Amigo",
-                adv2Desc: "Ganhe <strong>$10 de recarga</strong> instantaneamente quando um amigo se cadastrar.",
+                adv2Desc: "Ganhe <strong>$10</strong> quando um amigo se cadastrar e usar o serviço.",
                 adv3Title: "🔒 Segurança Total",
-                adv3Desc: "Proteção máxima garantida para todas as suas transações e dados.",
+                adv3Desc: "Proteção máxima garantida para todas as transações e dados.",
                 cookieText: "Usamos cookies para melhorar sua experiência. Por favor, escolha sua preferência:",
                 btnAcceptCookies: "Aceitar",
                 btnRejectCookies: "Rejeitar",
@@ -526,7 +528,7 @@
             }
         };
 
-        // Kanpe pou 8 segonn sou chak banyè (8000 milisègond)
+        // Rete 8 segonn sou chak banyè
         let currentSlide = 0;
         function startBannerSlider() {
             const slides = document.querySelectorAll('.banner-slide');
