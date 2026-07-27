@@ -23,26 +23,27 @@
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Badj Pwofil Itilizatè a */
+        /* Bèl Badj Pwofil anlè a */
         .user-profile-badge {
             width: 100%;
             background: linear-gradient(135deg, #ffffff, #f8fafc);
             border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 15px 20px;
+            padding: 16px 20px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
-        .profile-info { display: flex; align-items: center; gap: 15px; }
-        .profile-avatar { width: 45px; height: 45px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+        .profile-info { display: flex; align-items: center; gap: 14px; }
+        .profile-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
         .profile-details h5 { font-size: 1rem; color: #0f172a; font-weight: 700; }
         .profile-details p { font-size: 0.85rem; color: #64748b; }
-        .btn-logout { background: #f1f5f9; border: 1px solid #cbd5e1; color: #475569; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
-        .btn-logout:hover { background: #e2e8f0; }
+        .btn-logout { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-logout:hover { background: #fee2e2; }
 
+        /* Banyè Slider ak plizyè mesaj ki defile */
         .banner-slider-container {
             width: 100%;
             background: linear-gradient(135deg, #003366, #0056b3, #007bff);
@@ -60,10 +61,10 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        .banner-slide { display: none; animation: fadeIn 0.9s ease-in-out; }
+        .banner-slide { display: none; animation: fadeIn 0.8s ease-in-out; }
         .banner-slide.active { display: block; }
-        .banner-slide h4 { font-size: 1.2rem; font-weight: 800; color: #ffeb3b; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .banner-slide p { font-size: 1rem; font-weight: 500; color: #f8fafc; line-height: 1.5; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+        .banner-slide h4 { font-size: 1.2rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .banner-slide p { font-size: 0.95rem; font-weight: 500; color: #f8fafc; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         .banner-slide strong { color: #ffeb3b; font-weight: 700; }
 
         @keyframes fadeIn {
@@ -106,7 +107,6 @@
         .cookie-btn { border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: 0.2s; }
         .btn-accept { background-color: #0066cc; color: white; }
         .btn-reject { background-color: #f1f5f9; color: #334155; }
-        .btn-customize { background-color: transparent; color: #0066cc; border: 1px solid #0066cc; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; }
@@ -125,8 +125,8 @@
             </a>
             <div class="header-right">
                 <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
-                    <option value="en">🇺🇸 English</option>
                     <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
                     <option value="pt">🇧🇷 Português</option>
                 </select>
                 <div class="menu-container">
@@ -145,19 +145,19 @@
             </div>
         </header>
 
-        <!-- Bèl Badj Pwofil la (Sèlman vizib si itilizatè a deja konekte/enskri) -->
-        <div id="userProfileBadge" class="user-profile-badge" style="display: none;">
+        <!-- Bèl Badj Pwofil anlè a -->
+        <div id="userProfileBadge" class="user-profile-badge">
             <div class="profile-info">
                 <div class="profile-avatar" id="profileAvatarText">BS</div>
                 <div class="profile-details">
-                    <h5 id="profileNameDisplay">Non Itilizatè</h5>
-                    <p id="profileContactDisplay">imel@example.com</p>
+                    <h5 id="profileNameDisplay">Vizitè (Konekte pou wè pwofil)</h5>
+                    <p id="profileContactDisplay">Mete enfòmasyon w anba a</p>
                 </div>
             </div>
-            <button class="btn-logout" id="btnLogout" onclick="logoutUser()">Dekonekte</button>
+            <button class="btn-logout" id="btnLogout" onclick="logoutUser()" style="display:none;">Dekonekte</button>
         </div>
 
-        <!-- Banyè slider -->
+        <!-- Banyè Slider ak tout mesaj yo ki ap defile -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
                 <h4 id="adv1Title">🎉 Rechaj Mobil: $5 Rabè</h4>
@@ -392,7 +392,7 @@
 
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
-            const t = translations[lang] || translations['en'];
+            const t = translations[lang] || translations['ht'];
 
             document.getElementById('pageTitle').innerText = t.title;
             document.getElementById('tabTopup').innerText = t.tabTopup;
@@ -429,8 +429,8 @@
 
         function setMode(mode) {
             currentMode = mode;
-            var lang = localStorage.getItem('berdSendLang') || 'en';
-            var t = translations[lang] || translations['en'];
+            var lang = localStorage.getItem('berdSendLang') || 'ht';
+            var t = translations[lang] || translations['ht'];
             var promoGroup = document.getElementById('promoCodeGroup');
 
             if (mode === 'topup') {
@@ -517,6 +517,18 @@
             document.getElementById('totalCost').innerText = totalCostVal.toFixed(2) + " " + sender;
         }
 
+        // Slider pou banyè yo defile chak 7 segonn
+        function startBannerSlider() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 7000);
+        }
+
         // Tcheke sesyon ak verifikasyon 5 èdtan an
         function checkSessionTimeout() {
             let lastActive = localStorage.getItem('berdLastActiveTime');
@@ -524,16 +536,14 @@
             let savedName = localStorage.getItem('berdUserName');
 
             if (savedContact && savedName) {
-                // Montre badj pwofil la
-                document.getElementById('userProfileBadge').style.display = "flex";
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
+                document.getElementById('btnLogout').style.display = "inline-block";
                 
                 document.getElementById('userName').value = savedName;
                 document.getElementById('userContact').value = savedContact;
 
-                // Tcheke si 5è tan (5 * 3600 * 1000 ms) pase
                 if (lastActive) {
                     let currentTime = new Date().getTime();
                     let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
@@ -563,7 +573,10 @@
             localStorage.removeItem('berdUserContact');
             localStorage.removeItem('berdUserName');
             localStorage.removeItem('berdLastActiveTime');
-            document.getElementById('userProfileBadge').style.display = "none";
+            document.getElementById('profileNameDisplay').innerText = "Vizitè (Konekte pou wè pwofil)";
+            document.getElementById('profileContactDisplay').innerText = "Mete enfòmasyon w anba a";
+            document.getElementById('profileAvatarText').innerText = "BS";
+            document.getElementById('btnLogout').style.display = "none";
             document.getElementById('userName').value = "";
             document.getElementById('userContact').value = "";
             document.getElementById('userReferralDisplay').style.display = "none";
@@ -576,6 +589,7 @@
             changeLanguage(savedLang);
 
             setMode('topup');
+            startBannerSlider();
             checkSessionTimeout();
 
             document.getElementById('senderCountry').onchange = updateUI;
@@ -601,18 +615,15 @@
                     return;
                 }
 
-                // Anrejistre pwofil la nan localStorage
                 localStorage.setItem('berdUserName', name);
                 localStorage.setItem('berdUserContact', contact);
                 localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
 
-                // Afiche badj pwofil la
-                document.getElementById('userProfileBadge').style.display = "flex";
                 document.getElementById('profileNameDisplay').innerText = name;
                 document.getElementById('profileContactDisplay').innerText = contact;
                 document.getElementById('profileAvatarText').innerText = name.slice(0, 2).toUpperCase();
+                document.getElementById('btnLogout').style.display = "inline-block";
 
-                // Jenere kòd parèy (referral)
                 let namePart = name.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
                 let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
 
