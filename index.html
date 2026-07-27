@@ -18,7 +18,7 @@
         .header-right { display: flex; align-items: center; gap: 10px; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        /* Ikon tèt moun nan ak Bouton Konekte ant lang lan ak twa ba yo */
+        /* Bouton Login nan anlè toujou */
         .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
         .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -30,7 +30,7 @@
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Badj Pwofil anlè a lè itilizatè a konekte */
+        /* Badj Pwofil anlè a lè itilizatè a konekte (san bouton dekonekte) */
         .user-profile-badge {
             width: 100%;
             background: linear-gradient(135deg, #ffffff, #f8fafc);
@@ -47,8 +47,6 @@
         .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
         .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
         .profile-details p { font-size: 0.8rem; color: #64748b; }
-        .btn-logout { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn-logout:hover { background: #fee2e2; }
 
         /* Banyè Slider ak plizyè mesaj */
         .banner-slider-container {
@@ -137,7 +135,7 @@
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <!-- 2. Bouton ak Ikon Tèt Moun (Ant Lang lan ak Twa Ba yo) -->
+                <!-- 2. Bouton Login lan toujou rete anlè -->
                 <div class="auth-header-trigger" id="authHeaderTrigger" onclick="openAuthModal()">
                     <div class="header-avatar-icon">👤</div>
                     <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
@@ -160,7 +158,7 @@
             </div>
         </header>
 
-        <!-- Badj Pwofil anlè a (parèt otomatikman apre koneksyon) -->
+        <!-- Badj Pwofil anlè a (parèt anba ak non ak avatar, san opsyon dekonekte) -->
         <div id="userProfileBadge" class="user-profile-badge">
             <div class="profile-info">
                 <div class="profile-avatar" id="profileAvatarText">BS</div>
@@ -169,7 +167,6 @@
                     <p id="profileContactDisplay">imel@example.com</p>
                 </div>
             </div>
-            <button class="btn-logout" id="btnLogout" onclick="logoutUser()">Dekonekte</button>
         </div>
 
         <!-- Banyè Slider ak tout mesaj yo k ap defile -->
@@ -518,7 +515,7 @@
                 document.getElementById('profileContactDisplay').innerText = savedContact;
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
-                document.getElementById('authHeaderTrigger').style.display = "none";
+                document.getElementById('authHeaderTrigger').style.display = "flex"; // Bouton anlè a ap rete toujou
 
                 let namePart = savedName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
                 let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
@@ -534,15 +531,6 @@
                 document.getElementById('authHeaderTrigger').style.display = "flex";
                 document.getElementById('userReferralDisplay').style.display = "none";
             }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('berdUserName');
-            localStorage.removeItem('berdUserContact');
-            localStorage.removeItem('berdUserPassword');
-            localStorage.removeItem('berdLastActiveTime');
-            updateProfileUI();
-            alert("Ou dekonekte avèk siksè.");
         }
 
         function checkSessionTimeout() {
