@@ -15,15 +15,20 @@
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 48px; object-fit: contain; border-radius: 8px; }
         
-        .header-right { display: flex; align-items: center; gap: 12px; }
-        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 12px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+        
+        /* Bouton Konekte nan tèt paj la */
+        .btn-header-login { background: #0066cc; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+        .btn-header-login:hover { background: #0052a3; }
+
         .menu-container { position: relative; }
         .menu-btn { background: none; border: none; color: #333; font-size: 24px; cursor: pointer; padding: 5px; }
         .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; }
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Bèl Badj Pwofil anlè a */
+        /* Badj Pwofil anlè a lè itilizatè a konekte */
         .user-profile-badge {
             width: 100%;
             background: linear-gradient(135deg, #ffffff, #f8fafc);
@@ -31,19 +36,19 @@
             border-radius: 14px;
             padding: 16px 20px;
             margin-bottom: 20px;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
         .profile-info { display: flex; align-items: center; gap: 14px; }
-        .profile-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
-        .profile-details h5 { font-size: 1rem; color: #0f172a; font-weight: 700; }
-        .profile-details p { font-size: 0.85rem; color: #64748b; }
+        .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
+        .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
+        .profile-details p { font-size: 0.8rem; color: #64748b; }
         .btn-logout { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn-logout:hover { background: #fee2e2; }
 
-        /* Banyè Slider ak plizyè mesaj ki defile */
+        /* Banyè Slider ak plizyè mesaj */
         .banner-slider-container {
             width: 100%;
             background: linear-gradient(135deg, #003366, #0056b3, #007bff);
@@ -88,10 +93,8 @@
         .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1.05rem; }
         
         .promo-applied-msg { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
-
         .referral-box { background: #fdf4ff; border: 1px solid #f5d0fe; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #86198f; margin-bottom: 18px; display: none; }
         .referral-box strong { font-size: 1.05rem; color: #701a75; }
-
         .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #b45309; margin-top: 10px; display: none; font-weight: 600; }
 
         .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #475569; cursor: pointer; font-weight: 500; }
@@ -101,17 +104,19 @@
         .btn-submit:hover { background: #0052a3; }
         .btn-submit:active { transform: scale(0.99); }
         
+        /* Modal Style pou Login / Register */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; }
+        .modal-content h3 { margin-bottom: 8px; color: #0f172a; font-size: 1.3rem; font-weight: 700; }
+        .modal-content p { color: #64748b; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
+        
         .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; color: #003366; padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0066cc; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; font-size: 0.95rem; flex-wrap: wrap; gap: 15px; }
         .cookie-banner p { margin: 0; max-width: 600px; line-height: 1.5; color: #334155; font-size: 0.9rem; }
         .cookie-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .cookie-btn { border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: 0.2s; }
         .btn-accept { background-color: #0066cc; color: white; }
         .btn-reject { background-color: #f1f5f9; color: #334155; }
-
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; }
-        .modal-content h3 { margin-bottom: 12px; color: #0f172a; font-size: 1.2rem; font-weight: 700; }
-        .modal-content p { color: #64748b; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
 
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; }
     </style>
@@ -124,6 +129,7 @@
                 <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
             </a>
             <div class="header-right">
+                <button class="btn-header-login" id="btnHeaderLogin" onclick="openAuthModal()">Konekte / Register</button>
                 <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
                     <option value="ht">🇭🇹 Kreyòl</option>
                     <option value="en">🇺🇸 English</option>
@@ -145,19 +151,19 @@
             </div>
         </header>
 
-        <!-- Bèl Badj Pwofil anlè a -->
+        <!-- Badj Pwofil anlè a (parèt otomatikman apre koneksyon) -->
         <div id="userProfileBadge" class="user-profile-badge">
             <div class="profile-info">
                 <div class="profile-avatar" id="profileAvatarText">BS</div>
                 <div class="profile-details">
-                    <h5 id="profileNameDisplay">Vizitè (Konekte pou wè pwofil)</h5>
-                    <p id="profileContactDisplay">Mete enfòmasyon w anba a</p>
+                    <h5 id="profileNameDisplay">Non Itilizatè</h5>
+                    <p id="profileContactDisplay">imel@example.com</p>
                 </div>
             </div>
-            <button class="btn-logout" id="btnLogout" onclick="logoutUser()" style="display:none;">Dekonekte</button>
+            <button class="btn-logout" id="btnLogout" onclick="logoutUser()">Dekonekte</button>
         </div>
 
-        <!-- Banyè Slider ak tout mesaj yo ki ap defile -->
+        <!-- Banyè Slider ak tout mesaj yo k ap defile -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
                 <h4 id="adv1Title">🎉 Rechaj Mobil: $5 Rabè</h4>
@@ -237,22 +243,6 @@
                 </div>
             </div>
 
-            <!-- Chan Non Itilizatè -->
-            <div class="form-group">
-                <label id="lblUserName">Full Name (Non ou):</label>
-                <div class="input-box">
-                    <input type="text" id="userName" placeholder="eg: Jean Fleury">
-                </div>
-            </div>
-
-            <!-- Chan Imèl oswa Nimewo Telefòn -->
-            <div class="form-group">
-                <label id="lblUserContact">Your Email or Phone Number (Obligatwa):</label>
-                <div class="input-box">
-                    <input type="text" id="userContact" placeholder="eg: name@example.com oswa +509...">
-                </div>
-            </div>
-
             <div class="form-group">
                 <label id="lblPhone">Recipient phone number:</label>
                 <div class="input-box">
@@ -277,18 +267,50 @@
         </div>
     </div>
 
+    <!-- Modal Otantifikasyon (Konekte / Enskri) -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
+            <p id="authModalDesc">Antre non w, imèl ou (oswa telefòn), ak yon modpas pou jere tranzaksyon w yo.</p>
+            
+            <div class="form-group">
+                <label id="lblAuthName">Non a Konplè:</label>
+                <div class="input-box">
+                    <input type="text" id="authName" placeholder="eg: Jean Fleury">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblAuthEmail">Imèl oswa Telefòn:</label>
+                <div class="input-box">
+                    <input type="text" id="authEmail" placeholder="eg: name@example.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblAuthPassword">Modpas (Password):</label>
+                <div class="input-box">
+                    <input type="password" id="authPassword" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
+        </div>
+    </div>
+
     <!-- Modal Verifikasyon Idantite (Apre 5è tan inaktivite) -->
     <div id="verifyModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
-            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 5 èdtan. Tanpri antre imèl ou oswa nimewo telefòn ou an to konfime idantite w epi kontinye.</p>
+            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 5 èdtan. Tanpri antre modpas ou a pou debloke pwofil ou.</p>
             <div class="form-group">
                 <div class="input-box">
-                    <input type="text" id="verifyInputContact" placeholder="Antre imèl oswa telefòn ou...">
+                    <input type="password" id="verifyInputPassword" placeholder="Antre modpas ou...">
                 </div>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button class="btn-submit" onclick="confirmIdentity()">Verifye Idantite 🔓</button>
+            <div style="margin-top: 15px;">
+                <button class="btn-submit" onclick="confirmIdentity()">Verifye 🔓</button>
             </div>
         </div>
     </div>
@@ -322,19 +344,24 @@
                 lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
-                lblUserName: "Non a Konplè:",
-                lblUserContact: "Imèl ou oswa Nimewo Telefòn (Obligatwa):",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
                 lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
+                btnHeaderLogin: "Konekte / Register",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
-                alertContact: "Tanpri antre non ou ak yon imèl oswa telefòn ki valab!",
+                authTitle: "🔐 Konekte oswa Kreye Kont",
+                authDesc: "Antre non w, imèl ou, ak yon modpas pou jere kont ou.",
+                lblAuthName: "Non a Konplè:",
+                lblAuthEmail: "Imèl oswa Telefòn:",
+                lblAuthPassword: "Modpas (Password):",
+                btnAuthSubmit: "Anrejistre / Konekte 🚀",
+                alertAuth: "Tanpri ranpli tout chan yo (Non, Imèl/Telefòn, ak Modpas)!",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                alertSuccess: "Tranzaksyon an anrejistre avèk siksè! Pwofil ou anrejistre.",
+                alertSuccess: "Byenveni! Kont ou anrejistre avèk siksè.",
                 verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
-                verifyDesc: "Plis pase 5 èdtan pase depi dènye aktivite w. Tanpri re-antre kontak ou pou debloke sesyon an."
+                verifyDesc: "Plis pase 5 èdtan pase. Tanpri antre modpas ou pou debloke."
             },
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
@@ -348,19 +375,24 @@
                 lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
-                lblUserName: "Full Name:",
-                lblUserContact: "Your Email or Phone Number (Required):",
                 lblPhone: "Recipient phone number:",
                 lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
                 lblFeeText: "Transfer Fee (10% VIP Discount):",
                 lblPromo: "Send me promotional offers and updates (Optional)",
+                btnHeaderLogin: "Login / Register",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
-                alertContact: "Please enter your full name and a valid email or phone number!",
+                authTitle: "🔐 Login or Create Account",
+                authDesc: "Enter your name, email/phone, and a password to manage your account.",
+                lblAuthName: "Full Name:",
+                lblAuthEmail: "Email or Phone:",
+                lblAuthPassword: "Password:",
+                btnAuthSubmit: "Continue 🚀",
+                alertAuth: "Please fill in all fields (Name, Email/Phone, and Password)!",
                 alertPhone: "Please enter recipient phone number!",
-                alertSuccess: "Transaction registered successfully! Your profile is saved.",
+                alertSuccess: "Welcome! Account successfully registered.",
                 verifyTitle: "🔒 Identity Verification Required",
-                verifyDesc: "More than 5 hours have passed since your last activity. Please re-enter your contact to unlock."
+                verifyDesc: "More than 5 hours have passed. Please enter your password to unlock."
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -374,19 +406,24 @@
                 lblPromoCode: "Código Promocional (Apenas Recarga - $5 de desconto):",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
-                lblUserName: "Nome Completo:",
-                lblUserContact: "Seu E-mail ou Telefone (Obrigatório):",
                 lblPhone: "Número de telefone do destinatário:",
                 lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
                 lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
+                btnHeaderLogin: "Entrar / Cadastrar",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
-                alertContact: "Por favor, digite seu nome e um contato válido!",
+                authTitle: "🔐 Entrar ou Criar Conta",
+                authDesc: "Insira seu nome, e-mail/telefone e uma senha para gerenciar sua conta.",
+                lblAuthName: "Nome Completo:",
+                lblAuthEmail: "E-mail ou Telefone:",
+                lblAuthPassword: "Senha:",
+                btnAuthSubmit: "Continuar 🚀",
+                alertAuth: "Por favor, preencha todos os campos (Nome, E-mail/Telefone e Senha)!",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                alertSuccess: "Transação registrada com sucesso! Seu perfil foi salvo.",
+                alertSuccess: "Bem-vindo! Conta registrada com sucesso.",
                 verifyTitle: "🔒 Verificação de Identidade Necessária",
-                verifyDesc: "Mais de 5 horas se passaram. Por favor, confirme seu contato para desbloquear."
+                verifyDesc: "Mais de 5 horas se passaram. Insira sua senha para desbloquear."
             }
         };
 
@@ -403,12 +440,18 @@
             document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
-            document.getElementById('lblUserName').innerText = t.lblUserName;
-            document.getElementById('lblUserContact').innerText = t.lblUserContact;
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
             document.getElementById('lblFeeText').innerText = t.lblFeeText;
             document.getElementById('lblPromo').innerText = t.lblPromo;
+            document.getElementById('btnHeaderLogin').innerText = t.btnHeaderLogin;
+            
+            document.getElementById('authModalTitle').innerText = t.authTitle;
+            document.getElementById('authModalDesc').innerText = t.authDesc;
+            document.getElementById('lblAuthName').innerText = t.lblAuthName;
+            document.getElementById('lblAuthEmail').innerText = t.lblAuthEmail;
+            document.getElementById('lblAuthPassword').innerText = t.lblAuthPassword;
+            document.getElementById('btnAuthSubmit').innerText = t.btnAuthSubmit;
             
             document.getElementById('verifyTitle').innerText = t.verifyTitle;
             document.getElementById('verifyDesc').innerText = t.verifyDesc;
@@ -425,6 +468,98 @@
         function toggleMenu() {
             var menu = document.getElementById("myDropdown");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').style.display = "flex";
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = "none";
+        }
+
+        function handleAuthSubmit() {
+            let name = document.getElementById('authName').value.trim();
+            let email = document.getElementById('authEmail').value.trim();
+            let password = document.getElementById('authPassword').value.trim();
+            let lang = localStorage.getItem('berdSendLang') || 'ht';
+            let t = translations[lang] || translations['ht'];
+
+            if (!name || !email || !password) {
+                alert(t.alertAuth);
+                return;
+            }
+
+            localStorage.setItem('berdUserName', name);
+            localStorage.setItem('berdUserContact', email);
+            localStorage.setItem('berdUserPassword', password);
+            localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+
+            closeAuthModal();
+            updateProfileUI();
+            alert(t.alertSuccess);
+        }
+
+        function updateProfileUI() {
+            let savedName = localStorage.getItem('berdUserName');
+            let savedContact = localStorage.getItem('berdUserContact');
+
+            if (savedName && savedContact) {
+                document.getElementById('profileNameDisplay').innerText = savedName;
+                document.getElementById('profileContactDisplay').innerText = savedContact;
+                document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
+                document.getElementById('userProfileBadge').style.display = "flex";
+                document.getElementById('btnHeaderLogin').style.display = "none";
+
+                let namePart = savedName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+                let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
+                document.getElementById('assignedPromoCode').innerText = uniquePromoCode;
+                document.getElementById('userReferralDisplay').style.display = "block";
+
+                let currentRefs = parseInt(localStorage.getItem('referralCount_' + savedContact) || '0');
+                if (currentRefs >= 20) {
+                    document.getElementById('vipBadgeDisplay').style.display = "block";
+                }
+            } else {
+                document.getElementById('userProfileBadge').style.display = "none";
+                document.getElementById('btnHeaderLogin').style.display = "inline-block";
+                document.getElementById('userReferralDisplay').style.display = "none";
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('berdUserName');
+            localStorage.removeItem('berdUserContact');
+            localStorage.removeItem('berdUserPassword');
+            localStorage.removeItem('berdLastActiveTime');
+            updateProfileUI();
+            alert("Ou dekonekte avèk siksè.");
+        }
+
+        function checkSessionTimeout() {
+            let lastActive = localStorage.getItem('berdLastActiveTime');
+            let savedPassword = localStorage.getItem('berdUserPassword');
+
+            if (savedPassword && lastActive) {
+                let currentTime = new Date().getTime();
+                let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
+                if (hoursPassed >= 5) {
+                    document.getElementById('verifyModal').style.display = "flex";
+                }
+            }
+        }
+
+        function confirmIdentity() {
+            let inputPass = document.getElementById('verifyInputPassword').value.trim();
+            let savedPass = localStorage.getItem('berdUserPassword');
+
+            if (inputPass && inputPass === savedPass) {
+                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+                document.getElementById('verifyModal').style.display = "none";
+                document.getElementById('verifyInputPassword').value = "";
+            } else {
+                alert("Modpas la pa kòrèk!");
+            }
         }
 
         function setMode(mode) {
@@ -517,7 +652,6 @@
             document.getElementById('totalCost').innerText = totalCostVal.toFixed(2) + " " + sender;
         }
 
-        // Slider pou banyè yo defile chak 7 segonn
         function startBannerSlider() {
             const slides = document.querySelectorAll('.banner-slide');
             if (slides.length === 0) return;
@@ -529,60 +663,6 @@
             }, 7000);
         }
 
-        // Tcheke sesyon ak verifikasyon 5 èdtan an
-        function checkSessionTimeout() {
-            let lastActive = localStorage.getItem('berdLastActiveTime');
-            let savedContact = localStorage.getItem('berdUserContact');
-            let savedName = localStorage.getItem('berdUserName');
-
-            if (savedContact && savedName) {
-                document.getElementById('profileNameDisplay').innerText = savedName;
-                document.getElementById('profileContactDisplay').innerText = savedContact;
-                document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
-                document.getElementById('btnLogout').style.display = "inline-block";
-                
-                document.getElementById('userName').value = savedName;
-                document.getElementById('userContact').value = savedContact;
-
-                if (lastActive) {
-                    let currentTime = new Date().getTime();
-                    let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
-                    if (hoursPassed >= 5) {
-                        document.getElementById('verifyModal').style.display = "flex";
-                    }
-                }
-            } else {
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-            }
-        }
-
-        function confirmIdentity() {
-            let inputVal = document.getElementById('verifyInputContact').value.trim();
-            let savedContact = localStorage.getItem('berdUserContact');
-
-            if (inputVal && inputVal === savedContact) {
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-                document.getElementById('verifyModal').style.display = "none";
-                document.getElementById('verifyInputContact').value = "";
-            } else {
-                alert("Kontak la pa matche ak pwofil ki anrejistre a!");
-            }
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('berdUserContact');
-            localStorage.removeItem('berdUserName');
-            localStorage.removeItem('berdLastActiveTime');
-            document.getElementById('profileNameDisplay').innerText = "Vizitè (Konekte pou wè pwofil)";
-            document.getElementById('profileContactDisplay').innerText = "Mete enfòmasyon w anba a";
-            document.getElementById('profileAvatarText').innerText = "BS";
-            document.getElementById('btnLogout').style.display = "none";
-            document.getElementById('userName').value = "";
-            document.getElementById('userContact').value = "";
-            document.getElementById('userReferralDisplay').style.display = "none";
-            alert("Ou dekonekte ak siksè.");
-        }
-
         window.onload = function() {
             var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
@@ -590,6 +670,7 @@
 
             setMode('topup');
             startBannerSlider();
+            updateProfileUI();
             checkSessionTimeout();
 
             document.getElementById('senderCountry').onchange = updateUI;
@@ -599,15 +680,14 @@
             document.getElementById('promoCodeInput').oninput = updateUI;
             
             document.getElementById('btnSubmit').onclick = function() {
+                var phone = document.getElementById('phone').value.trim();
+                let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
-                
-                var name = document.getElementById('userName').value.trim();
-                var contact = document.getElementById('userContact').value.trim();
-                var phone = document.getElementById('phone').value.trim();
-                
-                if (!name || !contact) {
-                    alert(t.alertContact);
+
+                if (!savedContact) {
+                    alert("Tanpri konekte oswa kreye kont ou anvan w voye tranzaksyon an!");
+                    openAuthModal();
                     return;
                 }
                 if (!phone) {
@@ -615,30 +695,8 @@
                     return;
                 }
 
-                localStorage.setItem('berdUserName', name);
-                localStorage.setItem('berdUserContact', contact);
                 localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-
-                document.getElementById('profileNameDisplay').innerText = name;
-                document.getElementById('profileContactDisplay').innerText = contact;
-                document.getElementById('profileAvatarText').innerText = name.slice(0, 2).toUpperCase();
-                document.getElementById('btnLogout').style.display = "inline-block";
-
-                let namePart = name.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
-                let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
-
-                let currentRefs = parseInt(localStorage.getItem('referralCount_' + contact) || '0');
-                document.getElementById('assignedPromoCode').innerText = uniquePromoCode;
-                document.getElementById('userReferralDisplay').style.display = "block";
-
-                let vipBadgeDisplay = document.getElementById('vipBadgeDisplay');
-                if (currentRefs >= 20) {
-                    vipBadgeDisplay.style.display = "block";
-                } else {
-                    vipBadgeDisplay.style.display = "none";
-                }
-
-                alert(t.alertSuccess);
+                alert("Tranzaksyon an anrejistre avèk siksè!");
                 updateUI();
             };
 
