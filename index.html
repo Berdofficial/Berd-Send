@@ -15,7 +15,8 @@
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 48px; object-fit: contain; border-radius: 8px; }
         
-        .header-right { display: flex; align-items: center; gap: 10px; }
+        /* Pati dwat tèt paj la: byen aliye ak menm espas sou tout ekran */
+        .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
         /* Bouton Login / Dekonekte nan anlè */
@@ -24,13 +25,13 @@
         .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
         .btn-header-login { background: none; border: none; color: #0f172a; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
 
-        .menu-container { position: relative; }
-        .menu-btn { background: none; border: none; color: #333; font-size: 24px; cursor: pointer; padding: 5px; }
+        .menu-container { position: relative; display: flex; align-items: center; justify-content: center; }
+        .menu-btn { background: none; border: none; color: #333; font-size: 24px; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center; }
         .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; }
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Badj Pwofil anlè a lè itilizatè a konekte (san bouton dekonekte) */
+        /* Badj Pwofil anlè a lè itilizatè a konekte */
         .user-profile-badge {
             width: 100%;
             background: linear-gradient(135deg, #ffffff, #f8fafc);
@@ -118,6 +119,15 @@
         .btn-reject { background-color: #f1f5f9; color: #334155; }
 
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; }
+
+        @media (max-width: 480px) {
+            header { padding: 14px 15px; }
+            .app-logo-img { height: 40px; }
+            .header-right { gap: 8px; }
+            .lang-select { padding: 6px 8px; font-size: 0.8rem; }
+            .auth-header-trigger { padding: 5px 8px; }
+            .btn-header-login { font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
@@ -483,14 +493,12 @@
         function handleAuthHeaderClick() {
             let savedContact = localStorage.getItem('berdUserContact');
             if (savedContact) {
-                // Si itilizatè a te konekte, klike la a ap dekonekte l (logout)
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserContact');
                 localStorage.removeItem('berdUserPassword');
                 localStorage.removeItem('berdLastActiveTime');
                 updateProfileUI();
             } else {
-                // Si li pa te konekte, louvri modal la
                 openAuthModal();
             }
         }
@@ -532,13 +540,11 @@
             let t = translations[lang] || translations['ht'];
 
             if (savedName && savedContact) {
-                // Mizajou badj anba a
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
 
-                // Mizajou bouton anlè a pou l vin "Dekonekte"
                 document.getElementById('btnHeaderLogin').innerText = t.btnLogout;
                 document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
 
@@ -552,7 +558,6 @@
                     document.getElementById('vipBadgeDisplay').style.display = "block";
                 }
             } else {
-                // Si li dekonekte
                 document.getElementById('userProfileBadge').style.display = "none";
                 document.getElementById('btnHeaderLogin').innerText = t.btnLogin;
                 document.getElementById('headerAvatarIcon').innerText = "👤";
