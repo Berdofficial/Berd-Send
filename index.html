@@ -956,9 +956,10 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye kliyan an sou bon lyen Stripe la dapre sèvis li chwazi a
+            // Lojik pou voye kliyan an sou bon lyen Stripe la ak montan otomatik lan
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
+                var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
                 let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
@@ -972,21 +973,29 @@
                     alert(t.alertPhone);
                     return;
                 }
+                if (amountVal <= 0) {
+                    alert("Tanpri antre yon montan valab!");
+                    return;
+                }
 
                 var receiver = document.getElementById('receiverCountry').value;
+                var stripeUrl = "";
+
+                // Ajoute montan an otomatik nan lyen Stripe la ak '?prefilled_amount=' (an centimes, kidonk miltipliye pa 100)
+                var amountInCents = Math.round(amountVal * 100);
 
                 if (currentMode === 'topup') {
                     if (receiver === 'DOP') {
-                        // Lyen Stripe pou Rechaj Mobil RD (Claro / Viva)
-                        window.location.href = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01";
+                        stripeUrl = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01?prefilled_amount=" + amountInCents;
                     } else {
-                        // Lyen Stripe pou Rechaj Mobil Ayiti (Digicel / Natcom)
-                        window.location.href = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00";
+                        stripeUrl = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00?prefilled_amount=" + amountInCents;
                     }
                 } else {
-                    // Lyen Stripe pou Transfè MonCash / Natcash
-                    window.location.href = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02";
+                    stripeUrl = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02?prefilled_amount=" + amountInCents;
                 }
+
+                // Dirije itilizatè a dirèkteman sou paj peman Stripe la ak tout montan an deja ladan l
+                window.location.href = stripeUrl;
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
