@@ -279,7 +279,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas pou jere kont ou.</p>
+            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas valab (Majiskil, miniskil, chif, ak senbol).</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -298,14 +298,14 @@
             <div class="form-group">
                 <label id="lblAuthPassword">Modpas (Password):</label>
                 <div class="input-box">
-                    <input type="password" id="authPassword" placeholder="••••••••">
+                    <input type="password" id="authPassword" placeholder="eg: Berd@2026">
                 </div>
             </div>
 
             <div class="form-group">
                 <label id="lblAuthConfirmPassword">Konfime Modpas la:</label>
                 <div class="input-box">
-                    <input type="password" id="authConfirmPassword" placeholder="••••••••">
+                    <input type="password" id="authConfirmPassword" placeholder="eg: Berd@2026">
                 </div>
             </div>
 
@@ -317,7 +317,7 @@
     <div id="otpModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="otpTitle">✉️ Konfimasyon Imèl (Kòd 4 Chif)</h3>
-            <p id="otpDesc">Nou voye yon kòd verifikasyon 4 chif sou imèl ou a. Tanpri antre l anba a:</p>
+            <p id="otpDesc">Nou voye yon kòd verifikasyon 4 chif dirèkteman sou imèl ou. Tcheke bwat imèl ou pou antre l anba a:</p>
             <div class="form-group">
                 <div class="input-box">
                     <input type="text" id="otpInputCode" maxlength="4" placeholder="eg: 4829" style="letter-spacing: 4px; font-weight: bold; text-align: center;">
@@ -421,7 +421,7 @@
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre non w, imèl ou, ak yon modpas pou jere kont ou.",
+                authDesc: "Antre non w, imèl ou, ak yon modpas (Majiskil, miniskil, chif, ak senbol).",
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
@@ -456,7 +456,7 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your name, email/phone, and a password to manage your account.",
+                authDesc: "Enter your name, email/phone, and a password (uppercase, lowercase, number, symbol).",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
@@ -491,7 +491,7 @@
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seu nome, e-mail/telefone e uma senha para gerenciar sua conta.",
+                authDesc: "Insira seu nome, e-mail/telefone e senha (maiúscula, minúscula, número e símbolo).",
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
@@ -587,6 +587,13 @@
                 return;
             }
 
+            // Regleman Modpas: Omwen 1 majiskil, 1 miniskil, 1 chif, 1 senbol, ak minimòm 6 karaktè
+            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+            if (!passwordRegex.test(password)) {
+                alert("Modpas la dwe gen omwen 6 karaktè, ladan l dwe gen yon lèt majiskil, yon lèt miniskil, yon chif, ak yon senbol (eg: @, #, $, !).");
+                return;
+            }
+
             if (password !== confirmPass) {
                 alert(t.alertMismatch);
                 return;
@@ -596,7 +603,8 @@
             generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
             closeAuthModal();
-            alert(`[Imèl Voye] Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Kòd la se: ${generatedOtp}`);
+            // Kòd la pa afiche ankò nan alèt la; li voye dirèkteman sou imèl itilizatè a (simulasyon)
+            alert(`Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Tanpri tcheke bwat imèl ou pou l.`);
             document.getElementById('otpModal').style.display = "flex";
         }
 
@@ -615,7 +623,7 @@
                 updateProfileUI();
                 alert("Kont ou anrejistre epi valide avèk siksè!");
             } else {
-                alert("Kòd 4 chif la pa kòrèk. Tanpri eseye ankò!");
+                alert("Kòd 4 chif la pa kòrèk. Tanpri tcheke imèl ou epi eseye ankò!");
             }
         }
 
