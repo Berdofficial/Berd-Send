@@ -956,10 +956,11 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye kliyan an sou bon lyen Stripe la ak montan otomatik lan
+            // Lojik pou voye kliyan an sou bon lyen Stripe la epi ekri total la dirèkteman
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
+                var promoInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
                 let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
@@ -979,22 +980,37 @@
                 }
 
                 var receiver = document.getElementById('receiverCountry').value;
-                var stripeUrl = "";
+                var deliveryMethod = document.getElementById('deliveryMethod').value;
+                
+                // Kalkile total egzak la (avèk frè oubyen rabè kode a) menm jan l parèt nan sit la
+                let discount = (currentMode === 'topup' && promoInput.length > 0) ? 5.0 : 0;
+                let baseFee = 0;
+                if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
+                    baseFee = amountVal * 0.05;
+                    let referralsCount = parseInt(localStorage.getItem('referralCount_' + savedContact) || '0');
+                    if (referralsCount >= 20) baseFee = baseFee * 0.90;
+                }
+                let totalCostVal = amountVal + baseFee - discount;
+                if (totalCostVal < 0) totalCostVal = 0;
 
-                // Ajoute montan an otomatik nan lyen Stripe la ak '?prefilled_amount=' (an centimes, kidonk miltipliye pa 100)
-                var amountInCents = Math.round(amountVal * 100);
+                // Konvèti an centimes pou Stripe (eg: $10.00 vin 1000)
+                var amountInCents = Math.round(totalCostVal * 100);
+                var stripeUrl = "";
 
                 if (currentMode === 'topup') {
                     if (receiver === 'DOP') {
-                        stripeUrl = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01?prefilled_amount=" + amountInCents;
+                        // Lyen Stripe pou Mobile recharge DR - Claro / Viva
+                        stripeUrl = "https://buy.stripe.com/test_3cI8wOeil9xI482cxt1Nu01?prefilled_amount=" + amountInCents;
                     } else {
-                        stripeUrl = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00?prefilled_amount=" + amountInCents;
+                        // Lyen Stripe pou Mobile Recharge HT - Digicel / Natcom
+                        stripeUrl = "https://buy.stripe.com/test_5kQ00ieilcJUdIC8hd1Nu00?prefilled_amount=" + amountInCents;
                     }
                 } else {
-                    stripeUrl = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02?prefilled_amount=" + amountInCents;
+                    // Lyen Stripe pou Transfer MonCash / Natcash
+                    stripeUrl = "https://buy.stripe.com/test_cNibJ0cadh0a8oibtp1Nu02?prefilled_amount=" + amountInCents;
                 }
 
-                // Dirije itilizatè a dirèkteman sou paj peman Stripe la ak tout montan an deja ladan l
+                // Dirije itilizatè a sou Stripe ak tout montan an deja mete otomatikman
                 window.location.href = stripeUrl;
             };
 
