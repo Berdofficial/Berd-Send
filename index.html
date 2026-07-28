@@ -150,8 +150,6 @@
             .btn-header-login { font-size: 0.8rem; }
         }
     </style>
-    <!-- Entegre Stripe JS la pou peman an -->
-    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -229,7 +227,7 @@
             <div class="form-group">
                 <label id="lblReceiver">Recipient country:</label>
                 <div class="input-box">
-                    <select id="receiverCountry">
+                    <select id="receiverCountry" onchange="populateMethods(); updateUI();">
                         <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
                         <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
                     </select>
@@ -293,8 +291,7 @@
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
 
-            <!-- Bouton pou Peye ak Lyen Peman Stripe -->
-            <button class="btn-submit" id="btnSubmit">Peye Kounye a ($10) 🚀</button>
+            <button class="btn-submit" id="btnSubmit">Peye Kounye a 🚀</button>
         </div>
     </div>
 
@@ -442,8 +439,6 @@
     </footer>
 
     <script>
-        const stripe = Stripe('pk_test_51TyAw0PBu6DEc51rnjUjhvFatQY0loO4s9PnFJMLUL7mjvgXHwOY1Gpany91YqAzPLM3aNsbsp9KPo3JMiuMNzvX00fP2J5F8O');
-
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
 
@@ -466,8 +461,7 @@
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
-                btnSubmitTopup: "Peye Kounye a ($10) 🚀",
-                btnSubmitTransfer: "Peye Kounye a ($10) 🚀",
+                btnSubmit: "Peye Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
                 authDesc: "Antre non w, imèl ou, ak yon modpas valab.",
                 lblAuthName: "Non a Konplè:",
@@ -504,8 +498,7 @@
                 lblPromo: "Send me promotional offers and updates (Optional)",
                 btnLogin: "Login",
                 btnLogout: "Logout",
-                btnSubmitTopup: "Pay Now ($10) 🚀",
-                btnSubmitTransfer: "Pay Now ($10) 🚀",
+                btnSubmit: "Pay Now 🚀",
                 authTitle: "🔐 Login or Create Account",
                 authDesc: "Enter your name, email/phone, and a password.",
                 lblAuthName: "Full Name:",
@@ -542,8 +535,7 @@
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
-                btnSubmitTopup: "Pagar Agora ($10) 🚀",
-                btnSubmitTransfer: "Pagar Agora ($10) 🚀",
+                btnSubmit: "Pagar Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
                 authDesc: "Insira seu nome, e-mail/telefone e senha.",
                 lblAuthName: "Nome Completo:",
@@ -605,10 +597,8 @@
 
             if (currentMode === 'topup') {
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
             } else {
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
             }
 
             updateProfileUI();
@@ -618,13 +608,6 @@
             const dropdown = document.getElementById('settingsDropdown');
             const authDropdown = document.getElementById('authDropdown');
             authDropdown.style.display = 'none';
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function toggleAuthDropdown() {
-            const dropdown = document.getElementById('authDropdown');
-            const settingsDropdown = document.getElementById('settingsDropdown');
-            settingsDropdown.style.display = 'none';
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         }
 
@@ -973,7 +956,7 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Dirije kliyan an dirèkteman sou paj peman Stripe ou a lè li klike sou "Peye Kounye a"
+            // Lojik pou voye kliyan an sou bon lyen Stripe la dapre sèvis li chwazi a
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 let savedContact = localStorage.getItem('berdUserContact');
@@ -990,8 +973,21 @@
                     return;
                 }
 
-                // Voye kliyan an sou lyen Stripe la dirèkteman
-                window.location.href = "https://buy.stripe.com/test_8x28wR7P48CMbqC2K22ZO00";
+                var receiver = document.getElementById('receiverCountry').value;
+                var deliveryMethod = document.getElementById('deliveryMethod').value;
+
+                if (currentMode === 'topup') {
+                    if (receiver === 'DOP') {
+                        // Lyen Stripe pou Rechaj Mobil RD
+                        window.location.href = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01";
+                    } else {
+                        // Lyen Stripe pou Rechaj Mobil Ayiti
+                        window.location.href = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00";
+                    }
+                } else {
+                    // Lyen Stripe pou Transfè MonCash / Natcash
+                    window.location.href = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02";
+                }
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
