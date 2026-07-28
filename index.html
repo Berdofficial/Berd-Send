@@ -276,7 +276,7 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon (Konekte / Enskri ak Konfimasyon Modpas) -->
+    <!-- Modal Otantifikasyon (Konekte / Enskri) -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -317,23 +317,7 @@
         </div>
     </div>
 
-    <!-- Modal Verifikasyon Kòd OTP (4 Chif voye sou imèl) -->
-    <div id="otpModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 id="otpTitle">✉️ Konfimasyon Imèl (Kòd 4 Chif)</h3>
-            <p id="otpDesc">Nou voye yon kòd verifikasyon 4 chif dirèkteman sou imèl ou. Tcheke bwat imèl ou pou antre l anba a:</p>
-            <div class="form-group">
-                <div class="input-box">
-                    <input type="text" id="otpInputCode" maxlength="4" placeholder="eg: 4829" style="letter-spacing: 4px; font-weight: bold; text-align: center;">
-                </div>
-            </div>
-            <div style="margin-top: 15px;">
-                <button class="btn-submit" onclick="verifyOtpCode()">Konfime Kòd la ✅</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Verifikasyon Idantite (Apre 24h inaktivite) -->
+    <!-- Modal Verifikasyon Modpas (Apre 24h inaktivite) -->
     <div id="verifyModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
@@ -401,8 +385,6 @@
 
     <script>
         var currentMode = 'topup';
-        var tempUserData = null;
-        var generatedOtp = "";
 
         const translations = {
             ht: {
@@ -614,31 +596,15 @@
                 return;
             }
 
-            tempUserData = { name, email, password };
-            generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+            // Anrejistre itilizatè a direk san OTP
+            localStorage.setItem('berdUserName', name);
+            localStorage.setItem('berdUserContact', email);
+            localStorage.setItem('berdUserPassword', password);
+            localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
 
             closeAuthModal();
-            alert(`Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Tcheke bwat imèl ou pou l.`);
-            document.getElementById('otpModal').style.display = "flex";
-        }
-
-        function verifyOtpCode() {
-            let enteredOtp = document.getElementById('otpInputCode').value.trim();
-            if (enteredOtp === generatedOtp) {
-                localStorage.setItem('berdUserName', tempUserData.name);
-                localStorage.setItem('berdUserContact', tempUserData.email);
-                localStorage.setItem('berdUserPassword', tempUserData.password);
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-
-                document.getElementById('otpModal').style.display = "none";
-                document.getElementById('otpInputCode').value = "";
-                tempUserData = null;
-                
-                updateProfileUI();
-                alert("Kont ou anrejistre epi valide avèk siksè!");
-            } else {
-                alert("Kòd 4 chif la pa kòrèk. Tanpri tcheke imèl ou epi eseye ankò!");
-            }
+            updateProfileUI();
+            alert(t.alertSuccess);
         }
 
         function updateProfileUI() {
