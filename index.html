@@ -18,16 +18,17 @@
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; position: relative; transition: 0.2s; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
-        .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
         .btn-header-login { background: none; border: none; color: #0f172a; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
 
         .menu-container { position: relative; display: flex; align-items: center; justify-content: center; }
         .menu-btn { background: none; border: none; color: #333; font-size: 24px; cursor: pointer; padding: 5px; display: flex; align-items: center; justify-content: center; }
-        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; }
-        .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
-        .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
+        
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; border: 1px solid #eee; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; background: none; border: none; cursor: pointer; }
+        .dropdown-menu a:hover, .dropdown-menu button:hover { background: #f8fafc; color: #0066cc; }
 
         .user-profile-badge {
             width: 100%;
@@ -116,6 +117,16 @@
         .modal-content h3 { margin-bottom: 8px; color: #0f172a; font-size: 1.3rem; font-weight: 700; }
         .modal-content p { color: #64748b; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
         
+        /* Modal Konfimasyon Dekonekte espesyal */
+        .modal-box-logout { background: #fff; padding: 25px; border-radius: 16px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-box-logout p { font-size: 16px; margin-bottom: 20px; color: #333; font-weight: 500; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
+        .btn-yes { background: #dc2626; color: white; }
+        .btn-yes:hover { background: #b91c1c; }
+        .btn-no { background: #e2e8f0; color: #334155; }
+        .btn-no:hover { background: #cbd5e1; }
+
         .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; color: #003366; padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0066cc; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; font-size: 0.95rem; flex-wrap: wrap; gap: 15px; }
         .cookie-banner p { margin: 0; max-width: 600px; line-height: 1.5; color: #334155; font-size: 0.9rem; }
         .cookie-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -150,22 +161,24 @@
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <div class="auth-header-trigger" id="authHeaderTrigger" onclick="handleAuthHeaderClick()">
+                <!-- Bouton Login / Pwofil ak Meni Deroule -->
+                <div class="auth-header-trigger" onclick="toggleAuthDropdown()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
-                    <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
+                    <button class="btn-header-login" id="authButtonText">Konekte</button>
+                    <div id="authDropdown" class="dropdown-menu">
+                        <button onclick="handleAuthMenuClick()">Konekte / Pwofil</button>
+                        <button onclick="confirmLogout()">Dekonekte</button>
+                    </div>
                 </div>
 
+                <!-- Menu Paramèt ak Aksyon -->
                 <div class="menu-container">
-                    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-                    <div id="myDropdown" class="dropdown-menu">
-                        <a href="index.html" id="menuHome">Home</a>
-                        <a href="blog.html" id="menuBlog">Blog</a>
-                        <a href="privacy.html" id="menuPrivacy">Privacy Policy</a>
-                        <a href="terms.html" id="menuTerms">Terms of Service</a>
-                        <a href="about.html" id="menuAbout">About Us</a>
-                        <a href="contact.html" id="menuContact">Contact Us</a>
-                        <a href="faq.html" id="menuFaq">FAQ</a>
-                        <a href="tracking.html" id="menuTracking">Track Transfer</a>
+                    <button class="menu-btn" onclick="toggleSettingsDropdown()">⚙️</button>
+                    <div id="settingsDropdown" class="dropdown-menu">
+                        <a href="#" onclick="openSettingsModal()">Paramèt Kont</a>
+                        <button onclick="handleAuthMenuClick()">Konekte / Pwofil</button>
+                        <button onclick="confirmLogout()">Dekonekte</button>
+                        <a href="faq.html">Èd / Sipò</a>
                     </div>
                 </div>
             </div>
@@ -331,6 +344,17 @@
             </div>
 
             <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
+        </div>
+    </div>
+
+    <!-- Modal Konfimasyon Dekonekte -->
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box-logout">
+            <p>Èske w vle dekonekte tout bon vre?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-yes" onclick="executeLogout()">Wi</button>
+                <button class="modal-btn btn-no" onclick="closeLogoutModal()">Non</button>
+            </div>
         </div>
     </div>
 
@@ -611,9 +635,39 @@
             updateProfileUI();
         }
 
-        function toggleMenu() {
-            var menu = document.getElementById("myDropdown");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        // Fonksyon pou louvri/fèmen meni Settings (⚙️)
+        function toggleSettingsDropdown() {
+            const dropdown = document.getElementById('settingsDropdown');
+            const authDropdown = document.getElementById('authDropdown');
+            authDropdown.style.display = 'none';
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Fonksyon pou louvri/fèmen meni Auth (Bouton Login)
+        function toggleAuthDropdown() {
+            const dropdown = document.getElementById('authDropdown');
+            const settingsDropdown = document.getElementById('settingsDropdown');
+            settingsDropdown.style.display = 'none';
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Fèmen tout meni yo si w klike an deyò
+        window.onclick = function(event) {
+            if (!event.target.closest('.menu-container') && !event.target.closest('.auth-header-trigger')) {
+                document.getElementById('settingsDropdown').style.display = 'none';
+                document.getElementById('authDropdown').style.display = 'none';
+            }
+        }
+
+        function handleAuthMenuClick() {
+            document.getElementById('authDropdown').style.display = 'none';
+            document.getElementById('settingsDropdown').style.display = 'none';
+            let savedContact = localStorage.getItem('berdUserContact');
+            if (savedContact) {
+                openSettingsModal();
+            } else {
+                openAuthModal();
+            }
         }
 
         function togglePasswordVisibility(inputId, btn) {
@@ -627,20 +681,6 @@
             }
         }
 
-        function handleAuthHeaderClick() {
-            let savedContact = localStorage.getItem('berdUserContact');
-            if (savedContact) {
-                // Dekonekte san pa afiche okenn tèks sou bloke imèl la (rete sekirè)
-                localStorage.removeItem('berdUserName');
-                localStorage.removeItem('berdUserPassword');
-                localStorage.removeItem('berdLastActiveTime');
-                localStorage.setItem('berdEmailRegistered', savedContact);
-                updateProfileUI();
-            } else {
-                openAuthModal();
-            }
-        }
-
         function openAuthModal() {
             generateCaptcha();
             document.getElementById('authModal').style.display = "flex";
@@ -650,7 +690,27 @@
             document.getElementById('authModal').style.display = "none";
         }
 
+        function confirmLogout() {
+            document.getElementById('logoutModal').style.display = 'flex';
+            document.getElementById('settingsDropdown').style.display = 'none';
+            document.getElementById('authDropdown').style.display = 'none';
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        function executeLogout() {
+            document.getElementById('logoutModal').style.display = 'none';
+            localStorage.removeItem('berdUserName');
+            localStorage.removeItem('berdUserPassword');
+            localStorage.removeItem('berdLastActiveTime');
+            updateProfileUI();
+            alert("Ou dekonekte kounye a.");
+        }
+
         function openSettingsModal() {
+            document.getElementById('settingsDropdown').style.display = 'none';
             document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
             document.getElementById('settingsEmail').value = localStorage.getItem('berdUserContact') || '';
             document.getElementById('settingsPassword').value = '';
@@ -747,11 +807,10 @@
             closeAuthModal();
             updateProfileUI();
 
-            // Mesaj egzak ki mande yo
             if (isFirstTimeCreation) {
-                alert(t.msgRegistered); // "Anrejistre"
+                alert(t.msgRegistered);
             } else {
-                alert(t.msgLoggedIn);   // "Konekte"
+                alert(t.msgLoggedIn);
             }
         }
 
@@ -767,7 +826,7 @@
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
 
-                document.getElementById('btnHeaderLogin').innerText = t.btnLogout;
+                document.getElementById('authButtonText').innerText = savedName.split(' ')[0];
                 document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
 
                 let namePart = savedName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
@@ -781,7 +840,7 @@
                 }
             } else {
                 document.getElementById('userProfileBadge').style.display = "none";
-                document.getElementById('btnHeaderLogin').innerText = t.btnLogin;
+                document.getElementById('authButtonText').innerText = t.btnLogin;
                 document.getElementById('headerAvatarIcon').innerText = "👤";
                 document.getElementById('userReferralDisplay').style.display = "none";
             }
