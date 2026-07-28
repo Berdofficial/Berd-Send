@@ -14,27 +14,28 @@
         header { 
             width: 100%; 
             display: flex; 
-            justify-content: space-between; 
+            flex-direction: column; 
             align-items: center; 
             background: #fff; 
             border-bottom: 1px solid #eee; 
-            padding: 18px 25px; 
+            padding: 20px 25px; 
             margin-bottom: 15px; 
             border-radius: 14px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             gap: 15px;
+            text-align: center;
         }
 
-        .logo-container { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+        .logo-container { display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; }
         .app-logo-img { height: 75px; max-width: 200px; object-fit: contain; border-radius: 8px; }
         
         .header-right { 
             display: flex; 
             align-items: center; 
-            justify-content: flex-end; 
+            justify-content: center; 
             gap: 12px; 
-            flex-wrap: nowrap; 
-            flex-grow: 1;
+            flex-wrap: wrap; 
+            width: 100%;
         }
 
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
@@ -162,9 +163,9 @@
         .footer-links a:hover { text-decoration: underline; }
 
         @media (max-width: 480px) {
-            header { padding: 14px 15px; gap: 8px; }
+            header { padding: 14px 15px; gap: 12px; }
             .app-logo-img { height: 60px; max-width: 140px; }
-            .header-right { gap: 6px; }
+            .header-right { gap: 8px; }
             .lang-select { padding: 6px 6px; font-size: 0.75rem; }
             .auth-header-trigger { padding: 5px 6px; gap: 4px; }
             .btn-header-login { font-size: 0.75rem; }
