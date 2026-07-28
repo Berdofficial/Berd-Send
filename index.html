@@ -165,12 +165,11 @@
                 </select>
 
                 <!-- Bouton Login / Pwofil -->
-                <div class="auth-header-trigger" onclick="toggleAuthDropdown()">
+                <div class="auth-header-trigger" onclick="handleAuthHeaderClick()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="authButtonText">Konekte</button>
                     <div id="authDropdown" class="dropdown-menu">
-                        <button onclick="handleAuthMenuClick()">Konekte / Pwofil</button>
-                        <button onclick="confirmLogout()">Dekonekte</button>
+                        <!-- Dynamically populated based on auth status -->
                     </div>
                 </div>
 
@@ -179,8 +178,9 @@
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <button onclick="handleAuthMenuClick()">👤 Konekte / Pwofil</button>
-                        <button onclick="confirmLogout()">🚪 Dekonekte</button>
+                        <div id="settingsAuthActionContainer">
+                            <!-- Dynamically populated based on auth status -->
+                        </div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
                 </div>
@@ -467,7 +467,7 @@
             <a href="blog.html">Blog</a>
             <a href="faq.html">FAQ</a>
             <a href="about.html">About</a>
-            <a href="privacy.html">Konfidansyalite</a>
+            <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
         </div>
         <div>&copy; 2026 BerdSend. All rights reserved.</div>
@@ -665,9 +665,7 @@
             }
         }
 
-        function handleAuthMenuClick() {
-            document.getElementById('authDropdown').style.display = 'none';
-            document.getElementById('settingsDropdown').style.display = 'none';
+        function handleAuthHeaderClick() {
             let savedContact = localStorage.getItem('berdUserContact');
             if (savedContact) {
                 openSettingsModal();
@@ -711,6 +709,7 @@
             localStorage.removeItem('berdUserName');
             localStorage.removeItem('berdUserPassword');
             localStorage.removeItem('berdLastActiveTime');
+            localStorage.removeItem('berdUserContact');
             updateProfileUI();
             alert("Ou dekonekte kounye a.");
         }
@@ -826,6 +825,9 @@
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
 
+            let authDropdown = document.getElementById('authDropdown');
+            let settingsAuthContainer = document.getElementById('settingsAuthActionContainer');
+
             if (savedName && savedContact) {
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
@@ -834,6 +836,10 @@
 
                 document.getElementById('authButtonText').innerText = savedName.split(' ')[0];
                 document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
+
+                // 2. Le itilizatè a konekte deja: nan auth dropdown ak nan paramèt se dekonekte sèlman ki dwe la
+                authDropdown.innerHTML = `<button onclick="confirmLogout()">🚪 Dekonekte (Logout)</button>`;
+                settingsAuthContainer.innerHTML = `<button onclick="confirmLogout()">🚪 Dekonekte (Logout)</button>`;
 
                 let namePart = savedName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
                 let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
@@ -849,6 +855,10 @@
                 document.getElementById('authButtonText').innerText = t.btnLogin;
                 document.getElementById('headerAvatarIcon').innerText = "👤";
                 document.getElementById('userReferralDisplay').style.display = "none";
+
+                // 2. Le li dekonekte: nan auth dropdown ak nan paramèt se konekte sèlman ki dwe la
+                authDropdown.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
+                settingsAuthContainer.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
             }
         }
 
