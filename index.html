@@ -391,7 +391,6 @@
 
             <button class="btn-submit" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
             
-            <!-- Seksyon Siprime Kont (Pral parèt sèlman lè itilizatè a konekte epi kreye kont li) -->
             <div id="deleteAccountSection" style="display: none;">
                 <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
                 <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont 🗑️</button>
@@ -466,6 +465,8 @@
             <a href="blog.html">Blog</a>
             <a href="faq.html">FAQ</a>
             <a href="about.html">About</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="tracking.html">Tracking Transfer</a>
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
         </div>
@@ -721,7 +722,6 @@
             document.getElementById('settingsEmail').value = savedContact;
             document.getElementById('settingsPassword').value = '';
             
-            // Montre oubyen kache bouton sipresyon an depann si itilizatè a kreye kont li
             document.getElementById('deleteAccountSection').style.display = savedContact ? "block" : "none";
             
             document.getElementById('settingsModal').style.display = "flex";
