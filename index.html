@@ -391,12 +391,11 @@
 
             <button class="btn-submit" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
             
-            <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
-            
-            <h4 style="color: #dc2626; font-size: 1rem; margin-bottom: 8px;">Zòn Danje ⚠️</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 12px;">Si ou siprime kont ou a nèt, ou pap kapab itilize menm enfòmasyon yo an ankò sof si ou re-anrejistre.</p>
-            
-            <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont mwen nèt 🗑️</button>
+            <!-- Seksyon Siprime Kont (Pral parèt sèlman lè itilizatè a konekte epi kreye kont li) -->
+            <div id="deleteAccountSection" style="display: none;">
+                <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
+                <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont 🗑️</button>
+            </div>
         </div>
     </div>
 
@@ -716,9 +715,15 @@
 
         function openSettingsModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
+            let savedContact = localStorage.getItem('berdUserContact') || '';
+            
             document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
-            document.getElementById('settingsEmail').value = localStorage.getItem('berdUserContact') || '';
+            document.getElementById('settingsEmail').value = savedContact;
             document.getElementById('settingsPassword').value = '';
+            
+            // Montre oubyen kache bouton sipresyon an depann si itilizatè a kreye kont li
+            document.getElementById('deleteAccountSection').style.display = savedContact ? "block" : "none";
+            
             document.getElementById('settingsModal').style.display = "flex";
         }
 
@@ -837,7 +842,6 @@
                 document.getElementById('authButtonText').innerText = savedName.split(' ')[0];
                 document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
 
-                // 2. Le itilizatè a konekte deja: nan auth dropdown ak nan paramèt se dekonekte sèlman ki dwe la
                 authDropdown.innerHTML = `<button onclick="confirmLogout()">🚪 Dekonekte (Logout)</button>`;
                 settingsAuthContainer.innerHTML = `<button onclick="confirmLogout()">🚪 Dekonekte (Logout)</button>`;
 
@@ -856,7 +860,6 @@
                 document.getElementById('headerAvatarIcon').innerText = "👤";
                 document.getElementById('userReferralDisplay').style.display = "none";
 
-                // 2. Le li dekonekte: nan auth dropdown ak nan paramèt se konekte sèlman ki dwe la
                 authDropdown.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
                 settingsAuthContainer.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
             }
