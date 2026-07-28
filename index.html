@@ -956,7 +956,7 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye kliyan an sou Stripe lè l klike Peye Kounye a
+            // Lojik pou voye kliyan an sou Stripe ak prefilled_amount
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
@@ -993,21 +993,21 @@
                 let totalCostVal = amountVal + baseFee - discount;
                 if (totalCostVal < 0) totalCostVal = 0;
 
-                // Transfòme montan an an kantite (quantity) pou Stripe Payment Links
-                var finalQuantity = Math.round(totalCostVal);
+                // Stripe mande santim (cents), donk nou multiplye total la pa 100
+                var amountInCents = Math.round(totalCostVal * 100);
                 var stripeUrl = "";
 
                 if (currentMode === 'topup') {
                     if (receiver === 'DOP') {
-                        stripeUrl = "https://buy.stripe.com/test_3cI8wOeil9xI482cxt1Nu01?quantity=" + finalQuantity;
+                        stripeUrl = "https://buy.stripe.com/test_3cI8wOeil9xI482cxt1Nu01?prefilled_amount=" + amountInCents;
                     } else {
-                        stripeUrl = "https://buy.stripe.com/test_5kQ00ieilcJUdIC8hd1Nu00?quantity=" + finalQuantity;
+                        stripeUrl = "https://buy.stripe.com/test_5kQ00ieilcJUdIC8hd1Nu00?prefilled_amount=" + amountInCents;
                     }
                 } else {
-                    stripeUrl = "https://buy.stripe.com/test_cNibJ0cadh0a8oibtp1Nu02?quantity=" + finalQuantity;
+                    stripeUrl = "https://buy.stripe.com/test_cNibJ0cadh0a8oibtp1Nu02?prefilled_amount=" + amountInCents;
                 }
 
-                // Dirije kliyan an sou Stripe
+                // Dirije kliyan an sou Stripe san l pa bezwen retape montan an
                 window.location.href = stripeUrl;
             };
 
