@@ -45,6 +45,8 @@
         .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
         .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
         .profile-details p { font-size: 0.8rem; color: #64748b; }
+        .settings-btn { background: #e2e8f0; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; color: #334155; cursor: pointer; transition: 0.2s; }
+        .settings-btn:hover { background: #cbd5e1; }
 
         .banner-slider-container {
             width: 100%;
@@ -102,9 +104,11 @@
         .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
         .btn-submit:hover { background: #0052a3; }
         .btn-submit:active { transform: scale(0.99); }
+        .btn-danger { background: #dc2626 !important; }
+        .btn-danger:hover { background: #b91c1c !important; }
         
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; }
         .modal-content h3 { margin-bottom: 8px; color: #0f172a; font-size: 1.3rem; font-weight: 700; }
         .modal-content p { color: #64748b; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
@@ -172,6 +176,7 @@
                     <p id="profileContactDisplay">imel@example.com</p>
                 </div>
             </div>
+            <button class="settings-btn" onclick="openSettingsModal()">⚙️ Paramèt</button>
         </div>
 
         <div class="banner-slider-container">
@@ -281,7 +286,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas valab (Majiskil, miniskil, chif, ak senbol).</p>
+            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas valab.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -314,6 +319,46 @@
             </div>
 
             <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
+        </div>
+    </div>
+
+    <!-- Modal Paramèt Pwofil & Siprèsyon Kont -->
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+            <h3>⚙️ Paramèt Pwofil & Kont</h3>
+            <p>Modifye enfòmasyon pèsonèl ou oswa jere estati kont ou an.</p>
+            
+            <div class="form-group">
+                <label>Modifye Non a Konplè:</label>
+                <div class="input-box">
+                    <input type="text" id="settingsName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Adrès Imèl (Li bloke nan sistèm nan menm si ou dekonnekte):</label>
+                <div class="input-box">
+                    <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Nouvo Modpas (Opsyonèl):</label>
+                <div class="input-box">
+                    <input type="password" id="settingsPassword" placeholder="Lage vid si ou pa chanje l">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('settingsPassword', this)">👁️</button>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
+            
+            <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
+            
+            <h4 style="color: #dc2626; font-size: 1rem; margin-bottom: 8px;">Zòn Danje ⚠️</h4>
+            <p style="font-size: 0.8rem; margin-bottom: 12px;">Si ou siprime kont ou a nèt, imèl ou ap libere nan sistèm nan. Men si ou jis dekonnekte, imèl la ap rete bloke.</p>
+            
+            <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont mwen nèt 🗑️</button>
         </div>
     </div>
 
@@ -408,7 +453,7 @@
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre non w, imèl ou, ak yon modpas (Majiskil, miniskil, chif, ak senbol).",
+                authDesc: "Antre non w, imèl ou, ak yon modpas valab.",
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
@@ -417,7 +462,8 @@
                 alertAuth: "Tanpri ranpli tout chan yo kòrèkteman!",
                 alertMismatch: "Modpas yo pa matche! Tanpri tcheke yo.",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                alertSuccess: "Byenveni! Kont ou anrejistre avèk siksè.",
+                msgRegistered: "Anrejistre! Kont ou kreye pou premye fwa avèk siksè.",
+                msgLoggedIn: "Konekte! Byen tounen nan kont ou an.",
                 verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
                 verifyDesc: "Plis pase 24 èdtan pase. Tanpri antre modpas ou pou debloke.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou. Ou ka aksepte tout oswa chwazi ki done ou vle pataje:"
@@ -443,7 +489,7 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your name, email/phone, and a password (uppercase, lowercase, number, symbol).",
+                authDesc: "Enter your name, email/phone, and a password.",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
@@ -452,7 +498,8 @@
                 alertAuth: "Please fill in all fields correctly!",
                 alertMismatch: "Passwords do not match! Please check.",
                 alertPhone: "Please enter recipient phone number!",
-                alertSuccess: "Welcome! Account successfully registered.",
+                msgRegistered: "Registered! Account successfully created for the first time.",
+                msgLoggedIn: "Logged in! Welcome back to your account.",
                 verifyTitle: "🔒 Identity Verification Required",
                 verifyDesc: "More than 24 hours have passed. Please enter your password to unlock.",
                 cookieTextMsg: "We use cookies to improve your experience. You can accept all or customize your preferences:"
@@ -478,7 +525,7 @@
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seu nome, e-mail/telefone e senha (maiúscula, minúscula, número e símbolo).",
+                authDesc: "Insira seu nome, e-mail/telefone e senha.",
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
@@ -487,7 +534,8 @@
                 alertAuth: "Por favor, preencha todos os campos corretamente!",
                 alertMismatch: "As senhas não coincidem! Verifique.",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                alertSuccess: "Bem-vindo! Conta registrada com sucesso.",
+                msgRegistered: "Registrado! Conta criada com sucesso pela primeira vez.",
+                msgLoggedIn: "Logado! Bem-vindo de volta à sua conta.",
                 verifyTitle: "🔒 Verificação de Identidade Necessária",
                 verifyDesc: "Mais de 24 horas se passaram. Insira sua senha para desbloquear.",
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência. Você pode aceitar tudo ou personalizar suas preferências:"
@@ -554,10 +602,11 @@
         function handleAuthHeaderClick() {
             let savedContact = localStorage.getItem('berdUserContact');
             if (savedContact) {
+                // Dekonekte men kenbe imèl la nan sistèm lan (localStorage) pou lòt moun pa itilize l
                 localStorage.removeItem('berdUserName');
-                localStorage.removeItem('berdUserContact');
                 localStorage.removeItem('berdUserPassword');
                 localStorage.removeItem('berdLastActiveTime');
+                localStorage.setItem('berdEmailRegistered', savedContact); // Imèl rete bloke
                 updateProfileUI();
             } else {
                 openAuthModal();
@@ -570,6 +619,59 @@
 
         function closeAuthModal() {
             document.getElementById('authModal').style.display = "none";
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
+            document.getElementById('settingsEmail').value = localStorage.getItem('berdUserContact') || '';
+            document.getElementById('settingsPassword').value = '';
+            document.getElementById('settingsModal').style.display = "flex";
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').style.display = "none";
+        }
+
+        function saveSettingsUpdates() {
+            let newName = document.getElementById('settingsName').value.trim();
+            let newPass = document.getElementById('settingsPassword').value.trim();
+
+            if (!newName) {
+                alert("Non an pa dwe vid!");
+                return;
+            }
+
+            localStorage.setItem('berdUserName', newName);
+            if (newPass) {
+                let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+                if (!passwordRegex.test(newPass)) {
+                    alert("Modpas la dwe gen omwen 6 karaktè, yon majiskil, yon miniskil, yon chif, ak yon senbòl.");
+                    return;
+                }
+                localStorage.setItem('berdUserPassword', newPass);
+            }
+
+            closeSettingsModal();
+            updateProfileUI();
+            alert("Enfòmasyon pwofil ou yo mete ajou avèk siksè!");
+        }
+
+        function deleteUserAccount() {
+            if (confirm("Èske ou sèten ou vle siprime kont ou a nèt? Aksyon sa a ap libere imèl ou nan sistèm nan.")) {
+                let email = localStorage.getItem('berdUserContact');
+                // Retire tout enfòmasyon itilizatè a ak imèl li nan sistèm lan (libere imèl la nèt)
+                localStorage.removeItem('berdUserName');
+                localStorage.removeItem('berdUserContact');
+                localStorage.removeItem('berdUserPassword');
+                localStorage.removeItem('berdLastActiveTime');
+                localStorage.removeItem('berdEmailRegistered');
+                if (email) {
+                    localStorage.removeItem('referralCount_' + email);
+                }
+                closeSettingsModal();
+                updateProfileUI();
+                alert("Kont ou a siprime nèt, epi imèl ou libere nan sistèm nan.");
+            }
         }
 
         function handleAuthSubmit() {
@@ -587,7 +689,7 @@
 
             let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
             if (!passwordRegex.test(password)) {
-                alert("Modpas la dwe gen omwen 6 karaktè, ladan l dwe gen yon lèt majiskil, yon lèt miniskil, yon chif, ak yon senbol (eg: @, #, $, !).");
+                alert("Modpas la dwe gen omwen 6 karaktè, ladan l dwe gen yon lèt majiskil, yon lèt miniskil, yon chif, ak yon senbòl (eg: @, #, $, !).");
                 return;
             }
 
@@ -596,14 +698,33 @@
                 return;
             }
 
+            let registeredEmails = localStorage.getItem('berdEmailRegistered') || '';
+            let activeEmail = localStorage.getItem('berdUserContact') || '';
+            let isExistingEmail = (email === registeredEmails || email === activeEmail);
+
+            // Tcheke si imèl la deja itilize pa yon lòt moun epi kont lan toujou nan sistèm lan
+            if (isExistingEmail && activeEmail && activeEmail !== email) {
+                alert("Imèl sa a deja itilize nan sistèm nan e li bloke! Yon lòt moun pa ka anrejistre avè l.");
+                return;
+            }
+
+            let isFirstTimeCreation = !isExistingEmail && !activeEmail;
+
             localStorage.setItem('berdUserName', name);
             localStorage.setItem('berdUserContact', email);
+            localStorage.setItem('berdEmailRegistered', email);
             localStorage.setItem('berdUserPassword', password);
             localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
 
             closeAuthModal();
             updateProfileUI();
-            alert(t.alertSuccess);
+
+            // Mesaj egzak selon si se premye fwa oswa rekoneksyon
+            if (isFirstTimeCreation) {
+                alert(t.msgRegistered); // "Anrejistre"
+            } else {
+                alert(t.msgLoggedIn);   // "Konekte"
+            }
         }
 
         function updateProfileUI() {
@@ -641,8 +762,9 @@
         function checkSessionTimeout() {
             let lastActive = localStorage.getItem('berdLastActiveTime');
             let savedPassword = localStorage.getItem('berdUserPassword');
+            let savedContact = localStorage.getItem('berdUserContact');
 
-            if (savedPassword && lastActive) {
+            if (savedPassword && lastActive && savedContact) {
                 let currentTime = new Date().getTime();
                 let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
                 if (hoursPassed >= 24) {
