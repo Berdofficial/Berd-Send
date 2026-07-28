@@ -15,11 +15,9 @@
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 48px; object-fit: contain; border-radius: 8px; }
         
-        /* Pati dwat tèt paj la: byen aliye ak menm espas sou tout ekran */
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        /* Bouton Login / Dekonekte nan anlè */
         .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
         .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -31,7 +29,6 @@
         .dropdown-menu a { display: block; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; cursor: pointer; }
         .dropdown-menu a:hover { background: #f8fafc; color: #0066cc; }
 
-        /* Badj Pwofil anlè a lè itilizatè a konekte */
         .user-profile-badge {
             width: 100%;
             background: linear-gradient(135deg, #ffffff, #f8fafc);
@@ -49,7 +46,6 @@
         .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
         .profile-details p { font-size: 0.8rem; color: #64748b; }
 
-        /* Banyè Slider ak plizyè mesaj */
         .banner-slider-container {
             width: 100%;
             background: linear-gradient(135deg, #003366, #0056b3, #007bff);
@@ -138,20 +134,17 @@
                 <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
             </a>
             <div class="header-right">
-                <!-- 1. Chwa Lang lan -->
                 <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
                     <option value="ht">🇭🇹 Kreyòl</option>
                     <option value="en">🇺🇸 English</option>
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <!-- 2. Bouton Login / Dekonekte nan anlè a -->
                 <div class="auth-header-trigger" id="authHeaderTrigger" onclick="handleAuthHeaderClick()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="btnHeaderLogin">Konekte</button>
                 </div>
 
-                <!-- 3. Twa Ba yo (Meni an) -->
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleMenu()">☰</button>
                     <div id="myDropdown" class="dropdown-menu">
@@ -168,7 +161,6 @@
             </div>
         </header>
 
-        <!-- Badj Pwofil anlè a (parèt anba ak non ak avatar, san opsyon dekonekte) -->
         <div id="userProfileBadge" class="user-profile-badge">
             <div class="profile-info">
                 <div class="profile-avatar" id="profileAvatarText">BS</div>
@@ -179,7 +171,6 @@
             </div>
         </div>
 
-        <!-- Banyè Slider ak tout mesaj yo k ap defile -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
                 <h4 id="adv1Title">🎉 Rechaj Mobil: $5 Rabè</h4>
@@ -195,7 +186,6 @@
             </div>
         </div>
 
-        <!-- Kat Kalkilatris la -->
         <div class="card" id="mainCard">
             <div class="tabs">
                 <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
@@ -283,12 +273,12 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon (Konekte / Enskri) -->
+    <!-- Modal Otantifikasyon (Konekte / Enskri ak Konfimasyon Modpas) -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre non w, imèl ou (oswa telefòn), ak yon modpas pou jere tranzaksyon w yo.</p>
+            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas pou jere kont ou.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -311,15 +301,38 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label id="lblAuthConfirmPassword">Konfime Modpas la:</label>
+                <div class="input-box">
+                    <input type="password" id="authConfirmPassword" placeholder="••••••••">
+                </div>
+            </div>
+
             <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
         </div>
     </div>
 
-    <!-- Modal Verifikasyon Idantite (Apre 5è tan inaktivite) -->
+    <!-- Modal Verifikasyon Kòd OTP (4 Chif voye sou imèl) -->
+    <div id="otpModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="otpTitle">✉️ Konfimasyon Imèl (Kòd 4 Chif)</h3>
+            <p id="otpDesc">Nou voye yon kòd verifikasyon 4 chif sou imèl ou a. Tanpri antre l anba a:</p>
+            <div class="form-group">
+                <div class="input-box">
+                    <input type="text" id="otpInputCode" maxlength="4" placeholder="eg: 4829" style="letter-spacing: 4px; font-weight: bold; text-align: center;">
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="btn-submit" onclick="verifyOtpCode()">Konfime Kòd la ✅</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Verifikasyon Idantite (Apre 24h inaktivite) -->
     <div id="verifyModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
-            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 5 èdtan. Tanpri antre modpas ou a pou debloke pwofil ou.</p>
+            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 24 èdtan. Tanpri antre modpas ou a pou debloke pwofil ou.</p>
             <div class="form-group">
                 <div class="input-box">
                     <input type="password" id="verifyInputPassword" placeholder="Antre modpas ou...">
@@ -346,6 +359,8 @@
 
     <script>
         var currentMode = 'topup';
+        var tempUserData = null;
+        var generatedOtp = "";
 
         const translations = {
             ht: {
@@ -373,12 +388,14 @@
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
-                btnAuthSubmit: "Anrejistre / Konekte 🚀",
-                alertAuth: "Tanpri ranpli tout chan yo (Non, Imèl/Telefòn, ak Modpas)!",
+                lblAuthConfirmPassword: "Konfime Modpas la:",
+                btnAuthSubmit: "Kontinye 🚀",
+                alertAuth: "Tanpri ranpli tout chan yo kòrèkteman!",
+                alertMismatch: "Modpas yo pa matche! Tanpri tcheke yo.",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
                 alertSuccess: "Byenveni! Kont ou anrejistre avèk siksè.",
                 verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
-                verifyDesc: "Plis pase 5 èdtan pase. Tanpri antre modpas ou pou debloke."
+                verifyDesc: "Plis pase 24 èdtan pase. Tanpri antre modpas ou pou debloke."
             },
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
@@ -405,12 +422,14 @@
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
+                lblAuthConfirmPassword: "Confirm Password:",
                 btnAuthSubmit: "Continue 🚀",
-                alertAuth: "Please fill in all fields (Name, Email/Phone, and Password)!",
+                alertAuth: "Please fill in all fields correctly!",
+                alertMismatch: "Passwords do not match! Please check.",
                 alertPhone: "Please enter recipient phone number!",
                 alertSuccess: "Welcome! Account successfully registered.",
                 verifyTitle: "🔒 Identity Verification Required",
-                verifyDesc: "More than 5 hours have passed. Please enter your password to unlock."
+                verifyDesc: "More than 24 hours have passed. Please enter your password to unlock."
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -437,12 +456,14 @@
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
+                lblAuthConfirmPassword: "Confirmar Senha:",
                 btnAuthSubmit: "Continuar 🚀",
-                alertAuth: "Por favor, preencha todos os campos (Nome, E-mail/Telefone e Senha)!",
+                alertAuth: "Por favor, preencha todos os campos corretamente!",
+                alertMismatch: "As senhas não coincidem! Verifique.",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
                 alertSuccess: "Bem-vindo! Conta registrada com sucesso.",
                 verifyTitle: "🔒 Verificação de Identidade Necessária",
-                verifyDesc: "Mais de 5 horas se passaram. Insira sua senha para desbloquear."
+                verifyDesc: "Mais de 24 horas se passaram. Insira sua senha para desbloquear."
             }
         };
 
@@ -469,6 +490,7 @@
             document.getElementById('lblAuthName').innerText = t.lblAuthName;
             document.getElementById('lblAuthEmail').innerText = t.lblAuthEmail;
             document.getElementById('lblAuthPassword').innerText = t.lblAuthPassword;
+            document.getElementById('lblAuthConfirmPassword').innerText = t.lblAuthConfirmPassword;
             document.getElementById('btnAuthSubmit').innerText = t.btnAuthSubmit;
             
             document.getElementById('verifyTitle').innerText = t.verifyTitle;
@@ -515,22 +537,46 @@
             let name = document.getElementById('authName').value.trim();
             let email = document.getElementById('authEmail').value.trim();
             let password = document.getElementById('authPassword').value.trim();
+            let confirmPass = document.getElementById('authConfirmPassword').value.trim();
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
 
-            if (!name || !email || !password) {
+            if (!name || !email || !password || !confirmPass) {
                 alert(t.alertAuth);
                 return;
             }
 
-            localStorage.setItem('berdUserName', name);
-            localStorage.setItem('berdUserContact', email);
-            localStorage.setItem('berdUserPassword', password);
-            localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+            if (password !== confirmPass) {
+                alert(t.alertMismatch);
+                return;
+            }
+
+            // Sere done yo tanporèman epi voye kòd OTP 4 chif
+            tempUserData = { name, email, password };
+            generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
             closeAuthModal();
-            updateProfileUI();
-            alert(t.alertSuccess);
+            alert(`[Imèl Voye] Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Kòd la se: ${generatedOtp}`);
+            document.getElementById('otpModal').style.display = "flex";
+        }
+
+        function verifyOtpCode() {
+            let enteredOtp = document.getElementById('otpInputCode').value.trim();
+            if (enteredOtp === generatedOtp) {
+                localStorage.setItem('berdUserName', tempUserData.name);
+                localStorage.setItem('berdUserContact', tempUserData.email);
+                localStorage.setItem('berdUserPassword', tempUserData.password);
+                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
+
+                document.getElementById('otpModal').style.display = "none";
+                document.getElementById('otpInputCode').value = "";
+                tempUserData = null;
+                
+                updateProfileUI();
+                alert("Kont ou anrejistre epi valide avèk siksè!");
+            } else {
+                alert("Kòd 4 chif la pa kòrèk. Tanpri eseye ankò!");
+            }
         }
 
         function updateProfileUI() {
@@ -572,7 +618,7 @@
             if (savedPassword && lastActive) {
                 let currentTime = new Date().getTime();
                 let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
-                if (hoursPassed >= 5) {
+                if (hoursPassed >= 24) {
                     document.getElementById('verifyModal').style.display = "flex";
                 }
             }
