@@ -974,14 +974,13 @@
                 }
 
                 var receiver = document.getElementById('receiverCountry').value;
-                var deliveryMethod = document.getElementById('deliveryMethod').value;
 
                 if (currentMode === 'topup') {
                     if (receiver === 'DOP') {
-                        // Lyen Stripe pou Rechaj Mobil RD
+                        // Lyen Stripe pou Rechaj Mobil RD (Claro / Viva)
                         window.location.href = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01";
                     } else {
-                        // Lyen Stripe pou Rechaj Mobil Ayiti
+                        // Lyen Stripe pou Rechaj Mobil Ayiti (Digicel / Natcom)
                         window.location.href = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00";
                     }
                 } else {
