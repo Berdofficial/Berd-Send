@@ -98,6 +98,9 @@
         .referral-box strong { font-size: 1.05rem; color: #701a75; }
         .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #b45309; margin-top: 10px; display: none; font-weight: 600; }
 
+        .captcha-box { background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px; border-radius: 10px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+        .captcha-display { font-weight: 700; color: #0066cc; font-size: 0.95rem; }
+
         .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #475569; cursor: pointer; font-weight: 500; }
         .checkbox-group input { cursor: pointer; width: 18px; height: 18px; }
 
@@ -268,7 +271,7 @@
                 <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
                 <div id="vipBadgeDisplay" class="vip-badge-box">
-                    👑 <strong>Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash / Natcash.
+                    👑 <strong>Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
                 </div>
             </div>
 
@@ -281,7 +284,7 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon (Konekte / Enskri) -->
+    <!-- Modal Otantifikasyon (Konekte / Enskri) ak Kapcha -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -318,6 +321,15 @@
                 </div>
             </div>
 
+            <!-- Kapcha Sekirite kont Robo -->
+            <div class="captcha-box">
+                <label id="lblCaptchaText">Verifikasyon (Pè Makèt): Konbyen fè:</label>
+                <span class="captcha-display" id="captchaQuestion"></span>
+                <div class="input-box">
+                    <input type="number" id="captchaInput" placeholder="Antre repons lan...">
+                </div>
+            </div>
+
             <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
         </div>
     </div>
@@ -337,7 +349,7 @@
             </div>
 
             <div class="form-group">
-                <label>Adrès Imèl (Li bloke nan sistèm nan menm si ou dekonnekte):</label>
+                <label>Adrès Imèl:</label>
                 <div class="input-box">
                     <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
                 </div>
@@ -356,7 +368,7 @@
             <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
             
             <h4 style="color: #dc2626; font-size: 1rem; margin-bottom: 8px;">Zòn Danje ⚠️</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 12px;">Si ou siprime kont ou a nèt, imèl ou ap libere nan sistèm nan. Men si ou jis dekonnekte, imèl la ap rete bloke.</p>
+            <p style="font-size: 0.8rem; margin-bottom: 12px;">Si ou siprime kont ou a nèt, ou pap kapab itilize menm enfòmasyon yo an ankò sof si ou re-anrejistre.</p>
             
             <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont mwen nèt 🗑️</button>
         </div>
@@ -430,6 +442,7 @@
 
     <script>
         var currentMode = 'topup';
+        var currentCaptchaAnswer = 0;
 
         const translations = {
             ht: {
@@ -458,12 +471,14 @@
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
                 lblAuthConfirmPassword: "Konfime Modpas la:",
+                lblCaptchaText: "Verifikasyon anti-robo: Konbyen fè",
                 btnAuthSubmit: "Kontinye 🚀",
                 alertAuth: "Tanpri ranpli tout chan yo kòrèkteman!",
                 alertMismatch: "Modpas yo pa matche! Tanpri tcheke yo.",
+                alertCaptcha: "Repons Kapcha a pa kòrèk! Tanpri eseye ankò.",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                msgRegistered: "Anrejistre! Kont ou kreye pou premye fwa avèk siksè.",
-                msgLoggedIn: "Konekte! Byen tounen nan kont ou an.",
+                msgRegistered: "Anrejistre",
+                msgLoggedIn: "Konekte",
                 verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
                 verifyDesc: "Plis pase 24 èdtan pase. Tanpri antre modpas ou pou debloke.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou. Ou ka aksepte tout oswa chwazi ki done ou vle pataje:"
@@ -494,12 +509,14 @@
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
                 lblAuthConfirmPassword: "Confirm Password:",
+                lblCaptchaText: "Anti-robot verification: How much is",
                 btnAuthSubmit: "Continue 🚀",
                 alertAuth: "Please fill in all fields correctly!",
                 alertMismatch: "Passwords do not match! Please check.",
+                alertCaptcha: "Incorrect Captcha answer! Please try again.",
                 alertPhone: "Please enter recipient phone number!",
-                msgRegistered: "Registered! Account successfully created for the first time.",
-                msgLoggedIn: "Logged in! Welcome back to your account.",
+                msgRegistered: "Registered",
+                msgLoggedIn: "Logged in",
                 verifyTitle: "🔒 Identity Verification Required",
                 verifyDesc: "More than 24 hours have passed. Please enter your password to unlock.",
                 cookieTextMsg: "We use cookies to improve your experience. You can accept all or customize your preferences:"
@@ -530,17 +547,27 @@
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
                 lblAuthConfirmPassword: "Confirmar Senha:",
+                lblCaptchaText: "Verificação anti-robô: Quanto é",
                 btnAuthSubmit: "Continuar 🚀",
                 alertAuth: "Por favor, preencha todos os campos corretamente!",
                 alertMismatch: "As senhas não coincidem! Verifique.",
+                alertCaptcha: "Resposta do Captcha incorreta! Tente novamente.",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                msgRegistered: "Registrado! Conta criada com sucesso pela primeira vez.",
-                msgLoggedIn: "Logado! Bem-vindo de volta à sua conta.",
+                msgRegistered: "Registrado",
+                msgLoggedIn: "Logado",
                 verifyTitle: "🔒 Verificação de Identidade Necessária",
                 verifyDesc: "Mais de 24 horas se passaram. Insira sua senha para desbloquear.",
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência. Você pode aceitar tudo ou personalizar suas preferências:"
             }
         };
+
+        function generateCaptcha() {
+            let num1 = Math.floor(Math.random() * 10) + 1;
+            let num2 = Math.floor(Math.random() * 10) + 1;
+            currentCaptchaAnswer = num1 + num2;
+            document.getElementById('captchaQuestion').innerText = `${num1} + ${num2} = ?`;
+            document.getElementById('captchaInput').value = '';
+        }
 
         function changeLanguage(lang) {
             localStorage.setItem('berdSendLang', lang);
@@ -566,6 +593,7 @@
             document.getElementById('lblAuthEmail').innerText = t.lblAuthEmail;
             document.getElementById('lblAuthPassword').innerText = t.lblAuthPassword;
             document.getElementById('lblAuthConfirmPassword').innerText = t.lblAuthConfirmPassword;
+            document.getElementById('lblCaptchaText').innerText = t.lblCaptchaText;
             document.getElementById('btnAuthSubmit').innerText = t.btnAuthSubmit;
             
             document.getElementById('verifyTitle').innerText = t.verifyTitle;
@@ -602,11 +630,11 @@
         function handleAuthHeaderClick() {
             let savedContact = localStorage.getItem('berdUserContact');
             if (savedContact) {
-                // Dekonekte men kenbe imèl la nan sistèm lan (localStorage) pou lòt moun pa itilize l
+                // Dekonekte san pa afiche okenn tèks sou bloke imèl la (rete sekirè)
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserPassword');
                 localStorage.removeItem('berdLastActiveTime');
-                localStorage.setItem('berdEmailRegistered', savedContact); // Imèl rete bloke
+                localStorage.setItem('berdEmailRegistered', savedContact);
                 updateProfileUI();
             } else {
                 openAuthModal();
@@ -614,6 +642,7 @@
         }
 
         function openAuthModal() {
+            generateCaptcha();
             document.getElementById('authModal').style.display = "flex";
         }
 
@@ -657,9 +686,8 @@
         }
 
         function deleteUserAccount() {
-            if (confirm("Èske ou sèten ou vle siprime kont ou a nèt? Aksyon sa a ap libere imèl ou nan sistèm nan.")) {
+            if (confirm("Èske ou sèten ou vle siprime kont ou a nèt?")) {
                 let email = localStorage.getItem('berdUserContact');
-                // Retire tout enfòmasyon itilizatè a ak imèl li nan sistèm lan (libere imèl la nèt)
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserContact');
                 localStorage.removeItem('berdUserPassword');
@@ -670,7 +698,7 @@
                 }
                 closeSettingsModal();
                 updateProfileUI();
-                alert("Kont ou a siprime nèt, epi imèl ou libere nan sistèm nan.");
+                alert("Kont ou a siprime nèt.");
             }
         }
 
@@ -679,11 +707,18 @@
             let email = document.getElementById('authEmail').value.trim();
             let password = document.getElementById('authPassword').value.trim();
             let confirmPass = document.getElementById('authConfirmPassword').value.trim();
+            let captchaVal = parseInt(document.getElementById('captchaInput').value.trim());
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
 
-            if (!name || !email || !password || !confirmPass) {
+            if (!name || !email || !password || !confirmPass || isNaN(captchaVal)) {
                 alert(t.alertAuth);
+                return;
+            }
+
+            if (captchaVal !== currentCaptchaAnswer) {
+                alert(t.alertCaptcha);
+                generateCaptcha();
                 return;
             }
 
@@ -701,13 +736,6 @@
             let registeredEmails = localStorage.getItem('berdEmailRegistered') || '';
             let activeEmail = localStorage.getItem('berdUserContact') || '';
             let isExistingEmail = (email === registeredEmails || email === activeEmail);
-
-            // Tcheke si imèl la deja itilize pa yon lòt moun epi kont lan toujou nan sistèm lan
-            if (isExistingEmail && activeEmail && activeEmail !== email) {
-                alert("Imèl sa a deja itilize nan sistèm nan e li bloke! Yon lòt moun pa ka anrejistre avè l.");
-                return;
-            }
-
             let isFirstTimeCreation = !isExistingEmail && !activeEmail;
 
             localStorage.setItem('berdUserName', name);
@@ -719,7 +747,7 @@
             closeAuthModal();
             updateProfileUI();
 
-            // Mesaj egzak selon si se premye fwa oswa rekoneksyon
+            // Mesaj egzak ki mande yo
             if (isFirstTimeCreation) {
                 alert(t.msgRegistered); // "Anrejistre"
             } else {
