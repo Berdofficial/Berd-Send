@@ -80,9 +80,11 @@
         .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
         .form-group { margin-bottom: 18px; }
         label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
-        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; position: relative; }
         .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
         .input-box input, .input-box select { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; }
+        
+        .toggle-password { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #64748b; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
         
         .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.95rem; color: #166534; margin-bottom: 18px; font-weight: 500; }
         .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 18px; font-size: 0.9rem; }
@@ -299,6 +301,7 @@
                 <label id="lblAuthPassword">Modpas (Password):</label>
                 <div class="input-box">
                     <input type="password" id="authPassword" placeholder="eg: Berd@2026">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
                 </div>
             </div>
 
@@ -306,6 +309,7 @@
                 <label id="lblAuthConfirmPassword">Konfime Modpas la:</label>
                 <div class="input-box">
                     <input type="password" id="authConfirmPassword" placeholder="eg: Berd@2026">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authConfirmPassword', this)">👁️</button>
                 </div>
             </div>
 
@@ -337,6 +341,7 @@
             <div class="form-group">
                 <div class="input-box">
                     <input type="password" id="verifyInputPassword" placeholder="Antre modpas ou...">
+                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('verifyInputPassword', this)">👁️</button>
                 </div>
             </div>
             <div style="margin-top: 15px;">
@@ -553,6 +558,17 @@
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
+        function togglePasswordVisibility(inputId, btn) {
+            var input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerText = "🙈";
+            } else {
+                input.type = "password";
+                btn.innerText = "👁️";
+            }
+        }
+
         function handleAuthHeaderClick() {
             let savedContact = localStorage.getItem('berdUserContact');
             if (savedContact) {
@@ -587,7 +603,6 @@
                 return;
             }
 
-            // Regleman Modpas: Omwen 1 majiskil, 1 miniskil, 1 chif, 1 senbol, ak minimòm 6 karaktè
             let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
             if (!passwordRegex.test(password)) {
                 alert("Modpas la dwe gen omwen 6 karaktè, ladan l dwe gen yon lèt majiskil, yon lèt miniskil, yon chif, ak yon senbol (eg: @, #, $, !).");
@@ -603,8 +618,7 @@
             generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
             closeAuthModal();
-            // Kòd la pa afiche ankò nan alèt la; li voye dirèkteman sou imèl itilizatè a (simulasyon)
-            alert(`Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Tanpri tcheke bwat imèl ou pou l.`);
+            alert(`Yo voye yon kòd konfimasyon 4 chif sou imèl ou (${email}). Tcheke bwat imèl ou pou l.`);
             document.getElementById('otpModal').style.display = "flex";
         }
 
@@ -783,7 +797,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 7000);
+            }, 8000);
         }
 
         window.onload = function() {
