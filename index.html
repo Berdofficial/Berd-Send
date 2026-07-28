@@ -298,7 +298,7 @@
         </div>
     </div>
 
-    <!-- Modals yo rete menm jan an... -->
+    <!-- Modals -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -442,7 +442,6 @@
     </footer>
 
     <script>
-        // Kle Piblik Stripe ki sot nan kont ou a
         const stripe = Stripe('pk_test_51TyAw0PBu6DEc51rnjUjhvFatQY0loO4s9PnFJMLUL7mjvgXHwOY1Gpany91YqAzPLM3aNsbsp9KPo3JMiuMNzvX00fP2J5F8O');
 
         var currentMode = 'topup';
@@ -974,9 +973,11 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lè itilizatè klike sou bouton peman an, li rele wout sèvè API Stripe la
+            // Rele route.js la ak tout kalkil total montan an pou Stripe Checkout la mache avèk siksè
             document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
+                var sendAmount = parseFloat(document.getElementById('sendAmount').value) || 0;
+                var senderCountry = document.getElementById('senderCountry').value;
                 let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
@@ -991,16 +992,32 @@
                     return;
                 }
 
+                // Kalkile total pou peye pou voye l bay backend la
+                let promoInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+                let discount = (currentMode === 'topup' && promoInput.length > 0) ? 5.0 : 0;
+                let baseFee = 0;
+                let deliveryMethod = document.getElementById('deliveryMethod').value;
+                if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
+                    baseFee = sendAmount * 0.05;
+                    let referralsCount = parseInt(localStorage.getItem('referralCount_' + savedContact) || '0');
+                    if (referralsCount >= 20) baseFee *= 0.90;
+                }
+                let totalCostVal = sendAmount + baseFee - (currentMode === 'topup' ? discount : 0);
+                if (totalCostVal < 0) totalCostVal = 0;
+
                 try {
-                    // Rele wout sèvè API nou te kreye a pou Stripe Checkout
                     const response = await fetch('/api/create-checkout-session', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' }
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            amount: totalCostVal,
+                            currency: senderCountry,
+                            phone: phone
+                        })
                     });
                     const data = await response.json();
 
                     if (data.url) {
-                        // Voye itilizatè a sou paj peman an sekirite Stripe la
                         window.location.href = data.url;
                     } else {
                         alert("Erè nan kreye sesyon peman an: " + (data.error || 'Echèk'));
