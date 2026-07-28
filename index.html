@@ -14,7 +14,6 @@
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         
-        /* Logo ki vin pi gwo ak vizib sou tou de ekran */
         .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
@@ -151,6 +150,8 @@
             .btn-header-login { font-size: 0.8rem; }
         }
     </style>
+    <!-- Entegre Stripe JS la pou peman an -->
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -166,23 +167,17 @@
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <!-- Bouton Login / Pwofil -->
                 <div class="auth-header-trigger" onclick="handleAuthHeaderClick()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="authButtonText">Konekte</button>
-                    <div id="authDropdown" class="dropdown-menu">
-                        <!-- Dynamically populated based on auth status -->
-                    </div>
+                    <div id="authDropdown" class="dropdown-menu"></div>
                 </div>
 
-                <!-- 3 Ti Ba / Meni Paramèt ak Aksyon -->
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <div id="settingsAuthActionContainer">
-                            <!-- Dynamically populated based on auth status -->
-                        </div>
+                        <div id="settingsAuthActionContainer"></div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
                 </div>
@@ -298,31 +293,25 @@
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
 
-            <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
+            <!-- Bouton pou Peye ak Stripe -->
+            <button class="btn-submit" id="btnSubmit">Peye Kounye a ($10) 🚀</button>
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon -->
+    <!-- Modals yo rete menm jan an... -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
             <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas valab.</p>
-            
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
-                <div class="input-box">
-                    <input type="text" id="authName" placeholder="eg: Jean Fleury">
-                </div>
+                <div class="input-box"><input type="text" id="authName" placeholder="eg: Jean Fleury"></div>
             </div>
-
             <div class="form-group">
                 <label id="lblAuthEmail">Imèl oswa Telefòn:</label>
-                <div class="input-box">
-                    <input type="text" id="authEmail" placeholder="eg: name@example.com">
-                </div>
+                <div class="input-box"><input type="text" id="authEmail" placeholder="eg: name@example.com"></div>
             </div>
-
             <div class="form-group">
                 <label id="lblAuthPassword">Modpas (Password):</label>
                 <div class="input-box">
@@ -330,7 +319,6 @@
                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
                 </div>
             </div>
-
             <div class="form-group">
                 <label id="lblAuthConfirmPassword">Konfime Modpas la:</label>
                 <div class="input-box">
@@ -338,20 +326,15 @@
                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authConfirmPassword', this)">👁️</button>
                 </div>
             </div>
-
             <div class="captcha-box">
                 <label id="lblCaptchaText">Verifikasyon (Pè Makèt): Konbyen fè:</label>
                 <span class="captcha-display" id="captchaQuestion"></span>
-                <div class="input-box">
-                    <input type="number" id="captchaInput" placeholder="Antre repons lan...">
-                </div>
+                <div class="input-box"><input type="number" id="captchaInput" placeholder="Antre repons lan..."></div>
             </div>
-
             <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
         </div>
     </div>
 
-    <!-- Modal Konfimasyon Dekonekte -->
     <div id="logoutModal" class="modal-overlay">
         <div class="modal-box-logout">
             <p>Èske w vle dekonekte tout bon vre?</p>
@@ -362,27 +345,19 @@
         </div>
     </div>
 
-    <!-- Modal Paramèt Pwofil & Siprèsyon Kont -->
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
             <h3>⚙️ Paramèt Pwofil & Kont</h3>
             <p>Modifye enfòmasyon pèsonèl ou oswa jere estati kont ou an.</p>
-            
             <div class="form-group">
                 <label>Modifye Non a Konplè:</label>
-                <div class="input-box">
-                    <input type="text" id="settingsName">
-                </div>
+                <div class="input-box"><input type="text" id="settingsName"></div>
             </div>
-
             <div class="form-group">
                 <label>Adrès Imèl:</label>
-                <div class="input-box">
-                    <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
-                </div>
+                <div class="input-box"><input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;"></div>
             </div>
-
             <div class="form-group">
                 <label>Nouvo Modpas (Opsyonèl):</label>
                 <div class="input-box">
@@ -390,9 +365,7 @@
                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('settingsPassword', this)">👁️</button>
                 </div>
             </div>
-
             <button class="btn-submit" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
-            
             <div id="deleteAccountSection" style="display: none;">
                 <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
                 <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont 🗑️</button>
@@ -400,7 +373,6 @@
         </div>
     </div>
 
-    <!-- Modal Verifikasyon Modpas (Apre 24h inaktivite) -->
     <div id="verifyModal" class="modal-overlay">
         <div class="modal-content">
             <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
@@ -417,13 +389,11 @@
         </div>
     </div>
 
-    <!-- Modal Pèsonalizasyon Cookie yo -->
     <div id="cookieModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeCookieModal()">&times;</button>
             <h3 id="cookieModalTitle">⚙️ Pèsonalize Preferans Cookie yo</h3>
             <p id="cookieModalDesc">Chwazi ki kalite done ou vle pataje pou amelyore eksperyans ou:</p>
-            
             <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
                 <input type="checkbox" id="cookieEssential" checked disabled style="margin-top:4px; width:18px; height:18px;">
                 <div>
@@ -431,7 +401,6 @@
                     <span style="font-size:0.78rem; color:#64748b;">Nesesè pou fonksyònman baz sit la ak sekirite sesyon w lan.</span>
                 </div>
             </div>
-
             <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
                 <input type="checkbox" id="cookieAnalytics" checked style="margin-top:4px; width:18px; height:18px;">
                 <div>
@@ -439,7 +408,6 @@
                     <span style="font-size:0.78rem; color:#64748b;">Ede nou konprann kijan vizitè yo itilize sit la pou nou ka amelyore l.</span>
                 </div>
             </div>
-
             <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
                 <input type="checkbox" id="cookieMarketing" checked style="margin-top:4px; width:18px; height:18px;">
                 <div>
@@ -447,12 +415,10 @@
                     <span style="font-size:0.78rem; color:#64748b;">Pèmèt nou voye òf espesyal ak piblisite ki koresponn ak enterè ou.</span>
                 </div>
             </div>
-
             <button class="btn-submit" onclick="saveCustomCookies()" style="margin-top: 10px;">Sere Preferans Mwen yo ✅</button>
         </div>
     </div>
 
-    <!-- Bannè Cookie -->
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
         <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
         <div class="cookie-buttons">
@@ -476,6 +442,9 @@
     </footer>
 
     <script>
+        // Kle Piblik Stripe ki sot nan kont ou a
+        const stripe = Stripe('pk_test_51TyAw0PBu6DEc51rnjUjhvFatQY0loO4s9PnFJMLUL7mjvgXHwOY1Gpany91YqAzPLM3aNsbsp9KPo3JMiuMNzvX00fP2J5F8O');
+
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
 
@@ -498,8 +467,8 @@
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
-                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
-                btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
+                btnSubmitTopup: "Peye Kounye a ($10) 🚀",
+                btnSubmitTransfer: "Peye Kounye a ($10) 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
                 authDesc: "Antre non w, imèl ou, ak yon modpas valab.",
                 lblAuthName: "Non a Konplè:",
@@ -536,8 +505,8 @@
                 lblPromo: "Send me promotional offers and updates (Optional)",
                 btnLogin: "Login",
                 btnLogout: "Logout",
-                btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Money Now 🚀",
+                btnSubmitTopup: "Pay Now ($10) 🚀",
+                btnSubmitTransfer: "Pay Now ($10) 🚀",
                 authTitle: "🔐 Login or Create Account",
                 authDesc: "Enter your name, email/phone, and a password.",
                 lblAuthName: "Full Name:",
@@ -574,8 +543,8 @@
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
-                btnSubmitTopup: "Enviar Recarga Agora 🚀",
-                btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
+                btnSubmitTopup: "Pagar Agora ($10) 🚀",
+                btnSubmitTransfer: "Pagar Agora ($10) 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
                 authDesc: "Insira seu nome, e-mail/telefone e senha.",
                 lblAuthName: "Nome Completo:",
@@ -896,21 +865,15 @@
 
         function setMode(mode) {
             currentMode = mode;
-            var lang = localStorage.getItem('berdSendLang') || 'ht';
-            var t = translations[lang] || translations['ht'];
             var promoGroup = document.getElementById('promoCodeGroup');
 
             if (mode === 'topup') {
                 document.getElementById('tabTopup').classList.add('active');
                 document.getElementById('tabTransfer').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
                 promoGroup.style.display = "block";
             } else {
                 document.getElementById('tabTransfer').classList.add('active');
                 document.getElementById('tabTopup').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
                 promoGroup.style.display = "none";
             }
             populateMethods();
@@ -1011,7 +974,8 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            document.getElementById('btnSubmit').onclick = function() {
+            // Lè itilizatè klike sou bouton peman an, li rele wout sèvè API Stripe la
+            document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
                 let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
@@ -1027,9 +991,23 @@
                     return;
                 }
 
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-                alert("Tranzaksyon an anrejistre avèk siksè!");
-                updateUI();
+                try {
+                    // Rele wout sèvè API nou te kreye a pou Stripe Checkout
+                    const response = await fetch('/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const data = await response.json();
+
+                    if (data.url) {
+                        // Voye itilizatè a sou paj peman an sekirite Stripe la
+                        window.location.href = data.url;
+                    } else {
+                        alert("Erè nan kreye sesyon peman an: " + (data.error || 'Echèk'));
+                    }
+                } catch (err) {
+                    alert("Echèk koneksyon ak sèvè a: " + err.message);
+                }
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
