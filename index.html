@@ -163,7 +163,7 @@
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <a href="#" onclick="openAdminModal()" id="adminMenuLink" style="color: #0284c7; font-weight: 700; display: none;">🛡️ Panèl DG (Admin)</a>
+                        <a href="#" onclick="openAdminModal()" id="adminMenuLink" style="color: #0284c7; font-weight: 700; display: none;">🛡️ Panèl Verifikasyon KYC (TerraPay Compliance)</a>
                         <div id="settingsAuthActionContainer"></div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
@@ -177,7 +177,7 @@
                 <div class="profile-details">
                     <h5 id="profileNameDisplay">Non Itilizatè</h5>
                     <p id="profileContactDisplay">imel@example.com</p>
-                    <span id="verificationStatusBadge" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #fef08a; color: #854d0e;">⏳ Ap tann Verifikasyon ID</span>
+                    <span id="verificationStatusBadge" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #fef08a; color: #854d0e;">⏳ Ap tann Verifikasyon KYC</span>
                 </div>
             </div>
             <button class="settings-btn" onclick="openSettingsModal()">⚙️ Paramèt</button>
@@ -201,7 +201,7 @@
         <div class="card" id="mainCard">
             <div class="tabs">
                 <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
-                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
+                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer (TerraPay)</button>
             </div>
 
             <div class="form-group">
@@ -281,33 +281,33 @@
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
 
-            <button class="btn-submit" id="btnSubmit">Send Top-Up Now 🚀</button>
+            <button class="btn-submit" id="btnSubmit">Send Transfer Now (TerraPay Ready) 🚀</button>
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon ak Soumèt ID -->
+    <!-- Modal Otantifikasyon ak Fòmilè KYC Strict pou TerraPay -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
-            <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.</p>
+            <h3 id="authModalTitle">🔐 Verifikasyon KYC & Kont</h3>
+            <p id="authModalDesc">Founisè nou yo (TerraPay) egzije yon dokiman ofisyèl valab ak enfòmasyon egzak.</p>
             
             <div class="form-group">
-                <label id="lblAuthName">Non a Konplè:</label>
+                <label id="lblAuthName">Non ak Siyati (Legal Full Name):</label>
                 <div class="input-box">
-                    <input type="text" id="authName" placeholder="eg: Jean Fleury">
+                    <input type="text" id="authName" placeholder="eg: Jean Aberd Fleurymond">
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblAuthEmail">Imèl oswa Telefòn:</label>
+                <label id="lblAuthEmail">Adrès Imèl Verifikasyon:</label>
                 <div class="input-box">
                     <input type="text" id="authEmail" placeholder="eg: name@example.com">
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblAuthPassword">Modpas (Password):</label>
+                <label id="lblAuthPassword">Modpas Secure:</label>
                 <div class="input-box">
                     <input type="password" id="authPassword" placeholder="eg: Berd@2026">
                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
@@ -323,34 +323,34 @@
             </div>
 
             <div class="form-group">
-                <label style="color: #0284c7;">🪪 Kat Idantifikasyon / Paspò (Obligatwa pou Verifikasyon):</label>
+                <label style="color: #0284c7;">🪪 Kat Idantifikasyon / Paspò (ZBL / KYC Dokiman):</label>
                 <div class="input-box" style="padding: 6px 10px; background: #f8fafc;">
                     <input type="file" id="idCardFile" accept="image/*" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
-                <span style="font-size: 0.75rem; color: #64748b;">Kat idantifikasyon w lan anrejistre pou verifikasyon.</span>
+                <span style="font-size: 0.75rem; color: #64748b;">Fòk foto ID a klè pou verifikasyon konfòmite TerraPay.</span>
             </div>
 
             <div class="captcha-box">
-                <label id="lblCaptchaText">Verifikasyon (Pè Makèt): Konbyen fè:</label>
+                <label id="lblCaptchaText">Verifikasyon anti-bò (Antre rezilta a):</label>
                 <span class="captcha-display" id="captchaQuestion"></span>
                 <div class="input-box">
-                    <input type="number" id="captchaInput" placeholder="Antre repons lan...">
+                    <input type="number" id="captchaInput" placeholder="Repons...">
                 </div>
             </div>
 
-            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye & Voye ID a 🚀</button>
+            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Soumèt pou Verifikasyon KYC 🚀</button>
         </div>
     </div>
 
-    <!-- Panèl Admin (DG) pou Tcheke ak Valide ID Kliyan yo -->
+    <!-- Panèl Komite Konfòmite / TerraPay Admin Validation -->
     <div id="adminModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <button class="modal-close" onclick="closeAdminModal()">&times;</button>
-            <h3 style="color: #0284c7;">🛡️ Panèl DG (Verifikasyon Admin)</h3>
-            <p>Lis kliyan ki fèk enskri epi ki ap tann verifikasyon idantite yo:</p>
+            <h3 style="color: #0284c7;">🛡️ Panèl Konfòmite & Verifikasyon KYC</h3>
+            <p>Revizyon dokiman itilizatè yo anvan yo pèmèt tranzaksyon entènasyonal:</p>
             
             <div id="adminUsersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 350px; overflow-y: auto;">
-                <!-- Lis itilizatè yo ap parèt isit la -->
+                <!-- Lis itilizatè yo -->
             </div>
         </div>
     </div>
@@ -370,11 +370,11 @@
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-            <h3>⚙️ Paramèt Pwofil & Kont</h3>
-            <p>Modifye enfòmasyon pèsonèl ou oswa gade estati verifikasyon ID ou a.</p>
+            <h3>⚙️ Paramèt Pwofil & Estati Kont</h3>
+            <p>Verifye estati konfòmite ou pou sèvis transfè yo.</p>
             
             <div class="form-group">
-                <label>Modifye Non a Konplè:</label>
+                <label>Non a Konplè:</label>
                 <div class="input-box">
                     <input type="text" id="settingsName">
                 </div>
@@ -392,12 +392,12 @@
             <div id="deleteAccountSection" style="display: none;">
                 <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
                 <div class="form-group">
-                    <label style="color: #dc2626;">Antre Modpas ou pou Siprime Kont la:</label>
+                    <label style="color: #dc2626;">Antre Modpas ou pou Fèmen Kont la:</label>
                     <div class="input-box">
-                        <input type="password" id="deleteConfirmPassword" placeholder="Antre modpas ou...">
+                        <input type="password" id="deleteConfirmPassword" placeholder="Modpas...">
                     </div>
                 </div>
-                <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont 🗑️</button>
+                <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Fèmen Kont la 🗑️</button>
             </div>
         </div>
     </div>
@@ -436,7 +436,7 @@
             ht: {
                 title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
                 tabTopup: "📱 Rechaj Telefòn",
-                tabTransfer: "💸 Transfè Lajan",
+                tabTransfer: "💸 Transfè Lajan (TerraPay)",
                 lblSender: "Peyi w ap voye soti a:",
                 lblReceiver: "Peyi destinasyon an:",
                 lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
@@ -451,22 +451,22 @@
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
-                btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
-                authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.",
-                lblAuthName: "Non a Konplè:",
-                lblAuthEmail: "Imèl oswa Telefòn:",
-                lblAuthPassword: "Modpas (Password):",
+                btnSubmitTransfer: "Voye Transfè a (TerraPay Ready) 🚀",
+                authTitle: "🔐 Verifikasyon KYC & Kont",
+                authDesc: "Founisè nou yo (TerraPay) egzije yon dokiman ofisyèl valab ak enfòmasyon egzak.",
+                lblAuthName: "Non ak Siyati (Legal Full Name):",
+                lblAuthEmail: "Adrès Imèl Verifikasyon:",
+                lblAuthPassword: "Modpas Secure:",
                 lblAuthConfirmPassword: "Konfime Modpas la:",
-                lblCaptchaText: "Verifikasyon anti-robo: Konbyen fè",
-                btnAuthSubmit: "Kontinye & Voye ID a 🚀",
-                msgRegistered: "Kont ou kreye avèk siksè! Kat idantifikasyon w lan anrejistre pou verifikasyon.",
+                lblCaptchaText: "Verifikasyon anti-bò (Antre rezilta a):",
+                btnAuthSubmit: "Soumèt pou Verifikasyon KYC 🚀",
+                msgRegistered: "Enfòmasyon ou yo soumèt avèk siksè! Kat ID a anrejistre pou revizyon KYC.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:"
             },
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
                 tabTopup: "📱 Mobile Top-Up",
-                tabTransfer: "💸 Money Transfer",
+                tabTransfer: "💸 Money Transfer (TerraPay)",
                 lblSender: "Country you are sending from:",
                 lblReceiver: "Recipient country:",
                 lblDeliveryMethodTopup: "Select Mobile Carrier:",
@@ -481,46 +481,46 @@
                 btnLogin: "Login",
                 btnLogout: "Logout",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Money Now 🚀",
-                authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your details and upload your ID card for verification.",
-                lblAuthName: "Full Name:",
-                lblAuthEmail: "Email or Phone:",
-                lblAuthPassword: "Password:",
+                btnSubmitTransfer: "Send Transfer (TerraPay Ready) 🚀",
+                authTitle: "🔐 KYC & Account Verification",
+                authDesc: "Our partners (TerraPay) require a valid official document and precise details.",
+                lblAuthName: "Legal Full Name:",
+                lblAuthEmail: "Verification Email:",
+                lblAuthPassword: "Secure Password:",
                 lblAuthConfirmPassword: "Confirm Password:",
-                lblCaptchaText: "Anti-robot verification: How much is",
-                btnAuthSubmit: "Continue & Upload ID 🚀",
-                msgRegistered: "Account created successfully! Your ID card has been recorded for verification.",
+                lblCaptchaText: "Anti-robot verification (Enter result):",
+                btnAuthSubmit: "Submit for KYC Verification 🚀",
+                msgRegistered: "Details successfully submitted! ID card recorded for KYC review.",
                 cookieTextMsg: "We use cookies to improve your browsing experience:"
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
                 tabTopup: "📱 Recarga de Celular",
-                tabTransfer: "💸 Transferência de Dinheiro",
+                tabTransfer: "💸 Transferência (TerraPay)",
                 lblSender: "País de origem:",
                 lblReceiver: "País de destino:",
                 lblDeliveryMethodTopup: "Selecionar Operadora:",
                 lblDeliveryMethodTransfer: "Como deseja que recebam:",
                 lblAmount: "Valor a enviar:",
-                lblPromoCode: "Código Promocional (Apenas Recarga - $5 de desconto):",
+                lblPromoCode: "Código Promocional (Apenas Recarga):",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
                 lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
-                lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
+                lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5):",
+                lblFeeText: "Taxa de Transferência (10% VIP):",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
-                btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
-                authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seus dados e envie sua identidade para verificação.",
+                btnSubmitTransfer: "Enviar Transferência (TerraPay Ready) 🚀",
+                authTitle: "🔐 Verificação KYC & Conta",
+                authDesc: "Nossos parceiros exigem um documento oficial e dados corretos.",
                 lblAuthName: "Nome Completo:",
-                lblAuthEmail: "E-mail ou Telefone:",
-                lblAuthPassword: "Senha:",
+                lblAuthEmail: "E-mail de Verificação:",
+                lblAuthPassword: "Senha Segura:",
                 lblAuthConfirmPassword: "Confirmar Senha:",
-                lblCaptchaText: "Verificação anti-robô: Quanto é",
-                btnAuthSubmit: "Continuar & Enviar ID 🚀",
-                msgRegistered: "Conta criada com sucesso! Documento registrado para verificação.",
+                lblCaptchaText: "Verificação anti-robô:",
+                btnAuthSubmit: "Enviar para Verificação KYC 🚀",
+                msgRegistered: "Dados enviados com sucesso! Documento registrado.",
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência:"
             }
         };
@@ -528,7 +528,6 @@
         function startBannerSlider() {
             const slides = document.querySelectorAll('.banner-slide');
             if (slides.length === 0) return;
-            
             if (bannerInterval) clearInterval(bannerInterval);
 
             bannerInterval = setInterval(() => {
@@ -645,7 +644,7 @@
             localStorage.removeItem('berdUserIdCardUrl');
             localStorage.removeItem('berdIdVerified');
             updateProfileUI();
-            alert("Ou dekonekte kounye a.");
+            alert("Ou dekonekte siksè nan sistèm nan.");
         }
 
         function openSettingsModal() {
@@ -669,7 +668,7 @@
             
             let currentUser = localStorage.getItem('berdUserContact') || '';
             if (currentUser.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-                alert("Ou pa gen otorizasyon pou antre nan Panèl DG a!");
+                alert("Aksè refize! Se sèl administratè konfòmite a ki kapab louvri panèl sa a.");
                 return;
             }
 
@@ -689,19 +688,19 @@
             let isVerified = localStorage.getItem('berdIdVerified') === 'true';
 
             if (!savedContact) {
-                container.innerHTML = `<p style="text-align: center; color: #64748b;">Okenn kliyan poko anrejistre sou aparèy sa a.</p>`;
+                container.innerHTML = `<p style="text-align: center; color: #64748b;">Okenn kliyan poko anrejistre.</p>`;
                 return;
             }
 
             container.innerHTML = `
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
-                    <div><strong>Non:</strong> ${savedName}</div>
-                    <div><strong>Imèl / Kontak:</strong> ${savedContact}</div>
-                    <div><strong>Estati ID:</strong> <span style="color: ${isVerified ? '#16a34a' : '#d97706'}; font-weight: 700;">${isVerified ? '✅ Apwouve (Verifye)' : '⏳ Ap tann Validasyon'}</span></div>
-                    ${idCardUrl ? `<div><a href="${idCardUrl}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: underline;">Gade Imaj Kat ID Kliyan an 🔗</a></div>` : '<div><em>Okenn imaj ID</em></div>'}
+                    <div><strong>Non Legal:</strong> ${savedName}</div>
+                    <div><strong>Imèl:</strong> ${savedContact}</div>
+                    <div><strong>Estati KYC:</strong> <span style="color: ${isVerified ? '#16a34a' : '#d97706'}; font-weight: 700;">${isVerified ? '✅ Apwouve (TerraPay Compliant)' : '⏳ Ap tann Revizyon'}</span></div>
+                    ${idCardUrl ? `<div><a href="${idCardUrl}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: underline;">Gade Dokiman Kat ID / Paspò a 🔗</a></div>` : '<div><em>Okenn dokiman</em></div>'}
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
-                        <button class="modal-btn btn-success" onclick="adminVerifyUser(true)" style="flex:1;">Apwouve ID ✅</button>
-                        <button class="modal-btn btn-yes" onclick="adminVerifyUser(false)" style="flex:1;">Rejte ❌</button>
+                        <button class="modal-btn btn-success" onclick="adminVerifyUser(true)" style="flex:1;">Apwouve KYC ✅</button>
+                        <button class="modal-btn btn-yes" onclick="adminVerifyUser(false)" style="flex:1;">Rejte Dokiman ❌</button>
                     </div>
                 </div>
             `;
@@ -710,7 +709,7 @@
         function adminVerifyUser(status) {
             localStorage.setItem('berdIdVerified', status ? 'true' : 'false');
             updateProfileUI();
-            alert(status ? "ID kliyan an apwouve avèk siksè!" : "ID kliyan an rejte!");
+            alert(status ? "Estati KYC kliyan an apwouve ak siksè!" : "Dokiman an rejte.");
             closeAdminModal();
         }
 
@@ -723,7 +722,7 @@
             localStorage.setItem('berdUserName', newName);
             closeSettingsModal();
             updateProfileUI();
-            alert("Enfòmasyon pwofil ou yo mete ajou!");
+            alert("Enfòmasyon pwofil yo mete ajou!");
         }
 
         function deleteUserAccount() {
@@ -731,16 +730,16 @@
             let savedPassword = localStorage.getItem('berdUserPassword');
 
             if (!passwordInput) {
-                alert("Tanpri antre modpas ou pou konfime sipresyon kont lan!");
+                alert("Tanpri antre modpas ou!");
                 return;
             }
 
             if (passwordInput !== savedPassword) {
-                alert("Modpas ou antre a pa kòrèk!");
+                alert("Modpas la pa bon!");
                 return;
             }
 
-            if (confirm("Èske ou sèten ou vle siprime kont ou an nèt?")) {
+            if (confirm("Èske w sèten ou vle fèmen kont sa a nèt?")) {
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserContact');
                 localStorage.removeItem('berdUserPassword');
@@ -748,7 +747,7 @@
                 localStorage.removeItem('berdIdVerified');
                 closeSettingsModal();
                 updateProfileUI();
-                alert("Kont ou an siprime nèt.");
+                alert("Kont ou an fèmen.");
             }
         }
 
@@ -768,7 +767,7 @@
             }
 
             if (captchaVal !== currentCaptchaAnswer) {
-                alert("Repons Kapcha a pa kòrèk!");
+                alert("Kapcha a pa bon! Eseye ankò.");
                 generateCaptcha();
                 return;
             }
@@ -779,7 +778,7 @@
             }
 
             if (!idCardInput.files || !idCardInput.files[0]) {
-                alert("Tanpri telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon an!");
+                alert("Obligatwa: Ou dwe telechaje yon Kat ID oswa Paspò ki valab pou konfòmite TerraPay!");
                 return;
             }
 
@@ -801,8 +800,8 @@
                 alert(t.msgRegistered);
             };
             reader.onerror = function (error) {
-                console.error("Erè lekti fichye a: ", error);
-                alert("Echèk nan chajman kat idantifikasyon an!");
+                console.error("Erè chajman fichye a: ", error);
+                alert("Echèk nan telechajman dokiman an!");
             };
         }
 
@@ -839,11 +838,11 @@
                 }
 
                 if (isVerified || savedContact.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-                    statusBadge.innerText = "✅ ID Verifye & Apwouve";
+                    statusBadge.innerText = "✅ KYC Verifye (TerraPay Ready)";
                     statusBadge.style.background = "#dcfce7";
                     statusBadge.style.color = "#166534";
                 } else {
-                    statusBadge.innerText = "⏳ Ap tann Verifikasyon ID";
+                    statusBadge.innerText = "⏳ Ap tann Verifikasyon KYC";
                     statusBadge.style.background = "#fef08a";
                     statusBadge.style.color = "#854d0e";
                 }
@@ -902,8 +901,8 @@
                     '<option value="digicel">📶 Digicel (Haiti - Direct)</option><option value="natcom">📶 Natcom (Haiti - Direct)</option>';
             } else {
                 deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="none">🇩🇴 Santo Domingo Transfer (Coming Soon)</option>' :
-                    '<option value="moncash">📱 MonCash (Mobile Wallet)</option><option value="natcash">📱 Natcash (Mobile Wallet)</option><option value="bank_ht">🏦 Bank Account in Haiti (Coming Soon)</option>';
+                    '<option value="terrapay_do">💳 TerraPay Bank / Wallet Deposit (Dominican Rep.)</option>' :
+                    '<option value="terrapay_moncash">📱 TerraPay via MonCash (API)</option><option value="terrapay_natcash">📱 TerraPay via Natcash (API)</option><option value="terrapay_bank">🏦 TerraPay Bank Account in Haiti</option>';
             }
             updateUI();
         }
@@ -923,7 +922,7 @@
             if (currentMode === 'topup' && promoInput.length > 0) {
                 discount = 5.0;
                 promoMsg.style.display = "block";
-                promoMsg.innerText = "✅ Kòd la valide! Ou jwenn $5 rabè sou rechaj mobil sa a.";
+                promoMsg.innerText = "✅ Kòd la valide! $5 rabè aplike.";
             } else {
                 promoMsg.style.display = "none";
             }
@@ -936,8 +935,8 @@
             var feeRow = document.getElementById('feeRow');
             var feeAmountEl = document.getElementById('feeAmount');
 
-            if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
-                baseFee = amountVal * 0.05; 
+            if (currentMode === 'transfer') {
+                baseFee = amountVal * 0.04; // Frè API TerraPay estanda
                 feeRow.style.display = "flex";
                 feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender;
             } else {
@@ -972,20 +971,20 @@
                 let isVerified = localStorage.getItem('berdIdVerified') === 'true';
 
                 if (!savedContact) {
-                    alert("Tanpri konekte oswa kreye kont ou anvan w voye tranzaksyon an!");
+                    alert("Obligatwa: Tanpri konekte oswa kreye kont ou ak dokiman KYC anvan w fè yon tranzaksyon TerraPay!");
                     openAuthModal();
                     return;
                 }
                 if (!isVerified && savedContact.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-                    alert("Kont ou a poko verifye pa administratè a! Tanpri tann yo apwouve kat idantifikasyon w lan.");
+                    alert("Tranzaksyon an bloke! Kont ou a dwe pase revizyon KYC la pa administratè a anvan rezo TerraPay la otorize l.");
                     return;
                 }
                 if (!phone) {
-                    alert("Tanpri antre nimewo telefòn moun k ap resevwa a!");
+                    alert("Tanpri antre nimewo telefòn destinatè a!");
                     return;
                 }
 
-                alert("Tranzaksyon an soumèt avèk siksè! Mèsi paske w ap itilize BerdSend 🚀");
+                alert("Tranzaksyon TerraPay la trete avèk siksè nan rezo a! 🚀");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
