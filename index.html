@@ -28,7 +28,7 @@
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
         .modal.active { display: flex; }
-        .modal-content { background: #fff; padding: 25px; border-radius: 14px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 14px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; }
         .modal-content h3 { margin-bottom: 15px; color: #0f172a; }
         .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.2rem; cursor: pointer; border: none; background: none; font-weight: bold; }
 
@@ -62,16 +62,19 @@
 
         .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
         
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
         .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; }
         .input-box select, .input-box input { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; }
+        .input-box input:disabled { background: #f8fafc; color: #64748b; }
 
         .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 10px; }
         .btn-submit:hover { background: #0052a3; }
-        .btn-submit:active { transform: scale(0.99); }
+        
+        .btn-edit { background-color: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; margin-top: 5px; }
+        .btn-edit:hover { background-color: #059669; }
 
-        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
+        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
         .btn-danger:hover { background-color: #dc2626; }
 
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -179,6 +182,7 @@
         </footer>
     </div>
 
+    <!-- Modal pou Paramèt ak Enfòmasyon Pwofil (Non, Imèl, Modpas, ak Sipresyon Kont) -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettings()">×</button>
@@ -186,11 +190,30 @@
             <p style="margin-bottom: 15px; font-size: 0.9rem; color: #64748b;">Jere enfòmasyon pèsonèl ou oswa fèmen kont ou isit la.</p>
             
             <div class="form-group">
-                <label>Non Itilizatè / Imèl:</label>
-                <input type="text" id="userEmailDisplay" value="kliyan@berdsend.com" readonly style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 10px; width: 100%; border-radius: 8px;">
+                <label>Non konplè:</label>
+                <input type="text" id="userNameInput" value="Jean Fleury" disabled>
             </div>
 
-            <button class="btn-danger" onclick="deleteAccount()">Efase / Siprime Kont Mwen (Delete Account)</button>
+            <div class="form-group">
+                <label>Imèl:</label>
+                <input type="email" id="userEmailInput" value="kliyan@berdsend.com" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>Modpas:</label>
+                <input type="password" id="userPassInput" value="********" disabled>
+            </div>
+
+            <button class="btn-edit" id="editProfileBtn" onclick="toggleEditProfile()">Edite Enfòmasyon Yo</button>
+
+            <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
+
+            <h4 style="color: #ef4444; margin-bottom: 10px; font-size: 1rem;">Zòn Danje: Siprime Kont la</h4>
+            <div class="form-group">
+                <label>Antre modpas ou pou konfimasyon:</label>
+                <input type="password" id="confirmDeletePass" placeholder="Tape modpas ou isit la">
+            </div>
+            <button class="btn-danger" onclick="confirmAndDeleteAccount()">Efase / Siprime Kont Mwen</button>
         </div>
     </div>
 
@@ -214,10 +237,52 @@
             document.getElementById('menuDropdown').classList.remove('active');
         }
 
-        function deleteAccount() {
-            if (confirm("Èske ou sèten ou vle efase kont ou a nèt? Aksyon sa a pa ka tounen dèyè.")) {
-                alert("Kont ou a te efase avèk siksè.");
+        // Fonksyon pou edite non, imèl, ak modpas
+        let isEditing = false;
+        function toggleEditProfile() {
+            const nameInput = document.getElementById('userNameInput');
+            const emailInput = document.getElementById('userEmailInput');
+            const passInput = document.getElementById('userPassInput');
+            const editBtn = document.getElementById('editProfileBtn');
+
+            isEditing = !isEditing;
+
+            if (isEditing) {
+                nameInput.disabled = false;
+                emailInput.disabled = false;
+                passInput.disabled = false;
+                passInput.type = "text"; // Pou yo ka wè modpas la pandan y ap edite l si l vle
+                editBtn.innerText = "Anrejistre Chanjman yo";
+                editBtn.style.background = "#2563eb";
+            } else {
+                nameInput.disabled = true;
+                emailInput.disabled = true;
+                passInput.disabled = true;
+                passInput.type = "password";
+                editBtn.innerText = "Edite Enfòmasyon Yo";
+                editBtn.style.background = "#10b981";
+                alert("Enfòmasyon ou yo mete ajou avèk siksè!");
+            }
+        }
+
+        // Fonksyon pou mande konfimasyon modpas epi mande si se tout bon anvan sipresyon
+        function confirmAndDeleteAccount() {
+            const passVal = document.getElementById('confirmDeletePass').value.trim();
+
+            if (!passVal) {
+                alert("Tanpri antre modpas ou a nan zòn konfimasyon an pou w ka efase kont lan.");
+                return;
+            }
+
+            // Premye mesaj kesyon pou konfime si se tout bon vre
+            const isSure = confirm("⚠️ Eske ou se tout bon vre ou vle siprime kont ou a nèt? Aksyon sa a ap efase tout done ou yo epi l pap ka tounen dèyè.");
+
+            if (isSure) {
+                // Isit la tcheke si modpas la kòrèk (nan ka sa a nou simulation li)
+                alert("Kont ou a te efase nèt avèk siksè. Mèsi paske w te itilize BerdSend.");
                 closeSettings();
+                // Opsyonèl: voye l sou paj akèy netwaye
+                window.location.href = "index.html";
             }
         }
 
@@ -255,9 +320,7 @@
                 return;
             }
 
-            // Dirije kliyan an baze sou chwa peyi orijin ou yo nan lyen Stripe yo
             let stripeLink = "";
-
             if (originCountry === "US") {
                 stripeLink = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00";
             } else if (originCountry === "BR") {
@@ -266,7 +329,6 @@
                 stripeLink = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02";
             }
 
-            // Redirije kliyan an dirèkteman sou paj peman Stripe la
             window.location.href = stripeLink;
         }
     </script>
