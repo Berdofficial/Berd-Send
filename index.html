@@ -14,6 +14,7 @@
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         
+        /* Logo ki vin pi gwo ak vizib sou tou de ekran */
         .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
@@ -169,15 +170,19 @@
                 <div class="auth-header-trigger" onclick="handleAuthHeaderClick()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="authButtonText">Konekte</button>
-                    <div id="authDropdown" class="dropdown-menu"></div>
+                    <div id="authDropdown" class="dropdown-menu">
+                        <!-- Dynamically populated based on auth status -->
+                    </div>
                 </div>
 
-                <!-- Meni Paramèt ak Aksyon -->
+                <!-- 3 Ti Ba / Meni Paramèt ak Aksyon -->
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <div id="settingsAuthActionContainer"></div>
+                        <div id="settingsAuthActionContainer">
+                            <!-- Dynamically populated based on auth status -->
+                        </div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
                 </div>
@@ -281,7 +286,7 @@
             </div>
 
             <div id="userReferralDisplay" class="referral-box">
-                <span id="lblYourCodeText">Kòd pwomosyon ou:</span><br>
+                <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
                 <div id="vipBadgeDisplay" class="vip-badge-box">
                     👑 <strong>Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
@@ -335,7 +340,7 @@
             </div>
 
             <div class="captcha-box">
-                <label id="lblCaptchaText">Verifikasyon:</label>
+                <label id="lblCaptchaText">Verifikasyon (Pè Makèt): Konbyen fè:</label>
                 <span class="captcha-display" id="captchaQuestion"></span>
                 <div class="input-box">
                     <input type="number" id="captchaInput" placeholder="Antre repons lan...">
@@ -357,7 +362,7 @@
         </div>
     </div>
 
-    <!-- Modal Paramèt Pwofil -->
+    <!-- Modal Paramèt Pwofil & Siprèsyon Kont -->
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
@@ -417,13 +422,13 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeCookieModal()">&times;</button>
             <h3 id="cookieModalTitle">⚙️ Pèsonalize Preferans Cookie yo</h3>
-            <p id="cookieModalDesc">Chwazi ki kalite done ou vle pataje:</p>
+            <p id="cookieModalDesc">Chwazi ki kalite done ou vle pataje pou amelyore eksperyans ou:</p>
             
             <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
                 <input type="checkbox" id="cookieEssential" checked disabled style="margin-top:4px; width:18px; height:18px;">
                 <div>
                     <label for="cookieEssential" style="margin-bottom:2px; font-size:0.9rem;">Cookie Espesyal (Obligatwa)</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Nesesè pou fonksyònman baz sit la.</span>
+                    <span style="font-size:0.78rem; color:#64748b;">Nesesè pou fonksyònman baz sit la ak sekirite sesyon w lan.</span>
                 </div>
             </div>
 
@@ -431,7 +436,7 @@
                 <input type="checkbox" id="cookieAnalytics" checked style="margin-top:4px; width:18px; height:18px;">
                 <div>
                     <label for="cookieAnalytics" style="margin-bottom:2px; font-size:0.9rem;">Cookie Pèfòmans ak Estatistik</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Ede nou amelyore pèfòmans aplikasyon an.</span>
+                    <span style="font-size:0.78rem; color:#64748b;">Ede nou konprann kijan vizitè yo itilize sit la pou nou ka amelyore l.</span>
                 </div>
             </div>
 
@@ -439,7 +444,7 @@
                 <input type="checkbox" id="cookieMarketing" checked style="margin-top:4px; width:18px; height:18px;">
                 <div>
                     <label for="cookieMarketing" style="margin-bottom:2px; font-size:0.9rem;">Cookie Maketing ak Pwomosyon</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Pèmèt nou voye òf ak pwomosyon ki enteresan.</span>
+                    <span style="font-size:0.78rem; color:#64748b;">Pèmèt nou voye òf espesyal ak piblisite ki koresponn ak enterè ou.</span>
                 </div>
             </div>
 
@@ -466,7 +471,6 @@
             <a href="tracking.html">Tracking Transfer</a>
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
-            <a href="refund.html">Refund Policy</a>
         </div>
         <div>&copy; 2026 BerdSend. All rights reserved.</div>
     </footer>
@@ -489,7 +493,7 @@
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
-                lblYourCodeText: "Kòd pwomosyon w:",
+                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnLogin: "Konekte",
@@ -508,8 +512,8 @@
                 alertMismatch: "Modpas yo pa matche! Tanpri tcheke yo.",
                 alertCaptcha: "Repons Kapcha a pa kòrèk! Tanpri eseye ankò.",
                 alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                msgRegistered: "Anrejistre avèk siksè!",
-                msgLoggedIn: "Konekte avèk siksè!",
+                msgRegistered: "Anrejistre",
+                msgLoggedIn: "Konekte",
                 verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
                 verifyDesc: "Plis pase 24 èdtan pase. Tanpri antre modpas ou pou debloke.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou. Ou ka aksepte tout oswa chwazi ki done ou vle pataje:"
@@ -527,7 +531,7 @@
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
                 lblPhone: "Recipient phone number:",
-                lblYourCodeText: "Your referral code:",
+                lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
                 lblFeeText: "Transfer Fee (10% VIP Discount):",
                 lblPromo: "Send me promotional offers and updates (Optional)",
                 btnLogin: "Login",
@@ -546,8 +550,8 @@
                 alertMismatch: "Passwords do not match! Please check.",
                 alertCaptcha: "Incorrect Captcha answer! Please try again.",
                 alertPhone: "Please enter recipient phone number!",
-                msgRegistered: "Registered successfully!",
-                msgLoggedIn: "Logged in successfully!",
+                msgRegistered: "Registered",
+                msgLoggedIn: "Logged in",
                 verifyTitle: "🔒 Identity Verification Required",
                 verifyDesc: "More than 24 hours have passed. Please enter your password to unlock.",
                 cookieTextMsg: "We use cookies to improve your experience. You can accept all or customize your preferences:"
@@ -565,7 +569,7 @@
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
                 lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código de indicação:",
+                lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
                 lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnLogin: "Entrar",
@@ -584,8 +588,8 @@
                 alertMismatch: "As senhas não coincidem! Verifique.",
                 alertCaptcha: "Resposta do Captcha incorreta! Tente novamente.",
                 alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                msgRegistered: "Registrado com sucesso!",
-                msgLoggedIn: "Logado com sucesso!",
+                msgRegistered: "Registrado",
+                msgLoggedIn: "Logado",
                 verifyTitle: "🔒 Verificação de Identidade Necessária",
                 verifyDesc: "Mais de 24 horas se passaram. Insira sua senha para desbloquear.",
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência. Você pode aceitar tudo ou personalizar suas preferências:"
@@ -646,6 +650,13 @@
             const dropdown = document.getElementById('settingsDropdown');
             const authDropdown = document.getElementById('authDropdown');
             authDropdown.style.display = 'none';
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleAuthDropdown() {
+            const dropdown = document.getElementById('authDropdown');
+            const settingsDropdown = document.getElementById('settingsDropdown');
+            settingsDropdown.style.display = 'none';
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         }
 
@@ -714,6 +725,7 @@
             document.getElementById('settingsPassword').value = '';
             
             document.getElementById('deleteAccountSection').style.display = savedContact ? "block" : "none";
+            
             document.getElementById('settingsModal').style.display = "flex";
         }
 
@@ -1002,6 +1014,8 @@
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 let savedContact = localStorage.getItem('berdUserContact');
+                var receiver = document.getElementById('receiverCountry').value;
+                var deliveryMethod = document.getElementById('deliveryMethod').value;
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
 
@@ -1016,8 +1030,20 @@
                 }
 
                 localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-                alert("Tranzaksyon an anrejistre avèk siksè!");
-                updateUI();
+
+                // Redireksyon otomatik nan bon lyen Stripe la baze sou sèvis la chwazi
+                let stripeUrl = "";
+                if (currentMode === 'topup') {
+                    if (receiver === 'DOP') {
+                        stripeUrl = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02"; // Mobile recharge DR - Claro / Viva
+                    } else {
+                        stripeUrl = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01"; // Mobile Recharge HT - Digicel / Natcom
+                    }
+                } else {
+                    stripeUrl = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00"; // Transfer Moncash / Natcash
+                }
+
+                window.location.href = stripeUrl;
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
