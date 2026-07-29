@@ -68,6 +68,28 @@
         .input-box select, .input-box input { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; }
         .input-box input:disabled { background: #f8fafc; color: #64748b; }
 
+        /* Nouvo estil pou tablo kalkilatris montan ak frè yo nan dashboard la */
+        .rate-preview-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+        .rate-preview-box h5 {
+            color: #0066cc;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .rate-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
         .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 10px; }
         .btn-submit:hover { background: #0052a3; }
         
@@ -131,7 +153,7 @@
             <div class="form-group">
                 <label>Chwazi Sèvis la:</label>
                 <div class="input-box">
-                    <select id="serviceType">
+                    <select id="serviceType" onchange="updateRatePreview()">
                         <option value="topup">📱 Rechaj Telefòn (Mobile Top-Up)</option>
                         <option value="transfer">💸 Transfè Lajan</option>
                     </select>
@@ -141,11 +163,19 @@
             <div class="form-group">
                 <label>Peyi Orijin (Kote lajan an ap soti):</label>
                 <div class="input-box">
-                    <select id="originCountry">
+                    <select id="originCountry" onchange="updateRatePreview()">
                         <option value="US">🇺🇸 Etazini (USA)</option>
                         <option value="BR">🇧🇷 Brezil (Brazil)</option>
                     </select>
                 </div>
+            </div>
+
+            <!-- Tablo Egzanp Montan ak Frè Tranzaksyon an aktyalize an dirèk -->
+            <div class="rate-preview-box" id="ratePreviewBox">
+                <h5>📊 Egzanp Kalkil Tranzaksyon:</h5>
+                <div class="rate-row"><span>Montan Voye:</span> <strong id="previewSent">10 USD</strong></div>
+                <div class="rate-row"><span>Frè Sèvis:</span> <strong id="previewFee">1.00 USD</strong></div>
+                <div class="rate-row"><span>Moun k ap resevwa a ap jwenn:</span> <strong id="previewGet" style="color: #10b981;">9.00 USD / Ekivalan</strong></div>
             </div>
 
             <div class="form-group">
@@ -182,7 +212,7 @@
         </footer>
     </div>
 
-    <!-- Modal pou Paramèt ak Enfòmasyon Pwofil (Non, Imèl, Modpas, ak Sipresyon) -->
+    <!-- Modal pou Paramèt ak Enfòmasyon Pwofil -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettings()">×</button>
@@ -206,7 +236,6 @@
 
             <button class="btn-edit" id="editProfileBtn" onclick="toggleEditProfile()">Edite Enfòmasyon Yo</button>
 
-            <!-- Bouton pou siprime kont la (lè itilizatè a klike sou li, l ap mande l konfimasyon ak modpas) -->
             <button class="btn-danger" onclick="promptDeleteAccount()">Efase / Siprime Kont Mwen</button>
         </div>
     </div>
@@ -231,7 +260,26 @@
             document.getElementById('menuDropdown').classList.remove('active');
         }
 
-        // Fonksyon pou edite non, imèl, ak modpas
+        // Fonksyon pou mete ajou egzanp kalkil la selon peyi ak sèvis la chwazi ($10 oubyen 10 Reals)
+        function updateRatePreview() {
+            const origin = document.getElementById('originCountry').value;
+            const service = document.getElementById('serviceType').value;
+            
+            const sentEl = document.getElementById('previewSent');
+            const feeEl = document.getElementById('previewFee');
+            const getEl = document.getElementById('previewGet');
+
+            if (origin === 'BR') {
+                sentEl.innerText = "10 BRL (Real)";
+                feeEl.innerText = "1.50 BRL";
+                getEl.innerText = service === 'topup' ? "8.50 BRL (Ekivalan Rechaj)" : "8.50 BRL (Transfè)";
+            } else {
+                sentEl.innerText = "10 USD (Dola)";
+                feeEl.innerText = "1.00 USD";
+                getEl.innerText = service === 'topup' ? "9.00 USD (Ekivalan Rechaj)" : "9.00 USD (Transfè)";
+            }
+        }
+
         let isEditing = false;
         function toggleEditProfile() {
             const nameInput = document.getElementById('userNameInput');
@@ -259,17 +307,13 @@
             }
         }
 
-        // Fonksyon ki lanse lè l klike sou "Efase / Siprime Kont Mwen"
         function promptDeleteAccount() {
-            // Mande konfimasyon anvan
             const isSure = confirm("⚠️ Èske ou se tout bon vre ou vle siprime kont ou a nèt? Aksyon sa a pap ka tounen dèyè.");
 
             if (isSure) {
-                // Mande l antre modpas li pou valide konfimasyon an
                 const passwordEntered = prompt("Tanpri antre modpas ou a pou konfime sipresyon kont la:");
 
                 if (passwordEntered !== null && passwordEntered.trim() !== "") {
-                    // Isit la nou valide ke li antre modpas la
                     alert("Kont ou a te efase nèt avèk siksè. Mèsi paske w te itilize BerdSend.");
                     closeSettings();
                     window.location.href = "index.html";
@@ -301,10 +345,10 @@
 
         window.onload = function() {
             startBannerSlider();
+            updateRatePreview();
         };
 
         function proceedToStripe() {
-            const serviceType = document.getElementById('serviceType').value;
             const originCountry = document.getElementById('originCountry').value;
             const phone = document.getElementById('phoneNumber').value.trim();
 
