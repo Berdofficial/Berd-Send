@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Square Web Payments SDK Script (Sandbox) -->
+    <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
@@ -278,6 +280,12 @@
                 </div>
             </div>
 
+            <!-- Square Card Container for Web Payments SDK -->
+            <div class="form-group">
+                <label>Peman Kat Kredi / Kat Debi (Square):</label>
+                <div id="card-container" style="background: #fff; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; min-height: 90px;"></div>
+            </div>
+
             <div id="userReferralDisplay" class="referral-box">
                 <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
@@ -441,6 +449,7 @@
     <script>
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
+        var cardInstance = null; // Variable pou estoke referans fòm Square la
 
         const translations = {
             ht: {
@@ -940,6 +949,21 @@
             }, 8000);
         }
 
+        // Fonksyon pou chaje Square SDK ak fòm kat la otomatikman
+        async function initSquarePaymentForm() {
+            try {
+                if (!window.Square) {
+                    console.error("Square SDK pa disponib.");
+                    return;
+                }
+                const payments = window.Square.payments("sandbox-sq0idb-KaVOFx7ywItn5x_nQkvuJA");
+                cardInstance = await payments.card();
+                await cardInstance.attach('#card-container');
+            } catch (e) {
+                console.error("Erè nan inisyalizasyon Square Card Form:", e);
+            }
+        }
+
         window.onload = function() {
             var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
@@ -949,6 +973,7 @@
             startBannerSlider();
             updateProfileUI();
             checkSessionTimeout();
+            initSquarePaymentForm(); // Inisyalize fòm kat la
 
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
@@ -956,8 +981,8 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou tranzaksyon an ak Square Sandbox App ID ou a
-            document.getElementById('btnSubmit').onclick = function() {
+            // Lojik pou voye tranzaksyon an ak Square Web Payments SDK tokenize la
+            document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
                 let savedContact = localStorage.getItem('berdUserContact');
@@ -978,11 +1003,30 @@
                     return;
                 }
 
-                // Square Sandbox Application ID
-                var squareAppId = "sandbox-sq0idb-KaVOFx7ywItn5x_nQkvuJA";
-                
-                // Ou ka konekte demann sa a ak endpoint API Square la oswa backend ou a
-                alert("Tranzaksyon an prèt pou voye nan Square Sandbox (App ID: " + squareAppId + "). Montan an ap trete kòm Tès!");
+                try {
+                    if (!cardInstance) {
+                        alert("Fòm peman Square la poko pare nèt.");
+                        return;
+                    }
+
+                    // Tokenize kat la (kreye yon token an sekirite)
+                    const result = await cardInstance.tokenize();
+                    if (result.status === 'OK') {
+                        const token = result.token;
+                        console.log("Square Token Jwenn:", token);
+                        alert("Tranzaksyon an aksepte nan Square Sandbox! Token kat la kreye avèk siksè: " + token.slice(0, 10) + "...");
+                        // Isit la ou ka voye 'token' sa a nan backend ou pou fini chaj la nan Square API
+                    } else {
+                        let errorMessage = `Tokenization failed: ${result.status}`;
+                        if (result.errors) {
+                            errorMessage += ` - ${result.errors.map(err => err.message).join(', ')}`;
+                        }
+                        alert(errorMessage);
+                    }
+                } catch (e) {
+                    console.error("Erè pandan peman Square:", e);
+                    alert("Erè: " + e.message);
+                }
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
