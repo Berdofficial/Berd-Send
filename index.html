@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Square Web Payments SDK Script (Sandbox) -->
-    <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    <!-- Square Web Payments SDK Script (Production) -->
+    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
@@ -449,7 +449,7 @@
     <script>
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
-        var cardInstance = null; // Variable pou estoke referans fòm Square la
+        var cardInstance = null;
 
         const translations = {
             ht: {
@@ -949,14 +949,15 @@
             }, 8000);
         }
 
-        // Fonksyon pou chaje Square SDK ak fòm kat la otomatikman
+        // Fonksyon pou inisyalize Square SDK an mòd PRODUCTION
         async function initSquarePaymentForm() {
             try {
                 if (!window.Square) {
                     console.error("Square SDK pa disponib.");
                     return;
                 }
-                const payments = window.Square.payments("sandbox-sq0idb-KaVOFx7ywItn5x_nQkvuJA");
+                // Sèvi ak Production Application ID ofisyèl la
+                const payments = window.Square.payments("sq0idp-CR-bEB73g2-lyJjvNGEodg");
                 cardInstance = await payments.card();
                 await cardInstance.attach('#card-container');
             } catch (e) {
@@ -973,7 +974,7 @@
             startBannerSlider();
             updateProfileUI();
             checkSessionTimeout();
-            initSquarePaymentForm(); // Inisyalize fòm kat la
+            initSquarePaymentForm();
 
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
@@ -981,7 +982,7 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye tranzaksyon an ak Square Web Payments SDK tokenize la
+            // Lojik pou voye tranzaksyon an nan mòd Production
             document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
@@ -1009,13 +1010,13 @@
                         return;
                     }
 
-                    // Tokenize kat la (kreye yon token an sekirite)
+                    // Tokenize kat la an sekirite (Production)
                     const result = await cardInstance.tokenize();
                     if (result.status === 'OK') {
                         const token = result.token;
-                        console.log("Square Token Jwenn:", token);
-                        alert("Tranzaksyon an aksepte nan Square Sandbox! Token kat la kreye avèk siksè: " + token.slice(0, 10) + "...");
-                        // Isit la ou ka voye 'token' sa a nan backend ou pou fini chaj la nan Square API
+                        console.log("Square Production Token Jwenn:", token);
+                        alert("Tranzaksyon an pare pou Production! Token kat la kreye avèk siksè: " + token.slice(0, 10) + "...");
+                        // Isit la ou ka voye 'token' sa a nan backend ou pou fini chaj la nan Square API Production
                     } else {
                         let errorMessage = `Tokenization failed: ${result.status}`;
                         if (result.errors) {
