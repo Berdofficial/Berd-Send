@@ -71,10 +71,10 @@
         .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 10px; }
         .btn-submit:hover { background: #0052a3; }
         
-        .btn-edit { background-color: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; margin-top: 5px; }
+        .btn-edit { background-color: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 5px; }
         .btn-edit:hover { background-color: #059669; }
 
-        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
         .btn-danger:hover { background-color: #dc2626; }
 
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -182,7 +182,7 @@
         </footer>
     </div>
 
-    <!-- Modal pou Paramèt ak Enfòmasyon Pwofil (Non, Imèl, Modpas, ak Sipresyon Kont) -->
+    <!-- Modal pou Paramèt ak Enfòmasyon Pwofil (Non, Imèl, Modpas, ak Sipresyon) -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettings()">×</button>
@@ -206,14 +206,8 @@
 
             <button class="btn-edit" id="editProfileBtn" onclick="toggleEditProfile()">Edite Enfòmasyon Yo</button>
 
-            <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
-
-            <h4 style="color: #ef4444; margin-bottom: 10px; font-size: 1rem;">Zòn Danje: Siprime Kont la</h4>
-            <div class="form-group">
-                <label>Antre modpas ou pou konfimasyon:</label>
-                <input type="password" id="confirmDeletePass" placeholder="Tape modpas ou isit la">
-            </div>
-            <button class="btn-danger" onclick="confirmAndDeleteAccount()">Efase / Siprime Kont Mwen</button>
+            <!-- Bouton pou siprime kont la (lè itilizatè a klike sou li, l ap mande l konfimasyon ak modpas) -->
+            <button class="btn-danger" onclick="promptDeleteAccount()">Efase / Siprime Kont Mwen</button>
         </div>
     </div>
 
@@ -251,7 +245,7 @@
                 nameInput.disabled = false;
                 emailInput.disabled = false;
                 passInput.disabled = false;
-                passInput.type = "text"; // Pou yo ka wè modpas la pandan y ap edite l si l vle
+                passInput.type = "text"; 
                 editBtn.innerText = "Anrejistre Chanjman yo";
                 editBtn.style.background = "#2563eb";
             } else {
@@ -265,24 +259,23 @@
             }
         }
 
-        // Fonksyon pou mande konfimasyon modpas epi mande si se tout bon anvan sipresyon
-        function confirmAndDeleteAccount() {
-            const passVal = document.getElementById('confirmDeletePass').value.trim();
-
-            if (!passVal) {
-                alert("Tanpri antre modpas ou a nan zòn konfimasyon an pou w ka efase kont lan.");
-                return;
-            }
-
-            // Premye mesaj kesyon pou konfime si se tout bon vre
-            const isSure = confirm("⚠️ Eske ou se tout bon vre ou vle siprime kont ou a nèt? Aksyon sa a ap efase tout done ou yo epi l pap ka tounen dèyè.");
+        // Fonksyon ki lanse lè l klike sou "Efase / Siprime Kont Mwen"
+        function promptDeleteAccount() {
+            // Mande konfimasyon anvan
+            const isSure = confirm("⚠️ Èske ou se tout bon vre ou vle siprime kont ou a nèt? Aksyon sa a pap ka tounen dèyè.");
 
             if (isSure) {
-                // Isit la tcheke si modpas la kòrèk (nan ka sa a nou simulation li)
-                alert("Kont ou a te efase nèt avèk siksè. Mèsi paske w te itilize BerdSend.");
-                closeSettings();
-                // Opsyonèl: voye l sou paj akèy netwaye
-                window.location.href = "index.html";
+                // Mande l antre modpas li pou valide konfimasyon an
+                const passwordEntered = prompt("Tanpri antre modpas ou a pou konfime sipresyon kont la:");
+
+                if (passwordEntered !== null && passwordEntered.trim() !== "") {
+                    // Isit la nou valide ke li antre modpas la
+                    alert("Kont ou a te efase nèt avèk siksè. Mèsi paske w te itilize BerdSend.");
+                    closeSettings();
+                    window.location.href = "index.html";
+                } else if (passwordEntered !== null) {
+                    alert("Modpas la pa valab. Yo anile operasyon pou efase kont la.");
+                }
             }
         }
 
