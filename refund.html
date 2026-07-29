@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Refund Policy - BerdSend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
+        
+        .wrapper { width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; }
+
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 25px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 50px; max-width: 150px; object-fit: contain; border-radius: 8px; }
+        
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 35px 30px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; text-align: left; }
+        .card h1 { font-size: 1.8rem; color: #0f172a; margin-bottom: 15px; font-weight: 800; }
+        .card h2 { font-size: 1.2rem; color: #0066cc; margin-top: 20px; margin-bottom: 10px; font-weight: 700; }
+        .card p, .card li { font-size: 0.95rem; color: #475569; line-height: 1.6; margin-bottom: 12px; }
+        .card ul { padding-left: 20px; margin-bottom: 15px; }
+
+        .back-home { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .back-home:hover { text-decoration: underline; }
+
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+        .footer-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            </a>
+            <div class="header-right">
+                <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="pt">🇧🇷 Português</option>
+                </select>
+            </div>
+        </header>
+
+        <div style="width: 100%; text-align: left;">
+            <a href="index.html" class="back-home" id="backLink">← Retounen nan Paj Akèy la</a>
+        </div>
+
+        <div class="card">
+            <h1 id="policyTitle">Refund Policy</h1>
+            <p id="policySubtitle">Last updated: July 2026</p>
+            
+            <h2 id="sec1Title">1. General Conditions</h2>
+            <p id="sec1Text">At BerdSend, we strive to ensure all mobile top-ups and money transfers are processed accurately and delivered instantly. Because of the digital nature of our services, refunds are evaluated on a case-by-case basis.</p>
+            
+            <h2 id="sec2Title">2. Eligible Cases for Refund</h2>
+            <ul>
+                <li id="li1">Transactions that failed due to a system error on our end but where your account was charged.</li>
+                <li id="li2">Mobile top-up sent to an incorrect number caused by a technical glitch in our platform (not user input error).</li>
+                <li id="li3">Duplicate transactions processed accidentally.</li>
+            </ul>
+
+            <h2 id="sec3Title">3. Non-Refundable Cases</h2>
+            <ul>
+                <li id="li4">Transactions successfully delivered to the correct recipient phone number or mobile wallet provided by the user.</li>
+                <li id="li5">Delays caused by third-party mobile carriers (e.g., Digicel, Natcom, Claro, Altice) or network outages.</li>
+            </ul>
+
+            <h2 id="sec4Title">4. How to Request a Refund</h2>
+            <p id="sec4Text">If you believe you qualify for a refund, please contact our support team via our contact page with your transaction ID, registered email, and proof of payment within 48 hours of the transaction.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="faq.html">FAQ</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="tracking.html">Tracking Transfer</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="refund.html">Refund Policy</a>
+        </div>
+        <div>&copy; 2026 BerdSend. All rights reserved.</div>
+    </footer>
+
+    <script>
+        const translations = {
+            ht: {
+                title: "Politik Ranbousman - BerdSend",
+                backLink: "← Retounen nan Paj Akèy la",
+                policyTitle: "Politik Ranbousman (Refund Policy)",
+                policySubtitle: "Dènye mizajou: Jiyè 2026",
+                sec1Title: "1. Kondisyon Jeneral",
+                sec1Text: "Nan BerdSend, nou fè efò pou asire tout rechaj mobil ak transfè lajan trete avèk presizyon epi rive tousuit. Akòz sèvis dijital nou yo, nou evalye chak demann ranbousman sou baz ka pa ka.",
+                sec2Title: "2. Ka ki Kalifye pou Ranbousman",
+                li1: "Tranzaksyon ki echwe akòz yon erè sistèm nan bò pa nou men yo te retire lajan nan kont ou.",
+                li2: "Rechaj mobil ki ale sou yon move nimewo akòz yon ensidan teknik nan platfòm nou an (non pa erè itilizatè a).",
+                li3: "Tranzaksyon an doubl ki pase pa aksidan.",
+                sec3Title: "3. Ka ki PA ka Ranbousre",
+                li4: "Tranzaksyon ki rive avèk siksè nan bon nimewo telefòn oswa bous mobil itilizatè a te bay la.",
+                li5: "Reta ki koze pa konpayi telefòn twazyèm pati yo (tankou Digicel, Natcom, Claro, Altice) oswa pwoblèm rezo.",
+                sec4Title: "4. Kijan pou Mande yon Ranbousman",
+                sec4Text: "Si ou panse ou kalifye pou yon ranbousman, tanpri kontakte ekip sipò nou an nan paj kontak nou an ak nimewo tranzaksyon an, imèl ou, ak prèv peman an nan 48 èdtan apre tranzaksyon an."
+            },
+            en: {
+                title: "Refund Policy - BerdSend",
+                backLink: "← Back to Home",
+                policyTitle: "Refund Policy",
+                policySubtitle: "Last updated: July 2026",
+                sec1Title: "1. General Conditions",
+                sec1Text: "At BerdSend, we strive to ensure all mobile top-ups and money transfers are processed accurately and delivered instantly. Because of the digital nature of our services, refunds are evaluated on a case-by-case basis.",
+                sec2Title: "2. Eligible Cases for Refund",
+                li1: "Transactions that failed due to a system error on our end but where your account was charged.",
+                li2: "Mobile top-up sent to an incorrect number caused by a technical glitch in our platform (not user input error).",
+                li3: "Duplicate transactions processed accidentally.",
+                sec3Title: "3. Non-Refundable Cases",
+                li4: "Transactions successfully delivered to the correct recipient phone number or mobile wallet provided by the user.",
+                li5: "Delays caused by third-party mobile carriers (e.g., Digicel, Natcom, Claro, Altice) or network outages.",
+                sec4Title: "4. How to Request a Refund",
+                sec4Text: "If you believe you qualify for a refund, please contact our support team via our contact page with your transaction ID, registered email, and proof of payment within 48 hours of the transaction."
+            },
+            pt: {
+                title: "Política de Reembolso - BerdSend",
+                backLink: "← Voltar para o Início",
+                policyTitle: "Política de Reembolso",
+                policySubtitle: "Última atualização: Julho de 2026",
+                sec1Title: "1. Condições Gerais",
+                sec1Text: "Na BerdSend, esforçamo-nos para garantir que todas as recargas de celular e transferências de dinheiro sejam processadas com precisão e entregues instantaneamente. Devido à natureza digital de nossos serviços, os reembolsos são avaliados caso a caso.",
+                sec2Title: "2. Casos Elegíveis para Reembolso",
+                li1: "Transações que falharam devido a um erro de sistema de nossa parte, mas nas quais sua conta foi cobrada.",
+                li2: "Recarga enviada para o número incorreto devido a uma falha técnica em nossa plataforma (não por erro do usuário).",
+                li3: "Transações duplicadas processadas acidentalmente.",
+                sec3Title: "3. Casos Não Reembolsáveis",
+                li4: "Transações entregues com sucesso ao número de telefone ou carteira móvel corretos fornecidos pelo usuário.",
+                li5: "Atrasos causados por operadoras de celular terceirizadas (como Digicel, Natcom, Claro, Altice) ou interrupções de rede.",
+                sec4Title: "4. Como Solicitar um Reembolso",
+                sec4Text: "Se você acredita que se qualifica para um reembolso, entre em contato com nossa equipe de suporte através da página de contato com seu ID de transação, e-mail cadastrado e comprovante de pagamento em até 48 horas."
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang] || translations['ht'];
+
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('backLink').innerText = t.backLink;
+            document.getElementById('policyTitle').innerText = t.policyTitle;
+            document.getElementById('policySubtitle').innerText = t.policySubtitle;
+            document.getElementById('sec1Title').innerText = t.sec1Title;
+            document.getElementById('sec1Text').innerText = t.sec1Text;
+            document.getElementById('sec2Title').innerText = t.sec2Title;
+            document.getElementById('li1').innerText = t.li1;
+            document.getElementById('li2').innerText = t.li2;
+            document.getElementById('li3').innerText = t.li3;
+            document.getElementById('sec3Title').innerText = t.sec3Title;
+            document.getElementById('li4').innerText = t.li4;
+            document.getElementById('li5').innerText = t.li5;
+            document.getElementById('sec4Title').innerText = t.sec4Title;
+            document.getElementById('sec4Text').innerText = t.sec4Text;
+        }
+
+        window.onload = function() {
+            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
+            document.getElementById('langSwitch').value = savedLang;
+            changeLanguage(savedLang);
+        };
+    </script>
+</body>
+</html>
