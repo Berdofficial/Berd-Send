@@ -9,24 +9,30 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
         
-        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; position: relative; }
 
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
         
-        .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; position: relative; }
         .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
         
-        /* Bouton Paramèt ak Meni 3 ti bar (Burger Menu) */
         .icon-btn { background: #fff; border: 1px solid #ddd; color: #333; width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: background 0.2s; text-decoration: none; }
         .icon-btn:hover { background: #f8fafc; }
 
-        /* Seksyon Modal pou Meni an ak Kont */
-        .menu-dropdown { position: absolute; top: 75px; right: 25px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 220px; display: none; flex-direction: column; padding: 10px 0; z-index: 100; }
+        /* Dropdown Meni */
+        .menu-dropdown { position: absolute; top: 50px; right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 240px; display: none; flex-direction: column; padding: 10px 0; z-index: 100; }
         .menu-dropdown.active { display: flex; }
         .menu-dropdown a, .menu-dropdown button { padding: 10px 18px; text-align: left; background: none; border: none; font-size: 0.9rem; color: #334155; text-decoration: none; cursor: pointer; font-weight: 500; width: 100%; }
         .menu-dropdown a:hover, .menu-dropdown button:hover { background: #f1f5f9; color: #0066cc; }
+
+        /* Modal pou Paramèt ak Kont Pwofil */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 14px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
+        .modal-content h3 { margin-bottom: 15px; color: #0f172a; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.2rem; cursor: pointer; border: none; background: none; font-weight: bold; }
 
         .banner-slider-container {
             width: 100%;
@@ -56,7 +62,7 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; position: relative; }
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
         
         .form-group { margin-bottom: 18px; }
         label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
@@ -67,6 +73,9 @@
         .btn-submit:hover { background: #0052a3; }
         .btn-submit:active { transform: scale(0.99); }
 
+        .btn-danger { background-color: #ef4444; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; }
+        .btn-danger:hover { background-color: #dc2626; }
+
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
         .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
@@ -75,7 +84,7 @@
 </head>
 <body>
 
-    <div class="wrapper" style="position: relative;">
+    <div class="wrapper">
         <!-- Header -->
         <header>
             <a href="index.html" class="logo-container">
@@ -89,23 +98,23 @@
                 </select>
 
                 <!-- Paramèt -->
-                <a href="#" class="icon-btn" title="Paramèt">⚙️</a>
+                <button class="icon-btn" onclick="openSettings()" title="Paramèt">⚙️</button>
 
-                <!-- Meni 3 ti bar (Burger Menu) pou Kont ak Sèvis -->
+                <!-- Meni 3 ti bar (Burger Menu) -->
                 <button class="icon-btn" onclick="toggleMenu()" title="Meni">☰</button>
+
+                <!-- Dropdown Meni an -->
+                <div id="menuDropdown" class="menu-dropdown">
+                    <a href="#" onclick="openAccountModal('signup')">👤 Kreye Kont (Sign Up)</a>
+                    <a href="#" onclick="openAccountModal('signin')">🔑 Konekte (Sign In)</a>
+                    <a href="#" onclick="openSettings()">⚙️ Paramèt Pwofil & Kont</a>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
+                    <a href="#">❓ Èd & FAQ</a>
+                </div>
             </div>
         </header>
 
-        <!-- Dropdown Meni an (Kote kliyan an ka kreye kont oswa konekte) -->
-        <div id="menuDropdown" class="menu-dropdown">
-            <a href="register.html">👤 Kreye Kont (Sign Up)</a>
-            <a href="login.html">🔑 Konekte (Sign In)</a>
-            <a href="profile.html">⚙️ Paramèt Pwofil</a>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
-            <a href="faq.html">❓ Èd & FAQ</a>
-        </div>
-
-        <!-- Banyè Pwomosyon (Banner Slider) -->
+        <!-- Banyè Pwomosyon -->
         <div class="banner-slider-container">
             <div class="banner-slide active">
                 <h4>🎉 Rechaj Mobil: $5 Rabè</h4>
@@ -121,7 +130,7 @@
             </div>
         </div>
 
-        <!-- Fòm Prensipal san bwat Square la ak san chan montan an -->
+        <!-- Fòm Prensipal -->
         <div class="card">
             <h3 style="margin-bottom: 20px; color: #0f172a; text-align: center;">BerdSend - Transfè & Rechaj</h3>
 
@@ -170,16 +179,52 @@
         </footer>
     </div>
 
+    <!-- Modal pou Paramèt ak Jesyon Kont -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSettings()">×</button>
+            <h3>Paramèt Pwofil & Kont Kliyan</h3>
+            <p style="margin-bottom: 15px; font-size: 0.9rem; color: #64748b;">Jere enfòmasyon pèsonèl ou oswa fèmen kont ou isit la.</p>
+            
+            <div class="form-group">
+                <label>Non Itilizatè / Imèl:</label>
+                <input type="text" id="userEmailDisplay" value="kliyan@berdsend.com" readonly style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 10px; width: 100%; border-radius: 8px;">
+            </div>
+
+            <button class="btn-danger" onclick="deleteAccount()">Efase / Siprime Kont Mwen (Delete Account)</button>
+        </div>
+    </div>
+
     <script>
-        // Fonksyon pou louvri/fèmen meni 3 ti bar la
         function toggleMenu() {
             const menu = document.getElementById('menuDropdown');
             menu.classList.toggle('active');
         }
 
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('menuDropdown').classList.remove('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function openAccountModal(type) {
+            alert(type === 'signup' ? "Louvri fòm pou Kreye Kont (Sign Up)" : "Louvri fòm pou Konekte (Sign In)");
+            document.getElementById('menuDropdown').classList.remove('active');
+        }
+
+        function deleteAccount() {
+            if (confirm("Èske ou sèten ou vle efase kont ou a nèt? Aksyon sa a pa ka tounen dèyè.")) {
+                alert("Kont ou a te efase avèk siksè.");
+                closeSettings();
+            }
+        }
+
         // Fèmen meni an si moun nan klike deyò l
         window.onclick = function(event) {
-            if (!event.target.matches('button') && !event.target.closest('.header-right')) {
+            if (!event.target.matches('.icon-btn') && !event.target.closest('.header-right')) {
                 const menu = document.getElementById('menuDropdown');
                 if (menu.classList.contains('active')) {
                     menu.classList.remove('active');
@@ -187,7 +232,7 @@
             }
         }
 
-        // Fonksyon pou jere banyè ki ap defile a (Banner Slider)
+        // Banyè Slider
         function startBannerSlider() {
             const slides = document.querySelectorAll('.banner-slide');
             if (slides.length === 0) return;
@@ -203,7 +248,8 @@
             startBannerSlider();
         };
 
-        function proceedToStripe() {
+        // Fonksyon pou pase sou Stripe
+        async function proceedToStripe() {
             const serviceType = document.getElementById('serviceType').value;
             const country = document.getElementById('receiverCountry').value;
             const phone = document.getElementById('phoneNumber').value.trim();
@@ -213,18 +259,24 @@
                 return;
             }
 
-            alert("Redirije sou Stripe Checkout pou chwazi montan an epi konplete peman an...");
-            
-            // Lè w konekte backend Stripe la pita:
-            /*
-            fetch('/create-checkout-session', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ serviceType, country, phone })
-            })
-            .then(res => res.json())
-            .then(data => { window.location.href = data.url; });
-            */
+            try {
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ serviceType, country, phone })
+                });
+
+                const data = await response.json();
+
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert("Erè nan kreye sesyon peman an. Eseye ankò.");
+                }
+            } catch (error) {
+                console.error("Erè:", error);
+                alert("Gen yon pwoblèm koneksyon ak sèvè a.");
+            }
         }
     </script>
 </body>
