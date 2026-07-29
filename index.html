@@ -27,7 +27,7 @@
         .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px 8px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; transition: 0.2s; }
         .menu-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
         
-        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 210px; z-index: 1000; border: 1px solid #eee; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 220px; z-index: 1000; border: 1px solid #eee; }
         .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; background: none; border: none; cursor: pointer; }
         .dropdown-menu a:hover, .dropdown-menu button:hover { background: #f8fafc; color: #0066cc; }
 
@@ -289,12 +289,12 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon ak Soumèt ID pou Cloudinary -->
+    <!-- Modal Otantifikasyon ak Soumèt ID -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon imedyat.</p>
+            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -326,13 +326,13 @@
                 </div>
             </div>
 
-            <!-- Chan pou Kat Idantifikasyon (Cloudinary Upload) -->
+            <!-- Chan pou Kat Idantifikasyon -->
             <div class="form-group">
                 <label style="color: #0284c7;">🪪 Kat Idantifikasyon / Paspò (Obligatwa pou Verifikasyon):</label>
                 <div class="input-box" style="padding: 6px 10px; background: #f8fafc;">
                     <input type="file" id="idCardFile" accept="image/*" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
-                <span style="font-size: 0.75rem; color: #64748b;">Foto a ap estoke sou Cloudinary pou administratè a valide l.</span>
+                <span style="font-size: 0.75rem; color: #64748b;">Chwazi yon foto kat ID w pou administratè a valide l.</span>
             </div>
 
             <div class="captcha-box">
@@ -352,10 +352,10 @@
         <div class="modal-content" style="max-width: 500px;">
             <button class="modal-close" onclick="closeAdminModal()">&times;</button>
             <h3 style="color: #0284c7;">🛡️ Panèl Verifikasyon Admin</h3>
-            <p>Lis kliyan ki fèk enskri epi ki ap tann verifikasyon idantite yo sou Cloudinary:</p>
+            <p>Lis kliyan ki fèk enskri epi ki ap tann verifikasyon idantite yo:</p>
             
             <div id="adminUsersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 350px; overflow-y: auto;">
-                <!-- Lis itilizatè yo ap parèt isit la dinamikman -->
+                <!-- Lis itilizatè yo ap parèt isit la -->
             </div>
         </div>
     </div>
@@ -395,7 +395,7 @@
             <div class="form-group">
                 <label>Kat ID ou telechaje a:</label>
                 <div id="settingsIdPreview" style="margin-top: 5px;">
-                    <a href="#" target="_blank" id="settingsIdLink" style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">Gade imaj ID ou a sou Cloudinary 🔗</a>
+                    <a href="#" target="_blank" id="settingsIdLink" style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">Gade imaj ID ou a 🔗</a>
                 </div>
             </div>
 
@@ -462,7 +462,7 @@
                 lblAuthConfirmPassword: "Konfime Modpas la:",
                 lblCaptchaText: "Verifikasyon anti-robo: Konbyen fè",
                 btnAuthSubmit: "Kontinye & Voye ID a 🚀",
-                msgRegistered: "Kont ou kreye avèk siksè! Y ap verifye ID ou sou Cloudinary.",
+                msgRegistered: "Kont ou kreye avèk siksè! ID ou anrejistre pou verifikasyon.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:"
             },
             en: {
@@ -485,7 +485,7 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your details and upload your ID card for instant verification.",
+                authDesc: "Enter your details and upload your ID card for verification.",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
@@ -661,8 +661,16 @@
             document.getElementById('settingsModal').style.display = "none";
         }
 
+        // --- Fonksyon Panèl Admin ak Modpas Sekrè (Ou ka chanje "BerdAdmin2026" anba a a nenpòt lòt modpas ou vle) ---
         function openAdminModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
+            
+            let adminPass = prompt("Antre modpas administratè a:");
+            if (adminPass !== "BerdAdmin2026") { // Chanje kòd sa a si ou vle yon lòt modpas pèsonèl
+                alert("Modpas la pa kòrèk!");
+                return;
+            }
+
             renderAdminUsersList();
             document.getElementById('adminModal').style.display = "flex";
         }
@@ -686,9 +694,9 @@
             container.innerHTML = `
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
                     <div><strong>Non:</strong> ${savedName}</div>
-                    <div><strong>Imèl:</strong> ${savedContact}</div>
+                    <div><strong>Imèl / Kontak:</strong> ${savedContact}</div>
                     <div><strong>Estati ID:</strong> <span style="color: ${isVerified ? '#16a34a' : '#d97706'}; font-weight: 700;">${isVerified ? '✅ Apwouve (Verifye)' : '⏳ Ap tann Validasyon'}</span></div>
-                    ${idCardUrl ? `<div><a href="${idCardUrl}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: underline;">Gade Kat ID sou Cloudinary 🔗</a></div>` : '<div><em>Okenn imaj ID</em></div>'}
+                    ${idCardUrl ? `<div><a href="${idCardUrl}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: underline;">Gade Imaj Kat ID Kliyan an 🔗</a></div>` : '<div><em>Okenn imaj ID</em></div>'}
                     <div style="display: flex; gap: 10px; margin-top: 5px;">
                         <button class="modal-btn btn-success" onclick="adminVerifyUser(true)" style="flex:1;">Apwouve ID ✅</button>
                         <button class="modal-btn btn-yes" onclick="adminVerifyUser(false)" style="flex:1;">Rejte ❌</button>
@@ -760,23 +768,14 @@
                 return;
             }
 
-            // Voye imaj la sou Cloudinary
+            // Konvèti imaj la an Base64 pou li ka parèt tou dwat nan panèl admin ou a
             let file = idCardInput.files[0];
-            let formData = new FormData();
-            formData.append("file", file);
-            formData.append("upload_preset", "berdsend_preset"); // Ranplase ak upload preset ou a nan Cloudinary
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                let base64Image = reader.result;
 
-            // Notifikasyon ke y ap voye dosye a
-            alert("Y ap telechaje kat ID ou a sou Cloudinary...");
-
-            fetch("https://api.cloudinary.com/v1_1/d.../image/upload", { // Mete non cloud ou a nan lyen sa a
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                let secureUrl = data.secure_url || "https://res.cloudinary.com/demo/image/upload/sample.jpg"; // Fallback demo si w ap teste
-                localStorage.setItem('berdUserIdCardUrl', secureUrl);
+                localStorage.setItem('berdUserIdCardUrl', base64Image);
                 localStorage.setItem('berdIdVerified', 'false'); // Ap tann apwobasyon admin
 
                 localStorage.setItem('berdUserName', name);
@@ -786,21 +785,11 @@
                 closeAuthModal();
                 updateProfileUI();
                 alert(t.msgRegistered);
-            })
-            .catch(error => {
-                console.error("Erè Cloudinary:", error);
-                // Si gen pwoblèm ak koneksyon Cloudinary nan anviwònman lokal, nou sove yon lyen lokal pou tès
-                localStorage.setItem('berdUserIdCardUrl', URL.createObjectURL(file));
-                localStorage.setItem('berdIdVerified', 'false');
-
-                localStorage.setItem('berdUserName', name);
-                localStorage.setItem('berdUserContact', email);
-                localStorage.setItem('berdUserPassword', password);
-
-                closeAuthModal();
-                updateProfileUI();
-                alert(t.msgRegistered);
-            });
+            };
+            reader.onerror = function (error) {
+                console.error("Erè lekti fichye a: ", error);
+                alert("Echèk nan chajman kat idantifikasyon an!");
+            };
         }
 
         function updateProfileUI() {
