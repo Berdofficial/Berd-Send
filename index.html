@@ -167,7 +167,7 @@
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <a href="#" onclick="openAdminModal()" style="color: #0284c7; font-weight: 700;">🛡️ Panèl Verifikasyon Admin</a>
+                        <a href="#" onclick="openAdminModal()" id="adminMenuLink" style="color: #0284c7; font-weight: 700; display: none;">🛡️ Panèl DG (Admin)</a>
                         <div id="settingsAuthActionContainer"></div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
@@ -294,7 +294,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon sekirize.</p>
+            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -326,7 +326,6 @@
                 </div>
             </div>
 
-            <!-- Chan pou Kat Idantifikasyon -->
             <div class="form-group">
                 <label style="color: #0284c7;">🪪 Kat Idantifikasyon / Paspò (Obligatwa pou Verifikasyon):</label>
                 <div class="input-box" style="padding: 6px 10px; background: #f8fafc;">
@@ -347,11 +346,11 @@
         </div>
     </div>
 
-    <!-- Panèl Admin pou Tcheke ak Valide ID Kliyan yo -->
+    <!-- Panèl Admin (DG) pou Tcheke ak Valide ID Kliyan yo -->
     <div id="adminModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <button class="modal-close" onclick="closeAdminModal()">&times;</button>
-            <h3 style="color: #0284c7;">🛡️ Panèl Verifikasyon Admin</h3>
+            <h3 style="color: #0284c7;">🛡️ Panèl DG (Verifikasyon Admin)</h3>
             <p>Lis kliyan ki fèk enskri epi ki ap tann verifikasyon idantite yo:</p>
             
             <div id="adminUsersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 350px; overflow-y: auto;">
@@ -389,13 +388,6 @@
                 <label>Adrès Imèl:</label>
                 <div class="input-box">
                     <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Kat ID ou telechaje a:</label>
-                <div id="settingsIdPreview" style="margin-top: 5px;">
-                    <a href="#" target="_blank" id="settingsIdLink" style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">Gade imaj ID ou a 🔗</a>
                 </div>
             </div>
 
@@ -437,6 +429,8 @@
     </footer>
 
     <script>
+        const ADMIN_EMAIL = "topberd@gmail.com";
+
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
 
@@ -461,7 +455,7 @@
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon sekirize.",
+                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.",
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
@@ -491,7 +485,7 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your details and upload your ID card for secure verification.",
+                authDesc: "Enter your details and upload your ID card for verification.",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
@@ -521,7 +515,7 @@
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seus dados e envie sua identidade para verificação segura.",
+                authDesc: "Insira seus dados e envie sua identidade para verificação.",
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
@@ -646,19 +640,10 @@
         function openSettingsModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
             let savedContact = localStorage.getItem('berdUserContact') || '';
-            let idCardUrl = localStorage.getItem('berdUserIdCardUrl') || '#';
             
             document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
             document.getElementById('settingsEmail').value = savedContact;
             document.getElementById('deleteConfirmPassword').value = '';
-            
-            let idLink = document.getElementById('settingsIdLink');
-            if (idCardUrl !== '#') {
-                idLink.href = idCardUrl;
-                idLink.style.display = "inline";
-            } else {
-                idLink.style.display = "none";
-            }
             
             document.getElementById('deleteAccountSection').style.display = savedContact ? "block" : "none";
             document.getElementById('settingsModal').style.display = "flex";
@@ -668,13 +653,12 @@
             document.getElementById('settingsModal').style.display = "none";
         }
 
-        // --- Panèl Admin ak Modpas Sekrè ---
         function openAdminModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
             
-            let adminPass = prompt("Antre modpas administratè a:");
-            if (adminPass !== "BerdAdmin2026") { // Chanje kòd sa a si ou vle yon lòt modpas pèsonèl
-                alert("Modpas la pa kòrèk!");
+            let currentUser = localStorage.getItem('berdUserContact') || '';
+            if (currentUser.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+                alert("Ou pa gen otorizasyon pou antre nan Panèl DG a!");
                 return;
             }
 
@@ -795,7 +779,7 @@
                 let base64Image = reader.result;
 
                 localStorage.setItem('berdUserIdCardUrl', base64Image);
-                localStorage.setItem('berdIdVerified', 'false'); // Rete an atant jiskaske admin an apwouve l
+                localStorage.setItem('berdIdVerified', 'false');
 
                 localStorage.setItem('berdUserName', name);
                 localStorage.setItem('berdUserContact', email);
@@ -821,6 +805,7 @@
             let authDropdown = document.getElementById('authDropdown');
             let settingsAuthContainer = document.getElementById('settingsAuthActionContainer');
             let statusBadge = document.getElementById('verificationStatusBadge');
+            let adminMenuLink = document.getElementById('adminMenuLink');
 
             if (savedName && savedContact) {
                 document.getElementById('profileNameDisplay').innerText = savedName;
@@ -828,7 +813,14 @@
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
 
-                if (isVerified) {
+                // SÈLMAN MONTRE SI IMÈL LA MATCHE EGZAKTMAN AK topberd@gmail.com
+                if (savedContact.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    adminMenuLink.style.display = "block";
+                } else {
+                    adminMenuLink.style.display = "none";
+                }
+
+                if (isVerified || savedContact.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                     statusBadge.innerText = "✅ ID Verifye & Apwouve";
                     statusBadge.style.background = "#dcfce7";
                     statusBadge.style.color = "#166534";
@@ -853,6 +845,7 @@
                 document.getElementById('authButtonText').innerText = t.btnLogin;
                 document.getElementById('headerAvatarIcon').innerText = "👤";
                 document.getElementById('userReferralDisplay').style.display = "none";
+                adminMenuLink.style.display = "none";
 
                 authDropdown.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
                 settingsAuthContainer.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
@@ -964,7 +957,7 @@
                     openAuthModal();
                     return;
                 }
-                if (!isVerified) {
+                if (!isVerified && savedContact.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
                     alert("Kont ou a poko verifye pa administratè a! Tanpri tann yo apwouve kat idantifikasyon w lan.");
                     return;
                 }
