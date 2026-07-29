@@ -44,7 +44,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
         .profile-info { display: flex; align-items: center; gap: 14px; }
-        .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); }
+        .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); overflow: hidden; }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
         .profile-details p { font-size: 0.8rem; color: #64748b; }
         .settings-btn { background: #e2e8f0; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; color: #334155; cursor: pointer; transition: 0.2s; }
@@ -67,16 +68,11 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        .banner-slide { display: none; animation: fadeIn 0.8s ease-in-out; }
+        .banner-slide { display: none; }
         .banner-slide.active { display: block; }
         .banner-slide h4 { font-size: 1.2rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .banner-slide p { font-size: 0.95rem; font-weight: 500; color: #f8fafc; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         .banner-slide strong { color: #ffeb3b; font-weight: 700; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
 
         .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
         .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 22px; }
@@ -433,6 +429,8 @@
 
         var currentMode = 'topup';
         var currentCaptchaAnswer = 0;
+        let currentSlideIndex = 0;
+        let bannerInterval = null;
 
         const translations = {
             ht: {
@@ -526,6 +524,19 @@
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência:"
             }
         };
+
+        function startBannerSlider() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            
+            if (bannerInterval) clearInterval(bannerInterval);
+
+            bannerInterval = setInterval(() => {
+                slides[currentSlideIndex].classList.remove('active');
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                slides[currentSlideIndex].classList.add('active');
+            }, 8000);
+        }
 
         function generateCaptcha() {
             let num1 = Math.floor(Math.random() * 10) + 1;
@@ -798,6 +809,7 @@
         function updateProfileUI() {
             let savedName = localStorage.getItem('berdUserName');
             let savedContact = localStorage.getItem('berdUserContact');
+            let idCardUrl = localStorage.getItem('berdUserIdCardUrl');
             let isVerified = localStorage.getItem('berdIdVerified') === 'true';
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
@@ -806,14 +818,20 @@
             let settingsAuthContainer = document.getElementById('settingsAuthActionContainer');
             let statusBadge = document.getElementById('verificationStatusBadge');
             let adminMenuLink = document.getElementById('adminMenuLink');
+            let profileAvatarContainer = document.getElementById('profileAvatarText');
 
             if (savedName && savedContact) {
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
-                document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
+                
+                if (idCardUrl) {
+                    profileAvatarContainer.innerHTML = `<img src="${idCardUrl}" alt="Avatar">`;
+                } else {
+                    profileAvatarContainer.innerText = savedName.slice(0, 2).toUpperCase();
+                }
+
                 document.getElementById('userProfileBadge').style.display = "flex";
 
-                // SÈLMAN MONTRE SI IMÈL LA MATCHE EGZAKTMAN AK topberd@gmail.com
                 if (savedContact.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                     adminMenuLink.style.display = "block";
                 } else {
@@ -940,6 +958,7 @@
 
             setMode('topup');
             updateProfileUI();
+            startBannerSlider();
 
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
