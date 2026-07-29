@@ -135,7 +135,6 @@
                 </div>
             </div>
 
-            <!-- Nouvo Opsyon: Peyi Orijin Transfè a -->
             <div class="form-group">
                 <label>Peyi Orijin (Kote lajan an ap soti):</label>
                 <div class="input-box">
@@ -246,10 +245,9 @@
             startBannerSlider();
         };
 
-        async function proceedToStripe() {
+        function proceedToStripe() {
             const serviceType = document.getElementById('serviceType').value;
             const originCountry = document.getElementById('originCountry').value;
-            const receiverCountry = document.getElementById('receiverCountry').value;
             const phone = document.getElementById('phoneNumber').value.trim();
 
             if (!phone) {
@@ -257,24 +255,19 @@
                 return;
             }
 
-            try {
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ serviceType, originCountry, receiverCountry, phone })
-                });
+            // Dirije kliyan an baze sou chwa peyi orijin ou yo nan lyen Stripe yo
+            let stripeLink = "";
 
-                const data = await response.json();
-
-                if (data.url) {
-                    window.location.href = data.url;
-                } else {
-                    alert("Erè nan kreye sesyon peman an. Eseye ankò.");
-                }
-            } catch (error) {
-                console.error("Erè:", error);
-                alert("Gen yon pwoblèm koneksyon ak sèvè a.");
+            if (originCountry === "US") {
+                stripeLink = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00";
+            } else if (originCountry === "BR") {
+                stripeLink = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01";
+            } else {
+                stripeLink = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02";
             }
+
+            // Redirije kliyan an dirèkteman sou paj peman Stripe la
+            window.location.href = stripeLink;
         }
     </script>
 </body>
