@@ -4,117 +4,187 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BerdSend - Voye Lajan ak Rechaj Telefòn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8fafc;
-            margin: 0;
-            padding: 20px;
-            color: #334155;
-        }
-        .container {
-            max-width: 500px;
-            background: #ffffff;
-            margin: 40px auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        h2 {
-            text-align: center;
-            color: #0f172a;
-            margin-bottom: 25px;
-        }
-        .form-group {
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
+        
+        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
+        
+        .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+
+        .banner-slider-container {
+            width: 100%;
+            background: linear-gradient(135deg, #003366, #0056b3, #007bff);
+            color: #ffffff;
+            padding: 22px 25px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0, 86, 179, 0.25);
             margin-bottom: 20px;
+            text-align: center;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 14px;
+        .banner-slide { display: none; animation: fadeIn 0.8s ease-in-out; }
+        .banner-slide.active { display: block; }
+        .banner-slide h4 { font-size: 1.2rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; }
+        .banner-slide p { font-size: 0.95rem; font-weight: 500; color: #f8fafc; line-height: 1.4; }
+        .banner-slide strong { color: #ffeb3b; font-weight: 700; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
-        select, input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .btn-next {
-            width: 100%;
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 10px;
-        }
-        .btn-next:hover {
-            background-color: #1d4ed8;
-        }
+
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; }
+        .input-box select, .input-box input { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; }
+
+        .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 10px; }
+        .btn-submit:hover { background: #0052a3; }
+        .btn-submit:active { transform: scale(0.99); }
+
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+        .footer-links a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>BerdSend - Transfè & Rechaj</h2>
-        
-        <div class="form-group">
-            <label for="service-type">Chwazi Sèvis la:</label>
-            <select id="service-type">
-                <option value="topup">Rechaj Telefòn (Mobile Top-Up)</option>
-                <option value="transfer">Transfè Lajan</option>
-            </select>
+    <div class="wrapper">
+        <!-- Header -->
+        <header>
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            </a>
+            <div class="header-right">
+                <select class="lang-select" id="langSwitch">
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="pt">🇧🇷 Português</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Banyè Pwomosyon (Banner Slider) -->
+        <div class="banner-slider-container">
+            <div class="banner-slide active">
+                <h4>🎉 Rechaj Mobil: $5 Rabè</h4>
+                <p>Itilize yon kòd pwomosyon epi jwenn <strong>$5</strong> sou premye rechaj ou!</p>
+            </div>
+            <div class="banner-slide">
+                <h4>🎁 Pwomosyon 7 Premye Jou yo: $10</h4>
+                <p>Nan premye 7 jou yo w ap jwenn <strong>$10</strong> pa envitasyon, apre sa <strong>$5</strong> pa envitasyon!</p>
+            </div>
+            <div class="banner-slide">
+                <h4>👑 Envite 20 Zanmi = Badj VIP</h4>
+                <p>Jwenn yon badj VIP pou <strong>10% rabè</strong> sou frè MonCash ak Natcash!</p>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="destination-country">Peyi Destinasyon:</label>
-            <select id="destination-country">
-                <option value="ht">Ayiti (HT)</option>
-                <option value="do">Repiblik Dominikèn (DO)</option>
-            </select>
+        <!-- Fòm Prensipal -->
+        <div class="card">
+            <h3 style="margin-bottom: 20px; color: #0f172a; text-align: center;">BerdSend - Transfè & Rechaj</h3>
+
+            <div class="form-group">
+                <label>Chwazi Sèvis la:</label>
+                <div class="input-box">
+                    <select id="serviceType">
+                        <option value="topup">📱 Rechaj Telefòn (Mobile Top-Up)</option>
+                        <option value="transfer">💸 Transfè Lajan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Peyi Destinasyon:</label>
+                <div class="input-box">
+                    <select id="receiverCountry">
+                        <option value="HT">🇭🇹 Ayiti (HT)</option>
+                        <option value="DO">🇩🇴 Repiblik Dominikèn (DO)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Nimewo Telefòn Moun k ap resevwa a:</label>
+                <div class="input-box">
+                    <input type="tel" id="phoneNumber" placeholder="eg: +509 ...">
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="proceedToStripe()">Suivan (Next) ➔</button>
         </div>
 
-        <div class="form-group">
-            <label for="phone-number">Nimewo Telefòn Moun k ap resevwa a:</label>
-            <input type="text" id="phone-number" placeholder="eg: 16148174311">
-        </div>
-
-        <!-- Bouton Suivan ki mennen sou Stripe Checkout -->
-        <button class="btn-next" onclick="proceedToStripe()">Suivan (Next) ➔</button>
+        <!-- Footer -->
+        <footer>
+            <div class="footer-links">
+                <a href="#">Blog</a>
+                <a href="#">FAQ</a>
+                <a href="#">About</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Tracking Transfer</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <div>&copy; 2026 BerdSend. All rights reserved.</div>
+        </footer>
     </div>
 
     <script>
+        // Fonksyon pou jere banyè ki ap defile a (Banner Slider)
+        function startBannerSlider() {
+            const slides = document.querySelectorAll('.banner-slide');
+            if (slides.length === 0) return;
+            let currentSlide = 0;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 8000);
+        }
+
+        window.onload = function() {
+            startBannerSlider();
+        };
+
         function proceedToStripe() {
-            const serviceType = document.getElementById('service-type').value;
-            const country = document.getElementById('destination-country').value;
-            const phone = document.getElementById('phone-number').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const country = document.getElementById('receiverCountry').value;
+            const phone = document.getElementById('phoneNumber').value.trim();
 
             if (!phone) {
                 alert("Tanpri antre nimewo telefòn lan anvan ou kontinye.");
                 return;
             }
 
-            // Lè nou konekte backend Stripe la, w ap voye enfòmasyon sa yo 
-            // pou kreye sesyon an epi redirije kliyan an sou lyen Stripe la.
             alert("Redirije sou Stripe Checkout pou chwazi montan an epi konplete peman an...");
             
-            // Egzanp kòd pou rele backend ou a pita:
-            // fetch('/create-checkout-session', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ serviceType, country, phone })
-            // })
-            // .then(res => res.json())
-            // .then(data => { window.location.href = data.url; });
+            // Isit la nan kòd la w ap konekte l ak backend Stripe la pita:
+            /*
+            fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ serviceType, country, phone })
+            })
+            .then(res => res.json())
+            .then(data => { window.location.href = data.url; });
+            */
         }
     </script>
-
 </body>
 </html>
