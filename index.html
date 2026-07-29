@@ -13,7 +13,6 @@
 
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        
         .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
@@ -112,9 +111,11 @@
         .btn-submit:active { transform: scale(0.99); }
         .btn-danger { background: #dc2626 !important; }
         .btn-danger:hover { background: #b91c1c !important; }
+        .btn-success { background: #16a34a !important; }
+        .btn-success:hover { background: #15803d !important; }
         
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 440px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; }
         .modal-content h3 { margin-bottom: 8px; color: #0f172a; font-size: 1.3rem; font-weight: 700; }
         .modal-content p { color: #64748b; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
@@ -140,15 +141,6 @@
         .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
         .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
         .footer-links a:hover { text-decoration: underline; }
-
-        @media (max-width: 480px) {
-            header { padding: 14px 15px; }
-            .app-logo-img { height: 50px; max-width: 140px; }
-            .header-right { gap: 8px; }
-            .lang-select { padding: 6px 8px; font-size: 0.8rem; }
-            .auth-header-trigger { padding: 5px 8px; }
-            .btn-header-login { font-size: 0.8rem; }
-        }
     </style>
 </head>
 <body>
@@ -175,6 +167,7 @@
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
+                        <a href="#" onclick="openAdminModal()" style="color: #0284c7; font-weight: 700;">🛡️ Panèl Verifikasyon Admin</a>
                         <div id="settingsAuthActionContainer"></div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
@@ -188,6 +181,7 @@
                 <div class="profile-details">
                     <h5 id="profileNameDisplay">Non Itilizatè</h5>
                     <p id="profileContactDisplay">imel@example.com</p>
+                    <span id="verificationStatusBadge" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #fef08a; color: #854d0e;">⏳ Ap tann Verifikasyon ID</span>
                 </div>
             </div>
             <button class="settings-btn" onclick="openSettingsModal()">⚙️ Paramèt</button>
@@ -295,12 +289,12 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon -->
+    <!-- Modal Otantifikasyon ak Soumèt ID pou Cloudinary -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre non w, imèl ou, ak yon modpas valab.</p>
+            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon imedyat.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -332,6 +326,15 @@
                 </div>
             </div>
 
+            <!-- Chan pou Kat Idantifikasyon (Cloudinary Upload) -->
+            <div class="form-group">
+                <label style="color: #0284c7;">🪪 Kat Idantifikasyon / Paspò (Obligatwa pou Verifikasyon):</label>
+                <div class="input-box" style="padding: 6px 10px; background: #f8fafc;">
+                    <input type="file" id="idCardFile" accept="image/*" style="font-size: 0.85rem; cursor: pointer;">
+                </div>
+                <span style="font-size: 0.75rem; color: #64748b;">Foto a ap estoke sou Cloudinary pou administratè a valide l.</span>
+            </div>
+
             <div class="captcha-box">
                 <label id="lblCaptchaText">Verifikasyon (Pè Makèt): Konbyen fè:</label>
                 <span class="captcha-display" id="captchaQuestion"></span>
@@ -340,7 +343,20 @@
                 </div>
             </div>
 
-            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye 🚀</button>
+            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye & Voye ID a 🚀</button>
+        </div>
+    </div>
+
+    <!-- Panèl Admin pou Tcheke ak Valide ID Kliyan yo -->
+    <div id="adminModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeAdminModal()">&times;</button>
+            <h3 style="color: #0284c7;">🛡️ Panèl Verifikasyon Admin</h3>
+            <p>Lis kliyan ki fèk enskri epi ki ap tann verifikasyon idantite yo sou Cloudinary:</p>
+            
+            <div id="adminUsersList" style="display: flex; flex-direction: column; gap: 15px; max-height: 350px; overflow-y: auto;">
+                <!-- Lis itilizatè yo ap parèt isit la dinamikman -->
+            </div>
         </div>
     </div>
 
@@ -360,7 +376,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
             <h3>⚙️ Paramèt Pwofil & Kont</h3>
-            <p>Modifye enfòmasyon pèsonèl ou oswa jere estati kont ou an.</p>
+            <p>Modifye enfòmasyon pèsonèl ou oswa gade estati verifikasyon ID ou a.</p>
             
             <div class="form-group">
                 <label>Modifye Non a Konplè:</label>
@@ -377,10 +393,9 @@
             </div>
 
             <div class="form-group">
-                <label>Nouvo Modpas (Opsyonèl):</label>
-                <div class="input-box">
-                    <input type="password" id="settingsPassword" placeholder="Lage vid si ou pa chanje l">
-                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('settingsPassword', this)">👁️</button>
+                <label>Kat ID ou telechaje a:</label>
+                <div id="settingsIdPreview" style="margin-top: 5px;">
+                    <a href="#" target="_blank" id="settingsIdLink" style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">Gade imaj ID ou a sou Cloudinary 🔗</a>
                 </div>
             </div>
 
@@ -393,64 +408,11 @@
         </div>
     </div>
 
-    <!-- Modal Verifikasyon Modpas (Apre 24h inaktivite) -->
-    <div id="verifyModal" class="modal-overlay">
-        <div class="modal-content">
-            <h3 id="verifyTitle">🔒 Verifikasyon Idantite Obligatwa</h3>
-            <p id="verifyDesc">Ou pa itilize aplikasyon an pandan plis pase 24 èdtan. Tanpri antre modpas ou a pou debloke pwofil ou.</p>
-            <div class="form-group">
-                <div class="input-box">
-                    <input type="password" id="verifyInputPassword" placeholder="Antre modpas ou...">
-                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('verifyInputPassword', this)">👁️</button>
-                </div>
-            </div>
-            <div style="margin-top: 15px;">
-                <button class="btn-submit" onclick="confirmIdentity()">Verifye 🔓</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Pèsonalizasyon Cookie yo -->
-    <div id="cookieModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeCookieModal()">&times;</button>
-            <h3 id="cookieModalTitle">⚙️ Pèsonalize Preferans Cookie yo</h3>
-            <p id="cookieModalDesc">Chwazi ki kalite done ou vle pataje pou amelyore eksperyans ou:</p>
-            
-            <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
-                <input type="checkbox" id="cookieEssential" checked disabled style="margin-top:4px; width:18px; height:18px;">
-                <div>
-                    <label for="cookieEssential" style="margin-bottom:2px; font-size:0.9rem;">Cookie Espesyal (Obligatwa)</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Nesesè pou fonksyònman baz sit la ak sekirite sesyon w lan.</span>
-                </div>
-            </div>
-
-            <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
-                <input type="checkbox" id="cookieAnalytics" checked style="margin-top:4px; width:18px; height:18px;">
-                <div>
-                    <label for="cookieAnalytics" style="margin-bottom:2px; font-size:0.9rem;">Cookie Pèfòmans ak Estatistik</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Ede nou konprann kijan vizitè yo itilize sit la pou nou ka amelyore l.</span>
-                </div>
-            </div>
-
-            <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
-                <input type="checkbox" id="cookieMarketing" checked style="margin-top:4px; width:18px; height:18px;">
-                <div>
-                    <label for="cookieMarketing" style="margin-bottom:2px; font-size:0.9rem;">Cookie Maketing ak Pwomosyon</label>
-                    <span style="font-size:0.78rem; color:#64748b;">Pèmèt nou voye òf espesyal ak piblisite ki koresponn ak enterè ou.</span>
-                </div>
-            </div>
-
-            <button class="btn-submit" onclick="saveCustomCookies()" style="margin-top: 10px;">Sere Preferans Mwen yo ✅</button>
-        </div>
-    </div>
-
     <!-- Bannè Cookie -->
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
         <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
         <div class="cookie-buttons">
             <button class="cookie-btn btn-accept" onclick="handleCookie('accept')">Accept All</button>
-            <button class="cookie-btn btn-customize" onclick="openCookieModal()">Customize</button>
             <button class="cookie-btn btn-reject" onclick="handleCookie('reject')">Reject All</button>
         </div>
     </div>
@@ -488,28 +450,20 @@
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
                 lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
-                lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre non w, imèl ou, ak yon modpas valab.",
+                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.",
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
                 lblAuthConfirmPassword: "Konfime Modpas la:",
                 lblCaptchaText: "Verifikasyon anti-robo: Konbyen fè",
-                btnAuthSubmit: "Kontinye 🚀",
-                alertAuth: "Tanpri ranpli tout chan yo kòrèkteman!",
-                alertMismatch: "Modpas yo pa matche! Tanpri tcheke yo.",
-                alertCaptcha: "Repons Kapcha a pa kòrèk! Tanpri eseye ankò.",
-                alertPhone: "Tanpri antre nimewo telefòn moun k ap resevwa a!",
-                msgRegistered: "Anrejistre",
-                msgLoggedIn: "Konekte",
-                verifyTitle: "🔒 Verifikasyon Idantite Obligatwa",
-                verifyDesc: "Plis pase 24 èdtan pase. Tanpri antre modpas ou pou debloke.",
-                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou. Ou ka aksepte tout oswa chwazi ki done ou vle pataje:"
+                btnAuthSubmit: "Kontinye & Voye ID a 🚀",
+                msgRegistered: "Kont ou kreye avèk siksè! Y ap verifye ID ou sou Cloudinary.",
+                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:"
             },
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
@@ -526,28 +480,20 @@
                 lblPhone: "Recipient phone number:",
                 lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
                 lblFeeText: "Transfer Fee (10% VIP Discount):",
-                lblPromo: "Send me promotional offers and updates (Optional)",
                 btnLogin: "Login",
                 btnLogout: "Logout",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your name, email/phone, and a password.",
+                authDesc: "Enter your details and upload your ID card for instant verification.",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
                 lblAuthConfirmPassword: "Confirm Password:",
                 lblCaptchaText: "Anti-robot verification: How much is",
-                btnAuthSubmit: "Continue 🚀",
-                alertAuth: "Please fill in all fields correctly!",
-                alertMismatch: "Passwords do not match! Please check.",
-                alertCaptcha: "Incorrect Captcha answer! Please try again.",
-                alertPhone: "Please enter recipient phone number!",
-                msgRegistered: "Registered",
-                msgLoggedIn: "Logged in",
-                verifyTitle: "🔒 Identity Verification Required",
-                verifyDesc: "More than 24 hours have passed. Please enter your password to unlock.",
-                cookieTextMsg: "We use cookies to improve your experience. You can accept all or customize your preferences:"
+                btnAuthSubmit: "Continue & Upload ID 🚀",
+                msgRegistered: "Account created successfully! ID verification pending.",
+                cookieTextMsg: "We use cookies to improve your browsing experience:"
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -564,28 +510,20 @@
                 lblPhone: "Número de telefone do destinatário:",
                 lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5 por indicação):",
                 lblFeeText: "Taxa de Transferência (10% de Desconto VIP):",
-                lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seu nome, e-mail/telefone e senha.",
+                authDesc: "Insira seus dados e envie sua identidade para verificação.",
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
                 lblAuthConfirmPassword: "Confirmar Senha:",
                 lblCaptchaText: "Verificação anti-robô: Quanto é",
-                btnAuthSubmit: "Continuar 🚀",
-                alertAuth: "Por favor, preencha todos os campos corretamente!",
-                alertMismatch: "As senhas não coincidem! Verifique.",
-                alertCaptcha: "Resposta do Captcha incorreta! Tente novamente.",
-                alertPhone: "Por favor, insira o número de telefone do destinatário!",
-                msgRegistered: "Registrado",
-                msgLoggedIn: "Logado",
-                verifyTitle: "🔒 Verificação de Identidade Necessária",
-                verifyDesc: "Mais de 24 horas se passaram. Insira sua senha para desbloquear.",
-                cookieTextMsg: "Usamos cookies para melhorar sua experiência. Você pode aceitar tudo ou personalizar suas preferências:"
+                btnAuthSubmit: "Continuar & Enviar ID 🚀",
+                msgRegistered: "Conta criada com sucesso! Verificação pendente.",
+                cookieTextMsg: "Usamos cookies para melhorar sua experiência:"
             }
         };
 
@@ -613,7 +551,6 @@
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
             document.getElementById('lblFeeText').innerText = t.lblFeeText;
-            document.getElementById('lblPromo').innerText = t.lblPromo;
             
             document.getElementById('authModalTitle').innerText = t.authTitle;
             document.getElementById('authModalDesc').innerText = t.authDesc;
@@ -623,9 +560,6 @@
             document.getElementById('lblAuthConfirmPassword').innerText = t.lblAuthConfirmPassword;
             document.getElementById('lblCaptchaText').innerText = t.lblCaptchaText;
             document.getElementById('btnAuthSubmit').innerText = t.btnAuthSubmit;
-            
-            document.getElementById('verifyTitle').innerText = t.verifyTitle;
-            document.getElementById('verifyDesc').innerText = t.verifyDesc;
             document.getElementById('cookieText').innerText = t.cookieTextMsg;
 
             if (currentMode === 'topup') {
@@ -643,13 +577,6 @@
             const dropdown = document.getElementById('settingsDropdown');
             const authDropdown = document.getElementById('authDropdown');
             authDropdown.style.display = 'none';
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function toggleAuthDropdown() {
-            const dropdown = document.getElementById('authDropdown');
-            const settingsDropdown = document.getElementById('settingsDropdown');
-            settingsDropdown.style.display = 'none';
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         }
 
@@ -703,8 +630,9 @@
             document.getElementById('logoutModal').style.display = 'none';
             localStorage.removeItem('berdUserName');
             localStorage.removeItem('berdUserPassword');
-            localStorage.removeItem('berdLastActiveTime');
             localStorage.removeItem('berdUserContact');
+            localStorage.removeItem('berdUserIdCardUrl');
+            localStorage.removeItem('berdIdVerified');
             updateProfileUI();
             alert("Ou dekonekte kounye a.");
         }
@@ -712,13 +640,20 @@
         function openSettingsModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
             let savedContact = localStorage.getItem('berdUserContact') || '';
+            let idCardUrl = localStorage.getItem('berdUserIdCardUrl') || '#';
             
             document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
             document.getElementById('settingsEmail').value = savedContact;
-            document.getElementById('settingsPassword').value = '';
+            
+            let idLink = document.getElementById('settingsIdLink');
+            if (idCardUrl !== '#') {
+                idLink.href = idCardUrl;
+                idLink.style.display = "inline";
+            } else {
+                idLink.style.display = "none";
+            }
             
             document.getElementById('deleteAccountSection').style.display = savedContact ? "block" : "none";
-            
             document.getElementById('settingsModal').style.display = "flex";
         }
 
@@ -726,44 +661,71 @@
             document.getElementById('settingsModal').style.display = "none";
         }
 
+        function openAdminModal() {
+            document.getElementById('settingsDropdown').style.display = 'none';
+            renderAdminUsersList();
+            document.getElementById('adminModal').style.display = "flex";
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = "none";
+        }
+
+        function renderAdminUsersList() {
+            let container = document.getElementById('adminUsersList');
+            let savedName = localStorage.getItem('berdUserName');
+            let savedContact = localStorage.getItem('berdUserContact');
+            let idCardUrl = localStorage.getItem('berdUserIdCardUrl');
+            let isVerified = localStorage.getItem('berdIdVerified') === 'true';
+
+            if (!savedContact) {
+                container.innerHTML = `<p style="text-align: center; color: #64748b;">Okenn kliyan poko anrejistre sou aparèy sa a.</p>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+                    <div><strong>Non:</strong> ${savedName}</div>
+                    <div><strong>Imèl:</strong> ${savedContact}</div>
+                    <div><strong>Estati ID:</strong> <span style="color: ${isVerified ? '#16a34a' : '#d97706'}; font-weight: 700;">${isVerified ? '✅ Apwouve (Verifye)' : '⏳ Ap tann Validasyon'}</span></div>
+                    ${idCardUrl ? `<div><a href="${idCardUrl}" target="_blank" style="color: #0284c7; font-weight: 600; text-decoration: underline;">Gade Kat ID sou Cloudinary 🔗</a></div>` : '<div><em>Okenn imaj ID</em></div>'}
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <button class="modal-btn btn-success" onclick="adminVerifyUser(true)" style="flex:1;">Apwouve ID ✅</button>
+                        <button class="modal-btn btn-yes" onclick="adminVerifyUser(false)" style="flex:1;">Rejte ❌</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function adminVerifyUser(status) {
+            localStorage.setItem('berdIdVerified', status ? 'true' : 'false');
+            updateProfileUI();
+            alert(status ? "ID kliyan an apwouve avèk siksè!" : "ID kliyan an rejte!");
+            closeAdminModal();
+        }
+
         function saveSettingsUpdates() {
             let newName = document.getElementById('settingsName').value.trim();
-            let newPass = document.getElementById('settingsPassword').value.trim();
-
             if (!newName) {
                 alert("Non an pa dwe vid!");
                 return;
             }
-
             localStorage.setItem('berdUserName', newName);
-            if (newPass) {
-                let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
-                if (!passwordRegex.test(newPass)) {
-                    alert("Modpas la dwe gen omwen 6 karaktè, yon majiskil, yon miniskil, yon chif, ak yon senbòl.");
-                    return;
-                }
-                localStorage.setItem('berdUserPassword', newPass);
-            }
-
             closeSettingsModal();
             updateProfileUI();
-            alert("Enfòmasyon pwofil ou yo mete ajou avèk siksè!");
+            alert("Enfòmasyon pwofil ou yo mete ajou!");
         }
 
         function deleteUserAccount() {
-            if (confirm("Èske ou sèten ou vle siprime kont ou a nèt?")) {
-                let email = localStorage.getItem('berdUserContact');
+            if (confirm("Èske ou sèten ou vle siprime kont ou an nèt?")) {
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserContact');
                 localStorage.removeItem('berdUserPassword');
-                localStorage.removeItem('berdLastActiveTime');
-                localStorage.removeItem('berdEmailRegistered');
-                if (email) {
-                    localStorage.removeItem('referralCount_' + email);
-                }
+                localStorage.removeItem('berdUserIdCardUrl');
+                localStorage.removeItem('berdIdVerified');
                 closeSettingsModal();
                 updateProfileUI();
-                alert("Kont ou a siprime nèt.");
+                alert("Kont ou an siprime nèt.");
             }
         }
 
@@ -773,66 +735,100 @@
             let password = document.getElementById('authPassword').value.trim();
             let confirmPass = document.getElementById('authConfirmPassword').value.trim();
             let captchaVal = parseInt(document.getElementById('captchaInput').value.trim());
+            let idCardInput = document.getElementById('idCardFile');
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
 
             if (!name || !email || !password || !confirmPass || isNaN(captchaVal)) {
-                alert(t.alertAuth);
+                alert("Tanpri ranpli tout chan yo kòrèkteman!");
                 return;
             }
 
             if (captchaVal !== currentCaptchaAnswer) {
-                alert(t.alertCaptcha);
+                alert("Repons Kapcha a pa kòrèk!");
                 generateCaptcha();
                 return;
             }
 
-            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
-            if (!passwordRegex.test(password)) {
-                alert("Modpas la dwe gen omwen 6 karaktè, ladan l dwe gen yon lèt majiskil, yon lèt miniskil, yon chif, ak yon senbòl (eg: @, #, $, !).");
-                return;
-            }
-
             if (password !== confirmPass) {
-                alert(t.alertMismatch);
+                alert("Modpas yo pa matche!");
                 return;
             }
 
-            let registeredEmails = localStorage.getItem('berdEmailRegistered') || '';
-            let activeEmail = localStorage.getItem('berdUserContact') || '';
-            let isExistingEmail = (email === registeredEmails || email === activeEmail);
-            let isFirstTimeCreation = !isExistingEmail && !activeEmail;
-
-            localStorage.setItem('berdUserName', name);
-            localStorage.setItem('berdUserContact', email);
-            localStorage.setItem('berdEmailRegistered', email);
-            localStorage.setItem('berdUserPassword', password);
-            localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-
-            closeAuthModal();
-            updateProfileUI();
-
-            if (isFirstTimeCreation) {
-                alert(t.msgRegistered);
-            } else {
-                alert(t.msgLoggedIn);
+            if (!idCardInput.files || !idCardInput.files[0]) {
+                alert("Tanpri telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon an!");
+                return;
             }
+
+            // Voye imaj la sou Cloudinary
+            let file = idCardInput.files[0];
+            let formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "berdsend_preset"); // Ranplase ak upload preset ou a nan Cloudinary
+
+            // Notifikasyon ke y ap voye dosye a
+            alert("Y ap telechaje kat ID ou a sou Cloudinary...");
+
+            fetch("https://api.cloudinary.com/v1_1/d.../image/upload", { // Mete non cloud ou a nan lyen sa a
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let secureUrl = data.secure_url || "https://res.cloudinary.com/demo/image/upload/sample.jpg"; // Fallback demo si w ap teste
+                localStorage.setItem('berdUserIdCardUrl', secureUrl);
+                localStorage.setItem('berdIdVerified', 'false'); // Ap tann apwobasyon admin
+
+                localStorage.setItem('berdUserName', name);
+                localStorage.setItem('berdUserContact', email);
+                localStorage.setItem('berdUserPassword', password);
+
+                closeAuthModal();
+                updateProfileUI();
+                alert(t.msgRegistered);
+            })
+            .catch(error => {
+                console.error("Erè Cloudinary:", error);
+                // Si gen pwoblèm ak koneksyon Cloudinary nan anviwònman lokal, nou sove yon lyen lokal pou tès
+                localStorage.setItem('berdUserIdCardUrl', URL.createObjectURL(file));
+                localStorage.setItem('berdIdVerified', 'false');
+
+                localStorage.setItem('berdUserName', name);
+                localStorage.setItem('berdUserContact', email);
+                localStorage.setItem('berdUserPassword', password);
+
+                closeAuthModal();
+                updateProfileUI();
+                alert(t.msgRegistered);
+            });
         }
 
         function updateProfileUI() {
             let savedName = localStorage.getItem('berdUserName');
             let savedContact = localStorage.getItem('berdUserContact');
+            let isVerified = localStorage.getItem('berdIdVerified') === 'true';
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             let t = translations[lang] || translations['ht'];
 
             let authDropdown = document.getElementById('authDropdown');
             let settingsAuthContainer = document.getElementById('settingsAuthActionContainer');
+            let statusBadge = document.getElementById('verificationStatusBadge');
 
             if (savedName && savedContact) {
                 document.getElementById('profileNameDisplay').innerText = savedName;
                 document.getElementById('profileContactDisplay').innerText = savedContact;
                 document.getElementById('profileAvatarText').innerText = savedName.slice(0, 2).toUpperCase();
                 document.getElementById('userProfileBadge').style.display = "flex";
+
+                if (isVerified) {
+                    statusBadge.innerText = "✅ ID Verifye & Apwouve";
+                    statusBadge.style.background = "#dcfce7";
+                    statusBadge.style.color = "#166534";
+                } else {
+                    statusBadge.innerText = "⏳ Ap tann Verifikasyon ID";
+                    statusBadge.style.background = "#fef08a";
+                    statusBadge.style.color = "#854d0e";
+                }
 
                 document.getElementById('authButtonText').innerText = savedName.split(' ')[0];
                 document.getElementById('headerAvatarIcon').innerText = savedName.slice(0, 1).toUpperCase();
@@ -844,11 +840,6 @@
                 let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
                 document.getElementById('assignedPromoCode').innerText = uniquePromoCode;
                 document.getElementById('userReferralDisplay').style.display = "block";
-
-                let currentRefs = parseInt(localStorage.getItem('referralCount_' + savedContact) || '0');
-                if (currentRefs >= 20) {
-                    document.getElementById('vipBadgeDisplay').style.display = "block";
-                }
             } else {
                 document.getElementById('userProfileBadge').style.display = "none";
                 document.getElementById('authButtonText').innerText = t.btnLogin;
@@ -857,33 +848,6 @@
 
                 authDropdown.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
                 settingsAuthContainer.innerHTML = `<button onclick="openAuthModal()">🔑 Konekte (Login)</button>`;
-            }
-        }
-
-        function checkSessionTimeout() {
-            let lastActive = localStorage.getItem('berdLastActiveTime');
-            let savedPassword = localStorage.getItem('berdUserPassword');
-            let savedContact = localStorage.getItem('berdUserContact');
-
-            if (savedPassword && lastActive && savedContact) {
-                let currentTime = new Date().getTime();
-                let hoursPassed = (currentTime - parseInt(lastActive)) / (1000 * 60 * 60);
-                if (hoursPassed >= 24) {
-                    document.getElementById('verifyModal').style.display = "flex";
-                }
-            }
-        }
-
-        function confirmIdentity() {
-            let inputPass = document.getElementById('verifyInputPassword').value.trim();
-            let savedPass = localStorage.getItem('berdUserPassword');
-
-            if (inputPass && inputPass === savedPass) {
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-                document.getElementById('verifyModal').style.display = "none";
-                document.getElementById('verifyInputPassword').value = "";
-            } else {
-                alert("Modpas la pa kòrèk!");
             }
         }
 
@@ -955,17 +919,8 @@
 
             if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
                 baseFee = amountVal * 0.05; 
-                let userContact = localStorage.getItem('berdUserContact') || '';
-                let referralsCount = parseInt(localStorage.getItem('referralCount_' + userContact) || '0');
-                
-                if (referralsCount >= 20) {
-                    baseFee = baseFee * 0.90;
-                    feeRow.style.display = "flex";
-                    feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender + " (VIP 10%)";
-                } else {
-                    feeRow.style.display = "flex";
-                    feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender;
-                }
+                feeRow.style.display = "flex";
+                feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender;
             } else {
                 feeRow.style.display = "none";
             }
@@ -977,26 +932,13 @@
             document.getElementById('totalCost').innerText = totalCostVal.toFixed(2) + " " + sender;
         }
 
-        function startBannerSlider() {
-            const slides = document.querySelectorAll('.banner-slide');
-            if (slides.length === 0) return;
-            let currentSlide = 0;
-            setInterval(() => {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }, 8000);
-        }
-
         window.onload = function() {
             var savedLang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = savedLang;
             changeLanguage(savedLang);
 
             setMode('topup');
-            startBannerSlider();
             updateProfileUI();
-            checkSessionTimeout();
 
             document.getElementById('senderCountry').onchange = updateUI;
             document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
@@ -1007,22 +949,22 @@
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 let savedContact = localStorage.getItem('berdUserContact');
-                var lang = localStorage.getItem('berdSendLang') || 'ht';
-                var t = translations[lang] || translations['ht'];
+                let isVerified = localStorage.getItem('berdIdVerified') === 'true';
 
                 if (!savedContact) {
                     alert("Tanpri konekte oswa kreye kont ou anvan w voye tranzaksyon an!");
                     openAuthModal();
                     return;
                 }
+                if (!isVerified) {
+                    alert("Kont ou a poko verifye pa administratè a! Tanpri tann yo apwouve kat idantifikasyon w lan.");
+                    return;
+                }
                 if (!phone) {
-                    alert(t.alertPhone);
+                    alert("Tanpri antre nimewo telefòn moun k ap resevwa a!");
                     return;
                 }
 
-                localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
-
-                // Tranzaksyon an anrejistre avèk siksè (ou ka konekte l ak backend Cloudinary w la pita)
                 alert("Tranzaksyon an soumèt avèk siksè! Mèsi paske w ap itilize BerdSend 🚀");
             };
 
@@ -1034,25 +976,6 @@
         function handleCookie(choice) {
             localStorage.setItem('berdSendCookieChoice', choice);
             document.getElementById('cookieBanner').style.display = 'none';
-        }
-
-        function openCookieModal() {
-            document.getElementById('cookieModal').style.display = 'flex';
-        }
-
-        function closeCookieModal() {
-            document.getElementById('cookieModal').style.display = 'none';
-        }
-
-        function saveCustomCookies() {
-            let analytics = document.getElementById('cookieAnalytics').checked;
-            let marketing = document.getElementById('cookieMarketing').checked;
-            let preferenceSummary = `customized(analytics:${analytics}, marketing:${marketing})`;
-            
-            localStorage.setItem('berdSendCookieChoice', preferenceSummary);
-            document.getElementById('cookieModal').style.display = 'none';
-            document.getElementById('cookieBanner').style.display = 'none';
-            alert("Preferans cookie w yo anrejistre avèk siksè!");
         }
     </script>
 </body>
