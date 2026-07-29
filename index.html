@@ -294,7 +294,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
             <h3 id="authModalTitle">🔐 Konekte oswa Kreye Kont</h3>
-            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w (ID oswa Paspò) pou verifikasyon.</p>
+            <p id="authModalDesc">Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon sekirize.</p>
             
             <div class="form-group">
                 <label id="lblAuthName">Non a Konplè:</label>
@@ -332,7 +332,7 @@
                 <div class="input-box" style="padding: 6px 10px; background: #f8fafc;">
                     <input type="file" id="idCardFile" accept="image/*" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
-                <span style="font-size: 0.75rem; color: #64748b;">Chwazi yon foto kat ID w pou administratè a valide l.</span>
+                <span style="font-size: 0.75rem; color: #64748b;">Kat idantifikasyon w lan anrejistre pou verifikasyon.</span>
             </div>
 
             <div class="captcha-box">
@@ -403,6 +403,12 @@
             
             <div id="deleteAccountSection" style="display: none;">
                 <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
+                <div class="form-group">
+                    <label style="color: #dc2626;">Antre Modpas ou pou Siprime Kont la:</label>
+                    <div class="input-box">
+                        <input type="password" id="deleteConfirmPassword" placeholder="Antre modpas ou...">
+                    </div>
+                </div>
                 <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Siprime Kont 🗑️</button>
             </div>
         </div>
@@ -455,14 +461,14 @@
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Lajan an Kounye a 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
-                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon.",
+                authDesc: "Antre enfòmasyon w epi telechaje kat idantifikasyon w pou verifikasyon sekirize.",
                 lblAuthName: "Non a Konplè:",
                 lblAuthEmail: "Imèl oswa Telefòn:",
                 lblAuthPassword: "Modpas (Password):",
                 lblAuthConfirmPassword: "Konfime Modpas la:",
                 lblCaptchaText: "Verifikasyon anti-robo: Konbyen fè",
                 btnAuthSubmit: "Kontinye & Voye ID a 🚀",
-                msgRegistered: "Kont ou kreye avèk siksè! ID ou anrejistre pou verifikasyon.",
+                msgRegistered: "Kont ou kreye avèk siksè! Kat idantifikasyon w lan anrejistre pou verifikasyon.",
                 cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:"
             },
             en: {
@@ -485,14 +491,14 @@
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Money Now 🚀",
                 authTitle: "🔐 Login or Create Account",
-                authDesc: "Enter your details and upload your ID card for verification.",
+                authDesc: "Enter your details and upload your ID card for secure verification.",
                 lblAuthName: "Full Name:",
                 lblAuthEmail: "Email or Phone:",
                 lblAuthPassword: "Password:",
                 lblAuthConfirmPassword: "Confirm Password:",
                 lblCaptchaText: "Anti-robot verification: How much is",
                 btnAuthSubmit: "Continue & Upload ID 🚀",
-                msgRegistered: "Account created successfully! ID verification pending.",
+                msgRegistered: "Account created successfully! Your ID card has been recorded for verification.",
                 cookieTextMsg: "We use cookies to improve your browsing experience:"
             },
             pt: {
@@ -515,14 +521,14 @@
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Dinheiro Agora 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
-                authDesc: "Insira seus dados e envie sua identidade para verificação.",
+                authDesc: "Insira seus dados e envie sua identidade para verificação segura.",
                 lblAuthName: "Nome Completo:",
                 lblAuthEmail: "E-mail ou Telefone:",
                 lblAuthPassword: "Senha:",
                 lblAuthConfirmPassword: "Confirmar Senha:",
                 lblCaptchaText: "Verificação anti-robô: Quanto é",
                 btnAuthSubmit: "Continuar & Enviar ID 🚀",
-                msgRegistered: "Conta criada com sucesso! Verificação pendente.",
+                msgRegistered: "Conta criada com sucesso! Documento registrado para verificação.",
                 cookieTextMsg: "Usamos cookies para melhorar sua experiência:"
             }
         };
@@ -644,6 +650,7 @@
             
             document.getElementById('settingsName').value = localStorage.getItem('berdUserName') || '';
             document.getElementById('settingsEmail').value = savedContact;
+            document.getElementById('deleteConfirmPassword').value = '';
             
             let idLink = document.getElementById('settingsIdLink');
             if (idCardUrl !== '#') {
@@ -661,7 +668,7 @@
             document.getElementById('settingsModal').style.display = "none";
         }
 
-        // --- Fonksyon Panèl Admin ak Modpas Sekrè (Ou ka chanje "BerdAdmin2026" anba a a nenpòt lòt modpas ou vle) ---
+        // --- Panèl Admin ak Modpas Sekrè ---
         function openAdminModal() {
             document.getElementById('settingsDropdown').style.display = 'none';
             
@@ -725,6 +732,19 @@
         }
 
         function deleteUserAccount() {
+            let passwordInput = document.getElementById('deleteConfirmPassword').value.trim();
+            let savedPassword = localStorage.getItem('berdUserPassword');
+
+            if (!passwordInput) {
+                alert("Tanpri antre modpas ou pou konfime sipresyon kont lan!");
+                return;
+            }
+
+            if (passwordInput !== savedPassword) {
+                alert("Modpas ou antre a pa kòrèk!");
+                return;
+            }
+
             if (confirm("Èske ou sèten ou vle siprime kont ou an nèt?")) {
                 localStorage.removeItem('berdUserName');
                 localStorage.removeItem('berdUserContact');
@@ -768,7 +788,6 @@
                 return;
             }
 
-            // Konvèti imaj la an Base64 pou li ka parèt tou dwat nan panèl admin ou a
             let file = idCardInput.files[0];
             let reader = new FileReader();
             reader.readAsDataURL(file);
@@ -776,7 +795,7 @@
                 let base64Image = reader.result;
 
                 localStorage.setItem('berdUserIdCardUrl', base64Image);
-                localStorage.setItem('berdIdVerified', 'false'); // Ap tann apwobasyon admin
+                localStorage.setItem('berdIdVerified', 'false'); // Rete an atant jiskaske admin an apwouve l
 
                 localStorage.setItem('berdUserName', name);
                 localStorage.setItem('berdUserContact', email);
