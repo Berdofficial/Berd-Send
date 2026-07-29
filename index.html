@@ -888,6 +888,7 @@
 
         var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
         var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
+        var totalCostVal = 100; // Global variable to hold total cost
 
         function updateUI() {
             var sender = document.getElementById('senderCountry').value;
@@ -931,7 +932,7 @@
                 feeRow.style.display = "none";
             }
 
-            var totalCostVal = amountVal + baseFee - (currentMode === 'topup' ? discount : 0);
+            totalCostVal = amountVal + baseFee - (currentMode === 'topup' ? discount : 0);
             if (totalCostVal < 0) totalCostVal = 0;
 
             document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
@@ -949,14 +950,12 @@
             }, 8000);
         }
 
-        // Fonksyon pou inisyalize Square SDK an mòd PRODUCTION
         async function initSquarePaymentForm() {
             try {
                 if (!window.Square) {
                     console.error("Square SDK pa disponib.");
                     return;
                 }
-                // Sèvi ak Production Application ID ofisyèl la
                 const payments = window.Square.payments("sq0idp-CR-bEB73g2-lyJjvNGEodg");
                 cardInstance = await payments.card();
                 await cardInstance.attach('#card-container');
@@ -982,11 +981,12 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye tranzaksyon an nan mòd Production
+            // Lojik pou voye tranzaksyon an nan API Vercel la
             document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
                 let savedContact = localStorage.getItem('berdUserContact');
+                var sender = document.getElementById('senderCountry').value;
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
 
@@ -1010,13 +1010,28 @@
                         return;
                     }
 
-                    // Tokenize kat la an sekirite (Production)
                     const result = await cardInstance.tokenize();
                     if (result.status === 'OK') {
                         const token = result.token;
-                        console.log("Square Production Token Jwenn:", token);
-                        alert("Tranzaksyon an pare pou Production! Token kat la kreye avèk siksè: " + token.slice(0, 10) + "...");
-                        // Isit la ou ka voye 'token' sa a nan backend ou pou fini chaj la nan Square API Production
+                        
+                        // Voye token an nan api Vercel la (/api/pay)
+                        const response = await fetch('/api/pay', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                sourceId: token,
+                                amount: totalCostVal,
+                                currency: sender,
+                                phone: phone
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            alert("Peman an pase avèk siksè! ID Peman: " + data.paymentId);
+                        } else {
+                            alert("Echèk nan peman an: " + data.error);
+                        }
                     } else {
                         let errorMessage = `Tokenization failed: ${result.status}`;
                         if (result.errors) {
@@ -1025,7 +1040,7 @@
                         alert(errorMessage);
                     }
                 } catch (e) {
-                    console.error("Erè pandan peman Square:", e);
+                    console.error("Erè:", e);
                     alert("Erè: " + e.message);
                 }
             };
