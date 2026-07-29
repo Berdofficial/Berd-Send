@@ -230,11 +230,19 @@
                 </div>
             </div>
 
-            <!-- Nouvo jaden adrès konplè ak tèks pou kliyan yo -->
+            <!-- Jaden Adrès Konplè Destinatè a / Kliyan a -->
             <div class="form-group">
-                <label id="lblAddress">Adrès Konplè Destinatè a (oswa Kliyan):</label>
+                <label id="lblAddress">Adrès Konplè Destinatè a (Full Address):</label>
                 <div class="input-box">
                     <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Eta / Depatman..."></textarea>
+                </div>
+            </div>
+
+            <!-- Jaden Nimewo Idantifikasyon (ID / Paspò / NIF) -->
+            <div class="form-group">
+                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
+                <div class="input-box">
+                    <input type="text" id="idNumberInput" placeholder="eg: P1234567 oswa NIF w...">
                 </div>
             </div>
 
@@ -285,7 +293,7 @@
         </div>
     </div>
 
-    <!-- Modal Otantifikasyon / Enskripsyon Senp san ID -->
+    <!-- Modal Otantifikasyon / Enskripsyon Senp -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
@@ -395,6 +403,8 @@
                 lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
                 lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
                 lblAmount: "Montan pou voye a:",
+                lblAddress: "Adrès Konplè Destinatè a (Full Address):",
+                lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
                 lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
@@ -416,6 +426,8 @@
                 lblDeliveryMethodTopup: "Select Mobile Carrier:",
                 lblDeliveryMethodTransfer: "How should they receive it:",
                 lblAmount: "Amount to send:",
+                lblAddress: "Recipient Full Address:",
+                lblIdNumber: "Identification Number (ID, Passport or Tax ID):",
                 lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
@@ -437,6 +449,8 @@
                 lblDeliveryMethodTopup: "Selecionar Operadora:",
                 lblDeliveryMethodTransfer: "Como deseja que recebam:",
                 lblAmount: "Valor a enviar:",
+                lblAddress: "Endereço Completo do Destinatário:",
+                lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF):",
                 lblPromoCode: "Código Promocional (Apenas Recarga):",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
@@ -473,6 +487,8 @@
             document.getElementById('lblSender').innerText = t.lblSender;
             document.getElementById('lblReceiver').innerText = t.lblReceiver;
             document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
             document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
@@ -765,11 +781,16 @@
             document.getElementById('promoCodeInput').oninput = updateUI;
             
             document.getElementById('btnSubmit').onclick = function() {
-                var phone = document.getElementById('phone').value.trim();
                 var address = document.getElementById('fullAddressInput').value.trim();
+                var idNumber = document.getElementById('idNumberInput').value.trim();
+                var phone = document.getElementById('phone').value.trim();
 
                 if (!address) {
                     alert("Tanpri antre adrès konplè a!");
+                    return;
+                }
+                if (!idNumber) {
+                    alert("Tanpri antre nimewo idantifikasyon ou (ID, Paspò oswa NIF)!");
                     return;
                 }
                 if (!phone) {
