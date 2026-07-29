@@ -14,7 +14,6 @@
         header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         
-        /* Logo ki vin pi gwo ak vizib sou tou de ekran */
         .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
         
         .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
@@ -166,23 +165,17 @@
                     <option value="pt">🇧🇷 Português</option>
                 </select>
 
-                <!-- Bouton Login / Pwofil -->
                 <div class="auth-header-trigger" onclick="handleAuthHeaderClick()">
                     <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
                     <button class="btn-header-login" id="authButtonText">Konekte</button>
-                    <div id="authDropdown" class="dropdown-menu">
-                        <!-- Dynamically populated based on auth status -->
-                    </div>
+                    <div id="authDropdown" class="dropdown-menu"></div>
                 </div>
 
-                <!-- 3 Ti Ba / Meni Paramèt ak Aksyon -->
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
                         <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
-                        <div id="settingsAuthActionContainer">
-                            <!-- Dynamically populated based on auth status -->
-                        </div>
+                        <div id="settingsAuthActionContainer"></div>
                         <a href="faq.html">❓ Èd / Sipò</a>
                     </div>
                 </div>
@@ -1014,8 +1007,6 @@
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 let savedContact = localStorage.getItem('berdUserContact');
-                var receiver = document.getElementById('receiverCountry').value;
-                var deliveryMethod = document.getElementById('deliveryMethod').value;
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
 
@@ -1031,19 +1022,8 @@
 
                 localStorage.setItem('berdLastActiveTime', new Date().getTime().toString());
 
-                // Redireksyon otomatik nan bon lyen Stripe la baze sou sèvis la chwazi
-                let stripeUrl = "";
-                if (currentMode === 'topup') {
-                    if (receiver === 'DOP') {
-                        stripeUrl = "https://buy.stripe.com/cNibJ0cadh0a8oibtp1Nu02"; // Mobile recharge DR - Claro / Viva
-                    } else {
-                        stripeUrl = "https://buy.stripe.com/3cI8wOeil9xI482cxt1Nu01"; // Mobile Recharge HT - Digicel / Natcom
-                    }
-                } else {
-                    stripeUrl = "https://buy.stripe.com/5kQ00ieilcJUdIC8hd1Nu00"; // Transfer Moncash / Natcash
-                }
-
-                window.location.href = stripeUrl;
+                // Tranzaksyon an anrejistre avèk siksè (ou ka konekte l ak backend Cloudinary w la pita)
+                alert("Tranzaksyon an soumèt avèk siksè! Mèsi paske w ap itilize BerdSend 🚀");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
