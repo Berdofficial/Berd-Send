@@ -291,7 +291,7 @@
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
 
-            <button class="btn-submit" id="btnSubmit">Peye Kounye a 🚀</button>
+            <button class="btn-submit" id="btnSubmit">Peye Kounye a (Square) 🚀</button>
         </div>
     </div>
 
@@ -461,7 +461,7 @@
                 lblPromo: "Vle resevwa promosyon ak nouvèl pa imèl/SMS (Opsyonèl)",
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
-                btnSubmit: "Peye Kounye a 🚀",
+                btnSubmit: "Peye Kounye a (Square) 🚀",
                 authTitle: "🔐 Konekte oswa Kreye Kont",
                 authDesc: "Antre non w, imèl ou, ak yon modpas valab.",
                 lblAuthName: "Non a Konplè:",
@@ -498,7 +498,7 @@
                 lblPromo: "Send me promotional offers and updates (Optional)",
                 btnLogin: "Login",
                 btnLogout: "Logout",
-                btnSubmit: "Pay Now 🚀",
+                btnSubmit: "Pay Now (Square) 🚀",
                 authTitle: "🔐 Login or Create Account",
                 authDesc: "Enter your name, email/phone, and a password.",
                 lblAuthName: "Full Name:",
@@ -535,7 +535,7 @@
                 lblPromo: "Quero receber ofertas e novidades (Opcional)",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
-                btnSubmit: "Pagar Agora 🚀",
+                btnSubmit: "Pagar Agora (Square) 🚀",
                 authTitle: "🔐 Entrar ou Criar Conta",
                 authDesc: "Insira seu nome, e-mail/telefone e senha.",
                 lblAuthName: "Nome Completo:",
@@ -956,11 +956,10 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye kliyan an sou Stripe ak prefilled_amount
+            // Lojik pou tranzaksyon an ak Square Sandbox App ID ou a
             document.getElementById('btnSubmit').onclick = function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
-                var promoInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
                 let savedContact = localStorage.getItem('berdUserContact');
                 var lang = localStorage.getItem('berdSendLang') || 'ht';
                 var t = translations[lang] || translations['ht'];
@@ -979,36 +978,11 @@
                     return;
                 }
 
-                var receiver = document.getElementById('receiverCountry').value;
-                var deliveryMethod = document.getElementById('deliveryMethod').value;
+                // Square Sandbox Application ID
+                var squareAppId = "sandbox-sq0idb-KaVOFx7ywItn5x_nQkvuJA";
                 
-                // Kalkile total egzak la (avèk frè oubyen rabè)
-                let discount = (currentMode === 'topup' && promoInput.length > 0) ? 5.0 : 0;
-                let baseFee = 0;
-                if (currentMode === 'transfer' && (deliveryMethod === 'moncash' || deliveryMethod === 'natcash')) {
-                    baseFee = amountVal * 0.05;
-                    let referralsCount = parseInt(localStorage.getItem('referralCount_' + savedContact) || '0');
-                    if (referralsCount >= 20) baseFee = baseFee * 0.90;
-                }
-                let totalCostVal = amountVal + baseFee - discount;
-                if (totalCostVal < 0) totalCostVal = 0;
-
-                // Stripe mande santim (cents), donk nou multiplye total la pa 100
-                var amountInCents = Math.round(totalCostVal * 100);
-                var stripeUrl = "";
-
-                if (currentMode === 'topup') {
-                    if (receiver === 'DOP') {
-                        stripeUrl = "https://buy.stripe.com/test_3cI8wOeil9xI482cxt1Nu01?prefilled_amount=" + amountInCents;
-                    } else {
-                        stripeUrl = "https://buy.stripe.com/test_5kQ00ieilcJUdIC8hd1Nu00?prefilled_amount=" + amountInCents;
-                    }
-                } else {
-                    stripeUrl = "https://buy.stripe.com/test_cNibJ0cadh0a8oibtp1Nu02?prefilled_amount=" + amountInCents;
-                }
-
-                // Dirije kliyan an sou Stripe san l pa bezwen retape montan an
-                window.location.href = stripeUrl;
+                // Ou ka konekte demann sa a ak endpoint API Square la oswa backend ou a
+                alert("Tranzaksyon an prèt pou voye nan Square Sandbox (App ID: " + squareAppId + "). Montan an ap trete kòm Tès!");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
