@@ -283,7 +283,7 @@
             <!-- Square Card Container for Web Payments SDK -->
             <div class="form-group">
                 <label>Peman Kat Kredi / Kat Debi (Square):</label>
-                <div id="card-container" style="background: #fff; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; min-height: 90px;"></div>
+                <div id="card-container" style="background: #fff; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; min-height: 120px;"></div>
             </div>
 
             <div id="userReferralDisplay" class="referral-box">
@@ -888,7 +888,7 @@
 
         var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
         var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
-        var totalCostVal = 100; // Global variable to hold total cost
+        var totalCostVal = 100;
 
         function updateUI() {
             var sender = document.getElementById('senderCountry').value;
@@ -957,7 +957,17 @@
                     return;
                 }
                 const payments = window.Square.payments("sq0idp-CR-bEB73g2-lyJjvNGEodg");
-                cardInstance = await payments.card();
+                
+                cardInstance = await payments.card({
+                    cardholderName: {
+                        visibility: 'ORGANIC',
+                        placeholder: 'Non sou kat la (eg: Jean Fleury)'
+                    },
+                    postalCode: {
+                        visibility: 'ORGANIC'
+                    }
+                });
+                
                 await cardInstance.attach('#card-container');
             } catch (e) {
                 console.error("Erè nan inisyalizasyon Square Card Form:", e);
@@ -981,7 +991,6 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Lojik pou voye tranzaksyon an nan API Vercel la
             document.getElementById('btnSubmit').onclick = async function() {
                 var phone = document.getElementById('phone').value.trim();
                 var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
@@ -1014,7 +1023,6 @@
                     if (result.status === 'OK') {
                         const token = result.token;
                         
-                        // Voye token an nan api Vercel la (/api/pay)
                         const response = await fetch('/api/pay', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
