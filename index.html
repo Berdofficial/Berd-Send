@@ -7,28 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 20px; padding-bottom: 90px; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 15px; padding-bottom: 90px; }
         
         .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
 
-        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 18px 25px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-        .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .app-logo-img { height: 60px; max-width: 180px; object-fit: contain; border-radius: 8px; }
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 18px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); gap: 10px; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+        .app-logo-img { height: 45px; max-width: 140px; object-fit: contain; border-radius: 8px; }
         
-        .header-right { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: nowrap; }
-        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 8px 10px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+        .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: nowrap; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 8px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
         
-        .auth-header-trigger { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer; position: relative; transition: 0.2s; }
+        .auth-header-trigger { display: flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 10px; border-radius: 10px; cursor: pointer; position: relative; transition: 0.2s; max-width: 120px; overflow: hidden; }
         .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
-        .header-avatar-icon { width: 28px; height: 28px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
-        .btn-header-login { background: none; border: none; color: #0f172a; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+        .header-avatar-icon { width: 24px; height: 24px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        .btn-header-login { background: none; border: none; color: #0f172a; font-weight: 600; font-size: 0.8rem; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .menu-container { position: relative; display: flex; align-items: center; justify-content: center; }
-        .menu-btn { background: none; border: none; color: #333; font-size: 22px; cursor: pointer; padding: 5px 8px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; transition: 0.2s; }
+        .menu-container { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .menu-btn { background: #f8fafc; border: 1px solid #e2e8f0; color: #333; font-size: 18px; cursor: pointer; padding: 6px 10px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: 0.2s; }
         .menu-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
         
-        .dropdown-menu { display: none; position: absolute; right: 0; top: 45px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 220px; z-index: 1000; border: 1px solid #eee; }
-        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 12px 18px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 14px; background: none; border: none; cursor: pointer; }
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 42px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 200px; z-index: 1000; border: 1px solid #eee; }
+        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 13px; background: none; border: none; cursor: pointer; }
         .dropdown-menu a:hover, .dropdown-menu button:hover { background: #f8fafc; color: #0066cc; }
 
         .user-profile-badge {
@@ -69,66 +69,66 @@
         }
         .banner-slide { display: none; }
         .banner-slide.active { display: block; }
-        .banner-slide h4 { font-size: 1.2rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .banner-slide p { font-size: 0.95rem; font-weight: 500; color: #f8fafc; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+        .banner-slide h4 { font-size: 1.1rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .banner-slide p { font-size: 0.9rem; font-weight: 500; color: #f8fafc; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         .banner-slide strong { color: #ffeb3b; font-weight: 700; }
 
-        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 30px 25px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
-        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 22px; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 25px 20px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
+        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.88rem; transition: 0.2s; }
         .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; font-size: 0.9rem; color: #1e293b; margin-bottom: 8px; font-weight: 700; }
-        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; position: relative; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; position: relative; }
         .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
-        .input-box input, .input-box select, .input-box textarea { background: transparent; border: none; color: #0f172a; font-size: 1.05rem; width: 100%; outline: none; resize: vertical; }
+        .input-box input, .input-box select, .input-box textarea { background: transparent; border: none; color: #0f172a; font-size: 1rem; width: 100%; outline: none; resize: vertical; }
         
         .toggle-password { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #64748b; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
         
-        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.95rem; color: #166534; margin-bottom: 18px; font-weight: 500; }
-        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 18px; font-size: 0.9rem; }
+        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #166534; margin-bottom: 16px; font-weight: 500; }
+        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.88rem; }
         .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
-        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1.05rem; }
+        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1rem; }
         
         .promo-applied-msg { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
-        .referral-box { background: #fdf4ff; border: 1px solid #f5d0fe; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #86198f; margin-bottom: 18px; display: none; }
-        .referral-box strong { font-size: 1.05rem; color: #701a75; }
-        .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #b45309; margin-top: 10px; display: none; font-weight: 600; }
+        .referral-box { background: #fdf4ff; border: 1px solid #f5d0fe; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.88rem; color: #86198f; margin-bottom: 16px; display: none; }
+        .referral-box strong { font-size: 1rem; color: #701a75; }
+        .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 10px; border-radius: 10px; text-align: center; font-size: 0.85rem; color: #b45309; margin-top: 8px; display: none; font-weight: 600; }
 
-        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #475569; cursor: pointer; font-weight: 500; }
-        .checkbox-group input { cursor: pointer; width: 18px; height: 18px; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 0.88rem; color: #475569; cursor: pointer; font-weight: 500; }
+        .checkbox-group input { cursor: pointer; width: 16px; height: 16px; }
 
-        .btn-submit { width: 100%; padding: 16px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+        .btn-submit { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
         .btn-submit:hover { background: #0052a3; }
         .btn-submit:active { transform: scale(0.99); }
         .btn-danger { background: #dc2626 !important; }
         .btn-danger:hover { background: #b91c1c !important; }
         
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 440px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
-        .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; }
-        .modal-content h3 { margin-bottom: 8px; color: #0f172a; font-size: 1.3rem; font-weight: 700; }
-        .modal-content p { color: #64748b; font-size: 0.88rem; margin-bottom: 20px; line-height: 1.4; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
+        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b; }
+        .modal-content h3 { margin-bottom: 6px; color: #0f172a; font-size: 1.2rem; font-weight: 700; }
+        .modal-content p { color: #64748b; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.4; }
         
-        .modal-box-logout { background: #fff; padding: 25px; border-radius: 16px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-box-logout p { font-size: 16px; margin-bottom: 20px; color: #333; font-weight: 500; }
+        .modal-box-logout { background: #fff; padding: 20px; border-radius: 16px; width: 90%; max-width: 330px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-box-logout p { font-size: 15px; margin-bottom: 18px; color: #333; font-weight: 500; }
         .modal-buttons { display: flex; gap: 10px; justify-content: center; }
-        .modal-btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
+        .modal-btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; }
         .btn-yes { background: #dc2626; color: white; }
         .btn-yes:hover { background: #b91c1c; }
         .btn-no { background: #e2e8f0; color: #334155; }
         .btn-no:hover { background: #cbd5e1; }
 
-        .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; color: #003366; padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0066cc; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; font-size: 0.95rem; flex-wrap: wrap; gap: 15px; }
-        .cookie-banner p { margin: 0; max-width: 600px; line-height: 1.5; color: #334155; font-size: 0.9rem; }
-        .cookie-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-        .cookie-btn { border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: 0.2s; }
+        .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; color: #003366; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0066cc; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; font-size: 0.9rem; flex-wrap: wrap; gap: 12px; }
+        .cookie-banner p { margin: 0; max-width: 600px; line-height: 1.4; color: #334155; font-size: 0.85rem; }
+        .cookie-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .cookie-btn { border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s; }
         .btn-accept { background-color: #0066cc; color: white; }
         .btn-reject { background-color: #f1f5f9; color: #334155; }
 
-        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.85rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-        .footer-links { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-        .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.8rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .footer-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.8rem; }
         .footer-links a:hover { text-decoration: underline; }
     </style>
 </head>
@@ -155,9 +155,9 @@
                 <div class="menu-container">
                     <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
                     <div id="settingsDropdown" class="dropdown-menu">
-                        <a href="#" onclick="openSettingsModal()">⚙️ Paramèt Kont</a>
+                        <a href="#" onclick="openSettingsModal()" id="menuSettingsText">⚙️ Paramèt Kont</a>
                         <div id="settingsAuthActionContainer"></div>
-                        <a href="faq.html">❓ Èd / Sipò</a>
+                        <a href="faq.html" id="menuFaqText">❓ Èd / Sipò</a>
                     </div>
                 </div>
             </div>
@@ -169,10 +169,10 @@
                 <div class="profile-details">
                     <h5 id="profileNameDisplay">Non Itilizatè</h5>
                     <p id="profileContactDisplay">imel@example.com</p>
-                    <span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #166534;">✅ Kont Kliyan Aktif</span>
+                    <span id="badgeActiveText" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #166534;">✅ Kont Kliyan Aktif</span>
                 </div>
             </div>
-            <button class="settings-btn" onclick="openSettingsModal()">⚙️ Paramèt</button>
+            <button class="settings-btn" id="badgeSettingsBtn" onclick="openSettingsModal()">⚙️ Paramèt</button>
         </div>
 
         <div class="banner-slider-container">
@@ -230,19 +230,24 @@
                 </div>
             </div>
 
-            <!-- Nouvo chan: Adrès Konplè Destinatè a -->
             <div class="form-group">
                 <label id="lblAddress">Adrès Konplè Destinatè a (Full Address):</label>
                 <div class="input-box">
-                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Eta / Depatman..."></textarea>
+                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
                 </div>
             </div>
 
-            <!-- Nouvo chan: Nimewo Idantifikasyon pou Verifikasyon (Sumsub Ready) -->
             <div class="form-group">
                 <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
                 <div class="input-box">
                     <input type="text" id="idNumberInput" placeholder="eg: P1234567 oswa NIF w...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdPhoto">Upload ID / Document Photo (Pyès Idantifikasyon / Paspò):</label>
+                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
+                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
             </div>
 
@@ -280,7 +285,7 @@
                 <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
                 <div id="vipBadgeDisplay" class="vip-badge-box">
-                    👑 <strong>Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
+                    👑 <strong id="vipTitleText">Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
                 </div>
             </div>
 
@@ -297,42 +302,42 @@
     <div id="authModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeAuthModal()">&times;</button>
-            <h3>🔐 Koneksyon / Enskripsyon Kliyan</h3>
-            <p>Antre non w ak imèl ou pou w konekte sou platfòm la fasil.</p>
+            <h3 id="authModalTitle">🔐 Koneksyon / Enskripsyon Kliyan</h3>
+            <p id="authModalDesc">Antre non w ak imèl ou pou w konekte sou platfòm la fasil.</p>
             
             <div class="form-group">
-                <label>Non ak Siyati (Full Name):</label>
+                <label id="lblAuthName">Non ak Siyati (Full Name):</label>
                 <div class="input-box">
                     <input type="text" id="authName" placeholder="eg: Jean Aberd Fleurymond">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Adrès Imèl:</label>
+                <label id="lblAuthEmail">Adrès Imèl:</label>
                 <div class="input-box">
                     <input type="email" id="authEmail" placeholder="eg: topberd@gmail.com">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Modpas:</label>
+                <label id="lblAuthPass">Modpas:</label>
                 <div class="input-box">
                     <input type="password" id="authPassword" placeholder="Modpas...">
                     <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
                 </div>
             </div>
 
-            <button class="btn-submit" onclick="handleAuthSubmit()">Kontinye ✅</button>
+            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye ✅</button>
         </div>
     </div>
 
     <!-- Modal Konfimasyon Dekonekte -->
     <div id="logoutModal" class="modal-overlay">
         <div class="modal-box-logout">
-            <p>Èske w vle dekonekte tout bon vre?</p>
+            <p id="logoutPromptText">Èske w vle dekonekte tout bon vre?</p>
             <div class="modal-buttons">
-                <button class="modal-btn btn-yes" onclick="executeLogout()">Wi</button>
-                <button class="modal-btn btn-no" onclick="closeLogoutModal()">Non</button>
+                <button class="modal-btn btn-yes" id="btnYesLogout" onclick="executeLogout()">Wi</button>
+                <button class="modal-btn btn-no" id="btnNoLogout" onclick="closeLogoutModal()">Non</button>
             </div>
         </div>
     </div>
@@ -341,28 +346,28 @@
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-            <h3>⚙️ Paramèt Pwofil</h3>
-            <p>Mete enfòmasyon pwofil ou yo ajou.</p>
+            <h3 id="settingsModalTitle">⚙️ Paramèt Pwofil</h3>
+            <p id="settingsModalDesc">Mete enfòmasyon pwofil ou yo ajou.</p>
             
             <div class="form-group">
-                <label>Non a Konplè:</label>
+                <label id="lblSettingsName">Non a Konplè:</label>
                 <div class="input-box">
                     <input type="text" id="settingsName">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Adrès Imèl:</label>
+                <label id="lblSettingsEmail">Adrès Imèl:</label>
                 <div class="input-box">
                     <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
                 </div>
             </div>
 
-            <button class="btn-submit" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
+            <button class="btn-submit" id="btnSettingsSave" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
             
             <div id="deleteAccountSection">
                 <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
-                <button class="btn-submit btn-danger" onclick="deleteUserAccount()">Fèmen Kont la 🗑️</button>
+                <button class="btn-submit btn-danger" id="btnDeleteAccount" onclick="deleteUserAccount()">Fèmen Kont la 🗑️</button>
             </div>
         </div>
     </div>
@@ -371,8 +376,8 @@
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
         <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
         <div class="cookie-buttons">
-            <button class="cookie-btn btn-accept" onclick="handleCookie('accept')">Accept All</button>
-            <button class="cookie-btn btn-reject" onclick="handleCookie('reject')">Reject All</button>
+            <button class="cookie-btn btn-accept" id="btnAcceptCookie" onclick="handleCookie('accept')">Accept All</button>
+            <button class="cookie-btn btn-reject" id="btnRejectCookie" onclick="handleCookie('reject')">Reject All</button>
         </div>
     </div>
 
@@ -403,19 +408,23 @@
                 lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
                 lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
                 lblAmount: "Montan pou voye a:",
-                lblAddress: "Adrès Konplè Destinatè a (Full Address):",
+                lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):",
                 lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
+                lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:",
                 lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
                 lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
+                lblPromo: "Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)",
                 btnLogin: "Konekte",
                 btnLogout: "Dekonekte",
                 btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
                 btnSubmitTransfer: "Voye Transfè a Kounye a 🚀",
-                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:"
+                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:",
+                acceptText: "Aksepte Tout",
+                rejectText: "Refize Tout"
             },
             en: {
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
@@ -426,19 +435,23 @@
                 lblDeliveryMethodTopup: "Select Mobile Carrier:",
                 lblDeliveryMethodTransfer: "How should they receive it:",
                 lblAmount: "Amount to send:",
-                lblAddress: "Recipient Full Address:",
                 lblIdNumber: "Identification Number (ID, Passport or Tax ID):",
+                lblAddress: "Recipient Full Address (Street, City, Department...):",
+                lblIdPhoto: "Upload ID / Document Photo:",
                 lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
                 lblPhone: "Recipient phone number:",
                 lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
                 lblFeeText: "Transfer Fee (10% VIP Discount):",
+                lblPromo: "Receive promotions and news via phone/email (Optional)",
                 btnLogin: "Login",
                 btnLogout: "Logout",
                 btnSubmitTopup: "Send Top-Up Now 🚀",
                 btnSubmitTransfer: "Send Transfer Now 🚀",
-                cookieTextMsg: "We use cookies to improve your browsing experience:"
+                cookieTextMsg: "We use cookies to improve your browsing experience:",
+                acceptText: "Accept All",
+                rejectText: "Reject All"
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
@@ -449,19 +462,23 @@
                 lblDeliveryMethodTopup: "Selecionar Operadora:",
                 lblDeliveryMethodTransfer: "Como deseja que recebam:",
                 lblAmount: "Valor a enviar:",
-                lblAddress: "Endereço Completo do Destinatário:",
                 lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF):",
+                lblAddress: "Endereço Completo do Destinatário (Rua, Cidade, Estado...):",
+                lblIdPhoto: "Enviar Foto do Documento / Identificação:",
                 lblPromoCode: "Código Promocional (Apenas Recarga):",
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
                 lblPhone: "Número de telefone do destinatário:",
                 lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5):",
                 lblFeeText: "Taxa de Transferência (10% VIP):",
+                lblPromo: "Receber promoções e novidades por telefone/e-mail (Opcional)",
                 btnLogin: "Entrar",
                 btnLogout: "Sair",
                 btnSubmitTopup: "Enviar Recarga Agora 🚀",
                 btnSubmitTransfer: "Enviar Transferência Agora 🚀",
-                cookieTextMsg: "Usamos cookies para melhorar sua experiência:"
+                cookieTextMsg: "Usamos cookies para melhorar sua experiência:",
+                acceptText: "Aceitar Todos",
+                rejectText: "Rejeitar Todos"
             }
         };
 
@@ -489,13 +506,17 @@
             document.getElementById('lblAmount').innerText = t.lblAmount;
             document.getElementById('lblAddress').innerText = t.lblAddress;
             document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
+            document.getElementById('lblIdPhoto').innerText = t.lblIdPhoto;
             document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
             document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
             document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
             document.getElementById('lblFeeText').innerText = t.lblFeeText;
+            document.getElementById('lblPromo').innerText = t.lblPromo;
             document.getElementById('cookieText').innerText = t.cookieTextMsg;
+            document.getElementById('btnAcceptCookie').innerText = t.acceptText;
+            document.getElementById('btnRejectCookie').innerText = t.rejectText;
 
             if (currentMode === 'topup') {
                 document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
@@ -780,10 +801,10 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
-            // Validasyon lè itilizatè a klike pou voye a
             document.getElementById('btnSubmit').onclick = function() {
                 var address = document.getElementById('fullAddressInput').value.trim();
                 var idNumber = document.getElementById('idNumberInput').value.trim();
+                var idPhoto = document.getElementById('idPhotoFile').files.length;
                 var phone = document.getElementById('phone').value.trim();
 
                 if (!address) {
@@ -791,7 +812,11 @@
                     return;
                 }
                 if (!idNumber) {
-                    alert("Tanpri antre nimewo idantifikasyon ou (ID, Paspò oswa NIF)!");
+                    alert("Tanpri antre nimewo idantifikasyon an!");
+                    return;
+                }
+                if (!idPhoto) {
+                    alert("Tanpri telechaje foto pyès idantifikasyon an pou verifye idantite a!");
                     return;
                 }
                 if (!phone) {
@@ -799,7 +824,7 @@
                     return;
                 }
 
-                alert("Tranzaksyon an soumèt avèk siksè nan sistèm nan! 🚀");
+                alert("Tranzaksyon an ak dokiman idantite yo soumèt avèk siksè nan sistèm nan! 🚀");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
