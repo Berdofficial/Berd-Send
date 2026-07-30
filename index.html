@@ -1,843 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ht" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">BerdSend - Transfè Lajan ak Rechaj Telefòn</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>BerdSend</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 15px; padding-bottom: 90px; }
-        
-        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
-
-        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 18px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); gap: 10px; }
-        .logo-container { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-        .app-logo-img { height: 45px; max-width: 140px; object-fit: contain; border-radius: 8px; }
-        
-        .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: nowrap; }
-        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 8px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
-        
-        .auth-header-trigger { display: flex; align-items: center; gap: 6px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 10px; border-radius: 10px; cursor: pointer; position: relative; transition: 0.2s; max-width: 120px; overflow: hidden; }
-        .auth-header-trigger:hover { background: #f1f5f9; border-color: #cbd5e1; }
-        .header-avatar-icon { width: 24px; height: 24px; background: #0066cc; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
-        .btn-header-login { background: none; border: none; color: #0f172a; font-weight: 600; font-size: 0.8rem; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .menu-container { position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .menu-btn { background: #f8fafc; border: 1px solid #e2e8f0; color: #333; font-size: 18px; cursor: pointer; padding: 6px 10px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: 0.2s; }
-        .menu-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
-        
-        .dropdown-menu { display: none; position: absolute; right: 0; top: 42px; background: #fff; box-shadow: 0px 6px 16px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; width: 200px; z-index: 1000; border: 1px solid #eee; }
-        .dropdown-menu a, .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; font-size: 13px; background: none; border: none; cursor: pointer; }
-        .dropdown-menu a:hover, .dropdown-menu button:hover { background: #f8fafc; color: #0066cc; }
-
-        .user-profile-badge {
-            width: 100%;
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            display: none;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
         }
-        .profile-info { display: flex; align-items: center; gap: 14px; }
-        .profile-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #0066cc, #004080); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,102,204,0.3); overflow: hidden; }
-        .profile-details h5 { font-size: 0.95rem; color: #0f172a; font-weight: 700; }
-        .profile-details p { font-size: 0.8rem; color: #64748b; }
-        .settings-btn { background: #e2e8f0; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; color: #334155; cursor: pointer; transition: 0.2s; }
-        .settings-btn:hover { background: #cbd5e1; }
-
-        .banner-slider-container {
-            width: 100%;
-            background: linear-gradient(135deg, #003366, #0056b3, #007bff);
-            color: #ffffff;
-            padding: 22px 25px;
-            border-radius: 14px;
-            box-shadow: 0 6px 18px rgba(0, 86, 179, 0.25);
-            margin-bottom: 20px;
-            text-align: center;
-            min-height: 110px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .container {
+            max-width: 500px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: auto;
         }
-        .banner-slide { display: none; }
-        .banner-slide.active { display: block; }
-        .banner-slide h4 { font-size: 1.1rem; font-weight: 800; color: #ffeb3b; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .banner-slide p { font-size: 0.9rem; font-weight: 500; color: #f8fafc; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
-        .banner-slide strong { color: #ffeb3b; font-weight: 700; }
-
-        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 25px 20px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
-        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.88rem; transition: 0.2s; }
-        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
-        .form-group { margin-bottom: 16px; }
-        label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
-        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; position: relative; }
-        .input-box:focus-within { border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.12); }
-        .input-box input, .input-box select, .input-box textarea { background: transparent; border: none; color: #0f172a; font-size: 1rem; width: 100%; outline: none; resize: vertical; }
-        
-        .toggle-password { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #64748b; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
-        
-        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #166534; margin-bottom: 16px; font-weight: 500; }
-        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.88rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
-        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1rem; }
-        
-        .promo-applied-msg { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
-        .referral-box { background: #fdf4ff; border: 1px solid #f5d0fe; padding: 14px; border-radius: 10px; text-align: center; font-size: 0.88rem; color: #86198f; margin-bottom: 16px; display: none; }
-        .referral-box strong { font-size: 1rem; color: #701a75; }
-        .vip-badge-box { background: #fffbeb; border: 1px solid #fde68a; padding: 10px; border-radius: 10px; text-align: center; font-size: 0.85rem; color: #b45309; margin-top: 8px; display: none; font-weight: 600; }
-
-        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 0.88rem; color: #475569; cursor: pointer; font-weight: 500; }
-        .checkbox-group input { cursor: pointer; width: 16px; height: 16px; }
-
-        .btn-submit { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.1s; }
-        .btn-submit:hover { background: #0052a3; }
-        .btn-submit:active { transform: scale(0.99); }
-        .btn-danger { background: #dc2626 !important; }
-        .btn-danger:hover { background: #b91c1c !important; }
-        
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: #ffffff; width: 100%; max-width: 420px; padding: 25px 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; position: relative; max-height: 90vh; overflow-y: auto; }
-        .modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #64748b; }
-        .modal-content h3 { margin-bottom: 6px; color: #0f172a; font-size: 1.2rem; font-weight: 700; }
-        .modal-content p { color: #64748b; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.4; }
-        
-        .modal-box-logout { background: #fff; padding: 20px; border-radius: 16px; width: 90%; max-width: 330px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-box-logout p { font-size: 15px; margin-bottom: 18px; color: #333; font-weight: 500; }
-        .modal-buttons { display: flex; gap: 10px; justify-content: center; }
-        .modal-btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; }
-        .btn-yes { background: #dc2626; color: white; }
-        .btn-yes:hover { background: #b91c1c; }
-        .btn-no { background: #e2e8f0; color: #334155; }
-        .btn-no:hover { background: #cbd5e1; }
-
-        .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #ffffff; color: #003366; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0066cc; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 9999; font-size: 0.9rem; flex-wrap: wrap; gap: 12px; }
-        .cookie-banner p { margin: 0; max-width: 600px; line-height: 1.4; color: #334155; font-size: 0.85rem; }
-        .cookie-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-        .cookie-btn { border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: 0.2s; }
-        .btn-accept { background-color: #0066cc; color: white; }
-        .btn-reject { background-color: #f1f5f9; color: #334155; }
-
-        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.8rem; font-weight: 500; width: 100%; display: flex; flex-direction: column; gap: 8px; align-items: center; }
-        .footer-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-        .footer-links a { color: #0066cc; text-decoration: none; font-weight: 600; font-size: 0.8rem; }
-        .footer-links a:hover { text-decoration: underline; }
+        .lang-selector {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .lang-selector select {
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <header>
-            <a href="index.html" class="logo-container">
-                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
-            </a>
-            <div class="header-right">
-                <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
-                    <option value="ht">🇭🇹 Kreyòl</option>
-                    <option value="en">🇺🇸 English</option>
-                    <option value="pt">🇧🇷 Português</option>
-                </select>
-
-                <div class="auth-header-trigger" onclick="handleAuthHeaderClick()">
-                    <div class="header-avatar-icon" id="headerAvatarIcon">👤</div>
-                    <button class="btn-header-login" id="authButtonText">Konekte</button>
-                    <div id="authDropdown" class="dropdown-menu"></div>
-                </div>
-
-                <div class="menu-container">
-                    <button class="menu-btn" onclick="toggleSettingsDropdown()">☰</button>
-                    <div id="settingsDropdown" class="dropdown-menu">
-                        <a href="#" onclick="openSettingsModal()" id="menuSettingsText">⚙️ Paramèt Kont</a>
-                        <div id="settingsAuthActionContainer"></div>
-                        <a href="faq.html" id="menuFaqText">❓ Èd / Sipò</a>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div id="userProfileBadge" class="user-profile-badge">
-            <div class="profile-info">
-                <div class="profile-avatar" id="profileAvatarText">BS</div>
-                <div class="profile-details">
-                    <h5 id="profileNameDisplay">Non Itilizatè</h5>
-                    <p id="profileContactDisplay">imel@example.com</p>
-                    <span id="badgeActiveText" style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #166534;">✅ Kont Kliyan Aktif</span>
-                </div>
-            </div>
-            <button class="settings-btn" id="badgeSettingsBtn" onclick="openSettingsModal()">⚙️ Paramèt</button>
-        </div>
-
-        <div class="banner-slider-container">
-            <div class="banner-slide active">
-                <h4 id="adv1Title">🎉 Rechaj Mobil: $5 Rabè</h4>
-                <p id="adv1Desc">Itilize yon kòd pwomosyon epi jwenn <strong>$5</strong> sou premye rechaj ou!</p>
-            </div>
-            <div class="banner-slide">
-                <h4 id="adv2Title">🎁 Pwomosyon 7 Premye Jou yo: $10</h4>
-                <p id="adv2Desc">Nan premye 7 jou yo w ap jwenn <strong>$10</strong> pa envitasyon, apre sa <strong>$5</strong> pa envitasyon!</p>
-            </div>
-            <div class="banner-slide">
-                <h4 id="adv3Title">👑 Envite 20 Zanmi = Badj VIP</h4>
-                <p id="adv3Desc">Jwenn yon badj VIP pou <strong>10% rabè</strong> sou frè MonCash ak Natcash!</p>
-            </div>
-        </div>
-
-        <div class="card" id="mainCard">
-            <div class="tabs">
-                <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Rechaj Telefòn</button>
-                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Transfè Lajan</button>
-            </div>
-
-            <div class="form-group">
-                <label id="lblSender">Peyi w ap voye soti a:</label>
-                <div class="input-box">
-                    <select id="senderCountry">
-                        <option value="USD">🇺🇸 Etazini (USD - $)</option>
-                        <option value="BRL">🇧🇷 Brezil (BRL - R$)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblReceiver">Peyi destinasyon an:</label>
-                <div class="input-box">
-                    <select id="receiverCountry">
-                        <option value="HTG">🇭🇹 Ayiti (HTG - G)</option>
-                        <option value="DOP">🇩🇴 Repiblik Dominikèn (DOP)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblDeliveryMethod">Chwazi Konpayi Telefòn:</label>
-                <div class="input-box">
-                    <select id="deliveryMethod"></select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblAmount">Montan pou voye a:</label>
-                <div class="input-box">
-                    <input type="number" id="sendAmount" value="100">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblAddress">Adrès Konplè Destinatè a (Lari, Vil, Depatman...):</label>
-                <div class="input-box">
-                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
-                <div class="input-box">
-                    <input type="text" id="idNumberInput" placeholder="eg: P1234567 oswa NIF w...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
-                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
-                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
-                </div>
-            </div>
-
-            <div class="form-group" id="promoCodeGroup">
-                <label id="lblPromoCode">Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):</label>
-                <div class="input-box">
-                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5 oswa FRIEND10">
-                </div>
-                <div id="promoAppliedMsg" class="promo-applied-msg"></div>
-            </div>
-
-            <div class="conversion-rate">
-                <span id="lblRecipientGets">Moun nan ap resevwa approx:</span> <strong id="receiveAmount" style="color: #166534;">0 HTG</strong>
-            </div>
-
-            <div class="summary-box">
-                <div class="summary-row" id="feeRow" style="display:none;">
-                    <span id="lblFeeText">Frè Tranzaksyon (10% Rabè VIP):</span>
-                    <span id="feeAmount">--</span>
-                </div>
-                <div class="summary-row total">
-                    <span id="lblTotalToPay">Total pou Peye:</span>
-                    <span id="totalCost" style="color: #0f172a;">100.00 USD</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblPhone">Nimewo telefòn moun k ap resevwa a:</label>
-                <div class="input-box">
-                    <input type="tel" id="phone" placeholder="+509 ...">
-                </div>
-            </div>
-
-            <div id="userReferralDisplay" class="referral-box">
-                <span id="lblYourCodeText">Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
-                <strong id="assignedPromoCode">---</strong>
-                <div id="vipBadgeDisplay" class="vip-badge-box">
-                    👑 <strong id="vipTitleText">Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
-                </div>
-            </div>
-
-            <label class="checkbox-group">
-                <input type="checkbox" id="promoCheckbox" checked>
-                <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
-            </label>
-
-            <button class="btn-submit" id="btnSubmit">Voye Transfè a Kounye a 🚀</button>
-        </div>
+<div class="container">
+    <!-- Chwa Lang -->
+    <div class="lang-selector">
+        <label for="langSelect" style="display:inline; font-size: 14px;" id="lblLang">Lang:</label>
+        <select id="langSelect" onchange="changeLanguage()">
+            <option value="ht">Kreyòl</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+        </select>
     </div>
 
-    <!-- Modal Otantifikasyon / Enskripsyon Senp -->
-    <div id="authModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeAuthModal()">&times;</button>
-            <h3 id="authModalTitle">🔐 Koneksyon / Enskripsyon Kliyan</h3>
-            <p id="authModalDesc">Antre non w ak imèl ou pou w konekte sou platfòm la fasil.</p>
-            
-            <div class="form-group">
-                <label id="lblAuthName">Non ak Siyati (Full Name):</label>
-                <div class="input-box">
-                    <input type="text" id="authName" placeholder="eg: Jean Aberd Fleurymond">
-                </div>
-            </div>
+    <h2 id="formTitle">Fòmilè Adrès Kliyan</h2>
 
-            <div class="form-group">
-                <label id="lblAuthEmail">Adrès Imèl:</label>
-                <div class="input-box">
-                    <input type="email" id="authEmail" placeholder="eg: topberd@gmail.com">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblAuthPass">Modpas:</label>
-                <div class="input-box">
-                    <input type="password" id="authPassword" placeholder="Modpas...">
-                    <button type="button" class="toggle-password" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
-                </div>
-            </div>
-
-            <button class="btn-submit" id="btnAuthSubmit" onclick="handleAuthSubmit()">Kontinye ✅</button>
+    <form>
+        <!-- Lari -->
+        <div class="form-group">
+            <label for="street" id="lblStreet">Lari:</label>
+            <input type="text" id="street" placeholder="Antre lari w la">
         </div>
-    </div>
 
-    <!-- Modal Konfimasyon Dekonekte -->
-    <div id="logoutModal" class="modal-overlay">
-        <div class="modal-box-logout">
-            <p id="logoutPromptText">Èske w vle dekonekte tout bon vre?</p>
-            <div class="modal-buttons">
-                <button class="modal-btn btn-yes" id="btnYesLogout" onclick="executeLogout()">Wi</button>
-                <button class="modal-btn btn-no" id="btnNoLogout" onclick="closeLogoutModal()">Non</button>
-            </div>
+        <!-- Vil -->
+        <div class="form-group">
+            <label for="city" id="lblCity">Vil:</label>
+            <input type="text" id="city" placeholder="Antre vil ou a">
         </div>
-    </div>
 
-    <!-- Modal Paramèt Pwofil & Siprèsyon Kont -->
-    <div id="settingsModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-            <h3 id="settingsModalTitle">⚙️ Paramèt Pwofil</h3>
-            <p id="settingsModalDesc">Mete enfòmasyon pwofil ou yo ajou.</p>
-            
-            <div class="form-group">
-                <label id="lblSettingsName">Non a Konplè:</label>
-                <div class="input-box">
-                    <input type="text" id="settingsName">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblSettingsEmail">Adrès Imèl:</label>
-                <div class="input-box">
-                    <input type="text" id="settingsEmail" disabled style="background: #f1f5f9; color: #64748b;">
-                </div>
-            </div>
-
-            <button class="btn-submit" id="btnSettingsSave" onclick="saveSettingsUpdates()" style="margin-bottom: 12px;">Mete Ajou Enfòmasyon yo ✅</button>
-            
-            <div id="deleteAccountSection">
-                <hr style="border:0; border-top:1px solid #e2e8f0; margin: 15px 0;">
-                <button class="btn-submit btn-danger" id="btnDeleteAccount" onclick="deleteUserAccount()">Fèmen Kont la 🗑️</button>
-            </div>
+        <!-- Depatman / Eta -->
+        <div class="form-group">
+            <label for="state" id="lblState">Depatman:</label>
+            <input type="text" id="state" placeholder="Antre depatman w lan">
         </div>
-    </div>
+    </form>
+</div>
 
-    <!-- Bannè Cookie -->
-    <div id="cookieBanner" class="cookie-banner" style="display: none;">
-        <p id="cookieText">Nou itilize cookies pou amelyore eksperyans ou sou sit la:</p>
-        <div class="cookie-buttons">
-            <button class="cookie-btn btn-accept" id="btnAcceptCookie" onclick="handleCookie('accept')">Aksepte Tout</button>
-            <button class="cookie-btn btn-reject" id="btnRejectCookie" onclick="handleCookie('reject')">Refize Tout</button>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-links">
-            <a href="blog.html">Blog</a>
-            <a href="faq.html">FAQ</a>
-            <a href="about.html">Konsènan Nou</a>
-            <a href="contact.html">Kontakte Nou</a>
-            <a href="privacy.html">Konfidansyalite</a>
-            <a href="terms.html"> Kondisyon Itilizasyon</a>
-        </div>
-        <div>&copy; 2026 BerdSend. Tout dwa rezève.</div>
-    </footer>
-
-    <script>
-        var currentMode = 'topup';
-        let currentSlideIndex = 0;
-        let bannerInterval = null;
-
-        const translations = {
-            ht: {
-                title: "BerdSend - Transfè Lajan ak Rechaj Telefòn",
-                tabTopup: "📱 Rechaj Telefòn",
-                tabTransfer: "💸 Transfè Lajan",
-                lblSender: "Peyi w ap voye soti a:",
-                lblReceiver: "Peyi destinasyon an:",
-                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
-                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
-                lblAmount: "Montan pou voye a:",
-                lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):",
-                lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
-                lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:",
-                lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
-                lblRecipientGets: "Moun nan ap resevwa approx:",
-                lblTotalToPay: "Total pou Peye:",
-                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
-                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
-                lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
-                lblPromo: "Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)",
-                btnLogin: "Konekte",
-                btnLogout: "Dekonekte",
-                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
-                btnSubmitTransfer: "Voye Transfè a Kounye a 🚀",
-                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:",
-                acceptText: "Aksepte Tout",
-                rejectText: "Refize Tout"
-            },
-            en: {
-                title: "BerdSend - Money Transfer & Mobile Top-Up",
-                tabTopup: "📱 Mobile Top-Up",
-                tabTransfer: "💸 Money Transfer",
-                lblSender: "Country you are sending from:",
-                lblReceiver: "Destination country:",
-                lblDeliveryMethodTopup: "Select Mobile Carrier:",
-                lblDeliveryMethodTransfer: "Delivery Method:",
-                lblAmount: "Amount to send:",
-                lblAddress: "Recipient Full Address (Street, City, Department...):",
-                lblIdNumber: "Identification Number (ID, Passport, or Tax ID):",
-                lblIdPhoto: "Upload ID / Document Photo:",
-                lblPromoCode: "Promo Code (Top-Up only - $5 Off):",
-                lblRecipientGets: "Recipient gets approx:",
-                lblTotalToPay: "Total to Pay:",
-                lblPhone: "Recipient phone number:",
-                lblYourCodeText: "Your promo code ($10 for the first 7 days, then $5 per referral):",
-                lblFeeText: "Transaction Fee (10% VIP Discount):",
-                lblPromo: "Want to receive promos and news via phone/email (Optional)",
-                btnLogin: "Login",
-                btnLogout: "Logout",
-                btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Transfer Now 🚀",
-                cookieTextMsg: "We use cookies to improve your experience on our site:",
-                acceptText: "Accept All",
-                rejectText: "Reject All"
-            },
-            pt: {
-                title: "BerdSend - Transferência e Recarga de Celular",
-                tabTopup: "📱 Recarga de Celular",
-                tabTransfer: "💸 Transferência",
-                lblSender: "País de envio:",
-                lblReceiver: "País de destino:",
-                lblDeliveryMethodTopup: "Selecione a Operadora:",
-                lblDeliveryMethodTransfer: "Método de Entrega:",
-                lblAmount: "Valor a enviar:",
-                lblAddress: "Endereço Completo do Destinatário (Rua, Cidade, Departamento...):",
-                lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF/NIF):",
-                lblIdPhoto: "Enviar Foto de Identificação / Documento:",
-                lblPromoCode: "Código Promocional (Apenas Recarga - $5 de Desconto):",
-                lblRecipientGets: "O destinatário recebe aprox:",
-                lblTotalToPay: "Total a Pagar:",
-                lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código de indicação ($10 nos primeiros 7 dias, depois $5 por indicação):",
-                lblFeeText: "Taxa de Transação (10% de Desconto VIP):",
-                lblPromo: "Deseja receber promoções e notícias por telefone/e-mail (Opcional)",
-                btnLogin: "Entrar",
-                btnLogout: "Sair",
-                btnSubmitTopup: "Enviar Recarga Agora 🚀",
-                btnSubmitTransfer: "Enviar Transferência Agora 🚀",
-                cookieTextMsg: "Usamos cookies para melhorar sua experiência em nosso site:",
-                acceptText: "Aceitar Todos",
-                rejectText: "Rejeitar Todos"
-            }
-        };
-
-        function startBannerSlider() {
-            const slides = document.querySelectorAll('.banner-slide');
-            if (slides.length === 0) return;
-            if (bannerInterval) clearInterval(bannerInterval);
-
-            bannerInterval = setInterval(() => {
-                slides[currentSlideIndex].classList.remove('active');
-                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-                slides[currentSlideIndex].classList.add('active');
-            }, 8000);
+<script>
+    // Mo tradiksyon yo pou chak lang
+    const translations = {
+        ht: {
+            formTitle: "Fòmilè Adrès Kliyan",
+            lblLang: "Lang:",
+            lblStreet: "Lari:",
+            streetPlaceholder: "Antre lari w la",
+            lblCity: "Vil:",
+            cityPlaceholder: "Antre vil ou a",
+            lblState: "Depatman:",
+            statePlaceholder: "Antre depatman w lan"
+        },
+        en: {
+            formTitle: "Customer Address Form",
+            lblLang: "Language:",
+            lblStreet: "Street:",
+            streetPlaceholder: "Enter your street",
+            lblCity: "City:",
+            cityPlaceholder: "Enter your city",
+            lblState: "State / Department:",
+            statePlaceholder: "Enter your department/state"
+        },
+        pt: {
+            formTitle: "Formulário de Endereço do Cliente",
+            lblLang: "Idioma:",
+            lblStreet: "Rua:",
+            streetPlaceholder: "Digite sua rua",
+            lblCity: "Cidade:",
+            cityPlaceholder: "Digite sua cidade",
+            lblState: "Estado / Departamento:",
+            statePlaceholder: "Digite seu departamento/estado"
         }
+    };
 
-        function changeLanguage(lang) {
-            localStorage.setItem('berdSendLang', lang);
-            const t = translations[lang] || translations['ht'];
+    function changeLanguage() {
+        const selectedLang = document.getElementById('langSelect').value;
+        
+        // Chanje lang HTML la
+        document.getElementById('htmlRoot').setAttribute('lang', selectedLang);
 
-            document.getElementById('pageTitle').innerText = t.title;
-            document.getElementById('tabTopup').innerText = t.tabTopup;
-            document.getElementById('tabTransfer').innerText = t.tabTransfer;
-            document.getElementById('lblSender').innerText = t.lblSender;
-            document.getElementById('lblReceiver').innerText = t.lblReceiver;
-            document.getElementById('lblAmount').innerText = t.lblAmount;
-            document.getElementById('lblAddress').innerText = t.lblAddress;
-            document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
-            document.getElementById('lblIdPhoto').innerText = t.lblIdPhoto;
-            document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
-            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
-            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
-            document.getElementById('lblPhone').innerText = t.lblPhone;
-            document.getElementById('lblYourCodeText').innerText = t.lblYourCodeText;
-            document.getElementById('lblFeeText').innerText = t.lblFeeText;
-            document.getElementById('lblPromo').innerText = t.lblPromo;
-            document.getElementById('cookieText').innerText = t.cookieTextMsg;
-            document.getElementById('btnAcceptCookie').innerText = t.acceptText;
-            document.getElementById('btnRejectCookie').innerText = t.rejectText;
+        // Mete tèks yo ajou baze sou lang ki chwazi a
+        document.getElementById('formTitle').innerText = translations[selectedLang].formTitle;
+        document.getElementById('lblLang').innerText = translations[selectedLang].lblLang;
+        
+        document.getElementById('lblStreet').innerText = translations[selectedLang].lblStreet;
+        document.getElementById('street').setAttribute('placeholder', translations[selectedLang].streetPlaceholder);
+        
+        document.getElementById('lblCity').innerText = translations[selectedLang].lblCity;
+        document.getElementById('city').setAttribute('placeholder', translations[selectedLang].cityPlaceholder);
+        
+        document.getElementById('lblState').innerText = translations[selectedLang].lblState;
+        document.getElementById('state').setAttribute('placeholder', translations[selectedLang].statePlaceholder);
+    }
+</script>
 
-            if (currentMode === 'topup') {
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
-            } else {
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
-            }
-
-            updateProfileUI();
-        }
-
-        function toggleSettingsDropdown() {
-            const dropdown = document.getElementById('settingsDropdown');
-            const authDropdown = document.getElementById('authDropdown');
-            authDropdown.style.display = 'none';
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.closest('.menu-container') && !event.target.closest('.auth-header-trigger')) {
-                document.getElementById('settingsDropdown').style.display = 'none';
-                document.getElementById('authDropdown').style.display = 'none';
-            }
-        }
-
-        function handleAuthHeaderClick() {
-            let activeUserEmail = localStorage.getItem('berdActiveUserEmail');
-            if (activeUserEmail) {
-                openSettingsModal();
-            } else {
-                openAuthModal();
-            }
-        }
-
-        function togglePasswordVisibility(inputId, btn) {
-            var input = document.getElementById(inputId);
-            if (input.type === "password") {
-                input.type = "text";
-                btn.innerText = "🙈";
-            } else {
-                input.type = "password";
-                btn.innerText = "👁️";
-            }
-        }
-
-        function openAuthModal() {
-            document.getElementById('authModal').style.display = "flex";
-        }
-
-        function closeAuthModal() {
-            document.getElementById('authModal').style.display = "none";
-        }
-
-        function confirmLogout() {
-            document.getElementById('logoutModal').style.display = 'flex';
-            document.getElementById('settingsDropdown').style.display = 'none';
-            document.getElementById('authDropdown').style.display = 'none';
-        }
-
-        function closeLogoutModal() {
-            document.getElementById('logoutModal').style.display = 'none';
-        }
-
-        function executeLogout() {
-            document.getElementById('logoutModal').style.display = 'none';
-            localStorage.removeItem('berdActiveUserEmail');
-            updateProfileUI();
-            alert("Ou dekonekte siksè nan sistèm nan.");
-        }
-
-        function openSettingsModal() {
-            document.getElementById('settingsDropdown').style.display = 'none';
-            let activeEmail = localStorage.getItem('berdActiveUserEmail');
-            let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
-            let currentUser = users.find(u => u.email === activeEmail);
-
-            if (!currentUser) return;
-
-            document.getElementById('settingsName').value = currentUser.name;
-            document.getElementById('settingsEmail').value = currentUser.email;
-            document.getElementById('settingsModal').style.display = "flex";
-        }
-
-        function closeSettingsModal() {
-            document.getElementById('settingsModal').style.display = "none";
-        }
-
-        function saveSettingsUpdates() {
-            let newName = document.getElementById('settingsName').value.trim();
-            let activeEmail = localStorage.getItem('berdActiveUserEmail');
-            let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
-
-            if (!newName) {
-                alert("Non an pa dwe vid!");
-                return;
-            }
-
-            let userIndex = users.findIndex(u => u.email === activeEmail);
-            if (userIndex !== -1) {
-                users[userIndex].name = newName;
-                localStorage.setItem('berdUsersList', JSON.stringify(users));
-                closeSettingsModal();
-                updateProfileUI();
-                alert("Enfòmasyon pwofil yo mete ajou!");
-            }
-        }
-
-        function deleteUserAccount() {
-            let activeEmail = localStorage.getItem('berdActiveUserEmail');
-            let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
-            let userIndex = users.findIndex(u => u.email === activeEmail);
-
-            if (userIndex === -1) return;
-
-            if (confirm("Èske w sèten ou vle fèmen kont sa a nèt?")) {
-                users.splice(userIndex, 1);
-                localStorage.setItem('berdUsersList', JSON.stringify(users));
-                localStorage.removeItem('berdActiveUserEmail');
-                closeSettingsModal();
-                updateProfileUI();
-                alert("Kont ou an fèmen.");
-            }
-        }
-
-        function handleAuthSubmit() {
-            let name = document.getElementById('authName').value.trim();
-            let email = document.getElementById('authEmail').value.trim().toLowerCase();
-            let password = document.getElementById('authPassword').value.trim();
-
-            if (!name || !email || !password) {
-                alert("Tanpri ranpli tout chan yo kòrèkteman!");
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
-            let existingUser = users.find(u => u.email === email);
-            
-            if (existingUser) {
-                localStorage.setItem('berdActiveUserEmail', email);
-            } else {
-                let newUser = { name, email, password };
-                users.push(newUser);
-                localStorage.setItem('berdUsersList', JSON.stringify(users));
-                localStorage.setItem('berdActiveUserEmail', email);
-            }
-
-            closeAuthModal();
-            updateProfileUI();
-            alert("Enskripsyon oswa koneksyon an reyisi!");
-        }
-
-        function updateProfileUI() {
-            let activeEmail = localStorage.getItem('berdActiveUserEmail');
-            let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
-            let currentUser = users.find(u => u.email === activeEmail);
-
-            let authDropdown = document.getElementById('authDropdown');
-            let settingsAuthContainer = document.getElementById('settingsAuthActionContainer');
-            let profileAvatarContainer = document.getElementById('profileAvatarText');
-            let lang = localStorage.getItem('berdSendLang') || 'ht';
-            let t = translations[lang] || translations['ht'];
-
-            if (currentUser) {
-                document.getElementById('profileNameDisplay').innerText = currentUser.name;
-                document.getElementById('profileContactDisplay').innerText = currentUser.email;
-                profileAvatarContainer.innerText = currentUser.name.slice(0, 2).toUpperCase();
-
-                document.getElementById('userProfileBadge').style.display = "flex";
-
-                document.getElementById('authButtonText').innerText = currentUser.name.split(' ')[0];
-                document.getElementById('headerAvatarIcon').innerText = currentUser.name.slice(0, 1).toUpperCase();
-
-                authDropdown.innerHTML = `<button onclick="confirmLogout()">🚪 ${t.btnLogout}</button>`;
-                settingsAuthContainer.innerHTML = `<button onclick="confirmLogout()">🚪 ${t.btnLogout}</button>`;
-
-                let namePart = currentUser.name.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
-                let uniquePromoCode = "BERD-" + namePart + Math.floor(100 + Math.random() * 900);
-                document.getElementById('assignedPromoCode').innerText = uniquePromoCode;
-                document.getElementById('userReferralDisplay').style.display = "block";
-            } else {
-                document.getElementById('userProfileBadge').style.display = "none";
-                document.getElementById('authButtonText').innerText = t.btnLogin;
-                document.getElementById('headerAvatarIcon').innerText = "👤";
-                document.getElementById('userReferralDisplay').style.display = "none";
-
-                authDropdown.innerHTML = `<button onclick="openAuthModal()">🔑 ${t.btnLogin}</button>`;
-                settingsAuthContainer.innerHTML = `<button onclick="openAuthModal()">🔑 ${t.btnLogin}</button>`;
-            }
-        }
-
-        function setMode(mode) {
-            currentMode = mode;
-            var lang = localStorage.getItem('berdSendLang') || 'ht';
-            var t = translations[lang] || translations['ht'];
-            var promoGroup = document.getElementById('promoCodeGroup');
-
-            if (mode === 'topup') {
-                document.getElementById('tabTopup').classList.add('active');
-                document.getElementById('tabTransfer').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTopup;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTopup;
-                promoGroup.style.display = "block";
-            } else {
-                document.getElementById('tabTransfer').classList.add('active');
-                document.getElementById('tabTopup').classList.remove('active');
-                document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethodTransfer;
-                document.getElementById('btnSubmit').innerText = t.btnSubmitTransfer;
-                promoGroup.style.display = "none";
-            }
-            populateMethods();
-            updateUI();
-        }
-
-        function populateMethods() {
-            var receiver = document.getElementById('receiverCountry').value;
-            var deliverySelect = document.getElementById('deliveryMethod');
-            if (currentMode === 'topup') {
-                deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="claro_do">📶 Claro (Repiblik Dominikèn)</option><option value="altice_do">📶 Altice (Repiblik Dominikèn)</option>' :
-                    '<option value="digicel">📶 Digicel (Ayiti - Dirèk)</option><option value="natcom">📶 Natcom (Ayiti - Dirèk)</option>';
-            } else {
-                deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="terrapay_do">💳 Depo nan Bank / Kont (Repiblik Dominikèn)</option>' :
-                    '<option value="moncash">📱 MonCash (Ayiti)</option><option value="natcash">📱 Natcash (Ayiti)</option><option value="bank">🏦 Kont Bankè an Ayiti</option>';
-            }
-            updateUI();
-        }
-
-        var transferRates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
-        var topupRates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
-
-        function updateUI() {
-            var sender = document.getElementById('senderCountry').value;
-            var receiver = document.getElementById('receiverCountry').value;
-            var amountVal = parseFloat(document.getElementById('sendAmount').value) || 0;
-            var promoInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
-            var promoMsg = document.getElementById('promoAppliedMsg');
-            
-            let discount = 0;
-            if (currentMode === 'topup' && promoInput.length > 0) {
-                discount = 5.0;
-                promoMsg.style.display = "block";
-                promoMsg.innerText = "✅ Kòd la valide! $5 rabè aplike.";
-            } else {
-                promoMsg.style.display = "none";
-            }
-
-            var targetCurrency = (receiver === 'DOP') ? 'DOP' : 'HTG';
-            var conversionRate = ((currentMode === 'topup') ? topupRates : transferRates)[sender][targetCurrency];
-            var totalReceive = amountVal * conversionRate;
-            
-            var baseFee = 0;
-            var feeRow = document.getElementById('feeRow');
-            var feeAmountEl = document.getElementById('feeAmount');
-
-            if (currentMode === 'transfer') {
-                baseFee = amountVal * 0.04;
-                feeRow.style.display = "flex";
-                feeAmountEl.innerText = baseFee.toFixed(2) + " " + sender;
-            } else {
-                feeRow.style.display = "none";
-            }
-
-            var totalCostVal = amountVal + baseFee - (currentMode === 'topup' ? discount : 0);
-            if (totalCostVal < 0) totalCostVal = 0;
-
-            document.getElementById('receiveAmount').innerText = totalReceive.toLocaleString(undefined, {maximumFractionDigits: 2}) + " " + targetCurrency;
-            document.getElementById('totalCost').innerText = totalCostVal.toFixed(2) + " " + sender;
-        }
-
-        window.onload = function() {
-            var savedLang = localStorage.getItem('berdSendLang') || 'ht';
-            document.getElementById('langSwitch').value = savedLang;
-            changeLanguage(savedLang);
-
-            setMode('topup');
-            updateProfileUI();
-            startBannerSlider();
-
-            document.getElementById('senderCountry').onchange = updateUI;
-            document.getElementById('receiverCountry').onchange = function() { populateMethods(); updateUI(); };
-            document.getElementById('deliveryMethod').onchange = updateUI;
-            document.getElementById('sendAmount').oninput = updateUI;
-            document.getElementById('promoCodeInput').oninput = updateUI;
-            
-            document.getElementById('btnSubmit').onclick = function() {
-                var address = document.getElementById('fullAddressInput').value.trim();
-                var idNumber = document.getElementById('idNumberInput').value.trim();
-                var idPhoto = document.getElementById('idPhotoFile').files.length;
-                var phone = document.getElementById('phone').value.trim();
-
-                if (!address) {
-                    alert("Tanpri antre adrès konplè a (Lari, Vil, Depatman)!");
-                    return;
-                }
-                if (!idNumber) {
-                    alert("Tanpri antre nimewo idantifikasyon an!");
-                    return;
-                }
-                if (!idPhoto) {
-                    alert("Tanpri telechaje foto pyès idantifikasyon an pou verifye idantite a!");
-                    return;
-                }
-                if (!phone) {
-                    alert("Tanpri antre nimewo telefòn lan!");
-                    return;
-                }
-
-                alert("Tranzaksyon an ak dokiman idantite yo soumèt avèk siksè nan sistèm nan! 🚀");
-            };
-
-            if (!localStorage.getItem('berdSendCookieChoice')) {
-                document.getElementById('cookieBanner').style.display = 'flex';
-            }
-        };
-
-        function handleCookie(choice) {
-            localStorage.setItem('berdSendCookieChoice', choice);
-            document.getElementById('cookieBanner').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
