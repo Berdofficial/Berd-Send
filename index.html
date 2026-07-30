@@ -230,6 +230,7 @@
                 </div>
             </div>
 
+            <!-- Nouvo chan: Adrès Konplè Destinatè a -->
             <div class="form-group">
                 <label id="lblAddress">Adrès Konplè Destinatè a (Full Address):</label>
                 <div class="input-box">
@@ -237,6 +238,7 @@
                 </div>
             </div>
 
+            <!-- Nouvo chan: Nimewo Idantifikasyon pou Verifikasyon (Sumsub Ready) -->
             <div class="form-group">
                 <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
                 <div class="input-box">
@@ -778,6 +780,7 @@
             document.getElementById('sendAmount').oninput = updateUI;
             document.getElementById('promoCodeInput').oninput = updateUI;
             
+            // Validasyon lè itilizatè a klike pou voye a
             document.getElementById('btnSubmit').onclick = function() {
                 var address = document.getElementById('fullAddressInput').value.trim();
                 var idNumber = document.getElementById('idNumberInput').value.trim();
@@ -796,7 +799,7 @@
                     return;
                 }
 
-                alert("Tranzaksyon an soumèt avèk siksè nan baz la! 🚀");
+                alert("Tranzaksyon an soumèt avèk siksè nan sistèm nan! 🚀");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
