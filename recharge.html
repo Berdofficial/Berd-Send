@@ -22,11 +22,6 @@
         label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
         .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
         .input-box input, .input-box select { background: transparent; border: none; color: #0f172a; font-size: 1rem; width: 100%; outline: none; }
-        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #166534; margin-bottom: 16px; font-weight: 500; }
-        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.88rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
-        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1rem; }
-        .promo-applied-msg { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
         .btn-submit { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: #0052a3; }
         footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.8rem; width: 100%; }
@@ -55,79 +50,44 @@
             </div>
 
             <div class="form-group">
-                <label id="lblSender">Peyi w ap voye soti a:</label>
+                <label id="lblOperator">Operatè (Digicel / Natcom):</label>
                 <div class="input-box">
-                    <select id="senderCountry">
-                        <option value="USD">🇺🇸 Etazini (USD - $)</option>
-                        <option value="BRL">🇧🇷 Brezil (BRL - R$)</option>
+                    <select id="operatorSelect">
+                        <option value="digicel">Digicel Ayiti</option>
+                        <option value="natcom">Natcom Ayiti</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblReceiver">Peyi destinasyon an:</label>
+                <label id="lblPhone">Nimewo Telefòn pou chaje a:</label>
                 <div class="input-box">
-                    <select id="receiverCountry" onchange="populateCarriers()">
-                        <option value="HTG">🇭🇹 Ayiti (HTG - G)</option>
-                        <option value="DOP">🇩🇴 Repiblik Dominikèn (DOP)</option>
+                    <input type="tel" id="rechargePhone" placeholder="+509 ...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblPlan">Montan oswa Pakèt:</label>
+                <div class="input-box">
+                    <select id="planSelect">
+                        <option value="5">$5 USD - Rechaj Rapid</option>
+                        <option value="10">$10 USD - Entènèt / Minit</option>
+                        <option value="20">$20 USD - Pakèt Mwa</option>
                     </select>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label id="lblCarrier">Chwazi Konpayi Telefòn:</label>
-                <div class="input-box">
-                    <select id="carrierSelect">
-                        <option value="digicel">📶 Digicel (Ayiti - Dirèk)</option>
-                        <option value="natcom">📶 Natcom (Ayiti - Dirèk)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblAmount">Montan pou voye a:</label>
-                <div class="input-box">
-                    <input type="number" id="sendAmount" value="100">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblPromoCode">Kòd Pwomosyon ($5 Rabè):</label>
-                <div class="input-box">
-                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5">
-                </div>
-                <div id="promoAppliedMsg" class="promo-applied-msg">✅ Kòd la valide! $5 rabè aplike.</div>
-            </div>
-
-            <div class="conversion-rate">
-                <span id="lblRecipientGets">Moun nan ap resevwa approx:</span> <strong id="receiveAmount">0 HTG</strong>
-            </div>
-
-            <div class="summary-box">
-                <div class="summary-row total">
-                    <span id="lblTotalToPay">Total pou Peye:</span>
-                    <span id="totalCost">100.00 USD</span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblPhone">Nimewo telefòn moun k ap resevwa a:</label>
-                <div class="input-box">
-                    <input type="tel" id="phone" placeholder="+509 ...">
-                </div>
-            </div>
-
-            <button class="btn-submit" id="btnSubmit">Voye Rechaj la Kounye a 🚀</button>
+            <button class="btn-submit" id="btnSubmit">Voye Rechaj la Kounye a ⚡</button>
         </div>
     </div>
     <footer id="footerText">&copy; 2026 BerdSend. Tout dwa rezève.</footer>
 
     <script>
         const translations = {
-            ht: { title: "BerdSend - Rechaj Telefòn", tabTopup: "📱 Rechaj Telefòn", tabTransfer: "💸 Transfè Lajan", lblSender: "Peyi w ap voye soti a:", lblReceiver: "Peyi destinasyon an:", lblCarrier: "Chwazi Konpayi Telefòn:", lblAmount: "Montan pou voye a:", lblPromoCode: "Kòd Pwomosyon ($5 Rabè):", lblRecipientGets: "Moun nan ap resevwa approx:", lblTotalToPay: "Total pou Peye:", lblPhone: "Nimewo telefòn moun k ap resevwa a:", btnSubmit: "Voye Rechaj la Kounye a 🚀", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
-            en: { title: "BerdSend - Mobile Top-Up", tabTopup: "📱 Mobile Top-Up", tabTransfer: "💸 Money Transfer", lblSender: "Country you are sending from:", lblReceiver: "Destination country:", lblCarrier: "Select Mobile Carrier:", lblAmount: "Amount to send:", lblPromoCode: "Promo Code ($5 Off):", lblRecipientGets: "Recipient gets approx:", lblTotalToPay: "Total to Pay:", lblPhone: "Recipient phone number:", btnSubmit: "Send Top-Up Now 🚀", footerText: "&copy; 2026 BerdSend. All rights reserved." },
-            pt: { title: "BerdSend - Recarga de Celular", tabTopup: "📱 Recarga de Celular", tabTransfer: "💸 Transferência", lblSender: "País de envio:", lblReceiver: "País de destino:", lblCarrier: "Selecione a Operadora:", lblAmount: "Valor a enviar:", lblPromoCode: "Código Promocional ($5 de Desconto):", lblRecipientGets: "O destinatário recebe aprox:", lblTotalToPay: "Total a Pagar:", lblPhone: "Número de telefone do destinatário:", btnSubmit: "Enviar Recarga Agora 🚀", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
-            es: { title: "BerdSend - Recarga de Móvil", tabTopup: "📱 Recarga de Móvil", tabTransfer: "💸 Transferencia de Dinero", lblSender: "País desde el que envías:", lblReceiver: "País de destino:", lblCarrier: "Seleccione Operador Móvil:", lblAmount: "Monto a enviar:", lblPromoCode: "Código Promocional ($5 de Descuento):", lblRecipientGets: "El destinatario recibe aprox:", lblTotalToPay: "Total a Pagar:", lblPhone: "Número de teléfono del destinatario:", btnSubmit: "Enviar Recarga Ahora 🚀", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
+            ht: { title: "BerdSend - Rechaj Telefòn", tabTopup: "📱 Rechaj Telefòn", tabTransfer: "💸 Transfè Lajan", lblOperator: "Operatè (Digicel / Natcom):", lblPhone: "Nimewo Telefòn pou chaje a:", lblPlan: "Montan oswa Pakèt:", btnSubmit: "Voye Rechaj la Kounye a ⚡", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
+            en: { title: "BerdSend - Mobile Top-Up", tabTopup: "📱 Mobile Top-Up", tabTransfer: "💸 Money Transfer", lblOperator: "Operator (Digicel / Natcom):", lblPhone: "Phone number to top-up:", lblPlan: "Amount or Plan:", btnSubmit: "Send Top-Up Now ⚡", footerText: "&copy; 2026 BerdSend. All rights reserved." },
+            pt: { title: "BerdSend - Recarga de Celular", tabTopup: "📱 Recarga de Celular", tabTransfer: "💸 Transferência", lblOperator: "Operadora:", lblPhone: "Número de telefone:", lblPlan: "Valor ou Plano:", btnSubmit: "Enviar Recarga Agora ⚡", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
+            es: { title: "BerdSend - Recarga de Móvil", tabTopup: "📱 Recarga de Móvil", tabTransfer: "💸 Transferencia", lblOperator: "Operador:", lblPhone: "Número de teléfono:", lblPlan: "Monto o Paquete:", btnSubmit: "Enviar Recarga Ahora ⚡", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
         };
 
         function changeLanguage(lang) {
@@ -136,52 +96,17 @@
             document.getElementById('pageTitle').innerText = t.title;
             document.getElementById('tabTopup').innerText = t.tabTopup;
             document.getElementById('tabTransfer').innerText = t.tabTransfer;
-            document.getElementById('lblSender').innerText = t.lblSender;
-            document.getElementById('lblReceiver').innerText = t.lblReceiver;
-            document.getElementById('lblCarrier').innerText = t.lblCarrier;
-            document.getElementById('lblAmount').innerText = t.lblAmount;
-            document.getElementById('lblPromoCode').innerText = t.lblPromoCode;
-            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
-            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblOperator').innerText = t.lblOperator;
             document.getElementById('lblPhone').innerText = t.lblPhone;
+            document.getElementById('lblPlan').innerText = t.lblPlan;
             document.getElementById('btnSubmit').innerText = t.btnSubmit;
             document.getElementById('footerText').innerHTML = t.footerText;
-        }
-
-        function populateCarriers() {
-            let receiver = document.getElementById('receiverCountry').value;
-            let select = document.getElementById('carrierSelect');
-            select.innerHTML = receiver === 'DOP' ? 
-                '<option value="claro_do">📶 Claro (Repiblik Dominikèn)</option><option value="altice_do">📶 Altice (Repiblik Dominikèn)</option>' :
-                '<option value="digicel">📶 Digicel (Ayiti - Dirèk)</option><option value="natcom">📶 Natcom (Ayiti - Dirèk)</option>';
-            updateUI();
-        }
-
-        function updateUI() {
-            let sender = document.getElementById('senderCountry').value;
-            let receiver = document.getElementById('receiverCountry').value;
-            let amount = parseFloat(document.getElementById('sendAmount').value) || 0;
-            let promo = document.getElementById('promoCodeInput').value.trim();
-            
-            let rates = { USD: { HTG: 117.0, DOP: 54.0 }, BRL: { HTG: 23.0, DOP: 10.5 } };
-            let targetCurrency = receiver === 'DOP' ? 'DOP' : 'HTG';
-            let receive = amount * rates[sender][targetCurrency];
-            let discount = promo.length > 0 ? 5.0 : 0;
-            let total = Math.max(0, amount - discount);
-
-            document.getElementById('promoAppliedMsg').style.display = discount > 0 ? 'block' : 'none';
-            document.getElementById('receiveAmount').innerText = receive.toLocaleString() + " " + targetCurrency;
-            document.getElementById('totalCost').innerText = total.toFixed(2) + " " + sender;
         }
 
         window.onload = function() {
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = lang;
             changeLanguage(lang);
-            document.getElementById('senderCountry').onchange = updateUI;
-            document.getElementById('sendAmount').oninput = updateUI;
-            document.getElementById('promoCodeInput').oninput = updateUI;
-            updateUI();
         };
     </script>
 </body>
