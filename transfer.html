@@ -56,7 +56,6 @@
                 <a href="transfer.html" class="tab-btn active" id="tabTransfer">💸 Transfè Lajan</a>
             </div>
 
-            <!-- Enfòmasyon ki soti nan pwofil la pou kliyan an verifye -->
             <div class="profile-verify-box">
                 <h4 id="lblVerifyTitle">🔍 Verifikasyon Pwofil Ou:</h4>
                 <div class="profile-info"><strong id="lblProfileName">Non:</strong> <span id="displayUserName">Itilizatè</span></div>
@@ -76,7 +75,7 @@
             <div class="form-group">
                 <label id="lblReceiver">Peyi destinasyon an:</label>
                 <div class="input-box">
-                    <select id="receiverCountry" onchange="populateMethods()">
+                    <select id="receiverCountry">
                         <option value="HTG">🇭🇹 Ayiti (HTG - G)</option>
                         <option value="DOP">🇩🇴 Repiblik Dominikèn (DOP)</option>
                     </select>
@@ -119,7 +118,7 @@
             <div class="form-group">
                 <label id="lblPhone">Nimewo telefòn moun k ap resevwa a:</label>
                 <div class="input-box">
-                    <input type="tel" id="phone" placeholder="+509 ...">
+                    <input type="tel" id="phone" value="+509 ">
                 </div>
             </div>
 
@@ -160,9 +159,17 @@
         function populateMethods() {
             let receiver = document.getElementById('receiverCountry').value;
             let select = document.getElementById('deliveryMethod');
-            select.innerHTML = receiver === 'DOP' ? 
-                '<option value="terrapay_do">💳 Depo nan Bank / Kont (Repiblik Dominikèn)</option>' :
-                '<option value="moncash">📱 MonCash (Ayiti)</option><option value="natcash">📱 Natcash (Ayiti)</option><option value="bank">🏦 Kont Bankè an Ayiti</option>';
+            let phoneInput = document.getElementById('phone');
+            
+            if (receiver === 'DOP') {
+                select.innerHTML = '<option value="terrapay_do">💳 Depo nan Bank / Kont (Repiblik Dominikèn)</option>';
+                phoneInput.value = "+1809 ";
+                phoneInput.placeholder = "+1809 ...";
+            } else {
+                select.innerHTML = '<option value="moncash">📱 MonCash (Ayiti)</option><option value="natcash">📱 Natcash (Ayiti)</option><option value="bank">🏦 Kont Bankè an Ayiti</option>';
+                phoneInput.value = "+509 ";
+                phoneInput.placeholder = "+509 ...";
+            }
             updateUI();
         }
 
@@ -187,7 +194,6 @@
             document.getElementById('langSwitch').value = lang;
             changeLanguage(lang);
 
-            // Chaje non ak adrès itilizatè a depi nan LocalStorage
             let savedName = localStorage.getItem('berdSendName');
             let savedAddress = localStorage.getItem('berdSendAddress');
 
@@ -199,6 +205,7 @@
             }
 
             document.getElementById('senderCountry').onchange = updateUI;
+            document.getElementById('receiverCountry').onchange = populateMethods;
             document.getElementById('sendAmount').oninput = updateUI;
             updateUI();
         };
