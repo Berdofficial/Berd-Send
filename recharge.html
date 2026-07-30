@@ -18,6 +18,9 @@
         .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.88rem; text-decoration: none; text-align: center; }
         .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
+        .profile-verify-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.88rem; }
+        .profile-verify-box h4 { font-size: 0.95rem; color: #0f172a; margin-bottom: 8px; font-weight: 700; }
+        .profile-info { color: #475569; margin-bottom: 4px; }
         .form-group { margin-bottom: 16px; }
         label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
         .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
@@ -49,8 +52,24 @@
                 <a href="transfer.html" class="tab-btn" id="tabTransfer">💸 Transfè Lajan</a>
             </div>
 
+            <div class="profile-verify-box">
+                <h4 id="lblVerifyTitle">🔍 Verifikasyon Pwofil Ou:</h4>
+                <div class="profile-info"><strong id="lblProfileName">Non:</strong> <span id="displayUserName">Itilizatè</span></div>
+                <div class="profile-info"><strong id="lblProfileAddress">Adrès:</strong> <span id="displayUserAddress">Non anrejistre</span></div>
+            </div>
+
             <div class="form-group">
-                <label id="lblOperator">Operatè (Digicel / Natcom):</label>
+                <label id="lblReceiverCountry">Peyi Destinasyon an:</label>
+                <div class="input-box">
+                    <select id="receiverCountry" onchange="updateOperatorList()">
+                        <option value="HT">🇭🇹 Ayiti</option>
+                        <option value="DO">🇩🇴 Repiblik Dominikèn</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblOperator">Operatè:</label>
                 <div class="input-box">
                     <select id="operatorSelect">
                         <option value="digicel">Digicel Ayiti</option>
@@ -62,7 +81,7 @@
             <div class="form-group">
                 <label id="lblPhone">Nimewo Telefòn pou chaje a:</label>
                 <div class="input-box">
-                    <input type="tel" id="rechargePhone" placeholder="+509 ...">
+                    <input type="tel" id="rechargePhone" value="+509 ">
                 </div>
             </div>
 
@@ -84,10 +103,10 @@
 
     <script>
         const translations = {
-            ht: { title: "BerdSend - Rechaj Telefòn", tabTopup: "📱 Rechaj Telefòn", tabTransfer: "💸 Transfè Lajan", lblOperator: "Operatè (Digicel / Natcom):", lblPhone: "Nimewo Telefòn pou chaje a:", lblPlan: "Montan oswa Pakèt:", btnSubmit: "Voye Rechaj la Kounye a ⚡", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
-            en: { title: "BerdSend - Mobile Top-Up", tabTopup: "📱 Mobile Top-Up", tabTransfer: "💸 Money Transfer", lblOperator: "Operator (Digicel / Natcom):", lblPhone: "Phone number to top-up:", lblPlan: "Amount or Plan:", btnSubmit: "Send Top-Up Now ⚡", footerText: "&copy; 2026 BerdSend. All rights reserved." },
-            pt: { title: "BerdSend - Recarga de Celular", tabTopup: "📱 Recarga de Celular", tabTransfer: "💸 Transferência", lblOperator: "Operadora:", lblPhone: "Número de telefone:", lblPlan: "Valor ou Plano:", btnSubmit: "Enviar Recarga Agora ⚡", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
-            es: { title: "BerdSend - Recarga de Móvil", tabTopup: "📱 Recarga de Móvil", tabTransfer: "💸 Transferencia", lblOperator: "Operador:", lblPhone: "Número de teléfono:", lblPlan: "Monto o Paquete:", btnSubmit: "Enviar Recarga Ahora ⚡", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
+            ht: { title: "BerdSend - Rechaj Telefòn", tabTopup: "📱 Rechaj Telefòn", tabTransfer: "💸 Transfè Lajan", lblVerifyTitle: "🔍 Verifikasyon Pwofil Ou:", lblProfileName: "Non:", lblProfileAddress: "Adrès:", lblReceiverCountry: "Peyi Destinasyon an:", lblOperator: "Operatè:", lblPhone: "Nimewo Telefòn pou chaje a:", lblPlan: "Montan oswa Pakèt:", btnSubmit: "Voye Rechaj la Kounye a ⚡", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
+            en: { title: "BerdSend - Mobile Top-Up", tabTopup: "📱 Mobile Top-Up", tabTransfer: "💸 Money Transfer", lblVerifyTitle: "🔍 Profile Verification:", lblProfileName: "Name:", lblProfileAddress: "Address:", lblReceiverCountry: "Destination Country:", lblOperator: "Operator:", lblPhone: "Phone number to top-up:", lblPlan: "Amount or Plan:", btnSubmit: "Send Top-Up Now ⚡", footerText: "&copy; 2026 BerdSend. All rights reserved." },
+            pt: { title: "BerdSend - Recarga de Celular", tabTopup: "📱 Recarga de Celular", tabTransfer: "💸 Transferência", lblVerifyTitle: "🔍 Verificação do Perfil:", lblProfileName: "Nome:", lblProfileAddress: "Endereço:", lblReceiverCountry: "País de Destino:", lblOperator: "Operadora:", lblPhone: "Número de telefone:", lblPlan: "Valor ou Plano:", btnSubmit: "Enviar Recarga Agora ⚡", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
+            es: { title: "BerdSend - Recarga de Móvil", tabTopup: "📱 Recarga de Móvil", tabTransfer: "💸 Transferencia", lblVerifyTitle: "🔍 Verificación de Perfil:", lblProfileName: "Nombre:", lblProfileAddress: "Dirección:", lblReceiverCountry: "País de Destino:", lblOperator: "Operador:", lblPhone: "Número de teléfono:", lblPlan: "Monto o Paquete:", btnSubmit: "Enviar Recarga Ahora ⚡", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
         };
 
         function changeLanguage(lang) {
@@ -96,6 +115,10 @@
             document.getElementById('pageTitle').innerText = t.title;
             document.getElementById('tabTopup').innerText = t.tabTopup;
             document.getElementById('tabTransfer').innerText = t.tabTransfer;
+            document.getElementById('lblVerifyTitle').innerText = t.lblVerifyTitle;
+            document.getElementById('lblProfileName').innerText = t.lblProfileName;
+            document.getElementById('lblProfileAddress').innerText = t.lblProfileAddress;
+            document.getElementById('lblReceiverCountry').innerText = t.lblReceiverCountry;
             document.getElementById('lblOperator').innerText = t.lblOperator;
             document.getElementById('lblPhone').innerText = t.lblPhone;
             document.getElementById('lblPlan').innerText = t.lblPlan;
@@ -103,10 +126,39 @@
             document.getElementById('footerText').innerHTML = t.footerText;
         }
 
+        function updateOperatorList() {
+            let country = document.getElementById('receiverCountry').value;
+            let opSelect = document.getElementById('operatorSelect');
+            let phoneInput = document.getElementById('rechargePhone');
+
+            if (country === 'DO') {
+                opSelect.innerHTML = '<option value="claro_do">Claro (Repiblik Dominikèn)</option><option value="altice_do">Altice (Repiblik Dominikèn)</option>';
+                phoneInput.value = "+1809 ";
+                phoneInput.placeholder = "+1809 ...";
+            } else {
+                opSelect.innerHTML = '<option value="digicel">Digicel Ayiti</option><option value="natcom">Natcom Ayiti</option>';
+                phoneInput.value = "+509 ";
+                phoneInput.placeholder = "+509 ...";
+            }
+        }
+
         window.onload = function() {
             let lang = localStorage.getItem('berdSendLang') || 'ht';
             document.getElementById('langSwitch').value = lang;
             changeLanguage(lang);
+
+            let savedName = localStorage.getItem('berdSendName');
+            let savedAddress = localStorage.getItem('berdSendAddress');
+
+            if(savedName) {
+                document.getElementById('displayUserName').innerText = savedName;
+            }
+            if(savedAddress) {
+                document.getElementById('displayUserAddress').innerText = savedAddress;
+            }
+
+            document.getElementById('receiverCountry').onchange = updateOperatorList;
+            updateOperatorList();
         };
     </script>
 </body>
