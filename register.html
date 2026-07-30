@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">BerdSend - Verifikasyon ak Adrès</title>
+    <title id="pageTitle">BerdSend - Enskripsyon ak Adrès</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -42,7 +42,7 @@
         </header>
 
         <div class="card">
-            <h2 id="pageHeading">🔐 Enskripsyon ak Verifikasyon Idantite</h2>
+            <h2 id="pageHeading">📝 Fòm Enskripsyon ak Adrès</h2>
 
             <div class="form-group">
                 <label id="lblFullName">Non ak Siyati w:</label>
@@ -54,35 +54,21 @@
             <div class="form-group">
                 <label id="lblAddress">Adrès Konplè w (Lari, Vil, Eta/Depatman...):</label>
                 <div class="input-box">
-                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
+                    <textarea id="fullAddressInput" rows="3" placeholder="Lari, Vil, Depatman..."></textarea>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
-                <div class="input-box">
-                    <input type="text" id="idNumberInput" placeholder="eg: P1234567...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
-                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
-                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
-                </div>
-            </div>
-
-            <a href="transfer.html" class="btn-submit" id="btnSubmit">Kontinye nan Transfè a 🚀</a>
+            <button type="button" class="btn-submit" id="btnSubmit" onclick="saveAndProceed()">Kontinye nan Transfè a 🚀</button>
         </div>
     </div>
     <footer id="footerText">&copy; 2026 BerdSend. Tout dwa rezève.</footer>
 
     <script>
         const translations = {
-            ht: { title: "BerdSend - Verifikasyon ak Adrès", heading: "🔐 Enskripsyon ak Verifikasyon Idantite", lblFullName: "Non ak Siyati w:", lblAddress: "Adrès Konplè w (Lari, Vil, Eta/Depatman...):", lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):", lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:", btnSubmit: "Kontinye nan Transfè a 🚀", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
-            en: { title: "BerdSend - Verification & Address", heading: "🔐 Registration & Identity Verification", lblFullName: "Full Name:", lblAddress: "Full Address (Street, City, State/Department...):", lblIdNumber: "Identification Number (ID, Passport, or Tax ID):", lblIdPhoto: "Upload ID / Document Photo:", btnSubmit: "Continue to Transfer 🚀", footerText: "&copy; 2026 BerdSend. All rights reserved." },
-            pt: { title: "BerdSend - Verificação e Endereço", heading: "🔐 Cadastro e Verificação de Identidade", lblFullName: "Nome Completo:", lblAddress: "Endereço Completo (Rua, Cidade, Estado/Departamento...):", lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF/NIF):", lblIdPhoto: "Enviar Foto de Identificação / Documento:", btnSubmit: "Continuar para Transferência 🚀", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
-            es: { title: "BerdSend - Verificación y Dirección", heading: "🔐 Registro y Verificación de Identidad", lblFullName: "Nombre Completo:", lblAddress: "Dirección Completa (Calle, Ciudad, Estado/Departamento...):", lblIdNumber: "Número de Identificación (ID, Pasaporte o NIT):", lblIdPhoto: "Subir Foto de Identificación / Documento:", btnSubmit: "Continuar a Transferencia 🚀", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
+            ht: { title: "BerdSend - Enskripsyon ak Adrès", heading: "📝 Fòm Enskripsyon ak Adrès", lblFullName: "Non ak Siyati w:", lblAddress: "Adrès Konplè w (Lari, Vil, Eta/Depatman...):", btnSubmit: "Kontinye nan Transfè a 🚀", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
+            en: { title: "BerdSend - Registration & Address", heading: "📝 Registration & Address Form", lblFullName: "Full Name:", lblAddress: "Full Address (Street, City, State/Department...):", btnSubmit: "Continue to Transfer 🚀", footerText: "&copy; 2026 BerdSend. All rights reserved." },
+            pt: { title: "BerdSend - Cadastro e Endereço", heading: "📝 Formulário de Cadastro e Endereço", lblFullName: "Nome Completo:", lblAddress: "Endereço Completo (Rua, Cidade, Estado/Departamento...):", btnSubmit: "Continuar para Transferência 🚀", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
+            es: { title: "BerdSend - Registro y Dirección", heading: "📝 Formulario de Registro y Dirección", lblFullName: "Nombre Completo:", lblAddress: "Dirección Completa (Calle, Ciudad, Estado/Departamento...):", btnSubmit: "Continuar a Transferencia 🚀", footerText: "&copy; 2026 BerdSend. Todos os derechos reservados." }
         };
 
         function changeLanguage(lang) {
@@ -92,10 +78,22 @@
             document.getElementById('pageHeading').innerText = t.heading;
             document.getElementById('lblFullName').innerText = t.lblFullName;
             document.getElementById('lblAddress').innerText = t.lblAddress;
-            document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
-            document.getElementById('lblIdPhoto').innerText = t.lblIdPhoto;
             document.getElementById('btnSubmit').innerText = t.btnSubmit;
             document.getElementById('footerText').innerHTML = t.footerText;
+        }
+
+        function saveAndProceed() {
+            let name = document.getElementById('fullNameInput').value.trim();
+            let address = document.getElementById('fullAddressInput').value.trim();
+            
+            if(!name || !address) {
+                alert("Tanpri ranpli tout chan yo anvan ou kontinye!");
+                return;
+            }
+
+            localStorage.setItem('berdSendName', name);
+            localStorage.setItem('berdSendAddress', address);
+            window.location.href = "transfer.html";
         }
 
         window.onload = function() {
