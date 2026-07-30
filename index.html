@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">BerdSend - Money Transfer & Mobile Top-Up</title>
+    <title id="pageTitle">BerdSend - Transfè Lajan ak Rechaj Telefòn</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -192,46 +192,46 @@
 
         <div class="card" id="mainCard">
             <div class="tabs">
-                <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Mobile Top-Up</button>
-                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Money Transfer</button>
+                <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Rechaj Telefòn</button>
+                <button class="tab-btn" id="tabTransfer" onclick="setMode('transfer')">💸 Transfè Lajan</button>
             </div>
 
             <div class="form-group">
-                <label id="lblSender">Country you are sending from:</label>
+                <label id="lblSender">Peyi w ap voye soti a:</label>
                 <div class="input-box">
                     <select id="senderCountry">
-                        <option value="USD">🇺🇸 United States (USD - $)</option>
-                        <option value="BRL">🇧🇷 Brazil (BRL - R$)</option>
+                        <option value="USD">🇺🇸 Etazini (USD - $)</option>
+                        <option value="BRL">🇧🇷 Brezil (BRL - R$)</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblReceiver">Recipient country:</label>
+                <label id="lblReceiver">Peyi destinasyon an:</label>
                 <div class="input-box">
                     <select id="receiverCountry">
-                        <option value="HTG">🇭🇹 Haiti (HTG - G)</option>
-                        <option value="DOP">🇩🇴 Dominican Republic (DOP)</option>
+                        <option value="HTG">🇭🇹 Ayiti (HTG - G)</option>
+                        <option value="DOP">🇩🇴 Repiblik Dominikèn (DOP)</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblDeliveryMethod">Select Mobile Carrier:</label>
+                <label id="lblDeliveryMethod">Chwazi Konpayi Telefòn:</label>
                 <div class="input-box">
                     <select id="deliveryMethod"></select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblAmount">Amount to send:</label>
+                <label id="lblAmount">Montan pou voye a:</label>
                 <div class="input-box">
                     <input type="number" id="sendAmount" value="100">
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblAddress">Adrès Konplè Destinatè a (Full Address):</label>
+                <label id="lblAddress">Adrès Konplè Destinatè a (Lari, Vil, Depatman...):</label>
                 <div class="input-box">
                     <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
                 </div>
@@ -245,44 +245,44 @@
             </div>
 
             <div class="form-group">
-                <label id="lblIdPhoto">Upload ID / Document Photo (Pyès Idantifikasyon / Paspò):</label>
+                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
                 <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
                     <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
             </div>
 
             <div class="form-group" id="promoCodeGroup">
-                <label id="lblPromoCode">Promo Code (Mobile Top-Up only - Get $5 off):</label>
+                <label id="lblPromoCode">Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):</label>
                 <div class="input-box">
-                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5 or FRIEND10">
+                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5 oswa FRIEND10">
                 </div>
                 <div id="promoAppliedMsg" class="promo-applied-msg"></div>
             </div>
 
             <div class="conversion-rate">
-                <span id="lblRecipientGets">Recipient gets approx:</span> <strong id="receiveAmount" style="color: #166534;">0 HTG</strong>
+                <span id="lblRecipientGets">Moun nan ap resevwa approx:</span> <strong id="receiveAmount" style="color: #166534;">0 HTG</strong>
             </div>
 
             <div class="summary-box">
                 <div class="summary-row" id="feeRow" style="display:none;">
-                    <span id="lblFeeText">Transfer Fee (10% VIP Discount):</span>
+                    <span id="lblFeeText">Frè Tranzaksyon (10% Rabè VIP):</span>
                     <span id="feeAmount">--</span>
                 </div>
                 <div class="summary-row total">
-                    <span id="lblTotalToPay">Total to Pay:</span>
+                    <span id="lblTotalToPay">Total pou Peye:</span>
                     <span id="totalCost" style="color: #0f172a;">100.00 USD</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label id="lblPhone">Recipient phone number:</label>
+                <label id="lblPhone">Nimewo telefòn moun k ap resevwa a:</label>
                 <div class="input-box">
                     <input type="tel" id="phone" placeholder="+509 ...">
                 </div>
             </div>
 
             <div id="userReferralDisplay" class="referral-box">
-                <span id="lblYourCodeText">Kòd pwomosyon ou ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
+                <span id="lblYourCodeText">Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
                 <div id="vipBadgeDisplay" class="vip-badge-box">
                     👑 <strong id="vipTitleText">Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
@@ -294,7 +294,7 @@
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
 
-            <button class="btn-submit" id="btnSubmit">Send Transfer Now 🚀</button>
+            <button class="btn-submit" id="btnSubmit">Voye Transfè a Kounye a 🚀</button>
         </div>
     </div>
 
@@ -374,10 +374,10 @@
 
     <!-- Bannè Cookie -->
     <div id="cookieBanner" class="cookie-banner" style="display: none;">
-        <p id="cookieText">We use cookies to improve your browsing experience. Please select your preference:</p>
+        <p id="cookieText">Nou itilize cookies pou amelyore eksperyans ou sou sit la:</p>
         <div class="cookie-buttons">
-            <button class="cookie-btn btn-accept" id="btnAcceptCookie" onclick="handleCookie('accept')">Accept All</button>
-            <button class="cookie-btn btn-reject" id="btnRejectCookie" onclick="handleCookie('reject')">Reject All</button>
+            <button class="cookie-btn btn-accept" id="btnAcceptCookie" onclick="handleCookie('accept')">Aksepte Tout</button>
+            <button class="cookie-btn btn-reject" id="btnRejectCookie" onclick="handleCookie('reject')">Refize Tout</button>
         </div>
     </div>
 
@@ -385,12 +385,12 @@
         <div class="footer-links">
             <a href="blog.html">Blog</a>
             <a href="faq.html">FAQ</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
+            <a href="about.html">Konsènan Nou</a>
+            <a href="contact.html">Kontakte Nou</a>
+            <a href="privacy.html">Konfidansyalite</a>
+            <a href="terms.html"> Kondisyon Itilizasyon</a>
         </div>
-        <div>&copy; 2026 BerdSend. All rights reserved.</div>
+        <div>&copy; 2026 BerdSend. Tout dwa rezève.</div>
     </footer>
 
     <script>
@@ -400,7 +400,7 @@
 
         const translations = {
             ht: {
-                title: "BerdSend - Voye Lajan ak Rechaj Telefòn",
+                title: "BerdSend - Transfè Lajan ak Rechaj Telefòn",
                 tabTopup: "📱 Rechaj Telefòn",
                 tabTransfer: "💸 Transfè Lajan",
                 lblSender: "Peyi w ap voye soti a:",
@@ -430,55 +430,55 @@
                 title: "BerdSend - Money Transfer & Mobile Top-Up",
                 tabTopup: "📱 Mobile Top-Up",
                 tabTransfer: "💸 Money Transfer",
-                lblSender: "Country you are sending from:",
-                lblReceiver: "Recipient country:",
-                lblDeliveryMethodTopup: "Select Mobile Carrier:",
-                lblDeliveryMethodTransfer: "How should they receive it:",
-                lblAmount: "Amount to send:",
-                lblIdNumber: "Identification Number (ID, Passport or Tax ID):",
-                lblAddress: "Recipient Full Address (Street, City, Department...):",
-                lblIdPhoto: "Upload ID / Document Photo:",
-                lblPromoCode: "Promo Code (Mobile Top-Up only - Get $5 off):",
-                lblRecipientGets: "Recipient gets approx:",
-                lblTotalToPay: "Total to Pay:",
-                lblPhone: "Recipient phone number:",
-                lblYourCodeText: "Your referral code ($10 first 7 days, then $5 per invitation):",
-                lblFeeText: "Transfer Fee (10% VIP Discount):",
-                lblPromo: "Receive promotions and news via phone/email (Optional)",
-                btnLogin: "Login",
-                btnLogout: "Logout",
-                btnSubmitTopup: "Send Top-Up Now 🚀",
-                btnSubmitTransfer: "Send Transfer Now 🚀",
-                cookieTextMsg: "We use cookies to improve your browsing experience:",
-                acceptText: "Accept All",
-                rejectText: "Reject All"
+                lblSender: "Peyi w ap voye soti a:",
+                lblReceiver: "Peyi destinasyon an:",
+                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
+                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
+                lblAmount: "Montan pou voye a:",
+                lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):",
+                lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
+                lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:",
+                lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
+                lblRecipientGets: "Moun nan ap resevwa approx:",
+                lblTotalToPay: "Total pou Peye:",
+                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
+                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
+                lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
+                lblPromo: "Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)",
+                btnLogin: "Konekte",
+                btnLogout: "Dekonekte",
+                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
+                btnSubmitTransfer: "Voye Transfè a Kounye a 🚀",
+                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:",
+                acceptText: "Aksepte Tout",
+                rejectText: "Refize Tout"
             },
             pt: {
                 title: "BerdSend - Transferência e Recarga de Celular",
                 tabTopup: "📱 Recarga de Celular",
                 tabTransfer: "💸 Transferência",
-                lblSender: "País de origem:",
-                lblReceiver: "País de destino:",
-                lblDeliveryMethodTopup: "Selecionar Operadora:",
-                lblDeliveryMethodTransfer: "Como deseja que recebam:",
-                lblAmount: "Valor a enviar:",
-                lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF):",
-                lblAddress: "Endereço Completo do Destinatário (Rua, Cidade, Estado...):",
-                lblIdPhoto: "Enviar Foto do Documento / Identificação:",
-                lblPromoCode: "Código Promocional (Apenas Recarga):",
-                lblRecipientGets: "O destinatário recebe aprox:",
-                lblTotalToPay: "Total a Pagar:",
-                lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código ($10 nos primeiros 7 dias, depois $5):",
-                lblFeeText: "Taxa de Transferência (10% VIP):",
-                lblPromo: "Receber promoções e novidades por telefone/e-mail (Opcional)",
-                btnLogin: "Entrar",
-                btnLogout: "Sair",
-                btnSubmitTopup: "Enviar Recarga Agora 🚀",
-                btnSubmitTransfer: "Enviar Transferência Agora 🚀",
-                cookieTextMsg: "Usamos cookies para melhorar sua experiência:",
-                acceptText: "Aceitar Todos",
-                rejectText: "Rejeitar Todos"
+                lblSender: "Peyi w ap voye soti a:",
+                lblReceiver: "Peyi destinasyon an:",
+                lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
+                lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
+                lblAmount: "Montan pou voye a:",
+                lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):",
+                lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
+                lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:",
+                lblPromoCode: "Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):",
+                lblRecipientGets: "Moun nan ap resevwa approx:",
+                lblTotalToPay: "Total pou Peye:",
+                lblPhone: "Nimewo telefòn moun k ap resevwa a:",
+                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
+                lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
+                lblPromo: "Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)",
+                btnLogin: "Konekte",
+                btnLogout: "Dekonekte",
+                btnSubmitTopup: "Voye Rechaj la Kounye a 🚀",
+                btnSubmitTransfer: "Voye Transfè a Kounye a 🚀",
+                cookieTextMsg: "Nou itilize cookies pou amelyore eksperyans ou sou sit la:",
+                acceptText: "Aksepte Tout",
+                rejectText: "Refize Tout"
             }
         };
 
@@ -734,12 +734,12 @@
             var deliverySelect = document.getElementById('deliveryMethod');
             if (currentMode === 'topup') {
                 deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="claro_do">📶 Claro (Dominican Rep.)</option><option value="altice_do">📶 Altice (Dominican Rep.)</option>' :
-                    '<option value="digicel">📶 Digicel (Haiti - Direct)</option><option value="natcom">📶 Natcom (Haiti - Direct)</option>';
+                    '<option value="claro_do">📶 Claro (Repiblik Dominikèn)</option><option value="altice_do">📶 Altice (Repiblik Dominikèn)</option>' :
+                    '<option value="digicel">📶 Digicel (Ayiti - Dirèk)</option><option value="natcom">📶 Natcom (Ayiti - Dirèk)</option>';
             } else {
                 deliverySelect.innerHTML = receiver === 'DOP' ? 
-                    '<option value="terrapay_do">💳 Bank / Wallet Deposit (Dominican Rep.)</option>' :
-                    '<option value="moncash">📱 MonCash (Haiti)</option><option value="natcash">📱 Natcash (Haiti)</option><option value="bank">🏦 Bank Account in Haiti</option>';
+                    '<option value="terrapay_do">💳 Depo nan Bank / Kont (Repiblik Dominikèn)</option>' :
+                    '<option value="moncash">📱 MonCash (Ayiti)</option><option value="natcash">📱 Natcash (Ayiti)</option><option value="bank">🏦 Kont Bankè an Ayiti</option>';
             }
             updateUI();
         }
@@ -808,7 +808,7 @@
                 var phone = document.getElementById('phone').value.trim();
 
                 if (!address) {
-                    alert("Tanpri antre adrès konplè a!");
+                    alert("Tanpri antre adrès konplè a (Lari, Vil, Depatman)!");
                     return;
                 }
                 if (!idNumber) {
