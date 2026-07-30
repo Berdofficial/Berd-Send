@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">BerdSend - Verifikasyon ak Adrès</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 15px; padding-bottom: 90px; }
+        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 18px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); gap: 10px; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+        .app-logo-img { height: 45px; max-width: 140px; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 8px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 25px 20px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+        .input-box input, .input-box textarea { background: transparent; border: none; color: #0f172a; font-size: 1rem; width: 100%; outline: none; resize: vertical; }
+        .btn-submit { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; text-decoration: none; display: block; text-align: center; }
+        .btn-submit:hover { background: #0052a3; }
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.8rem; width: 100%; }
+        h2 { font-size: 1.2rem; margin-bottom: 20px; color: #0f172a; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            </a>
+            <div class="header-right">
+                <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="pt">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="card">
+            <h2 id="pageHeading">🔐 Enskripsyon ak Verifikasyon Idantite</h2>
+
+            <div class="form-group">
+                <label id="lblFullName">Non ak Siyati w:</label>
+                <div class="input-box">
+                    <input type="text" id="fullNameInput" placeholder="Non konplè...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblAddress">Adrès Konplè w (Lari, Vil, Eta/Depatman...):</label>
+                <div class="input-box">
+                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
+                <div class="input-box">
+                    <input type="text" id="idNumberInput" placeholder="eg: P1234567...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
+                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
+                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
+                </div>
+            </div>
+
+            <a href="transfer.html" class="btn-submit" id="btnSubmit">Kontinye nan Transfè a 🚀</a>
+        </div>
+    </div>
+    <footer id="footerText">&copy; 2026 BerdSend. Tout dwa rezève.</footer>
+
+    <script>
+        const translations = {
+            ht: { title: "BerdSend - Verifikasyon ak Adrès", heading: "🔐 Enskripsyon ak Verifikasyon Idantite", lblFullName: "Non ak Siyati w:", lblAddress: "Adrès Konplè w (Lari, Vil, Eta/Depatman...):", lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):", lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:", btnSubmit: "Kontinye nan Transfè a 🚀", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
+            en: { title: "BerdSend - Verification & Address", heading: "🔐 Registration & Identity Verification", lblFullName: "Full Name:", lblAddress: "Full Address (Street, City, State/Department...):", lblIdNumber: "Identification Number (ID, Passport, or Tax ID):", lblIdPhoto: "Upload ID / Document Photo:", btnSubmit: "Continue to Transfer 🚀", footerText: "&copy; 2026 BerdSend. All rights reserved." },
+            pt: { title: "BerdSend - Verificação e Endereço", heading: "🔐 Cadastro e Verificação de Identidade", lblFullName: "Nome Completo:", lblAddress: "Endereço Completo (Rua, Cidade, Estado/Departamento...):", lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF/NIF):", lblIdPhoto: "Enviar Foto de Identificação / Documento:", btnSubmit: "Continuar para Transferência 🚀", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
+            es: { title: "BerdSend - Verificación y Dirección", heading: "🔐 Registro y Verificación de Identidad", lblFullName: "Nombre Completo:", lblAddress: "Dirección Completa (Calle, Ciudad, Estado/Departamento...):", lblIdNumber: "Número de Identificación (ID, Pasaporte o NIT):", lblIdPhoto: "Subir Foto de Identificación / Documento:", btnSubmit: "Continuar a Transferencia 🚀", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang] || translations['ht'];
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('pageHeading').innerText = t.heading;
+            document.getElementById('lblFullName').innerText = t.lblFullName;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
+            document.getElementById('lblIdPhoto').innerText = t.lblIdPhoto;
+            document.getElementById('btnSubmit').innerText = t.btnSubmit;
+            document.getElementById('footerText').innerHTML = t.footerText;
+        }
+
+        window.onload = function() {
+            let lang = localStorage.getItem('berdSendLang') || 'ht';
+            document.getElementById('langSwitch').value = lang;
+            changeLanguage(lang);
+        };
+    </script>
+</body>
+</html>

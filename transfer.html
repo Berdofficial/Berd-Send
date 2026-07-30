@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">BerdSend - Transfè Lajan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #f0f4f8; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 15px; padding-bottom: 90px; }
+        .wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #eee; padding: 15px 18px; margin-bottom: 15px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); gap: 10px; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+        .app-logo-img { height: 45px; max-width: 140px; object-fit: contain; border-radius: 8px; }
+        .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+        .lang-select { background: #fff; border: 1px solid #ddd; color: #333; padding: 6px 8px; border-radius: 8px; outline: none; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
+        .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 25px 20px; width: 100%; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06); margin-bottom: 20px; }
+        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #64748b; font-weight: 600; border-radius: 8px; cursor: pointer; font-size: 0.88rem; text-decoration: none; text-align: center; }
+        .tab-btn.active { background: #0066cc; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 102, 204, 0.25); }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 0.88rem; color: #1e293b; margin-bottom: 6px; font-weight: 700; }
+        .input-box { display: flex; align-items: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+        .input-box input, .input-box select, .input-box textarea { background: transparent; border: none; color: #0f172a; font-size: 1rem; width: 100%; outline: none; resize: vertical; }
+        .conversion-rate { background: #f0fdf4; border: 1px solid #dcfce7; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; color: #166534; margin-bottom: 16px; font-weight: 500; }
+        .summary-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.88rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: #475569; }
+        .summary-row.total { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-bottom: 0; color: #0f172a; font-weight: 800; font-size: 1rem; }
+        .btn-submit { width: 100%; padding: 15px; background: #0066cc; border: none; border-radius: 10px; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: #0052a3; }
+        footer { margin-top: 25px; text-align: center; color: #64748b; font-size: 0.8rem; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <a href="index.html" class="logo-container">
+                <img src="logo.jpg" alt="BerdSend Logo" class="app-logo-img">
+            </a>
+            <div class="header-right">
+                <select class="lang-select" id="langSwitch" onchange="changeLanguage(this.value)">
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="pt">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="tabs">
+                <a href="recharge.html" class="tab-btn" id="tabTopup">📱 Rechaj Telefòn</a>
+                <a href="transfer.html" class="tab-btn active" id="tabTransfer">💸 Transfè Lajan</a>
+            </div>
+
+            <div class="form-group">
+                <label id="lblSender">Peyi w ap voye soti a:</label>
+                <div class="input-box">
+                    <select id="senderCountry">
+                        <option value="USD">🇺🇸 Etazini (USD - $)</option>
+                        <option value="BRL">🇧🇷 Brezil (BRL - R$)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblReceiver">Peyi destinasyon an:</label>
+                <div class="input-box">
+                    <select id="receiverCountry" onchange="populateMethods()">
+                        <option value="HTG">🇭🇹 Ayiti (HTG - G)</option>
+                        <option value="DOP">🇩🇴 Repiblik Dominikèn (DOP)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblDeliveryMethod">Ki jan yo dwe resevwa l:</label>
+                <div class="input-box">
+                    <select id="deliveryMethod">
+                        <option value="moncash">📱 MonCash (Ayiti)</option>
+                        <option value="natcash">📱 Natcash (Ayiti)</option>
+                        <option value="bank">🏦 Kont Bankè an Ayiti</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblAmount">Montan pou voye a:</label>
+                <div class="input-box">
+                    <input type="number" id="sendAmount" value="100">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblAddress">Adrès Konplè Destinatè a (Lari, Vil, Depatman...):</label>
+                <div class="input-box">
+                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
+                <div class="input-box">
+                    <input type="text" id="idNumberInput" placeholder="eg: P1234567...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
+                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
+                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
+                </div>
+            </div>
+
+            <div class="conversion-rate">
+                <span id="lblRecipientGets">Moun nan ap resevwa approx:</span> <strong id="receiveAmount">0 HTG</strong>
+            </div>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span id="lblFeeText">Frè Tranzaksyon (4%):</span>
+                    <span id="feeAmount">4.00 USD</span>
+                </div>
+                <div class="summary-row total">
+                    <span id="lblTotalToPay">Total pou Peye:</span>
+                    <span id="totalCost">104.00 USD</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblPhone">Nimewo telefòn moun k ap resevwa a:</label>
+                <div class="input-box">
+                    <input type="tel" id="phone" placeholder="+509 ...">
+                </div>
+            </div>
+
+            <button class="btn-submit" id="btnSubmit">Voye Transfè a Kounye a 🚀</button>
+        </div>
+    </div>
+    <footer id="footerText">&copy; 2026 BerdSend. Tout dwa rezève.</footer>
+
+    <script>
+        const translations = {
+            ht: { title: "BerdSend - Transfè Lajan", tabTopup: "📱 Rechaj Telefòn", tabTransfer: "💸 Transfè Lajan", lblSender: "Peyi w ap voye soti a:", lblReceiver: "Peyi destinasyon an:", lblDeliveryMethod: "Ki jan yo dwe resevwa l:", lblAmount: "Montan pou voye a:", lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):", lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):", lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:", lblRecipientGets: "Moun nan ap resevwa approx:", lblFeeText: "Frè Tranzaksyon (4%):", lblTotalToPay: "Total pou Peye:", lblPhone: "Nimewo telefòn moun k ap resevwa a:", btnSubmit: "Voye Transfè a Kounye a 🚀", footerText: "&copy; 2026 BerdSend. Tout dwa rezève." },
+            en: { title: "BerdSend - Money Transfer", tabTopup: "📱 Mobile Top-Up", tabTransfer: "💸 Money Transfer", lblSender: "Country you are sending from:", lblReceiver: "Destination country:", lblDeliveryMethod: "Delivery Method:", lblAmount: "Amount to send:", lblAddress: "Recipient Full Address (Street, City, Department...):", lblIdNumber: "Identification Number (ID, Passport, or Tax ID):", lblIdPhoto: "Upload ID / Document Photo:", lblRecipientGets: "Recipient gets approx:", lblFeeText: "Transaction Fee (4%):", lblTotalToPay: "Total to Pay:", lblPhone: "Recipient phone number:", btnSubmit: "Send Transfer Now 🚀", footerText: "&copy; 2026 BerdSend. All rights reserved." },
+            pt: { title: "BerdSend - Transferência", tabTopup: "📱 Recarga de Celular", tabTransfer: "💸 Transferência", lblSender: "País de envio:", lblReceiver: "País de destino:", lblDeliveryMethod: "Método de Entrega:", lblAmount: "Valor a enviar:", lblAddress: "Endereço Completo do Destinatário (Rua, Cidade, Departamento...):", lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF/NIF):", lblIdPhoto: "Enviar Foto de Identificação / Documento:", lblRecipientGets: "O destinatário recebe aprox:", lblFeeText: "Taxa de Transação (4%):", lblTotalToPay: "Total a Pagar:", lblPhone: "Número de telefone do destinatário:", btnSubmit: "Enviar Transferência Agora 🚀", footerText: "&copy; 2026 BerdSend. Todos os direitos reservados." },
+            es: { title: "BerdSend - Transferencia de Dinero", tabTopup: "📱 Recarga de Móvil", tabTransfer: "💸 Transferencia de Dinero", lblSender: "País desde el que envías:", lblReceiver: "País de destino:", lblDeliveryMethod: "Método de Entrega:", lblAmount: "Monto a enviar:", lblAddress: "Dirección Completa del Destinatario (Calle, Ciudad, Departamento...):", lblIdNumber: "Número de Identificación (ID, Pasaporte o NIT):", lblIdPhoto: "Subir Foto de Identificación / Documento:", lblRecipientGets: "El destinatario recibe aprox:", lblFeeText: "Tarifa de Transacción (4%):", lblTotalToPay: "Total a Pagar:", lblPhone: "Número de teléfono del destinatario:", btnSubmit: "Enviar Transferencia Ahora 🚀", footerText: "&copy; 2026 BerdSend. Todos los derechos reservados." }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('berdSendLang', lang);
+            const t = translations[lang] || translations['ht'];
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('tabTopup').innerText = t.tabTopup;
+            document.getElementById('tabTransfer').innerText = t.tabTransfer;
+            document.getElementById('lblSender').innerText = t.lblSender;
+            document.getElementById('lblReceiver').innerText = t.lblReceiver;
+            document.getElementById('lblDeliveryMethod').innerText = t.lblDeliveryMethod;
+            document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblAddress').innerText = t.lblAddress;
+            document.getElementById('lblIdNumber').innerText = t.lblIdNumber;
+            document.getElementById('lblIdPhoto').innerText = t.lblIdPhoto;
+            document.getElementById('lblRecipientGets').innerText = t.lblRecipientGets;
+            document.getElementById('lblFeeText').innerText = t.lblFeeText;
+            document.getElementById('lblTotalToPay').innerText = t.lblTotalToPay;
+            document.getElementById('lblPhone').innerText = t.lblPhone;
+            document.getElementById('btnSubmit').innerText = t.btnSubmit;
+            document.getElementById('footerText').innerHTML = t.footerText;
+        }
+
+        function populateMethods() {
+            let receiver = document.getElementById('receiverCountry').value;
+            let select = document.getElementById('deliveryMethod');
+            select.innerHTML = receiver === 'DOP' ? 
+                '<option value="terrapay_do">💳 Depo nan Bank / Kont (Repiblik Dominikèn)</option>' :
+                '<option value="moncash">📱 MonCash (Ayiti)</option><option value="natcash">📱 Natcash (Ayiti)</option><option value="bank">🏦 Kont Bankè an Ayiti</option>';
+            updateUI();
+        }
+
+        function updateUI() {
+            let sender = document.getElementById('senderCountry').value;
+            let receiver = document.getElementById('receiverCountry').value;
+            let amount = parseFloat(document.getElementById('sendAmount').value) || 0;
+            
+            let rates = { USD: { HTG: 130.5, DOP: 60.2 }, BRL: { HTG: 25.72, DOP: 11.8 } };
+            let targetCurrency = receiver === 'DOP' ? 'DOP' : 'HTG';
+            let receive = amount * rates[sender][targetCurrency];
+            let fee = amount * 0.04;
+            let total = amount + fee;
+
+            document.getElementById('receiveAmount').innerText = receive.toLocaleString() + " " + targetCurrency;
+            document.getElementById('feeAmount').innerText = fee.toFixed(2) + " " + sender;
+            document.getElementById('totalCost').innerText = total.toFixed(2) + " " + sender;
+        }
+
+        window.onload = function() {
+            let lang = localStorage.getItem('berdSendLang') || 'ht';
+            document.getElementById('langSwitch').value = lang;
+            changeLanguage(lang);
+            document.getElementById('senderCountry').onchange = updateUI;
+            document.getElementById('sendAmount').oninput = updateUI;
+            updateUI();
+        };
+    </script>
+</body>
+</html>
