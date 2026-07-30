@@ -9,12 +9,41 @@
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        /* ESTIL HEADER */
+        header {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-container img {
+            height: 45px;
+            object-fit: contain;
+        }
+        .nav-links {
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        /* CONTAINER PRENSIPAL */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
         .container {
+            width: 100%;
             max-width: 650px;
-            margin: 30px auto;
             background: #fff;
             padding: 30px;
             border-radius: 10px;
@@ -40,15 +69,34 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
+        /* Banye Verifikasyon */
         .banner {
             background-color: #fff3cd;
             color: #856404;
             padding: 12px;
             border: 1px solid #ffeeba;
             border-radius: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
             font-weight: bold;
+            font-size: 14px;
+        }
+        /* Banye Pwomosyonèl pou Enskripsyon */
+        .promo-banner {
+            background: linear-gradient(135deg, #0066cc, #00c6ff);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .promo-banner h3 {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        .promo-banner p {
+            margin: 0;
             font-size: 14px;
         }
         .btn {
@@ -83,101 +131,136 @@
         .hidden {
             display: none !important;
         }
+
+        /* ESTIL FOOTER */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- ================= PATI 1: ENKRIPSYON AK VERIFIKASYON ================= -->
-        <div id="registration-section">
-            <div class="banner">
-                ⚠️ Ou dwe enskri epi pase verifikasyon idantite a anvan ou jwenn aksè nan sèvis yo.
-            </div>
-            <h2>BerdSend - Enskripsyon & Verifikasyon Idantite</h2>
+    <!-- HEADER SOU TOUT PAJ YO -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.jpg" alt="BerdSend Logo">
+        </div>
+        <div class="nav-links">
+            <span>BerdSend Secure Platform</span>
+        </div>
+    </header>
+
+    <!-- KONTENI PRENSIPAL -->
+    <div class="main-content">
+        <div class="container">
             
-            <form id="verifyForm" onsubmit="handleRegistration(event)">
-                <div class="form-group">
-                    <label for="fullname">Non konplè:</label>
-                    <input type="text" id="fullname" placeholder="Antre non ak siyati w" required>
+            <!-- PATI 1: ENKRIPSYON AK VERIFIKASYON -->
+            <div id="registration-section">
+                
+                <!-- Banye Pwomosyonèl pou Motive Kliyan yo -->
+                <div class="promo-banner">
+                    <h3>🎉 Jwenn $5 Rabè sou Premye Rechaj ou!</h3>
+                    <p>Enskri jodi a epi verifye kont ou pou w jwenn aksè imedyat nan tout sèvis rapid nou yo.</p>
                 </div>
-                <div class="form-group">
-                    <label for="email">Imèl:</label>
-                    <input type="email" id="email" placeholder="eg: ou@gmail.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="id-number">Nimewo Idantifikasyon (ID, Passaporte oswa NIF):</label>
-                    <input type="text" id="id-number" placeholder="eg: P1234567 oswa NIF w..." required>
-                </div>
-                <div class="form-group">
-                    <label for="id-file">Voye Foto Idantifikasyon / Dokiman:</label>
-                    <input type="file" id="id-file" required>
-                </div>
-                <button type="submit" class="btn">Konfime Enskripsyon epi Pase nan Sèvis yo 🚀</button>
-            </form>
-        </div>
 
-        <!-- ================= PATI 2: PAJ SÈVIS (TRANSFÈ AK RECHAJ MOBIL) ================= -->
-        <div id="service-section" class="hidden">
-            <h2>Paj Sèvis BerdSend</h2>
-            <p style="text-align: center; color: #28a745; font-weight: bold;">✅ Kont ou verifye avèk siksè!</p>
-
-            <!-- Bouton Chwa Sèvis yo -->
-            <div class="tab-buttons">
-                <button type="button" class="tab-btn">📱 Recarga de Celular</button>
-                <button type="button" class="tab-btn" style="background: #6c757d;">💸 Transferência</button>
+                <div class="banner">
+                    ⚠️ Ou dwe enskri epi pase verifikasyon idantite a anvan ou jwenn aksè nan sèvis yo.
+                </div>
+                
+                <h2>Enskripsyon & Verifikasyon Idantite</h2>
+                
+                <form id="verifyForm" onsubmit="handleRegistration(event)">
+                    <div class="form-group">
+                        <label for="fullname">Non konplè:</label>
+                        <input type="text" id="fullname" placeholder="Antre non ak siyati w" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Imèl:</label>
+                        <input type="email" id="email" placeholder="eg: ou@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id-number">Nimewo Idantifikasyon (ID, Passaporte oswa NIF):</label>
+                        <input type="text" id="id-number" placeholder="eg: P1234567 oswa NIF w..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id-file">Voye Foto Idantifikasyon / Dokiman:</label>
+                        <input type="file" id="id-file" required>
+                    </div>
+                    <button type="submit" class="btn">Konfime Enskripsyon epi Pase nan Sèvis yo 🚀</button>
+                </form>
             </div>
 
-            <form id="serviceForm">
-                <div class="form-group">
-                    <label>País de envio:</label>
-                    <select>
-                        <option>🇺🇸 Etazini (USD - $)</option>
-                        <option>🇧🇷 Brezil (BRL - R$)</option>
-                    </select>
+            <!-- PATI 2: PAJ SÈVIS (TRANSFÈ AK RECHAJ MOBIL) -->
+            <div id="service-section" class="hidden">
+                <h2>Paj Sèvis BerdSend</h2>
+                <p style="text-align: center; color: #28a745; font-weight: bold;">✅ Kont ou verifye avèk siksè!</p>
+
+                <div class="tab-buttons">
+                    <button type="button" class="tab-btn">📱 Recarga de Celular</button>
+                    <button type="button" class="tab-btn" style="background: #6c757d;">💸 Transferência</button>
                 </div>
 
-                <div class="form-group">
-                    <label>País de destino:</label>
-                    <select>
-                        <option>🇭🇹 Ayiti (HTG - G)</option>
-                        <option>🇩🇴 Repiblik Dominikèn (DOP)</option>
-                    </select>
-                </div>
+                <form id="serviceForm">
+                    <div class="form-group">
+                        <label>País de envio:</label>
+                        <select>
+                            <option>🇺🇸 Etazini (USD - $)</option>
+                            <option>🇧🇷 Brezil (BRL - R$)</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>Selecione a Operadora:</label>
-                    <select>
-                        <option>📶 Digicel (Ayiti - Dirèk)</option>
-                        <option>📶 Natcom (Ayiti - Dirèk)</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label>País de destino:</label>
+                        <select>
+                            <option>🇭🇹 Ayiti (HTG - G)</option>
+                            <option>🇩🇴 Repiblik Dominikèn (DOP)</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>Valor a enviar ($):</label>
-                    <input type="number" value="100">
-                </div>
+                    <div class="form-group">
+                        <label>Selecione a Operadora:</label>
+                        <select>
+                            <option>📶 Digicel (Ayiti - Dirèk)</option>
+                            <option>📶 Natcom (Ayiti - Dirèk)</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>Endereço Completo do Destinatário:</label>
-                    <input type="text" placeholder="Digite rua, cidade, estado/departamento...">
-                </div>
+                    <div class="form-group">
+                        <label>Valor a enviar ($):</label>
+                        <input type="number" value="100">
+                    </div>
 
-                <div class="form-group">
-                    <label>Número de telefone do destinatário:</label>
-                    <input type="text" placeholder="+509 ...">
-                </div>
+                    <div class="form-group">
+                        <label>Endereço Completo do Destinatário:</label>
+                        <input type="text" placeholder="Digite rua, cidade, estado/departamento...">
+                    </div>
 
-                <div class="form-group">
-                    <label>Código Promocional (Apenas Recarga - $5 de Desconto):</label>
-                    <input type="text" placeholder="eg: BERD5 oswa FRIEND10">
-                </div>
+                    <div class="form-group">
+                        <label>Número de telefone do destinatário:</label>
+                        <input type="text" placeholder="+509 ...">
+                    </div>
 
-                <button type="button" class="btn" onclick="alert('Tranzaksyon voye avèk siksè!')">Enviar Recarga Agora 🚀</button>
-            </form>
+                    <div class="form-group">
+                        <label>Código Promocional (Apenas Recarga - $5 de Desconto):</label>
+                        <input type="text" placeholder="eg: BERD5 oswa FRIEND10">
+                    </div>
+
+                    <button type="button" class="btn" onclick="alert('Tranzaksyon voye avèk siksè!')">Enviar Recarga Agora 🚀</button>
+                </form>
+            </div>
+
         </div>
-
     </div>
+
+    <!-- FOOTER SOU TOUT PAJ YO -->
+    <footer>
+        <p>&copy; 2026 BerdSend. Tout dwa rezève. | Sekirite ak Konfidansyalite Garanti.</p>
+    </footer>
 
     <script>
         function handleRegistration(event) {
@@ -186,7 +269,7 @@
             // Kache seksyon enskripsyon an
             document.getElementById('registration-section').classList.add('hidden');
             
-            // Montre seksyon sèvis la (Transfè ak Rechaj)
+            // Montre seksyon sèvis la
             document.getElementById('service-section').classList.remove('hidden');
         }
     </script>
