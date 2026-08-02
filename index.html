@@ -135,32 +135,32 @@
                             <label id="labelDest" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Destinasyon *</label>
                             <select id="destCountry" onchange="onDestinationChange()" class="w-full country-select-custom font-semibold text-blue-400">
                                 <optgroup id="groupCaribbean" label="Karayib">
-                                    <option value="HT">🇭🇹 Ayiti (+509)</option>
-                                    <option value="DO">🇩🇴 Repiblik Dominiken (+1)</option>
-                                    <option value="JM">🇯🇲 Jamayik (+1)</option>
-                                    <option value="CU">🇨🇺 Kiba (+53)</option>
-                                    <option value="BS">🇧🇸 Bahamas (+1)</option>
-                                    <option value="GP">🇬🇵 Gwadloup (+590)</option>
-                                    <option value="MQ">🇲🇶 Matinik (+596)</option>
+                                    <option value="HT" id="destHT">🇭🇹 Ayiti (+509)</option>
+                                    <option value="DO" id="destDO">🇩🇴 Repiblik Dominiken (+1)</option>
+                                    <option value="JM" id="destJM">🇯🇲 Jamayik (+1)</option>
+                                    <option value="CU" id="destCU">🇨uba (+53)</option>
+                                    <option value="BS" id="destBS">🇧🇸 Bahamas (+1)</option>
+                                    <option value="GP" id="destGP">🇬🇵 Gwadloup (+590)</option>
+                                    <option value="MQ" id="destMQ">🇲🇶 Matinik (+596)</option>
                                 </optgroup>
                                 <optgroup id="groupLatinAmerica" label="Amerik Latin">
-                                    <option value="CO">🇨🇴 Kolonbi (+57)</option>
-                                    <option value="BR">🇧🇷 Brezil (+55)</option>
-                                    <option value="MX">🇲🇽 Meksik (+52)</option>
-                                    <option value="VE">🇻🇪 Venezwela (+58)</option>
-                                    <option value="AR">🇦🇷 Ajantin (+54)</option>
-                                    <option value="PE">🇵🇪 Pewou (+51)</option>
-                                    <option value="CL">🇨🇱 Chili (+56)</option>
+                                    <option value="CO" id="destCO">🇨🇴 Kolonbi (+57)</option>
+                                    <option value="BR" id="destBR">🇧🇷 Brezil (+55)</option>
+                                    <option value="MX" id="destMX">🇲🇽 Meksik (+52)</option>
+                                    <option value="VE" id="destVE">🇻🇪 Venezwela (+58)</option>
+                                    <option value="AR" id="destAR">🇦🇷 Ajantin (+54)</option>
+                                    <option value="PE" id="destPE">🇵🇪 Pewou (+51)</option>
+                                    <option value="CL" id="destCL">🇨🇱 Chili (+56)</option>
                                 </optgroup>
                                 <optgroup id="groupAfrica" label="Afrik">
-                                    <option value="NG">🇳🇬 Nijerya (+234)</option>
-                                    <option value="SN">🇸🇳 Senegal (+221)</option>
-                                    <option value="GH">🇬🇭 Gana (+233)</option>
-                                    <option value="CM">🇨🇲 Kamewoun (+237)</option>
-                                    <option value="CI">🇨🇮 Kòt Divwa (+225)</option>
-                                    <option value="CD">🇨🇩 Kongo (RDC) (+243)</option>
-                                    <option value="KE">🇰🇪 Kenya (+254)</option>
-                                    <option value="MA">🇲🇦 Mawòk (+212)</option>
+                                    <option value="NG" id="destNG">🇳🇬 Nijerya (+234)</option>
+                                    <option value="SN" id="destSN">🇸🇳 Senegal (+221)</option>
+                                    <option value="GH" id="destGH">🇬🇭 Gana (+233)</option>
+                                    <option value="CM" id="destCM">🇨🇲 Kamewoun (+237)</option>
+                                    <option value="CI" id="destCI">🇨🇮 Kòt Divwa (+225)</option>
+                                    <option value="CD" id="destCD">🇨🇩 Kongo (RDC) (+243)</option>
+                                    <option value="KE" id="destKE">🇰🇪 Kenya (+254)</option>
+                                    <option value="MA" id="destMA">🇲🇦 Mawòk (+212)</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -601,7 +601,7 @@
                 cCancelBtn: "Anile",
                 cSaveBtn: "Anrejistre Preferans yo",
                 downloadReceiptText: "Telechaje Resi a kòm PDF",
-                countries: { US: "Etazini (USA)", CA: "Kanada", FR: "Lafrans", BR: "Brezil", CL: "Chili", DO: "Repiblik Dominiken", HT: "Ayiti" },
+                countries: { US: "Etazini (USA)", CA: "Kanada", FR: "Lafrans", BR: "Brezil", CL: "Chili", DO: "Repiblik Dominiken", HT: "Ayiti", JM: "Jamayik", CU: "Kiba", BS: "Bahamas", GP: "Gwadloup", MQ: "Matinik", CO: "Kolonbi", MX: "Meksik", VE: "Venezwela", AR: "Ajantin", PE: "Pewou", NG: "Nijerya", SN: "Senegal", GH: "Gana", CM: "Kamewoun", CI: "Kòt Divwa", CD: "Kongo (RDC)", KE: "Kenya", MA: "Mawòk" },
                 groups: { Caribbean: "Karayib", LatinAmerica: "Amerik Latin", Africa: "Afrik" }
             },
             en: {
@@ -646,7 +646,7 @@
                 cCancelBtn: "Cancel",
                 cSaveBtn: "Save Preferences",
                 downloadReceiptText: "Download Receipt as PDF",
-                countries: { US: "United States (USA)", CA: "Canada", FR: "France", BR: "Brazil", CL: "Chile", DO: "Dominican Republic", HT: "Haiti" },
+                countries: { US: "United States (USA)", CA: "Canada", FR: "France", BR: "Brazil", CL: "Chile", DO: "Dominican Republic", HT: "Haiti", JM: "Jamaica", CU: "Cuba", BS: "Bahamas", GP: "Guadeloupe", MQ: "Martinique", CO: "Colombia", MX: "Mexico", VE: "Venezuela", AR: "Argentina", PE: "Peru", NG: "Nigeria", SN: "Senegal", GH: "Ghana", CM: "Cameroon", CI: "Ivory Coast", CD: "Congo (DRC)", KE: "Kenya", MA: "Morocco" },
                 groups: { Caribbean: "Caribbean", LatinAmerica: "Latin America", Africa: "Africa" }
             },
             es: {
@@ -691,7 +691,7 @@
                 cCancelBtn: "Cancelar",
                 cSaveBtn: "Guardar Preferencias",
                 downloadReceiptText: "Descargar Recibo como PDF",
-                countries: { US: "Estados Unidos (USA)", CA: "Canadá", FR: "Francia", BR: "Brasil", CL: "Chile", DO: "República Dominicana", HT: "Haití" },
+                countries: { US: "Estados Unidos (USA)", CA: "Canadá", FR: "Francia", BR: "Brasil", CL: "Chile", DO: "República Dominicana", HT: "Haití", JM: "Jamaica", CU: "Cuba", BS: "Bahamas", GP: "Guadalupe", MQ: "Martinica", CO: "Colombia", MX: "México", VE: "Venezuela", AR: "Argentina", PE: "Perú", NG: "Nigeria", SN: "Senegal", GH: "Ghana", CM: "Camerún", CI: "Costa de Marfil", CD: "Congo (RDC)", KE: "Kenia", MA: "Marruecos" },
                 groups: { Caribbean: "Caribe", LatinAmerica: "América Latina", Africa: "África" }
             },
             fr: {
@@ -736,7 +736,7 @@
                 cCancelBtn: "Annuler",
                 cSaveBtn: "Enregistrer les Préférences",
                 downloadReceiptText: "Télécharger le reçu en PDF",
-                countries: { US: "États-Unis (USA)", CA: "Canada", FR: "France", BR: "Brésil", CL: "Chili", DO: "République Dominicaine", HT: "Haïti" },
+                countries: { US: "États-Unis (USA)", CA: "Canada", FR: "France", BR: "Brésil", CL: "Chili", DO: "République Dominicaine", HT: "Haïti", JM: "Jamaïque", CU: "Cuba", BS: "Bahamas", GP: "Guadeloupe", MQ: "Martinique", CO: "Colombie", MX: "Mexique", VE: "Venezuela", AR: "Argentine", PE: "Pérou", NG: "Nigéria", SN: "Sénégal", GH: "Ghana", CM: "Cameroun", CI: "Côte d'Ivoire", CD: "Congo (RDC)", KE: "Kenya", MA: "Maroc" },
                 groups: { Caribbean: "Caraïbes", LatinAmerica: "Amérique Latine", Africa: "Afrique" }
             },
             pt: {
@@ -781,7 +781,7 @@
                 cCancelBtn: "Cancelar",
                 cSaveBtn: "Salvar Preferências",
                 downloadReceiptText: "Baixar Recibo em PDF",
-                countries: { US: "Estados Unidos (EUA)", CA: "Canadá", FR: "França", BR: "Brasil", CL: "Chile", DO: "República Dominicana", HT: "Haiti" },
+                countries: { US: "Estados Unidos (EUA)", CA: "Canadá", FR: "França", BR: "Brasil", CL: "Chile", DO: "República Dominicana", HT: "Haiti", JM: "Jamaica", CU: "Cuba", BS: "Bahamas", GP: "Guadalupe", MQ: "Martinica", CO: "Colômbia", MX: "México", VE: "Venezuela", AR: "Argentina", PE: "Peru", NG: "Nigéria", SN: "Senegal", GH: "Gana", CM: "Camarões", CI: "Costa do Marfim", CD: "Congo (RDC)", KE: "Quênia", MA: "Marrocos" },
                 groups: { Caribbean: "Caribe", LatinAmerica: "América Latina", Africa: "África" }
             }
         };
@@ -841,6 +841,32 @@
             document.getElementById('optCL').textContent = "🇨🇱 " + t.countries.CL;
             document.getElementById('optDO').textContent = "🇩🇴 " + t.countries.DO;
             document.getElementById('optHT').textContent = "🇭🇹 " + t.countries.HT;
+
+            // Translate Destination Countries
+            if (document.getElementById('destHT')) document.getElementById('destHT').textContent = "🇭🇹 " + t.countries.HT + " (+509)";
+            if (document.getElementById('destDO')) document.getElementById('destDO').textContent = "🇩🇴 " + t.countries.DO + " (+1)";
+            if (document.getElementById('destJM')) document.getElementById('destJM').textContent = "🇯🇲 " + t.countries.JM + " (+1)";
+            if (document.getElementById('destCU')) document.getElementById('destCU').textContent = "🇨🇺 " + t.countries.CU + " (+53)";
+            if (document.getElementById('destBS')) document.getElementById('destBS').textContent = "🇧🇸 " + t.countries.BS + " (+1)";
+            if (document.getElementById('destGP')) document.getElementById('destGP').textContent = "🇬🇵 " + t.countries.GP + " (+590)";
+            if (document.getElementById('destMQ')) document.getElementById('destMQ').textContent = "🇲🇶 " + t.countries.MQ + " (+596)";
+            
+            if (document.getElementById('destCO')) document.getElementById('destCO').textContent = "🇨🇴 " + t.countries.CO + " (+57)";
+            if (document.getElementById('destBR')) document.getElementById('destBR').textContent = "🇧🇷 " + t.countries.BR + " (+55)";
+            if (document.getElementById('destMX')) document.getElementById('destMX').textContent = "🇲🇽 " + t.countries.MX + " (+52)";
+            if (document.getElementById('destVE')) document.getElementById('destVE').textContent = "🇻🇪 " + t.countries.VE + " (+58)";
+            if (document.getElementById('destAR')) document.getElementById('destAR').textContent = "🇦🇷 " + t.countries.AR + " (+54)";
+            if (document.getElementById('destPE')) document.getElementById('destPE').textContent = "🇵🇪 " + t.countries.PE + " (+51)";
+            if (document.getElementById('destCL')) document.getElementById('destCL').textContent = "🇨🇱 " + t.countries.CL + " (+56)";
+
+            if (document.getElementById('destNG')) document.getElementById('destNG').textContent = "🇳🇬 " + t.countries.NG + " (+234)";
+            if (document.getElementById('destSN')) document.getElementById('destSN').textContent = "🇸🇳 " + t.countries.SN + " (+221)";
+            if (document.getElementById('destGH')) document.getElementById('destGH').textContent = "🇬🇭 " + t.countries.GH + " (+233)";
+            if (document.getElementById('destCM')) document.getElementById('destCM').textContent = "🇨🇲 " + t.countries.CM + " (+237)";
+            if (document.getElementById('destCI')) document.getElementById('destCI').textContent = "🇨🇮 " + t.countries.CI + " (+225)";
+            if (document.getElementById('destCD')) document.getElementById('destCD').textContent = "🇨🇩 " + t.countries.CD + " (+243)";
+            if (document.getElementById('destKE')) document.getElementById('destKE').textContent = "🇰🇪 " + t.countries.KE + " (+254)";
+            if (document.getElementById('destMA')) document.getElementById('destMA').textContent = "🇲🇦 " + t.countries.MA + " (+212)";
 
             // Translate Groups
             document.getElementById('groupCaribbean').label = t.groups.Caribbean;
