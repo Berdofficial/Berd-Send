@@ -192,6 +192,7 @@
             </div>
         </div>
 
+        <!-- Seksyon Transfè ak Rechaj Ansanm -->
         <div class="card" id="mainCard">
             <div class="tabs">
                 <button class="tab-btn active" id="tabTopup" onclick="setMode('topup')">📱 Rechaj Telefòn</button>
@@ -232,35 +233,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label id="lblAddress">Adrès Konplè Destinatè a (Lari, Vil, Depatman...):</label>
-                <div class="input-box">
-                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
-                <div class="input-box">
-                    <input type="text" id="idNumberInput" placeholder="eg: P1234567 oswa NIF w...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
-                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
-                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
-                </div>
-            </div>
-
-            <div class="form-group" id="promoCodeGroup">
-                <label id="lblPromoCode">Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):</label>
-                <div class="input-box">
-                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5 oswa FRIEND10">
-                </div>
-                <div id="promoAppliedMsg" class="promo-applied-msg"></div>
-            </div>
-
             <div class="conversion-rate">
                 <span id="lblRecipientGets">Moun nan ap resevwa approx:</span> <strong id="receiveAmount" style="color: #166534;">0 HTG</strong>
             </div>
@@ -283,11 +255,47 @@
                 </div>
             </div>
 
+            <div class="form-group" id="promoCodeGroup">
+                <label id="lblPromoCode">Kòd Pwomosyon (Sèlman pou Rechaj - $5 Rabè):</label>
+                <div class="input-box">
+                    <input type="text" id="promoCodeInput" placeholder="eg: BERD5 oswa FRIEND10">
+                </div>
+                <div id="promoAppliedMsg" class="promo-applied-msg"></div>
+            </div>
+
             <div id="userReferralDisplay" class="referral-box">
-                <span id="lblYourCodeText">Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):</span><br>
+                <span id="lblYourCodeText">Kòd pwomosyon w ($10 pou chak envitasyon nan 7 premye jou yo, apre sa $5 pou chak envitasyon):</span><br>
                 <strong id="assignedPromoCode">---</strong>
                 <div id="vipBadgeDisplay" class="vip-badge-box">
                     👑 <strong id="vipTitleText">Badj VIP Deploke!</strong> Ou gen 20+ envitasyon epi w ap benefisye 10% rabè sou frè MonCash ak Natcash.
+                </div>
+            </div>
+
+            <button class="btn-submit" id="btnSubmit">Voye Transfè a Kounye a 🚀</button>
+        </div>
+
+        <!-- Seksyon Enskripsyon ak Verifikasyon Idantifikasyon / Adrès Sezi Apa -->
+        <div class="card" id="verificationCard">
+            <h3 style="margin-bottom: 16px; color: #0f172a; font-size: 1.1rem;" id="secVerifyTitle">📋 Enskripsyon ak Verifikasyon Idantifikasyon</h3>
+            
+            <div class="form-group">
+                <label id="lblAddress">Adrès Konplè Destinatè a / Itilizatè a (Lari, Vil, Depatman...):</label>
+                <div class="input-box">
+                    <textarea id="fullAddressInput" rows="2" placeholder="Lari, Vil, Depatman..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdNumber">Nimewo Idantifikasyon (ID, Paspò oswa NIF):</label>
+                <div class="input-box">
+                    <input type="text" id="idNumberInput" placeholder="eg: P1234567 oswa NIF w...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="lblIdPhoto">Voye Foto Pyès Idantifikasyon / Dokiman an:</label>
+                <div class="input-box" style="padding: 8px 12px; background: #fafafa;">
+                    <input type="file" id="idPhotoFile" accept="image/*,.pdf" style="font-size: 0.85rem; cursor: pointer;">
                 </div>
             </div>
 
@@ -295,8 +303,6 @@
                 <input type="checkbox" id="promoCheckbox" checked>
                 <span id="lblPromo">Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)</span>
             </label>
-
-            <button class="btn-submit" id="btnSubmit">Voye Transfè a Kounye a 🚀</button>
         </div>
     </div>
 
@@ -315,9 +321,9 @@
             </div>
 
             <div class="form-group">
-                <label id="lblAuthEmail">Adrès Imèl:</label>
+                <label id="lblAuthEmail">Adrès Imèl (Obligatwa pou Tranzaksyon):</label>
                 <div class="input-box">
-                    <input type="email" id="authEmail" placeholder="eg: topberd@gmail.com">
+                    <input type="email" id="authEmail" placeholder="eg: topberd@gmail.com" required>
                 </div>
             </div>
 
@@ -412,7 +418,7 @@
                 lblDeliveryMethodTopup: "Chwazi Konpayi Telefòn:",
                 lblDeliveryMethodTransfer: "Ki jan yo dwe resevwa l:",
                 lblAmount: "Montan pou voye a:",
-                lblAddress: "Adrès Konplè Destinatè a (Lari, Vil, Depatman...):",
+                lblAddress: "Adrès Konplè Destinatè a / Itilizatè a (Lari, Vil, Depatman...):",
                 addressPlaceholder: "Antre lari, vil, depatman...",
                 lblIdNumber: "Nimewo Idantifikasyon (ID, Paspò oswa NIF):",
                 lblIdPhoto: "Voye Foto Pyès Idantifikasyon / Dokiman an:",
@@ -420,7 +426,7 @@
                 lblRecipientGets: "Moun nan ap resevwa approx:",
                 lblTotalToPay: "Total pou Peye:",
                 lblPhone: "Nimewo telefòn moun k ap resevwa a:",
-                lblYourCodeText: "Kòd pwomosyon w ($10 pou 7 premye jou yo, apre sa $5 pa envitasyon):",
+                lblYourCodeText: "Kòd pwomosyon w ($10 pou chak envitasyon nan 7 premye jou yo, apre sa $5 pou chak envitasyon):",
                 lblFeeText: "Frè Tranzaksyon (10% Rabè VIP):",
                 lblPromo: "Vle resevwa promosyon ak nouvèl sou telefòn / imèl mwen (Opsyonèl)",
                 btnLogin: "Konekte",
@@ -433,6 +439,7 @@
                 rejectText: "Rejte Tout",
                 menuSettings: "⚙️ Paramèt Kont",
                 menuFaq: "❓ Èd / Sipò",
+                secVerifyTitle: "📋 Enskripsyon ak Verifikasyon Idantifikasyon",
                 footerBlog: "Blog",
                 footerFaq: "FAQ",
                 footerAbout: "Konsènan Nou",
@@ -451,7 +458,7 @@
                 lblDeliveryMethodTopup: "Select Mobile Carrier:",
                 lblDeliveryMethodTransfer: "Delivery Method:",
                 lblAmount: "Amount to send:",
-                lblAddress: "Recipient Full Address (Street, City, Department...):",
+                lblAddress: "Recipient / User Full Address (Street, City, Department...):",
                 addressPlaceholder: "Enter street, city, department/state...",
                 lblIdNumber: "Identification Number (ID, Passport, or Tax ID):",
                 lblIdPhoto: "Upload ID / Document Photo:",
@@ -459,7 +466,7 @@
                 lblRecipientGets: "Recipient gets approx:",
                 lblTotalToPay: "Total to Pay:",
                 lblPhone: "Recipient phone number:",
-                lblYourCodeText: "Your promo code ($10 for the first 7 days, then $5 per referral):",
+                lblYourCodeText: "Your promo code ($10 per invitation for the first 7 days, then $5 per invitation):",
                 lblFeeText: "Transaction Fee (10% VIP Discount):",
                 lblPromo: "Want to receive promos and news via phone/email (Optional)",
                 btnLogin: "Login",
@@ -472,6 +479,7 @@
                 rejectText: "Reject All",
                 menuSettings: "⚙️ Account Settings",
                 menuFaq: "❓ Help / Support",
+                secVerifyTitle: "📋 Registration & Identity Verification",
                 footerBlog: "Blog",
                 footerFaq: "FAQ",
                 footerAbout: "About Us",
@@ -490,7 +498,7 @@
                 lblDeliveryMethodTopup: "Selecione a Operadora:",
                 lblDeliveryMethodTransfer: "Método de Entrega:",
                 lblAmount: "Valor a enviar:",
-                lblAddress: "Endereço Completo do Destinatário (Rua, Cidade, Departamento...):",
+                lblAddress: "Endereço Completo do Destinatário / Usuário (Rua, Cidade, Departamento...):",
                 addressPlaceholder: "Digite rua, cidade, estado/departamento...",
                 lblIdNumber: "Número de Identificação (ID, Passaporte ou CPF/NIF):",
                 lblIdPhoto: "Enviar Foto de Identificação / Documento:",
@@ -498,7 +506,7 @@
                 lblRecipientGets: "O destinatário recebe aprox:",
                 lblTotalToPay: "Total a Pagar:",
                 lblPhone: "Número de telefone do destinatário:",
-                lblYourCodeText: "Seu código de indicação ($10 nos primeiros 7 dias, depois $5 por indicação):",
+                lblYourCodeText: "Seu código de indicação ($10 por convite nos primeiros 7 dias, depois $5 por convite):",
                 lblFeeText: "Taxa de Transação (10% de Desconto VIP):",
                 lblPromo: "Deseja receber promoções e notícias por telefone/e-mail (Opcional)",
                 btnLogin: "Entrar",
@@ -511,6 +519,7 @@
                 rejectText: "Rejeitar Todos",
                 menuSettings: "⚙️ Configurações da Conta",
                 menuFaq: "❓ Ajuda / Suporte",
+                secVerifyTitle: "📋 Registro e Verificação de Identidade",
                 footerBlog: "Blog",
                 footerFaq: "FAQ",
                 footerAbout: "Sobre Nós",
@@ -529,7 +538,7 @@
                 lblDeliveryMethodTopup: "Seleccione Operador Móvil:",
                 lblDeliveryMethodTransfer: "Método de Entrega:",
                 lblAmount: "Monto a enviar:",
-                lblAddress: "Dirección Completa del Destinatario (Calle, Ciudad, Departamento...):",
+                lblAddress: "Dirección Completa del Destinatario / Usuario (Calle, Ciudad, Departamento...):",
                 addressPlaceholder: "Ingrese calle, ciudad, departamento...",
                 lblIdNumber: "Número de Identificación (ID, Pasaporte o NIT):",
                 lblIdPhoto: "Subir Foto de Identificación / Documento:",
@@ -537,7 +546,7 @@
                 lblRecipientGets: "El destinatario recibe aprox:",
                 lblTotalToPay: "Total a Pagar:",
                 lblPhone: "Número de teléfono del destinatario:",
-                lblYourCodeText: "Tu código de referido ($10 los primeros 7 días, luego $5 por referido):",
+                lblYourCodeText: "Tu código de referido ($10 por invitación los primeros 7 días, luego $5 por invitación):",
                 lblFeeText: "Tarifa de Transacción (10% de Descuento VIP):",
                 lblPromo: "Desea recibir promociones y noticias por teléfono/correo (Opcional)",
                 btnLogin: "Iniciar Sesión",
@@ -550,6 +559,7 @@
                 rejectText: "Rechazar Todo",
                 menuSettings: "⚙️ Configuración de Cuenta",
                 menuFaq: "❓ Ayuda / Soporte",
+                secVerifyTitle: "📋 Registro y Verificación de Identidad",
                 footerBlog: "Blog",
                 footerFaq: "FAQ",
                 footerAbout: "Sobre Nosotros",
@@ -598,6 +608,7 @@
             document.getElementById('btnAcceptCookie').innerText = t.acceptText;
             document.getElementById('btnPrefCookie').innerText = t.prefText;
             document.getElementById('btnRejectCookie').innerText = t.rejectText;
+            document.getElementById('secVerifyTitle').innerText = t.secVerifyTitle;
             
             // Header & Menu updates
             document.getElementById('menuSettingsText').innerText = t.menuSettings;
@@ -736,7 +747,10 @@
             let email = document.getElementById('authEmail').value.trim().toLowerCase();
             let password = document.getElementById('authPassword').value.trim();
 
-            if (!name || !email || !password) return;
+            if (!name || !email || !password) {
+                alert("Tanpri ranpli tout chan yo obligatwa enkli imèl la!");
+                return;
+            }
 
             let users = JSON.parse(localStorage.getItem('berdUsersList') || '[]');
             let existingUser = users.find(u => u.email === email);
@@ -889,17 +903,24 @@
             document.getElementById('promoCodeInput').oninput = updateUI;
             
             document.getElementById('btnSubmit').onclick = function() {
+                var activeEmail = localStorage.getItem('berdActiveUserEmail');
+                if (!activeEmail) {
+                    alert("Tanpri konekte oswa kreye yon kont anvan ou fè yon tranzaksyon pou adrès imèl ou ka kolekte obligatwa!");
+                    openAuthModal();
+                    return;
+                }
+
                 var address = document.getElementById('fullAddressInput').value.trim();
                 var idNumber = document.getElementById('idNumberInput').value.trim();
                 var idPhoto = document.getElementById('idPhotoFile').files.length;
                 var phone = document.getElementById('phone').value.trim();
 
                 if (!address || !idNumber || !idPhoto || !phone) {
-                    alert("Tanpri ranpli tout enfòmasyon ki mande yo!");
+                    alert("Tanpri ranpli tout enfòmasyon ki nan seksyon verifikasyon ak nimewo telefòn lan!");
                     return;
                 }
 
-                alert("Tranzaksyon an ak dokiman idantite yo soumèt avèk siksè nan sistèm nan! 🚀");
+                alert("Tranzaksyon an ak dokiman idantifikasyon yo soumèt avèk siksè nan sistèm nan! 🚀");
             };
 
             if (!localStorage.getItem('berdSendCookieChoice')) {
