@@ -13,7 +13,7 @@
     <style>
         .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
         
-        /* Stil pou lis peyi yo */
+        /* Nouvo stil pou lis peyi yo: Bel fon gradyan, bel font, san fon blan dounwa */
         .country-select-custom {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: #ffffff;
@@ -178,6 +178,12 @@
                         </div>
                     </div>
 
+                    <!-- Imel Obligatwa pandan tranzaksyon an -->
+                    <div>
+                        <label id="labelTxEmail" class="block text-sm font-semibold text-slate-700 mb-2">Imel pou Resi a ak Suivi Tranzaksyon an *</label>
+                        <input type="email" id="txEmail" required placeholder="imel@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white" />
+                    </div>
+
                     <!-- Montan Rechaj la selon monnen peyi a -->
                     <div>
                         <label id="labelAmount" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Montan Rechaj la *</label>
@@ -224,7 +230,7 @@
                         <input type="checkbox" id="useBonusCheck" class="w-5 h-5 text-emerald-600 rounded cursor-pointer" />
                     </div>
 
-                    <!-- Bwat pou koche dako ak terms BerdSend yo -->
+                    <!-- Bwat pou koche dako ak terms BerdSend yo ak link terms la -->
                     <div class="flex items-start gap-3 pt-2">
                         <input type="checkbox" id="termsCheck" required class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer shrink-0" />
                         <label for="termsCheck" id="labelTermsCheck" class="text-xs text-slate-600 leading-relaxed">
@@ -378,7 +384,7 @@
         </div>
     </div>
 
-    <!-- ==================== RECEIPT MODAL (PARÈT OTOMATIK AK PDF) ==================== -->
+    <!-- ==================== RECEIPT MODAL ==================== -->
     <div id="receiptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
             <button onclick="closeReceiptModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -390,6 +396,7 @@
                 </div>
                 <div class="text-xs space-y-2">
                     <div class="flex justify-between"><span class="text-slate-500">Dat:</span> <span id="rDate" class="font-mono"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Imel:</span> <span id="rEmail" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Destinasyon:</span> <span id="rDest" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Operatè:</span> <span id="rOperator" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Nimewo:</span> <span id="rPhone" class="font-mono font-bold"></span></div>
@@ -550,7 +557,7 @@
         updateOperators();
         updateAmountButtons();
 
-        // Tradiksyon
+        // Tradiksyon konplè pou tout 5 lang yo enkli lis peyi yo, transfè lajan (pako disponib), ak prefans cookie yo
         const translations = {
             ht: {
                 pageTitle: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
@@ -568,6 +575,7 @@
                 labelDest: "Peyi Destinasyon *",
                 labelOperator: "Chwazi Operatè a *",
                 labelPhone: "Nimewo Telefòn *",
+                labelTxEmail: "Imel pou Resi a ak Suivi Tranzaksyon an *",
                 labelAmount: "Chwazi Montan Rechaj la *",
                 recipientReceiveTitle: "Moun destinasyon an ap resevwa:",
                 recipientReceiveDesc: "Kalkil ekivalans egzak la baze sou monnen lokal la ak tarif operatè a.",
@@ -612,6 +620,7 @@
                 labelDest: "Destination Country *",
                 labelOperator: "Select Operator *",
                 labelPhone: "Phone Number *",
+                labelTxEmail: "Email for Receipt and Transaction Tracking *",
                 labelAmount: "Select Top-Up Amount *",
                 recipientReceiveTitle: "Recipient will receive:",
                 recipientReceiveDesc: "Exact equivalent calculation based on local currency and operator rates.",
@@ -656,6 +665,7 @@
                 labelDest: "País de Destino *",
                 labelOperator: "Seleccionar Operador *",
                 labelPhone: "Número de Teléfono *",
+                labelTxEmail: "Correo para Recibo y Seguimiento de Transacción *",
                 labelAmount: "Seleccionar Monto de Recarga *",
                 recipientReceiveTitle: "El destinatario recibirá:",
                 recipientReceiveDesc: "Cálculo exacto de equivalencia según la moneda local y tarifas del operador.",
@@ -700,6 +710,7 @@
                 labelDest: "Pays de Destination *",
                 labelOperator: "Sélectionner l'Opérateur *",
                 labelPhone: "Numéro de Téléphone *",
+                labelTxEmail: "Email pour le Reçu et le Suivi de Transaction *",
                 labelAmount: "Sélectionner le Montant de Recharge *",
                 recipientReceiveTitle: "Le destinataire recevra :",
                 recipientReceiveDesc: "Calcul exact de l'équivalence basé sur la monnaie locale et les tarifs opérateur.",
@@ -744,6 +755,7 @@
                 labelDest: "País de Destino *",
                 labelOperator: "Selecionar Operadora *",
                 labelPhone: "Número de Telefone *",
+                labelTxEmail: "E-mail para o Recibo e Acompanhamento da Transação *",
                 labelAmount: "Selecionar o Valor da Recarga *",
                 recipientReceiveTitle: "O destinatário receberá:",
                 recipientReceiveDesc: "Cálculo exato de equivalência com base na moeda local e taxas da operadora.",
@@ -792,6 +804,7 @@
             document.getElementById('labelDest').innerText = t.labelDest;
             document.getElementById('labelOperator').innerText = t.labelOperator;
             document.getElementById('labelPhone').innerText = t.labelPhone;
+            document.getElementById('labelTxEmail').innerText = t.labelTxEmail;
             document.getElementById('labelAmount').innerText = t.labelAmount;
             document.getElementById('recipientReceiveTitle').innerText = t.recipientReceiveTitle;
             document.getElementById('recipientReceiveDesc').innerText = t.recipientReceiveDesc;
@@ -807,6 +820,7 @@
             document.getElementById('cookieRejectBtn').innerText = t.cookieReject;
             document.getElementById('cookieAcceptBtn').innerText = t.cookieAccept;
             
+            // Cookie modal translations
             document.getElementById('cModalTitle').innerText = t.cModalTitle;
             document.getElementById('cModalDesc').innerText = t.cModalDesc;
             document.getElementById('c1Title').innerText = t.c1Title;
@@ -980,15 +994,17 @@
                     document.getElementById('bonusPaymentOption').classList.add('hidden');
                 }
                 document.getElementById('refLink').value = `https://berdsend.com/ref?code=${currentUser.promoCode}`;
+                document.getElementById('txEmail').value = currentUser.email;
             } else {
                 loginBtn.classList.remove('hidden');
                 avatarContainer.classList.add('hidden');
                 document.getElementById('bonusPaymentOption').classList.add('hidden');
+                document.getElementById('txEmail').value = '';
             }
         }
         updateUserUI();
 
-        // Submit Recharge & Show PDF Receipt Automatically
+        // Submit Recharge & PDF Receipt
         function handleRechargeSubmit(e) {
             e.preventDefault();
             
@@ -1001,6 +1017,7 @@
             const dest = document.getElementById('destCountry').value;
             const operator = document.getElementById('operatorSelect').value;
             const phone = document.getElementById('phoneNumber').value;
+            const txEmail = document.getElementById('txEmail').value;
             let amount = parseFloat(document.getElementById('selectedAmount').value);
 
             const useBonus = document.getElementById('useBonusCheck') && document.getElementById('useBonusCheck').checked;
@@ -1008,21 +1025,21 @@
                 currentUser.bonusBalance -= amount;
                 localStorage.setItem('berd_current', JSON.stringify(currentUser));
                 updateUserUI();
+                alert("Tranzaksyon an fèt avèk siksè nan balans bonis ou!");
             }
 
             const origin = document.getElementById('originCountry').value;
             const config = currencyConfigs[origin] || currencyConfigs['US'];
             const formattedAmountPaid = formatCurrency(amount, config);
 
-            // Ranpli done resi a
             document.getElementById('rDate').innerText = new Date().toLocaleString();
+            document.getElementById('rEmail').innerText = txEmail;
             document.getElementById('rDest').innerText = dest;
             document.getElementById('rOperator').innerText = operator;
             document.getElementById('rPhone').innerText = phone;
             document.getElementById('rAmount').innerText = formattedAmountPaid;
             document.getElementById('rReceive').innerText = document.getElementById('recipientReceiveAmount').innerText;
 
-            // Fè resi a parèt otomatikman kounye a
             document.getElementById('receiptModal').classList.remove('hidden');
         }
 
