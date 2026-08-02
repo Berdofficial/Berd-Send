@@ -12,17 +12,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         .Badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
-        /* Stil pou lis peyi ak bèl efè ak bèl tipografi */
         .country-select-custom {
-            Background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            Color: #ffffff;
-            Border: 1px solid #334155;
-            Border-radius: 0.75rem;
-            Transition: all 0.3s ease;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
         }
         .country-select-custom:focus {
-            Border-color: #3b82f6;
-            Box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
     </style>
 </head>
@@ -60,7 +59,7 @@
     <!-- ======================= MAIN CONTENT ======================= -->
     <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8 space-y-8">
 
-        <!-- Seksyon Transfer & Recharge (Ansanm jan ou te mande l la) -->
+        <!-- Seksyon Transfer & Recharge -->
         <section id="rechargeTransferSection" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8 space-y-6">
             <div class="border-b border-slate-100 pb-4">
                 <h1 class="text-2xl font-bold text-slate-900">Rechaj ak Transfè Fasil</h1>
@@ -75,14 +74,24 @@
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Peyi Destinasyon</label>
                         <select id="countrySelect" class="w-full px-4 py-3 country-select-custom text-sm" onchange="updateCountryAmounts()">
-                            <option value="us">Etazini (USA) - USD ($)</option>
-                            <option value="br">Brezil - Reais (R$)</option>
-                            <option value="fr">Lafrans - Euro (€)</option>
-                            <option value="ht">Ayiti - Goud (HTG)</option>
-                            <option value="do">Repiblik Dominikèn - Peso (DOP)</option>
-                            <option value="co">Kolonbi - Peso (COP)</option>
-                            <option value="mx">Meksik - Peso (MXN)</option>
-                            <option value="cl">Chili - Peso (CLP)</option>
+                            <optgroup label="Amerik di Nò ak Karayib">
+                                <option value="us">Etazini (USA) - USD ($)</option>
+                                <option value="ht">Ayiti - Goud (HTG)</option>
+                                <option value="do">Repiblik Dominikèn - Peso (DOP)</option>
+                                <option value="mx">Meksik - Peso (MXN)</option>
+                            </optgroup>
+                            <optgroup label="Amerik di Sid">
+                                <option value="br">Brezil - Reais (R$)</option>
+                                <option value="co">Kolonbi - Peso (COP)</option>
+                                <option value="cl">Chili - Peso (CLP)</option>
+                                <option value="ar">Ajantin - Peso (ARS)</option>
+                                <option value="pe">Peru - Sol (PEN)</option>
+                            </optgroup>
+                            <optgroup label="Ewòp">
+                                <option value="fr">Lafrans - Euro (€)</option>
+                                <option value="es">Espay - Euro (€)</option>
+                                <option value="it">Itali - Euro (€)</option>
+                            </optgroup>
                         </select>
                     </div>
 
@@ -94,18 +103,18 @@
                     </div>
                 </div>
 
-                <!-- Chan Kalkil Moun Destinasyon an ap resevwa -->
+                <!-- Chan Kalkil Moun Destinasyon an ap resevwa (Nan monnen lokal peyi a) -->
                 <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-4 flex items-center justify-between">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Montan Moun Destinasyon an ap resevwa</span>
-                        <p class="text-sm text-slate-600 mt-0.5">Valè egzak nan lajan peyi destinasyon a:</p>
+                        <p class="text-sm text-slate-600 mt-0.5">Valè nan monnen lokal peyi a:</p>
                     </div>
                     <div id="receiverCalculatedAmount" class="text-xl font-bold text-blue-700">
                         0.00
                     </div>
                 </div>
 
-                <!-- Enfòmasyon Kontak ak Imèl Ogligatwa -->
+                <!-- Enfòmasyon Kontak ak Imèl Obligatwa -->
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">Imèl Ou (Obligatwa pou Tranzaksyon an)</label>
@@ -132,7 +141,7 @@
             </form>
         </section>
 
-        <!-- Seksyon Enskripsyon ak Verifikasyon Idantite (Se apa jan ou te mande l la) -->
+        <!-- Seksyon Enskripsyon ak Verifikasyon Idantite -->
         <section id="register" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 sm:p-8 space-y-4">
             <h2 class="text-xl font-bold text-slate-900">Enskripsyon ak Verifikasyon Idantite</h2>
             <p class="text-sm text-slate-500">Kreye kont ou epi verifye idantite w ansanm ak adrès ou pou yon sekirite total nan tranzaksyon w yo.</p>
@@ -151,21 +160,35 @@
 
     </main>
 
-    <!-- Scripts pou jere dinamik montan ak kalkil -->
+    <!-- ======================= FOOTER ======================= -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+            <p>&copy; 2026 BerdSend LLC. Tout dwa rezève.</p>
+            <div class="flex items-center gap-6">
+                <a href="terms.html" class="hover:text-blue-600 transition-colors">Terms & Conditions</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+                <a href="contact.html" class="hover:text-blue-600 transition-colors">Kontak</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts pou jere dinamik montan ak kalkil nan monnen lokal -->
     <script>
-        // Inisyalizasyon Lucide Icons
         lucide.createIcons();
 
-        // Done montan ak pousantaj ekivalans pou chak peyi
         const countryData = {
-            us: { name: "Etazini", currency: "USD", symbol: "$", amounts: [5, 10, 15, 20], rate: 1 },
-            br: { name: "Brezil", currency: "BRL", symbol: "R$", amounts: [5, 10, 15, 20], rate: 5.5 },
-            fr: { name: "Lafrans", currency: "EUR", symbol: "€", amounts: [5, 10, 15, 20], rate: 0.92 },
-            ht: { name: "Ayiti", currency: "HTG", symbol: "G", amounts: [500, 1000, 1500, 2000], rate: 132 },
-            do: { name: "Repiblik Dominikèn", currency: "DOP", symbol: "RD$", amounts: [300, 600, 900, 1200], rate: 60 },
-            co: { name: "Kolonbi", currency: "COP", symbol: "COL$", amounts: [20000, 40000, 60000, 80000], rate: 4100 },
-            mx: { name: "Meksik", currency: "MXN", symbol: "MX$", amounts: [100, 200, 300, 400], rate: 18 },
-            cl: { name: "Chili", currency: "CLP", symbol: "CLP$", amounts: [5000, 10000, 15000, 20000], rate: 950 }
+            us: { name: "Etazini", currency: "USD", symbol: "$", amounts: [5, 10, 15, 20], baseValueMultiplier: 1 },
+            br: { name: "Brezil", currency: "BRL", symbol: "R$", amounts: [5, 10, 15, 20], baseValueMultiplier: 5.5 },
+            fr: { name: "Lafrans", currency: "EUR", symbol: "€", amounts: [5, 10, 15, 20], baseValueMultiplier: 0.92 },
+            es: { name: "Espay", currency: "EUR", symbol: "€", amounts: [5, 10, 15, 20], baseValueMultiplier: 0.92 },
+            it: { name: "Itali", currency: "EUR", symbol: "€", amounts: [5, 10, 15, 20], baseValueMultiplier: 0.92 },
+            ht: { name: "Ayiti", currency: "HTG", symbol: "G", amounts: [500, 1000, 1500, 2000], baseValueMultiplier: 132 },
+            do: { name: "Repiblik Dominikèn", currency: "DOP", symbol: "RD$", amounts: [300, 600, 900, 1200], baseValueMultiplier: 60 },
+            co: { name: "Kolonbi", currency: "COP", symbol: "COL$", amounts: [20000, 40000, 60000, 80000], baseValueMultiplier: 4100 },
+            mx: { name: "Meksik", currency: "MXN", symbol: "MX$", amounts: [100, 200, 300, 400], baseValueMultiplier: 18 },
+            cl: { name: "Chili", currency: "CLP", symbol: "CLP$", amounts: [5000, 10000, 15000, 20000], baseValueMultiplier: 950 },
+            ar: { name: "Ajantin", currency: "ARS", symbol: "ARS$", amounts: [1000, 2000, 3000, 4000], baseValueMultiplier: 950 },
+            pe: { name: "Peru", currency: "PEN", symbol: "S/.", amounts: [20, 40, 60, 80], baseValueMultiplier: 3.7 }
         };
 
         function updateCountryAmounts() {
@@ -186,17 +209,29 @@
         function calculateReceiverAmount() {
             const countryKey = document.getElementById('countrySelect').value;
             const data = countryData[countryKey];
-            const selectedAmount = parseFloat(document.getElementById('amountSelect').value) || 0;
+            const selectedIndex = document.getElementById('amountSelect').selectedIndex;
             
-            // Kalkil ekivalans lajan destinasyon an
-            let calculated = 0;
-            if (countryKey === 'us' || countryKey === 'fr') {
-                calculated = selectedAmount; // Dirèk nan lajan yo
-            } else {
-                calculated = selectedAmount * data.rate;
-            }
+            // Nou pran pozisyon opsyon an (indis la) pou detèmine kòmsadwa ki kantite moun nan ap jwenn nan monnen lokal li
+            // Pa egzanp: premye opsyon = 1ye nivo, dezyèm = 2yèm nivo, elatriye.
+            const receiverValues = {
+                us: [5, 10, 15, 20],
+                br: [5, 10, 15, 20],
+                fr: [5, 10, 15, 20],
+                es: [5, 10, 15, 20],
+                it: [5, 10, 15, 20],
+                ht: [500, 1000, 1500, 2000],
+                do: [300, 600, 900, 1200],
+                co: [20000, 40000, 60000, 80000],
+                mx: [100, 200, 300, 400],
+                cl: [5000, 10000, 15000, 20000],
+                ar: [1000, 2000, 3000, 4000],
+                pe: [20, 40, 60, 80]
+            };
 
-            document.getElementById('receiverCalculatedAmount').textContent = `${data.symbol}${calculated.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${data.currency}`;
+            const currentList = receiverValues[countryKey] || [5, 10, 15, 20];
+            const finalReceiverAmount = currentList[selectedIndex] !== undefined ? currentList[selectedIndex] : currentList[0];
+
+            document.getElementById('receiverCalculatedAmount').textContent = `${data.symbol}${finalReceiverAmount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${data.currency}`;
         }
 
         function handleBerdsendSubmit(e) {
@@ -209,7 +244,6 @@
             alert('Tranzaksyon an anrejistre avèk siksè!');
         }
 
-        // Kouri yon premye fwa pou ranpli opsyon yo lè paj la chaje
         window.onload = function() {
             updateCountryAmounts();
         };
