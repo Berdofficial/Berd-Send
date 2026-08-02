@@ -1,288 +1,727 @@
 <!DOCTYPE html>
 <html lang="ht">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BerdSend - Transfert d'Argent & Recharge Mobile</title>
-    <!-- Tailwind CSS CDN -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="pageTitle">BerdSend - Rechaj Telefòn ak Transfè Lajan</title>
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Web Payments SDK -->
-    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+    <!-- html2pdf Library pou telechaje PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        .active-tab {
-            border-bottom: 3px solid #2563eb;
-            color: #2563eb;
-            font-weight: 600;
-        }
+        .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 font-sans text-slate-800 flex flex-col min-h-screen">
 
-    <!-- HEADER / NAVIGATION KONPLÈ AK SELEKSYON LANG -->
-    <header class="bg-white shadow-sm border-b border-slate-100 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <!-- LOGO -->
-            <div class="flex items-center gap-2">
-                <img src="logo.jpg" alt="BerdSend Logo" class="h-10 w-auto object-contain" id="main-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/120x40?text=BerdSend';">
+    <!-- ==================== HEADER / NAVIGATION ==================== -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo (Pwen 7: Pi piti sou telefòn, nòmal sou òdinatè) -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <a href="/" class="flex items-center gap-1.5 sm:gap-2">
+                    <img src="logo.jpg" alt="BerdSend Logo" class="h-8 w-8 sm:h-10 sm:w-auto rounded-lg object-cover" onerror="this.src='https://via.placeholder.com/40?text=BS'" />
+                    <span class="text-base sm:text-xl font-bold text-blue-600 tracking-tight">BerdSend</span>
+                </a>
             </div>
-            
-            <!-- OPTIONS & LOGIN BUTTON -->
-            <div class="flex items-center gap-3">
-                <!-- SELEKSYON LANG -->
-                <div class="relative">
-                    <select id="language-select" onchange="changeLanguage(this.value)" class="bg-slate-100 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border-none outline-none cursor-pointer hover:bg-slate-200 transition">
-                        <option value="ht">🇭🇹 Kreyòl</option>
-                        <option value="fr">🇫🇷 Français</option>
-                        <option value="en">🇺🇸 English</option>
-                        <option value="pt">🇧🇷 Pt-BR</option>
-                    </select>
-                </div>
 
-                <!-- BUTTON KONEKTE / LOGIN -->
-                <button class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition shadow-sm">
-                    <i data-lucide="user" class="w-4 h-4"></i>
-                    <span>Konekte (Login)</span>
-                </button>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+                <a href="#recharge" id="navRecharge" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Rechaj Telefòn</a>
+                <div class="relative flex items-center gap-1.5 opacity-60 cursor-not-allowed">
+                    <span id="navTransfer">Transfè Lajan</span>
+                    <span id="badgeUnavailable" class="bg-amber-100 text-amber-800 text-xs font-semibold px-2 py-0.5 rounded-full">Pako disponib</span>
+                </div>
+                <a href="#referral" id="navReferral" class="hover:text-blue-600 transition">Pwogram $5 Referal</a>
+            </nav>
+
+            <!-- Right Side: Language Selector & Auth -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Pwen 1: 5 Lang ki tradui tout paj la -->
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-100 text-slate-700 text-xs sm:text-sm font-medium py-1.5 px-2 sm:px-3 rounded-lg border border-slate-200 outline-none cursor-pointer">
+                    <option value="ht">🇭🇹 Kreyòl</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="pt">🇧🇷 Português</option>
+                </select>
+
+                <!-- User Profile / Auth -->
+                <div class="flex items-center gap-3 border-l pl-3 sm:pl-4 border-slate-200">
+                    <button onclick="openAuthModal('login')" id="loginBtn" class="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium text-xs sm:text-sm hover:bg-blue-700 transition">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span id="loginText">Konekte</span>
+                    </button>
+                    <!-- Avatar (Visible after login) -->
+                    <div id="userAvatarContainer" class="hidden flex items-center gap-2 cursor-pointer" onclick="openProfileModal()">
+                        <img id="userAvatarImg" src="" alt="Avatar" class="w-9 h-9 rounded-full border-2 border-blue-600 object-cover" />
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-2xl mx-auto px-4 py-8 w-full flex-grow">
-        
-        <!-- CARD MAIN WRAPPER -->
-        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-            
-            <!-- SERVICES NAVIGATION TABS (TRANSFÈ AK RECHAJ ANSANM) -->
-            <div class="flex border-b border-slate-200 bg-slate-50/50">
-                <button id="tab-transfer" onclick="switchService('transfer')" class="flex-1 py-4 text-center text-sm font-semibold flex items-center justify-center gap-2 active-tab transition">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                    <span>Transfè Lajan</span>
+    <!-- ==================== MAIN HERO & FORM SECTION ==================== -->
+    <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full">
+        <div class="text-center mb-8">
+            <h1 id="heroTitle" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">Voye Rechaj Telefòn Nenpòt Ki Lè</h1>
+            <p id="heroSubtitle" class="text-slate-600 text-lg max-w-xl mx-auto">Voye minutes ak data sou pi bon rezo nan Karayib la, Amerik Latin ak Afrik byen rapid.</p>
+        </div>
+
+        <!-- MAIN TAB CONTAINER (Kenbe Transfer ak Recharge ansanm) -->
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+            <!-- TABS SELECTOR -->
+            <div class="flex border-b border-slate-200 bg-slate-50">
+                <button class="flex-1 py-4 px-6 text-center font-bold text-blue-600 border-b-2 border-blue-600 bg-white flex items-center justify-center gap-2">
+                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                    <span id="tabRecharge">Rechaj Telefòn</span>
                 </button>
-                <button id="tab-recharge" onclick="switchService('recharge')" class="flex-1 py-4 text-center text-sm font-semibold text-slate-500 flex items-center justify-center gap-2 hover:text-blue-600 transition">
-                    <i data-lucide="smartphone" class="w-4 h-4"></i>
-                    <span>Rechaj Mobil</span>
+                <button disabled class="flex-1 py-4 px-6 text-center font-medium text-slate-400 bg-slate-100 flex items-center justify-center gap-2 cursor-not-allowed">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <span id="tabTransfer">Transfè Lajan</span>
+                    <span class="bg-slate-200 text-slate-600 text-xs px-2 py-0.5 rounded-full font-semibold">Pako disponib</span>
                 </button>
             </div>
 
-            <div class="p-6 md:p-8">
-                <!-- FORMULARIO DE TRANSACCIÓN -->
-                <form id="payment-form" onsubmit="handleProcessPayment(event)">
+            <!-- RECHARGE FORM CONTENT -->
+            <div class="p-6 sm:p-8">
+                <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-6">
                     
-                    <!-- DYNAMIC SERVICE FIELDS -->
-                    <div id="service-fields" class="space-y-4 mb-6">
-                        <!-- Default: Transfer Fields -->
+                    <!-- Pwen 2: Peyi Orijin ak Destinasyon (Anpil peyi Karayib, Amerik Latin ak Afrik) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">Peyi Destinatè *</label>
-                            <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white">
-                                <option value="HT">Haïti (HTG / USD)</option>
-                                <option value="DR">République Dominicaine (DOP)</option>
+                            <label id="labelOrigin" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Orijin *</label>
+                            <select id="originCountry" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
+                                <option value="US">🇺🇸 Etazini (USA)</option>
+                                <option value="CA">🇨🇦 Kanada</option>
+                                <option value="FR">🇫🇷 Lafrans</option>
+                                <option value="BR">🇧🇷 Brezil</option>
+                                <option value="CL">🇨🇱 Chili</option>
+                                <option value="DO">🇩🇴 Repiblik Dominiken</option>
+                                <option value="HT">🇭🇹 Ayiti</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-1">Montan pou voye (USD) *</label>
-                            <input type="number" required min="1" placeholder="0.00" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
+                            <label id="labelDest" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Destinasyon *</label>
+                            <select id="destCountry" onchange="updateOperators()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base font-semibold text-blue-600">
+                                <optgroup label="Karayib">
+                                    <option value="HT">🇭🇹 Ayiti (+509)</option>
+                                    <option value="DO">🇩🇴 Repiblik Dominiken (+1)</option>
+                                    <option value="JM">🇯🇲 Jamayik (+1)</option>
+                                    <option value="CU">🇨🇺 Kiba (+53)</option>
+                                    <option value="BS">🇧🇸 Bahamas (+1)</option>
+                                    <option value="GP">🇬🇵 Gwadloup (+590)</option>
+                                    <option value="MQ">🇲🇶 Matinik (+596)</option>
+                                </optgroup>
+                                <optgroup label="Amerik Latin">
+                                    <option value="CO">🇨🇴 Kolonbi (+57)</option>
+                                    <option value="BR">🇧🇷 Brezil (+55)</option>
+                                    <option value="MX">🇲🇽 Meksik (+52)</option>
+                                    <option value="VE">🇻🇪 Venezwela (+58)</option>
+                                    <option value="AR">🇦，。 Арjentina (+54)</option>
+                                    <option value="PE">🇵🇪 Pewou (+51)</option>
+                                    <option value="CL">🇨🇱 Chili (+56)</option>
+                                </optgroup>
+                                <optgroup label="Afrik">
+                                    <option value="NG">🇳🇬 Nijerya (+234)</option>
+                                    <option value="SN">🇸🇳 Senegal (+221)</option>
+                                    <option value="GH">🇬🇭 Gana (+233)</option>
+                                    <option value="CM">🇨🇲 Kamewoun (+237)</option>
+                                    <option value="CI">🇨🇮 Kòt Divwa (+225)</option>
+                                    <option value="CD">🇨🇩 Kongo (RDC) (+243)</option>
+                                    <option value="KE">🇰🇪 Kenya (+254)</option>
+                                    <option value="MA">🇲🇦 Mawòk (+212)</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- MANDATORY EMAIL COLLECTION FOR TRANSACTION -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">
-                            Adrès Email (Obligatwa pou resevwa resi a) *
-                        </label>
-                        <input type="email" id="customer-email" required placeholder="egzamp@gmail.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
-                    </div>
-
-                    <!-- PAYMENT SECTION (SAN MO SQUARE LA) -->
-                    <div class="border-t border-slate-200 pt-6 space-y-4">
-                        <label class="block text-sm font-semibold text-slate-700 flex items-center gap-2">
-                            <i data-lucide="credit-card" class="w-4 h-4 text-blue-600"></i>
-                            <span>Enfòmasyon Peman Kat Kredi *</span>
-                        </label>
-
-                        <!-- CHAN POU NON KI SOU KAT LA -->
+                    <!-- Operatè ki depann de peyi destinasyon an (NB nan enstriksyon) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-1">Non ki sou Kat la *</label>
-                            <input type="text" id="cardholder-name" required placeholder="Egz. Jean Dupont" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white">
+                            <label id="labelOperator" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Operatè a *</label>
+                            <select id="operatorSelect" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base font-medium"></select>
                         </div>
-
-                        <!-- FÒM KAT LA -->
                         <div>
-                            <label class="block text-xs font-medium text-slate-600 mb-1">Nimewo Kat & Detay *</label>
-                            <div id="card-container" class="min-h-[90px] border border-slate-300 rounded-xl p-3 bg-white"></div>
+                            <label id="labelPhone" class="block text-sm font-semibold text-slate-700 mb-2">Nimewo Telefòn *</label>
+                            <input type="tel" id="phoneNumber" required placeholder="37000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 text-lg font-mono outline-none" />
                         </div>
-
-                        <div id="payment-status-container" class="text-xs font-semibold"></div>
                     </div>
 
-                    <!-- SUBMIT BUTTON -->
-                    <button id="card-button" type="submit" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
-                        <i data-lucide="lock" class="w-5 h-5"></i>
-                        <span>Peye nan Fason Ki Ansekirite</span>
+                    <!-- Step 3: Amount Selection -->
+                    <div>
+                        <label id="labelAmount" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Montan Rechaj la (USD $) *</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button type="button" onclick="selectAmount(5)" class="amount-btn border-2 border-blue-600 bg-blue-50 text-blue-600 rounded-xl py-3 text-center font-bold"> $5.00 </button>
+                            <button type="button" onclick="selectAmount(10)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $10.00 </button>
+                            <button type="button" onclick="selectAmount(20)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $20.00 </button>
+                        </div>
+                        <input type="hidden" id="selectedAmount" value="5" />
+                    </div>
+
+                    <!-- Pwen 8: Itilize Bonis Balans la (si kliyan an genyen l) -->
+                    <div id="bonusPaymentOption" class="hidden bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="gift" class="w-6 h-6 text-emerald-600"></i>
+                            <div>
+                                <h4 id="bonusBoxTitle" class="text-sm font-bold text-emerald-900">Ou gen $5.00 Bonis nan kont ou!</h4>
+                                <p id="bonusBoxDesc" class="text-xs text-emerald-700">Èske ou vle itilize bonis sa a pou peye rechaj sa a?</p>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="useBonusCheck" class="w-5 h-5 text-emerald-600 rounded cursor-pointer" />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-lg">
+                        <span>Peye & Voye Rechaj Kounye A</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
                 </form>
             </div>
         </div>
 
-        <!-- BANNER PWOMOSYON (5$ POUR CHAK ENVITASYON) -->
-        <div class="mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-md flex items-center justify-between">
-            <div>
-                <h3 class="font-bold text-lg mb-1">Envite yon zanmi, genyen $5!</h3>
-                <p class="text-xs text-blue-100">W ap resevwa $5 pou chak envitasyon yon nouvo moun kòmanse sèvi ak BerdSend.</p>
+        <!-- ==================== REFERRAL & PROMO SECTION (Pwen 8) ==================== -->
+        <section id="referral" class="mt-16 bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-8 shadow-xl">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <span id="refBadge" class="bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-blue-400/30">Pwogram Envitasyon</span>
+                    <h2 id="refTitle" class="text-2xl font-bold mt-2">Jwenn $5 pou chak envitasyon!</h2>
+                    <p id="refDesc" class="text-slate-300 text-sm mt-1 max-w-lg">Pataje kòd pwomosyon ou a! Tou de moun ki envite a ak moun ki envite a ap jwenn $5 dola bonis nan premye semèn yo sou app la.</p>
+                </div>
+                <div class="w-full md:w-auto flex flex-col gap-2">
+                    <div class="flex items-center gap-2 bg-white/10 p-2 rounded-xl border border-white/10">
+                        <input type="text" readonly value="BERD-PROMO-XYZ123" id="refLink" class="bg-transparent text-sm px-2 text-slate-200 outline-none w-full md:w-56 font-mono font-bold" />
+                        <button onclick="copyRefLink()" id="copyBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition shrink-0">Kopye</button>
+                    </div>
+                    <span id="copyMsg" class="text-xs text-green-400 hidden text-center">Kòd pwomosyon an kopye!</span>
+                </div>
             </div>
-            <button class="bg-white text-blue-600 font-bold text-xs px-4 py-2.5 rounded-xl shadow hover:bg-slate-100 transition whitespace-nowrap">
-                Pataje Lyen
-            </button>
-        </div>
+        </section>
     </main>
 
-    <!-- BANNER COOKIES -->
-    <div id="cookies-banner" class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-2xl z-50 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
-        <p class="text-slate-300">
-            Nou sèvi ak cookies pou amelyore eksperyans ou ak asire sekirite tranzaksyon yo sou BerdSend.
-        </p>
-        <div class="flex items-center gap-3">
-            <button onclick="acceptCookies()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition">
-                Aksepte Tout
-            </button>
-            <button onclick="acceptCookies()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold px-4 py-2 rounded-lg transition">
-                Fèmen
+    <!-- ==================== COOKIE BANNER (Pwen 3) ==================== -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 text-white p-4 sm:p-5 z-50 shadow-2xl transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-blue-600/20 rounded-xl text-blue-400 border border-blue-500/30 shrink-0">
+                    <i data-lucide="cookie" class="w-6 h-6"></i>
+                </div>
+                <p id="cookieText" class="text-sm text-slate-300">Nou itilize bonbon pou amelyore eksperyans ou, asire sekirite tranzaksyon ak analize traffic la. Ou ka chwazi preferans ou.</p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 w-full md:w-auto justify-end">
+                <button onclick="openCookieModal()" id="cookieCustomBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">Chwazi preferans</button>
+                <button onclick="handleCookieAction('reject')" id="cookieRejectBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 transition">Rejte</button>
+                <button onclick="handleCookieAction('accept')" id="cookieAcceptBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition">Aksepte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== COOKIE PREFERENCES MODAL ==================== -->
+    <div id="cookieModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl relative text-slate-800">
+            <button onclick="closeCookieModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 id="cModalTitle" class="text-lg font-bold text-slate-900 mb-2">Chwazi Preferans Bonbon ou</h3>
+            <p id="cModalDesc" class="text-xs text-slate-600 mb-4">Pèsonalize egzakteman kisa ou vle pataje pandan w ap itilize BerdSend.</p>
+            
+            <div class="space-y-4 text-sm">
+                <div class="flex items-start justify-between border-b pb-3">
+                    <div>
+                        <span id="c1Title" class="font-semibold text-slate-900">Bonbon Teknik (Obligatwa)</span>
+                        <p id="c1Desc" class="text-xs text-slate-500">Nesesè pou fè sit la mache epi pwoteje kont ou.</p>
+                    </div>
+                    <input type="checkbox" checked disabled class="mt-1 w-4 h-4 text-blue-600 rounded cursor-not-allowed" />
+                </div>
+                <div class="flex items-start justify-between border-b pb-3">
+                    <div>
+                        <span id="c2Title" class="font-semibold text-slate-900">Bonbon Pèfòmans & Estatistik</span>
+                        <p id="c2Desc" class="text-xs text-slate-500">Ede nou konprann kijan vizitè yo itilize platfòm la pou nou kapab amelyore l.</p>
+                    </div>
+                    <input type="checkbox" id="prefAnalytics" checked class="mt-1 w-4 h-4 text-blue-600 rounded cursor-pointer" />
+                </div>
+                <div class="flex items-start justify-between pb-2">
+                    <div>
+                        <span id="c3Title" class="font-semibold text-slate-900">Bonbon Piblisite & Pwomosyon</span>
+                        <p id="c3Desc" class="text-xs text-slate-500">Itilize pou ba ou òf ak kòd pwomosyon ki enteresan pou ou.</p>
+                    </div>
+                    <input type="checkbox" id="prefMarketing" class="mt-1 w-4 h-4 text-blue-600 rounded cursor-pointer" />
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end gap-3">
+                <button onclick="closeCookieModal()" id="cCancelBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700">Anile</button>
+                <button onclick="saveCookiePreferences()" id="cSaveBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white">Anrejistre Preferans yo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== AUTH MODAL (Pwen 5: Enskripsyon ak Verifikasyon) ==================== -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            
+            <div class="flex border-b mb-4">
+                <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-2 font-bold text-blue-600 border-b-2 border-blue-600 text-sm">Konekte</button>
+                <button onclick="switchAuthTab('register')" id="tabRegBtn" class="flex-1 pb-2 font-medium text-slate-500 text-sm">Kreye Kont</button>
+            </div>
+
+            <!-- Fòm Konekte -->
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label id="lEmailLabel" class="block text-xs font-semibold text-slate-700 mb-1">Imel *</label>
+                    <input type="email" id="loginEmail" required placeholder="imel@example.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <div>
+                    <label id="lPassLabel" class="block text-xs font-semibold text-slate-700 mb-1">Modpas *</label>
+                    <input type="password" id="loginPass" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <button type="submit" id="lSubmitBtn" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 transition">Konekte</button>
+            </form>
+
+            <!-- Fòm Enskri (Pwen 5: Non, Imel, Modpas, Konfimasyon Modpas + Anpeche doub enskripsyon sof si efase) -->
+            <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="space-y-3 hidden">
+                <div>
+                    <label id="rNameLabel" class="block text-xs font-semibold text-slate-700 mb-1">Non Konplè *</label>
+                    <input type="text" id="regName" required placeholder="Jean Dupont" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <div>
+                    <label id="rEmailLabel" class="block text-xs font-semibold text-slate-700 mb-1">Imel (Inik) *</label>
+                    <input type="email" id="regEmail" required placeholder="imel@example.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <div>
+                    <label id="rPassLabel" class="block text-xs font-semibold text-slate-700 mb-1">Modpas *</label>
+                    <input type="password" id="regPass" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <div>
+                    <label id="rConfLabel" class="block text-xs font-semibold text-slate-700 mb-1">Konfime Modpas *</label>
+                    <input type="password" id="regPassConfirm" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm" />
+                </div>
+                <button type="submit" id="rSubmitBtn" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-emerald-700 transition">Kreye Kont & Resevwa $5 Bonis</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== RECEIPT MODAL (Pwen 4: Telechaje PDF) ==================== -->
+    <div id="receiptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
+            <button onclick="closeReceiptModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            
+            <div id="receiptContent" class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 space-y-3">
+                <div class="text-center border-b pb-3">
+                    <h3 class="font-extrabold text-blue-600 text-lg">BerdSend LLC</h3>
+                    <p class="text-xs text-slate-500">Resi Ofisyèl Tranzaksyon</p>
+                </div>
+                <div class="text-xs space-y-2">
+                    <div class="flex justify-between"><span class="text-slate-500">Dat:</span> <span id="rDate" class="font-mono"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Destinasyon:</span> <span id="rDest" class="font-semibold"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Operatè:</span> <span id="rOperator" class="font-semibold"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Nimewo:</span> <span id="rPhone" class="font-mono font-bold"></span></div>
+                    <div class="flex justify-between border-t pt-2 text-sm"><span class="font-bold text-slate-700">Total Peye:</span> <span id="rAmount" class="font-bold text-blue-600"></span></div>
+                </div>
+            </div>
+
+            <button onclick="downloadPDF()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span id="downloadReceiptText">Telechaje Resi a kòm PDF</span>
             </button>
         </div>
     </div>
 
-    <!-- FOOTER KONPLÈ -->
-    <footer class="bg-white border-t border-slate-200 py-8 mt-12 text-slate-500 text-xs">
-        <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p>&copy; 2026 BerdSend LLC. Tout dwa rezève.</p>
-            <div class="flex items-center gap-6">
-                <a href="#" class="hover:text-blue-600 transition">Kondisyon Sèvis</a>
-                <a href="#" class="hover:text-blue-600 transition">Politik Konfidansyalite</a>
-                <a href="#" class="hover:text-blue-600 transition">Sipò / Kontak</a>
+    <!-- ==================== FOOTER (Pwen 6: Blog, about, privacy, terms, faq) ==================== -->
+    <footer class="bg-white border-t border-slate-200 mt-20 py-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
+            <p>© 2026 BerdSend LLC. Tout dwa rezève.</p>
+            <div class="flex flex-wrap justify-center gap-6 font-medium text-slate-600">
+                <a href="blog.html" class="hover:text-blue-600 transition">Blog</a>
+                <a href="about.html" class="hover:text-blue-600 transition">About</a>
+                <a href="faq.html" class="hover:text-blue-600 transition">FAQ</a>
+                <a href="privacy.html" class="hover:text-blue-600 transition">Privacy</a>
+                <a href="terms.html" class="hover:text-blue-600 transition">Terms</a>
             </div>
         </div>
     </footer>
 
-    <!-- SCRIPT CONFIGURATION AND LOGIC -->
+    <!-- ==================== JAVASCRIPT & LOGIC ==================== -->
     <script>
-        // INITIALIZE LUCIDE ICONS
         lucide.createIcons();
 
-        // CREDENTIALS INTEGRATION (PRODUCTION)
-        const appId = 'sq0idp-x8g0V6Q_HZZKVYFw8eVV2w';
-        const locationId = 'LB2PZD56256TT';
+        // 1. Operatè pa Peyi Destinasyon (Karayib, Amerik Latin, Afrik)
+        const operatorsByCountry = {
+            HT: ["Digicel Ayiti", "Natcom"],
+            DO: ["Claro Dominican Republic", "Altice", "Viva"],
+            JM: ["Digicel Jamaica", "Flow Jamaica"],
+            CU: ["Cubacel (ETECSA)"],
+            BS: ["BTC Bahamas", "Aliv"],
+            GP: ["Orange Caraïbe", "SFR Caraïbe", "Digicel"],
+            MQ: ["Orange Caraïbe", "SFR Caraïbe", "Digicel"],
+            CO: ["Claro Colombia", "Movistar", "Tigo", "Wom"],
+            BR: ["Vivo", "Claro Brasil", "TIM Brasil"],
+            MX: ["Telcel", "Movistar", "AT&T Mexico", "Unefon"],
+            VE: ["Movistar Venezuela", "Digitel", "Movilnet"],
+            AR: ["Claro Argentina", "Movistar", "Personal"],
+            PE: ["Claro Peru", "Movistar", "Entel", "Bitel"],
+            CL: ["Entel Chile", "Movistar", "Claro Chile", "Wom"],
+            NG: ["MTN Nigeria", "Glo Mobile", "Airtel", "9mobile"],
+            SN: ["Orange Senegal", "Free Senegal", "Expresso"],
+            GH: ["MTN Ghana", "Vodafone Ghana", "AirtelTigo"],
+            CM: ["MTN Cameroon", "Orange Cameroun"],
+            CI: ["Orange Côte d'Ivoire", "MTN CI", "Moov Africa"],
+            CD: ["Vodacom DRC", "Orange RDC", "Airtel RDC"],
+            KE: ["Safaricom", "Airtel Kenya"],
+            MA: ["Maroc Telecom", "Orange Maroc", "Inwi"]
+        };
 
-        let card;
+        function updateOperators() {
+            const dest = document.getElementById('destCountry').value;
+            const opSelect = document.getElementById('operatorSelect');
+            opSelect.innerHTML = '';
+            const operators = operatorsByCountry[dest] || ["Operatè Entènasyonal"];
+            operators.forEach(op => {
+                const opt = document.createElement('option');
+                opt.value = op;
+                opt.textContent = op;
+                opSelect.appendChild(opt);
+            });
+        }
+        updateOperators();
 
-        // INITIALIZE PAYMENTS SDK
-        async function initializePayment() {
-            if (!window.Square) {
-                console.error("SDK pa chaje.");
+        // 2. Diksyonè 5 Lang yo (Kreyòl, Franse, Anglè, Panyòl, Pòtigè)
+        const translations = {
+            ht: {
+                pageTitle: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
+                navRecharge: "Rechaj Telefòn",
+                navTransfer: "Transfè Lajan",
+                badgeUnavailable: "Pako disponib",
+                navReferral: "Pwogram $5 Referal",
+                loginText: "Konekte",
+                heroTitle: "Voye Rechaj Telefòn Nenpòt Ki Lè",
+                heroSubtitle: "Voye minutes ak data sou pi bon rezo nan Karayib la, Amerik Latin ak Afrik byen rapid.",
+                tabRecharge: "Rechaj Telefòn",
+                tabTransfer: "Transfè Lajan",
+                labelOrigin: "Peyi Orijin *",
+                labelDest: "Peyi Destinasyon *",
+                labelOperator: "Chwazi Operatè a *",
+                labelPhone: "Nimewo Telefòn *",
+                labelAmount: "Chwazi Montan Rechaj la (USD $) *",
+                submitText: "Peye & Voye Rechaj Kounye A",
+                refBadge: "Pwogram Envitasyon",
+                refTitle: "Jwenn $5 pou chak envitasyon!",
+                refDesc: "Pataje kòd pwomosyon ou a! Tou de moun ki envite a ak moun ki envite a ap jwenn $5 dola bonis nan premye semèn yo sou app la.",
+                copyText: "Kopye",
+                copySuccess: "Kòd pwomosyon an kopye!",
+                cookieText: "Nou itilize bonbon pou amelyore eksperyans ou, asire sekirite tranzaksyon ak analize traffic la. Ou ka chwazi preferans ou.",
+                cookieCustom: "Chwazi preferans",
+                cookieReject: "Rejte",
+                cookieAccept: "Aksepte",
+                downloadReceiptText: "Telechaje Resi a kòm PDF"
+            },
+            en: {
+                pageTitle: "BerdSend - Phone Top-Up & Money Transfer",
+                navRecharge: "Phone Top-Up",
+                navTransfer: "Money Transfer",
+                badgeUnavailable: "Coming Soon",
+                navReferral: "$5 Referral Program",
+                loginText: "Login",
+                heroTitle: "Send Phone Top-Up Anytime",
+                heroSubtitle: "Fast mobile recharges for top networks in the Caribbean, Latin America, and Africa.",
+                tabRecharge: "Phone Top-Up",
+                tabTransfer: "Money Transfer",
+                labelOrigin: "Origin Country *",
+                labelDest: "Destination Country *",
+                labelOperator: "Select Operator *",
+                labelPhone: "Phone Number *",
+                labelAmount: "Top-Up Amount (USD $) *",
+                submitText: "Pay & Send Top-Up Now",
+                refBadge: "Referral Program",
+                refTitle: "Earn $5 per invitation!",
+                refDesc: "Share your promo code! Both you and your invited friend will get a $5 bonus during their first week on the app.",
+                copyText: "Copy",
+                copySuccess: "Promo code copied!",
+                cookieText: "We use cookies to improve your experience, secure transactions, and analyze traffic. You can customize your preferences.",
+                cookieCustom: "Customize preferences",
+                cookieReject: "Reject",
+                cookieAccept: "Accept",
+                downloadReceiptText: "Download Receipt as PDF"
+            },
+            es: {
+                pageTitle: "BerdSend - Recarga de Celular y Transferencia",
+                navRecharge: "Recarga de Celular",
+                navTransfer: "Transferencia",
+                badgeUnavailable: "Próximamente",
+                navReferral: "Programa de Referidos $5",
+                loginText: "Iniciar Sesión",
+                heroTitle: "Envía Recargas en Cualquier Momento",
+                heroSubtitle: "Recargas móviles rápidas para el Caribe, América Latina y África.",
+                tabRecharge: "Recarga de Celular",
+                tabTransfer: "Transferencia",
+                labelOrigin: "País de Origen *",
+                labelDest: "País de Destino *",
+                labelOperator: "Seleccionar Operador *",
+                labelPhone: "Número de Teléfono *",
+                labelAmount: "Monto de Recarga (USD $) *",
+                submitText: "Pagar y Enviar Recarga",
+                refBadge: "Programa de Referidos",
+                refTitle: "¡Gana $5 por cada invitación!",
+                refDesc: "¡Comparte tu código promo! Tanto tú como tu invitado recibirán un bono de $5 durante su primera semana en la app.",
+                copyText: "Copiar",
+                copySuccess: "¡Código copiado!",
+                cookieText: "Utilizamos cookies para mejorar su experiencia, asegurar transacciones y analizar el tráfico. Personalice sus preferencias.",
+                cookieCustom: "Personalizar preferencias",
+                cookieReject: "Rechazar",
+                cookieAccept: "Aceptar",
+                downloadReceiptText: "Descargar Recibo como PDF"
+            },
+            fr: {
+                pageTitle: "BerdSend - Recharge Téléphone & Transfert",
+                navRecharge: "Recharge Téléphone",
+                navTransfer: "Transfert d'Argent",
+                badgeUnavailable: "Bientôt disponible",
+                navReferral: "Programme de Parrainage 5$",
+                loginText: "Connexion",
+                heroTitle: "Envoyez du Crédit Téléphone à Tout Moment",
+                heroSubtitle: "Recharges mobiles rapides pour les Caraïbes, l'Amérique Latine et l'Afrique.",
+                tabRecharge: "Recharge Téléphone",
+                tabTransfer: "Transfert d'Argent",
+                labelOrigin: "Pays d'Origine *",
+                labelDest: "Pays de Destination *",
+                labelOperator: "Sélectionner l'Opérateur *",
+                labelPhone: "Numéro de Téléphone *",
+                labelAmount: "Montant de Recharge (USD $) *",
+                submitText: "Payer & Envoyer la Recharge",
+                refBadge: "Programme de Parrainage",
+                refTitle: "Gagnez 5$ par invitation !",
+                refDesc: "Partagez votre code promo ! Vous et votre ami recevrez un bonus de 5$ durant sa première semaine sur l'app.",
+                copyText: "Copier",
+                copySuccess: "Code promo copié !",
+                cookieText: "Nous utilisons des cookies pour améliorer votre expérience et sécuriser les transactions. Personnalisez vos choix.",
+                cookieCustom: "Personnaliser",
+                cookieReject: "Refuser",
+                cookieAccept: "Accepter",
+                downloadReceiptText: "Télécharger le reçu en PDF"
+            },
+            pt: {
+                pageTitle: "BerdSend - Recarga de Celular e Transferência",
+                navRecharge: "Recarga de Celular",
+                navTransfer: "Transferência",
+                badgeUnavailable: "Em breve",
+                navReferral: "Programa de Indicação $5",
+                loginText: "Entrar",
+                heroTitle: "Envie Recarga de Celular a Qualquer Momento",
+                heroSubtitle: "Recargas móveis rápidas para o Caribe, América Latina e África.",
+                tabRecharge: "Recarga de Celular",
+                tabTransfer: "Transferência",
+                labelOrigin: "País de Origem *",
+                labelDest: "País de Destino *",
+                labelOperator: "Selecionar Operadora *",
+                labelPhone: "Número de Telefone *",
+                labelAmount: "Valor da Recarga (USD $) *",
+                submitText: "Pagar e Enviar Recarga",
+                refBadge: "Programa de Indicação",
+                refTitle: "Ganhe $5 por indicação!",
+                refDesc: "Compartilhe seu código de indicação! Você e seu amigo ganham um bônus de $5 na primeira semana.",
+                copyText: "Copiar",
+                copySuccess: "Código copiado!",
+                cookieText: "Usamos cookies para melhorar sua experiência e transações seguras. Personalize suas preferências.",
+                cookieCustom: "Personalizar preferências",
+                cookieReject: "Rejeitar",
+                cookieAccept: "Aceitar",
+                downloadReceiptText: "Baixar Recibo em PDF"
+            }
+        };
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('navRecharge').innerText = t.navRecharge;
+            document.getElementById('navTransfer').innerText = t.navTransfer;
+            document.getElementById('badgeUnavailable').innerText = t.badgeUnavailable;
+            document.getElementById('navReferral').innerText = t.navReferral;
+            document.getElementById('loginText').innerText = t.loginText;
+            document.getElementById('heroTitle').innerText = t.heroTitle;
+            document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
+            document.getElementById('tabRecharge').innerText = t.tabRecharge;
+            document.getElementById('tabTransfer').innerText = t.tabTransfer;
+            document.getElementById('labelOrigin').innerText = t.labelOrigin;
+            document.getElementById('labelDest').innerText = t.labelDest;
+            document.getElementById('labelOperator').innerText = t.labelOperator;
+            document.getElementById('labelPhone').innerText = t.labelPhone;
+            document.getElementById('labelAmount').innerText = t.labelAmount;
+            document.getElementById('submitBtn').querySelector('span').innerText = t.submitText;
+            document.getElementById('refBadge').innerText = t.refBadge;
+            document.getElementById('refTitle').innerText = t.refTitle;
+            document.getElementById('refDesc').innerText = t.refDesc;
+            document.getElementById('copyBtn').innerText = t.copyText;
+            document.getElementById('copyMsg').innerText = t.copySuccess;
+            document.getElementById('cookieText').innerText = t.cookieText;
+            document.getElementById('cookieCustomBtn').innerText = t.cookieCustom;
+            document.getElementById('cookieRejectBtn').innerText = t.cookieReject;
+            document.getElementById('cookieAcceptBtn').innerText = t.cookieAccept;
+            document.getElementById('downloadReceiptText').innerText = t.downloadReceiptText;
+        }
+
+        // 3. Cookie Modal Controls
+        function handleCookieAction(action) {
+            document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
+            setTimeout(() => document.getElementById('cookieBanner').style.display = 'none', 300);
+        }
+        function openCookieModal() { document.getElementById('cookieModal').classList.remove('hidden'); }
+        function closeCookieModal() { document.getElementById('cookieModal').classList.add('hidden'); }
+        function saveCookiePreferences() {
+            closeCookieModal();
+            handleCookieAction('accept');
+        }
+
+        // 5. Auth Modal Controls & User Validation (Inik, modpas konfime)
+        let registeredUsers = JSON.parse(localStorage.getItem('berd_users') || '[]');
+        let currentUser = JSON.parse(localStorage.getItem('berd_current') || 'null');
+
+        function openAuthModal(mode) {
+            document.getElementById('authModal').classList.remove('hidden');
+            switchAuthTab(mode);
+        }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function switchAuthTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
+                document.getElementById('tabLoginBtn').className = "flex-1 pb-2 font-bold text-blue-600 border-b-2 border-blue-600 text-sm";
+                document.getElementById('tabRegBtn').className = "flex-1 pb-2 font-medium text-slate-500 text-sm";
+            } else {
+                document.getElementById('registerForm').classList.remove('hidden');
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('tabRegBtn').className = "flex-1 pb-2 font-bold text-emerald-600 border-b-2 border-emerald-600 text-sm";
+                document.getElementById('tabLoginBtn').className = "flex-1 pb-2 font-medium text-slate-500 text-sm";
+            }
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            const conf = document.getElementById('regPassConfirm').value;
+
+            if (pass !== conf) {
+                alert("Modpas yo pa matche!");
                 return;
             }
 
-            try {
-                const payments = window.Square.payments(appId, locationId);
-                card = await payments.card();
-                await card.attach('#card-container');
-            } catch (e) {
-                console.error('Erè nan chajman fòm peman an:', e);
-                document.getElementById('payment-status-container').innerText = 'Erè nan chaje fòm kat la. Tanpri reload paj la.';
-                document.getElementById('payment-status-container').classList.add('text-red-500');
+            // Verify si imel la deja egziste (sof si itilizatè a efase kont li anvan)
+            const existing = registeredUsers.find(u => u.email === email);
+            if (existing) {
+                alert("Imel sa a deja anrejistre sou platfòm la!");
+                return;
             }
-        }
 
-        // SWITCH TABS (TRANSFÈ VS RECHAJ)
-        function switchService(service) {
-            const tabTransfer = document.getElementById('tab-transfer');
-            const tabRecharge = document.getElementById('tab-recharge');
-            const serviceFields = document.getElementById('service-fields');
-
-            if (service === 'transfer') {
-                tabTransfer.className = "flex-1 py-4 text-center text-sm font-semibold flex items-center justify-center gap-2 active-tab transition";
-                tabRecharge.className = "flex-1 py-4 text-center text-sm font-semibold text-slate-500 flex items-center justify-center gap-2 hover:text-blue-600 transition";
-                
-                serviceFields.innerHTML = `
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Peyi Destinatè *</label>
-                        <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white">
-                            <option value="HT">Haïti (HTG / USD)</option>
-                            <option value="DR">République Dominicaine (DOP)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Montan pou voye (USD) *</label>
-                        <input type="number" required min="1" placeholder="0.00" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
-                    </div>
-                `;
-            } else {
-                tabRecharge.className = "flex-1 py-4 text-center text-sm font-semibold text-blue-600 flex items-center justify-center gap-2 active-tab transition";
-                tabTransfer.className = "flex-1 py-4 text-center text-sm font-semibold text-slate-500 flex items-center justify-center gap-2 hover:text-blue-600 transition";
-
-                serviceFields.innerHTML = `
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Konpayi Telefòn *</label>
-                        <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white">
-                            <option value="digicel">Digicel Haïti</option>
-                            <option value="natcom">Natcom Haïti</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Nimewo Telefòn *</label>
-                        <input type="tel" required placeholder="+509 XXXX XXXX" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Montan Rechaj ($) *</label>
-                        <input type="number" required min="1" placeholder="5.00" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
-                    </div>
-                `;
-            }
-            lucide.createIcons();
-        }
-
-        // HANDLE COOKIES BANNER
-        function acceptCookies() {
-            document.getElementById('cookies-banner').style.display = 'none';
-        }
-
-        // HANDLE LANGUAGE SWITCH
-        function changeLanguage(lang) {
-            console.log("Langue sélectionnée:", lang);
-        }
-
-        // HANDLE PROCESS PAYMENT
-        async function handleProcessPayment(event) {
-            event.preventDefault();
-            const statusContainer = document.getElementById('payment-status-container');
-            const cardholderName = document.getElementById('cardholder-name').value;
+            // Kreye nouvo kont ak yon kòd pwomosyon inik + 5 dola bonis
+            const promoCode = "BERD-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+            const newUser = { name, email, pass, promoCode, bonusBalance: 5.0 };
             
-            statusContainer.innerText = 'N ap trete peman an...';
-            statusContainer.className = 'text-xs font-semibold text-blue-600';
-
-            try {
-                const result = await card.tokenize();
-                if (result.status === 'OK') {
-                    console.log('Token peman kreye avèk siksè:', result.token);
-                    console.log('Non ki sou kat la:', cardholderName);
-                    
-                    statusContainer.innerText = 'Peman an pase avèk siksè!';
-                    statusContainer.className = 'text-xs font-semibold text-green-600';
-                } else {
-                    let errorMessage = `Echèk peman: ${result.errors[0].message}`;
-                    statusContainer.innerText = errorMessage;
-                    statusContainer.className = 'text-xs font-semibold text-red-600';
-                }
-            } catch (e) {
-                console.error(e);
-                statusContainer.innerText = 'Gen yon erè ki rive pandan tretman an.';
-                statusContainer.className = 'text-xs font-semibold text-red-600';
-            }
+            registeredUsers.push(newUser);
+            localStorage.setItem('berd_users', JSON.stringify(registeredUsers));
+            localStorage.setItem('berd_current', JSON.stringify(newUser));
+            
+            currentUser = newUser;
+            updateUserUI();
+            closeAuthModal();
+            alert(`Kont ou kreye avèk siksè!\nOu resevwa $5.00 bonis kòm nouvo itilizatè.\nKòd pwomosyon ou: ${promoCode}`);
         }
 
-        // LOAD WHEN DOM IS READY
-        document.addEventListener('DOMContentLoaded', initializePayment);
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+
+            const user = registeredUsers.find(u => u.email === email && u.pass === pass);
+            if (!user) {
+                alert("Imel oswa modpas la pa kòrèk!");
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('berd_current', JSON.stringify(user));
+            updateUserUI();
+            closeAuthModal();
+            alert(`Byenveni ankò, ${user.name}!`);
+        }
+
+        function updateUserUI() {
+            if (currentUser) {
+                document.getElementById('loginBtn').classList.add('hidden');
+                const avatarContainer = document.getElementById('userAvatarContainer');
+                avatarContainer.classList.remove('hidden');
+                document.getElementById('userAvatarImg').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`;
+                
+                // Si li gen bonis, montre opsyon pou itilize l
+                if (currentUser.bonusBalance > 0) {
+                    document.getElementById('bonusPaymentOption').classList.remove('hidden');
+                    document.getElementById('bonusBoxTitle').innerText = `Ou gen $${currentUser.bonusBalance.toFixed(2)} Bonis nan kont ou!`;
+                }
+                // Mete kòd pwomosyon li nan seksyon referans lan
+                document.getElementById('refLink').value = `https://berdsend.com/ref?code=${currentUser.promoCode}`;
+            }
+        }
+        updateUserUI();
+
+        // 4. Submit Recharge & PDF Receipt
+        function handleRechargeSubmit(e) {
+            e.preventDefault();
+            const dest = document.getElementById('destCountry').value;
+            const operator = document.getElementById('operatorSelect').value;
+            const phone = document.getElementById('phoneNumber').value;
+            let amount = parseFloat(document.getElementById('selectedAmount').value);
+
+            // Tcheke si li vle itilize bonis li
+            const useBonus = document.getElementById('useBonusCheck').checked;
+            if (useBonus && currentUser && currentUser.bonusBalance >= amount) {
+                currentUser.bonusBalance -= amount;
+                localStorage.setItem('berd_current', JSON.stringify(currentUser));
+                alert("Tranzaksyon an fèt avèk siksè nan balans bonis ou!");
+            }
+
+            document.getElementById('rDate').innerText = new Date().toLocaleString();
+            document.getElementById('rDest').innerText = dest;
+            document.getElementById('rOperator').innerText = operator;
+            document.getElementById('rPhone').innerText = phone;
+            document.getElementById('rAmount').innerText = `$${amount.toFixed(2)} USD`;
+
+            document.getElementById('receiptModal').classList.remove('hidden');
+        }
+
+        function closeReceiptModal() { document.getElementById('receiptModal').classList.add('hidden'); }
+
+        function downloadPDF() {
+            const element = document.getElementById('receiptContent');
+            const opt = {
+                margin: 10,
+                filename: 'BerdSend-Resi.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().from(element).set(opt).save();
+        }
+
+        function selectAmount(amt) {
+            document.getElementById('selectedAmount').value = amt;
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-600');
+                btn.classList.add('border-slate-200', 'text-slate-700');
+            });
+            event.target.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-600');
+        }
+
+        function copyRefLink() {
+            const link = document.getElementById('refLink');
+            link.select();
+            document.execCommand('copy');
+            const msg = document.getElementById('copyMsg');
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
     </script>
 </body>
 </html>
