@@ -12,6 +12,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
+        .country-select-custom {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+            border: 1px solid #334155;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .country-select-custom:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800 flex flex-col min-h-screen">
@@ -89,7 +100,7 @@
             <div class="p-6 sm:p-8">
                 <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-6">
                     
-                    <!-- Pwen 2: Peyi Orijin ak Destinasyon (Anpil peyi Karayib, Amerik Latin ak Afrik) -->
+                    <!-- Peyi Orijin ak Destinasyon -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label id="labelOrigin" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Orijin *</label>
@@ -120,7 +131,7 @@
                                     <option value="BR">🇧🇷 Brezil (+55)</option>
                                     <option value="MX">🇲🇽 Meksik (+52)</option>
                                     <option value="VE">🇻🇪 Venezwela (+58)</option>
-                                    <option value="AR">🇦，。 Арjentina (+54)</option>
+                                    <option value="AR">🇦🇷 Ajantin (+54)</option>
                                     <option value="PE">🇵🇪 Pewou (+51)</option>
                                     <option value="CL">🇨🇱 Chili (+56)</option>
                                 </optgroup>
@@ -138,7 +149,7 @@
                         </div>
                     </div>
 
-                    <!-- Operatè ki depann de peyi destinasyon an (NB nan enstriksyon) -->
+                    <!-- Operatè ki depann de peyi destinasyon an & Nimewo Telefòn -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label id="labelOperator" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Operatè a *</label>
@@ -148,6 +159,12 @@
                             <label id="labelPhone" class="block text-sm font-semibold text-slate-700 mb-2">Nimewo Telefòn *</label>
                             <input type="tel" id="phoneNumber" required placeholder="37000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 text-lg font-mono outline-none" />
                         </div>
+                    </div>
+
+                    <!-- Imel Obligatwa pandan tranzaksyon an -->
+                    <div>
+                        <label id="labelTxEmail" class="block text-sm font-semibold text-slate-700 mb-2">Imel pou Resi a ak Suivi Tranzaksyon an *</label>
+                        <input type="email" id="txEmail" required placeholder="imel@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base" />
                     </div>
 
                     <!-- Step 3: Amount Selection -->
@@ -161,7 +178,7 @@
                         <input type="hidden" id="selectedAmount" value="5" />
                     </div>
 
-                    <!-- Pwen 8: Itilize Bonis Balans la (si kliyan an genyen l) -->
+                    <!-- Itilize Bonis Balans la (si kliyan an genyen l) -->
                     <div id="bonusPaymentOption" class="hidden bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <i data-lucide="gift" class="w-6 h-6 text-emerald-600"></i>
@@ -182,13 +199,13 @@
             </div>
         </div>
 
-        <!-- ==================== REFERRAL & PROMO SECTION (Pwen 8) ==================== -->
+        <!-- ==================== REFERRAL & PROMO SECTION ==================== -->
         <section id="referral" class="mt-16 bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-8 shadow-xl">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
                     <span id="refBadge" class="bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-blue-400/30">Pwogram Envitasyon</span>
                     <h2 id="refTitle" class="text-2xl font-bold mt-2">Jwenn $5 pou chak envitasyon!</h2>
-                    <p id="refDesc" class="text-slate-300 text-sm mt-1 max-w-lg">Pataje kòd pwomosyon ou a! Tou de moun ki envite a ak moun ki envite a ap jwenn $5 dola bonis nan premye semèn yo sou app la.</p>
+                    <p id="refDesc" class="text-slate-300 text-sm mt-1 max-w-lg">Pataje kòd pwomosyon ou a! Apre 7 jou, ou ap jwenn $5 dola bonis pou chak envitasyon ki valide sou app la.</p>
                 </div>
                 <div class="w-full md:w-auto flex flex-col gap-2">
                     <div class="flex items-center gap-2 bg-white/10 p-2 rounded-xl border border-white/10">
@@ -201,7 +218,7 @@
         </section>
     </main>
 
-    <!-- ==================== COOKIE BANNER (Pwen 3) ==================== -->
+    <!-- ==================== COOKIE BANNER ==================== -->
     <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 text-white p-4 sm:p-5 z-50 shadow-2xl transition-all duration-300">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -256,7 +273,7 @@
         </div>
     </div>
 
-    <!-- ==================== AUTH MODAL (Pwen 5: Enskripsyon ak Verifikasyon) ==================== -->
+    <!-- ==================== AUTH MODAL ==================== -->
     <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -279,7 +296,7 @@
                 <button type="submit" id="lSubmitBtn" class="w-full bg-blue-600 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-blue-700 transition">Konekte</button>
             </form>
 
-            <!-- Fòm Enskri (Pwen 5: Non, Imel, Modpas, Konfimasyon Modpas + Anpeche doub enskripsyon sof si efase) -->
+            <!-- Fòm Enskri -->
             <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="space-y-3 hidden">
                 <div>
                     <label id="rNameLabel" class="block text-xs font-semibold text-slate-700 mb-1">Non Konplè *</label>
@@ -302,7 +319,24 @@
         </div>
     </div>
 
-    <!-- ==================== RECEIPT MODAL (Pwen 4: Telechaje PDF) ==================== -->
+    <!-- ==================== PROFILE MODAL ==================== -->
+    <div id="profileModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
+            <button onclick="closeProfileModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="text-center mb-6">
+                <img id="profileModalAvatar" src="" alt="Avatar" class="w-20 h-20 rounded-full border-4 border-blue-600 object-cover mx-auto mb-3" />
+                <h3 id="profileModalName" class="text-lg font-bold text-slate-900"></h3>
+                <p id="profileModalEmail" class="text-xs text-slate-500"></p>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 space-y-2 text-sm">
+                <div class="flex justify-between"><span class="text-slate-500">Balans Bonis:</span> <span id="profileModalBonus" class="font-bold text-emerald-600"></span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Kòd Pwomosyon:</span> <span id="profileModalPromo" class="font-mono font-bold text-blue-600"></span></div>
+            </div>
+            <button onclick="handleLogout()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-sm transition">Dekonekte</button>
+        </div>
+    </div>
+
+    <!-- ==================== RECEIPT MODAL ==================== -->
     <div id="receiptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative text-slate-800">
             <button onclick="closeReceiptModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -314,6 +348,7 @@
                 </div>
                 <div class="text-xs space-y-2">
                     <div class="flex justify-between"><span class="text-slate-500">Dat:</span> <span id="rDate" class="font-mono"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Imel:</span> <span id="rEmail" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Destinasyon:</span> <span id="rDest" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Operatè:</span> <span id="rOperator" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Nimewo:</span> <span id="rPhone" class="font-mono font-bold"></span></div>
@@ -328,7 +363,7 @@
         </div>
     </div>
 
-    <!-- ==================== FOOTER (Pwen 6: Blog, about, privacy, terms, faq) ==================== -->
+    <!-- ==================== FOOTER ==================== -->
     <footer class="bg-white border-t border-slate-200 mt-20 py-8">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
             <p>© 2026 BerdSend LLC. Tout dwa rezève.</p>
@@ -386,7 +421,7 @@
         }
         updateOperators();
 
-        // 2. Diksyonè 5 Lang yo (Kreyòl, Franse, Anglè, Panyòl, Pòtigè)
+        // 2. Diksyonè 5 Lang yo
         const translations = {
             ht: {
                 pageTitle: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
@@ -403,11 +438,12 @@
                 labelDest: "Peyi Destinasyon *",
                 labelOperator: "Chwazi Operatè a *",
                 labelPhone: "Nimewo Telefòn *",
+                labelTxEmail: "Imel pou Resi a ak Suivi Tranzaksyon an *",
                 labelAmount: "Chwazi Montan Rechaj la (USD $) *",
                 submitText: "Peye & Voye Rechaj Kounye A",
                 refBadge: "Pwogram Envitasyon",
                 refTitle: "Jwenn $5 pou chak envitasyon!",
-                refDesc: "Pataje kòd pwomosyon ou a! Tou de moun ki envite a ak moun ki envite a ap jwenn $5 dola bonis nan premye semèn yo sou app la.",
+                refDesc: "Pataje kòd pwomosyon ou a! Apre 7 jou, ou ap jwenn $5 dola bonis pou chak envitasyon ki valide sou app la.",
                 copyText: "Kopye",
                 copySuccess: "Kòd pwomosyon an kopye!",
                 cookieText: "Nou itilize bonbon pou amelyore eksperyans ou, asire sekirite tranzaksyon ak analize traffic la. Ou ka chwazi preferans ou.",
@@ -431,11 +467,12 @@
                 labelDest: "Destination Country *",
                 labelOperator: "Select Operator *",
                 labelPhone: "Phone Number *",
+                labelTxEmail: "Email for Receipt and Transaction Tracking *",
                 labelAmount: "Top-Up Amount (USD $) *",
                 submitText: "Pay & Send Top-Up Now",
                 refBadge: "Referral Program",
                 refTitle: "Earn $5 per invitation!",
-                refDesc: "Share your promo code! Both you and your invited friend will get a $5 bonus during their first week on the app.",
+                refDesc: "Share your promo code! After 7 days, you will receive a $5 bonus for each validated invitation on the app.",
                 copyText: "Copy",
                 copySuccess: "Promo code copied!",
                 cookieText: "We use cookies to improve your experience, secure transactions, and analyze traffic. You can customize your preferences.",
@@ -459,11 +496,12 @@
                 labelDest: "País de Destino *",
                 labelOperator: "Seleccionar Operador *",
                 labelPhone: "Número de Teléfono *",
+                labelTxEmail: "Correo para Recibo y Seguimiento de Transacción *",
                 labelAmount: "Monto de Recarga (USD $) *",
                 submitText: "Pagar y Enviar Recarga",
                 refBadge: "Programa de Referidos",
                 refTitle: "¡Gana $5 por cada invitación!",
-                refDesc: "¡Comparte tu código promo! Tanto tú como tu invitado recibirán un bono de $5 durante su primera semana en la app.",
+                refDesc: "¡Comparte tu código promo! Después de 7 días, recibirás un bono de $5 por cada invitación validada en la app.",
                 copyText: "Copiar",
                 copySuccess: "¡Código copiado!",
                 cookieText: "Utilizamos cookies para mejorar su experiencia, asegurar transacciones y analizar el tráfico. Personalice sus preferencias.",
@@ -487,11 +525,12 @@
                 labelDest: "Pays de Destination *",
                 labelOperator: "Sélectionner l'Opérateur *",
                 labelPhone: "Numéro de Téléphone *",
+                labelTxEmail: "Email pour le Reçu et le Suivi de Transaction *",
                 labelAmount: "Montant de Recharge (USD $) *",
                 submitText: "Payer & Envoyer la Recharge",
                 refBadge: "Programme de Parrainage",
                 refTitle: "Gagnez 5$ par invitation !",
-                refDesc: "Partagez votre code promo ! Vous et votre ami recevrez un bonus de 5$ durant sa première semaine sur l'app.",
+                refDesc: "Partagez votre code promo ! Après 7 jours, vous recevrez un bonus de 5$ pour chaque invitation validée sur l'app.",
                 copyText: "Copier",
                 copySuccess: "Code promo copié !",
                 cookieText: "Nous utilisons des cookies pour améliorer votre expérience et sécuriser les transactions. Personnalisez vos choix.",
@@ -515,11 +554,12 @@
                 labelDest: "País de Destino *",
                 labelOperator: "Selecionar Operadora *",
                 labelPhone: "Número de Telefone *",
+                labelTxEmail: "E-mail para o Recibo e Acompanhamento da Transação *",
                 labelAmount: "Valor da Recarga (USD $) *",
                 submitText: "Pagar e Enviar Recarga",
                 refBadge: "Programa de Indicação",
                 refTitle: "Ganhe $5 por indicação!",
-                refDesc: "Compartilhe seu código de indicação! Você e seu amigo ganham um bônus de $5 na primeira semana.",
+                refDesc: "Compartilhe seu código de indicação! Após 7 dias, você receberá um bônus de $5 para cada convite validado no app.",
                 copyText: "Copiar",
                 copySuccess: "Código copiado!",
                 cookieText: "Usamos cookies para melhorar sua experiência e transações seguras. Personalize suas preferências.",
@@ -547,6 +587,7 @@
             document.getElementById('labelDest').innerText = t.labelDest;
             document.getElementById('labelOperator').innerText = t.labelOperator;
             document.getElementById('labelPhone').innerText = t.labelPhone;
+            document.getElementById('labelTxEmail').innerText = t.labelTxEmail;
             document.getElementById('labelAmount').innerText = t.labelAmount;
             document.getElementById('submitBtn').querySelector('span').innerText = t.submitText;
             document.getElementById('refBadge').innerText = t.refBadge;
@@ -573,7 +614,7 @@
             handleCookieAction('accept');
         }
 
-        // 5. Auth Modal Controls & User Validation (Inik, modpas konfime)
+        // 5. Auth Modal Controls & User Validation
         let registeredUsers = JSON.parse(localStorage.getItem('berd_users') || '[]');
         let currentUser = JSON.parse(localStorage.getItem('berd_current') || 'null');
 
@@ -582,6 +623,25 @@
             switchAuthTab(mode);
         }
         function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function openProfileModal() {
+            if (!currentUser) return;
+            document.getElementById('profileModalAvatar').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`;
+            document.getElementById('profileModalName').innerText = currentUser.name;
+            document.getElementById('profileModalEmail').innerText = currentUser.email;
+            document.getElementById('profileModalBonus').innerText = `$${currentUser.bonusBalance.toFixed(2)}`;
+            document.getElementById('profileModalPromo').innerText = currentUser.promoCode;
+            document.getElementById('profileModal').classList.remove('hidden');
+        }
+        function closeProfileModal() { document.getElementById('profileModal').classList.add('hidden'); }
+
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('berd_current');
+            closeProfileModal();
+            updateUserUI();
+            alert("Ou dekonekte avèk siksè!");
+        }
 
         function switchAuthTab(tab) {
             if (tab === 'login') {
@@ -609,14 +669,12 @@
                 return;
             }
 
-            // Verify si imel la deja egziste (sof si itilizatè a efase kont li anvan)
             const existing = registeredUsers.find(u => u.email === email);
             if (existing) {
                 alert("Imel sa a deja anrejistre sou platfòm la!");
                 return;
             }
 
-            // Kreye nouvo kont ak yon kòd pwomosyon inik + 5 dola bonis
             const promoCode = "BERD-" + Math.random().toString(36).substring(2, 8).toUpperCase();
             const newUser = { name, email, pass, promoCode, bonusBalance: 5.0 };
             
@@ -649,40 +707,50 @@
         }
 
         function updateUserUI() {
+            const loginBtn = document.getElementById('loginBtn');
+            const avatarContainer = document.getElementById('userAvatarContainer');
+            
             if (currentUser) {
-                document.getElementById('loginBtn').classList.add('hidden');
-                const avatarContainer = document.getElementById('userAvatarContainer');
+                loginBtn.classList.add('hidden');
                 avatarContainer.classList.remove('hidden');
                 document.getElementById('userAvatarImg').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.name}`;
                 
-                // Si li gen bonis, montre opsyon pou itilize l
                 if (currentUser.bonusBalance > 0) {
                     document.getElementById('bonusPaymentOption').classList.remove('hidden');
                     document.getElementById('bonusBoxTitle').innerText = `Ou gen $${currentUser.bonusBalance.toFixed(2)} Bonis nan kont ou!`;
+                } else {
+                    document.getElementById('bonusPaymentOption').classList.add('hidden');
                 }
-                // Mete kòd pwomosyon li nan seksyon referans lan
                 document.getElementById('refLink').value = `https://berdsend.com/ref?code=${currentUser.promoCode}`;
+                document.getElementById('txEmail').value = currentUser.email;
+            } else {
+                loginBtn.classList.remove('hidden');
+                avatarContainer.classList.add('hidden');
+                document.getElementById('bonusPaymentOption').classList.add('hidden');
+                document.getElementById('txEmail').value = '';
             }
         }
         updateUserUI();
 
-        // 4. Submit Recharge & PDF Receipt
+        // Submit Recharge & PDF Receipt
         function handleRechargeSubmit(e) {
             e.preventDefault();
             const dest = document.getElementById('destCountry').value;
             const operator = document.getElementById('operatorSelect').value;
             const phone = document.getElementById('phoneNumber').value;
+            const txEmail = document.getElementById('txEmail').value;
             let amount = parseFloat(document.getElementById('selectedAmount').value);
 
-            // Tcheke si li vle itilize bonis li
-            const useBonus = document.getElementById('useBonusCheck').checked;
+            const useBonus = document.getElementById('useBonusCheck') && document.getElementById('useBonusCheck').checked;
             if (useBonus && currentUser && currentUser.bonusBalance >= amount) {
                 currentUser.bonusBalance -= amount;
                 localStorage.setItem('berd_current', JSON.stringify(currentUser));
+                updateUserUI();
                 alert("Tranzaksyon an fèt avèk siksè nan balans bonis ou!");
             }
 
             document.getElementById('rDate').innerText = new Date().toLocaleString();
+            document.getElementById('rEmail').innerText = txEmail;
             document.getElementById('rDest').innerText = dest;
             document.getElementById('rOperator').innerText = operator;
             document.getElementById('rPhone').innerText = phone;
