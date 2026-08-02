@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="pageTitle">BerdSend - Rechaj Telefòn ak Transfè Lajan</title>
+  
   <!-- Google Fonts (Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -21,10 +23,10 @@
       }
     }
   </script>
+  
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- html2pdf Library pou telechaje PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
   <style>
     .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
     .glass-card { background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.9)); backdrop-filter: blur(10px); }
@@ -63,7 +65,7 @@
           <option value="pt">🇧🇷 Português</option>
         </select>
         <div class="flex items-center gap-3 border-l pl-3 sm:pl-4 border-slate-200">
-          <button onclick="openAuthModal('login')" id="loginBtn" class="flex items-center gap-1.5 bg-blue-600 text-white px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-blue-700 shadow-md shadow-blue-500/20 transition">
+          <button onclick="alert('Paj enskripsyon ak pwofil ap vini talè!')" id="loginBtn" class="flex items-center gap-1.5 bg-blue-600 text-white px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-blue-700 shadow-md shadow-blue-500/20 transition">
             <i data-lucide="user" class="w-4 h-4"></i>
             <span id="loginText">Konekte</span>
           </button>
@@ -83,6 +85,8 @@
       <div class="glass-card rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
         <div class="p-6 sm:p-10">
           <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-6">
+            
+            <!-- Peyi Orijin & Destinasyon -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label id="labelOrigin" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Peyi Orijin *</label>
@@ -102,10 +106,13 @@
                   <option value="JM">🇯🇲 Jamayik (+1)</option>
                   <option value="BR">🇧🇷 Brezil (+55)</option>
                   <option value="CL">🇨🇱 Chili (+56)</option>
+                  <option value="MX">🇲🇽 Meksik (+52)</option>
+                  <option value="CO">🇨🇴 Kolonbi (+57)</option>
                 </select>
               </div>
             </div>
 
+            <!-- Nimewo Telefòn & Operatè -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label id="labelPhone" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Nimewo Telefòn *</label>
@@ -120,13 +127,14 @@
               </div>
             </div>
 
+            <!-- Montan Rechaj -->
             <div>
               <label id="labelAmount" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Chwazi Montan / Pake Rechaj la *</label>
               <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="amountButtonsContainer"></div>
               <input type="hidden" id="selectedAmount" value="5" />
-              <input type="hidden" id="selectedOperatorId" value="" />
             </div>
 
+            <!-- Bouton Peye -->
             <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-4 rounded-2xl shadow-xl transition flex items-center justify-center gap-2 text-lg">
               <span id="btnSubmitText">Peye & Voye Rechaj Kounye A</span>
               <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -137,13 +145,14 @@
     </div>
   </main>
 
+  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
     lucide.createIcons();
 
     let currentOperatorsList = [];
     let autoDetectTimer = null;
 
-    // SISTÈM TRADIKSYON LANG (Multi-language Support)
+    // TRADIKSYON LANG (Multi-language Support)
     const translations = {
       ht: {
         title: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
@@ -239,14 +248,13 @@
       document.getElementById('btnSubmitText').innerText = t.btnSubmitText;
     }
 
-    // LOAD OPERATORS VIA BACKEND
+    // CHAJE OPERATÈ RELOADLY YO POU TOUT PEYI
     async function loadReloadlyOperators() {
       const countryCode = document.getElementById('destCountry').value;
       const opSelect = document.getElementById('operatorSelect');
       opSelect.innerHTML = '<option value="">Ap chaje operatè yo...</option>';
 
       try {
-        // Asire ke backend API route la pwen kòrèkteman
         const res = await fetch(`/api/reloadly?action=getOperators&countryCode=${countryCode}`);
         const data = await res.json();
         
@@ -255,13 +263,12 @@
           opSelect.innerHTML = '';
           data.forEach(op => {
             const opt = document.createElement('option');
-            opt.value = op.operatorId;
+            opt.value = op.operatorId || op.id;
             opt.textContent = op.name;
             opSelect.appendChild(opt);
           });
           renderOperatorOptions();
         } else {
-          // Fallback an ka ke backend lan pako deplwaye kòrèkteman sou Vercel
           fallbackOperators(countryCode);
         }
       } catch (err) {
@@ -269,15 +276,28 @@
       }
     }
 
-    // Fallback pou anpeche fòm lan bloke pandan konfigirasyon Vercel
+    // LIST OPERATÈ FALLBACK POU TOUT PEYI POU PA GEN BLOKAJS
     function fallbackOperators(country) {
       const opSelect = document.getElementById('operatorSelect');
       opSelect.innerHTML = '';
-      if (country === 'HT') {
-        opSelect.innerHTML = '<option value="1">Digicel Haiti</option><option value="2">Natcom Haiti</option>';
-      } else {
-        opSelect.innerHTML = '<option value="0">Operatè Jeneral</option>';
-      }
+      
+      const defaultOperators = {
+        'HT': [{id: 1, name: 'Digicel Haiti'}, {id: 2, name: 'Natcom Haiti'}],
+        'DO': [{id: 3, name: 'Claro Dominican Republic'}, {id: 4, name: 'Altice Dominican Republic'}, {id: 5, name: 'Viva'}],
+        'JM': [{id: 6, name: 'Digicel Jamaica'}, {id: 7, name: 'Flow Jamaica'}],
+        'BR': [{id: 8, name: 'Vivo Brazil'}, {id: 9, name: 'TIM Brazil'}, {id: 10, name: 'Claro Brazil'}],
+        'CL': [{id: 11, name: 'Entel Chile'}, {id: 12, name: 'Movistar Chile'}, {id: 13, name: 'WOM Chile'}],
+        'MX': [{id: 14, name: 'Telcel Mexico'}, {id: 15, name: 'Movistar Mexico'}, {id: 16, name: 'AT&T Mexico'}],
+        'CO': [{id: 17, name: 'Claro Colombia'}, {id: 18, name: 'Movistar Colombia'}, {id: 19, name: 'Tigo Colombia'}]
+      };
+
+      const list = defaultOperators[country] || [{id: 0, name: 'Operatè Jeneral ' + country}];
+      list.forEach(op => {
+        const opt = document.createElement('option');
+        opt.value = op.id;
+        opt.textContent = op.name;
+        opSelect.appendChild(opt);
+      });
       renderOperatorOptions();
     }
 
@@ -315,8 +335,8 @@
         try {
           const res = await fetch(`/api/reloadly?action=autoDetect&phone=${phone}&countryCode=${countryCode}`);
           const op = await res.json();
-          if (op && op.operatorId) {
-            document.getElementById('operatorSelect').value = op.operatorId;
+          if (op && (op.operatorId || op.id)) {
+            document.getElementById('operatorSelect').value = op.operatorId || op.id;
             statusSpan.textContent = `Operatè detekte: ${op.name}`;
           } else {
             statusSpan.textContent = '';
@@ -327,6 +347,62 @@
       }, 500);
     }
 
+    // FONKSYON POU VOYE SOU REDERIKYON CHECKOUT SQUARE
+    async function handleRechargeSubmit(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnSubmitText');
+      
+      submitBtn.disabled = true;
+      btnText.innerText = "N ap prepare paj peyman an...";
+
+      const originCountry = document.getElementById('originCountry').value;
+      const destCountry = document.getElementById('destCountry').value;
+      const phoneNumber = document.getElementById('phoneNumber').value.trim();
+      const operatorId = document.getElementById('operatorSelect').value;
+      const amount = document.getElementById('selectedAmount').value;
+
+      if (!phoneNumber) {
+        alert("Tanpri antre yon nimewo telefòn ki valid.");
+        submitBtn.disabled = false;
+        btnText.innerText = translations[document.getElementById('langSelect').value]?.btnSubmitText || "Peye & Voye Rechaj Kounye A";
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/square', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            phoneNumber,
+            operatorId,
+            amount,
+            originCountry,
+            destCountry
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        } else {
+          alert("Gen yon pwoblèm ak sèvis peyman an: " + (data.error || "Eseye ankò."));
+          submitBtn.disabled = false;
+          btnText.innerText = translations[document.getElementById('langSelect').value]?.btnSubmitText || "Peye & Voye Rechaj Kounye A";
+        }
+      } catch (error) {
+        console.error("Erè peyman:", error);
+        alert("Erè nan koneksyon ak sèvè peyman an.");
+        submitBtn.disabled = false;
+        btnText.innerText = translations[document.getElementById('langSelect').value]?.btnSubmitText || "Peye & Voye Rechaj Kounye A";
+      }
+    }
+
+    // Chaje operatè yo tou swit lè paj la fini chaje
     window.addEventListener('DOMContentLoaded', loadReloadlyOperators);
   </script>
 </body>
