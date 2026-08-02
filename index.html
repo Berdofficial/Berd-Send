@@ -1,340 +1,328 @@
 <!DOCTYPE html>
 <html lang="ht">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="pageTitle">BerdSend - Rechaj Telefòn ak Transfè Lajan</title>
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BerdSend - Rechaj Telefòn ak Transfè Lajan</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 flex flex-col min-h-screen">
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- ==================== HEADER / NAVIGATION ==================== -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center gap-3">
-                <a href="/" class="flex items-center gap-2">
-                    <img src="logo.jpg" alt="BerdSend Logo" class="h-10 w-auto rounded-lg object-cover" onerror="this.src='https://via.placeholder.com/40?text=BS'" />
-                    <span class="text-xl font-bold text-blue-600 tracking-tight">BerdSend</span>
-                </a>
-            </div>
+  <!-- ==================== HEADER / NAVIGATION ==================== -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2">
+        <img src="logo.jpg" alt="BerdSend Logo" class="h-10 w-auto rounded-lg object-cover" onerror="this.src='https://via.placeholder.com/40?text=BS'" />
+        <span class="text-xl font-bold text-blue-600 tracking-tight">BerdSend</span>
+      </a>
 
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600">
-                <a href="#recharge" id="navRecharge" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Rechaj Telefòn</a>
-                <div class="relative flex items-center gap-1.5 opacity-60 cursor-not-allowed">
-                    <span id="navTransfer">Transfè Lajan</span>
-                    <span id="badgeUnavailable" class="bg-amber-100 text-amber-800 text-xs font-semibold px-2 py-0.5 rounded-full">Pako disponib</span>
-                </div>
-                <a href="#referral" id="navReferral" class="hover:text-blue-600 transition">Pwogram $5 Referal</a>
-            </nav>
-
-            <!-- Right Side: Language Selector & Profile / Auth -->
-            <div class="flex items-center gap-4">
-                <!-- Language Selector -->
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-100 text-slate-700 text-sm font-medium py-1.5 px-3 rounded-lg border border-slate-200 outline-none cursor-pointer">
-                    <option value="ht">🇭🇹 Kreyòl</option>
-                    <option value="fr">🇫🇷 Français</option>
-                    <option value="en">🇺🇸 English</option>
-                </select>
-
-                <!-- User Logged In View / Avatar Menu -->
-                <div class="flex items-center gap-3 border-l pl-4 border-slate-200">
-                    <button id="loginBtn" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
-                        <i data-lucide="user" class="w-4 h-4"></i>
-                        <span id="loginText">Konekte</span>
-                    </button>
-                    <!-- Avatar -->
-                    <div id="userAvatar" class="hidden flex items-center gap-2 cursor-pointer">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jean" alt="Avatar" class="w-9 h-9 rounded-full border-2 border-blue-600" />
-                    </div>
-                </div>
-            </div>
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 font-medium text-slate-600 text-sm">
+        <a href="#recharge" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Rechaj Telefòn</a>
+        <div class="relative flex items-center gap-1.5 opacity-60 cursor-not-allowed">
+          <span>Transfè Lajan</span>
+          <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2 py-0.5 rounded-full">Pako disponib</span>
         </div>
-    </header>
+        <a href="#referral" class="hover:text-blue-600 transition">Pwogram $5 Referal</a>
+      </nav>
 
-    <!-- ==================== MAIN HERO & FORM SECTION ==================== -->
-    <main class="max-w-4xl mx-auto px-4 py-12 flex-grow">
-        <div class="text-center mb-8">
-            <h1 id="heroTitle" class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">Voye Rechaj Telefòn Nenpòt Ki Lè</h1>
-            <p id="heroSubtitle" class="text-slate-600 text-lg max-w-xl mx-auto">Voye minutes ak data sou Digicel, Natcom ak plis pase 150+ rezo nan mond lan byen rapid.</p>
+      <!-- Right Side: Language & Auth -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Language Selector -->
+        <div class="relative">
+          <select id="langSelect" class="bg-slate-100 border border-slate-300 text-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="ht">🇭🇹 Kreyòl</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="pt">🇧🇷 Português</option>
+            <option value="fr">🇫🇷 Français</option>
+          </select>
         </div>
 
-        <!-- MAIN TAB CONTAINER -->
-        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-            <!-- TABS SELECTOR -->
-            <div class="flex border-b border-slate-200 bg-slate-50">
-                <button class="flex-1 py-4 px-6 text-center font-bold text-blue-600 border-b-2 border-blue-600 bg-white flex items-center justify-center gap-2">
-                    <i data-lucide="smartphone" class="w-5 h-5"></i>
-                    <span id="tabRecharge">Rechaj Telefòn</span>
-                </button>
-                <button disabled class="flex-1 py-4 px-6 text-center font-medium text-slate-400 bg-slate-100 flex items-center justify-center gap-2 cursor-not-allowed">
-                    <i data-lucide="send" class="w-5 h-5"></i>
-                    <span id="tabTransfer">Transfè Lajan</span>
-                    <span class="bg-slate-200 text-slate-600 text-xs px-2 py-0.5 rounded-full font-semibold">Pako disponib</span>
-                </button>
-            </div>
+        <!-- Login Button -->
+        <button onclick="toggleModal(true)" class="flex items-center gap-2 bg-blue-600 text-white text-sm px-3.5 py-1.5 rounded-lg font-medium hover:bg-blue-700 transition">
+          <i data-lucide="user" class="w-4 h-4"></i>
+          <span>Konekte</span>
+        </button>
 
-            <!-- RECHARGE FORM CONTENT -->
-            <div class="p-6 sm:p-8">
-                <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-6">
-                    <!-- Step 1: Phone Number -->
-                    <div>
-                        <label id="labelPhone" class="block text-sm font-semibold text-slate-700 mb-2">1. Nimewo Telefòn ki pral resevwa rechaj la *</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 font-medium">+509</div>
-                            <input type="tel" id="phoneNumber" required placeholder="37000000" class="w-full pl-16 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-mono outline-none transition" />
-                        </div>
-                        <p id="phoneHelp" class="text-xs text-slate-500 mt-1">Antre nimewo Digicel oswa Natcom san kòd peyi a (+509).</p>
-                    </div>
+      </div>
 
-                    <!-- Step 2: Amount Selection -->
-                    <div>
-                        <label id="labelAmount" class="block text-sm font-semibold text-slate-700 mb-2">2. Chwazi Montan Rechaj la *</label>
-                        <div class="grid grid-cols-3 gap-3">
-                            <button type="button" onclick="selectAmount(5)" class="amount-btn border-2 border-blue-600 bg-blue-50 text-blue-600 rounded-xl py-3 text-center font-bold"> $5.00 </button>
-                            <button type="button" onclick="selectAmount(10)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $10.00 </button>
-                            <button type="button" onclick="selectAmount(20)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $20.00 </button>
-                        </div>
-                        <input type="hidden" id="selectedAmount" value="5" />
-                    </div>
+    </div>
+  </header>
 
-                    <!-- Step 3: Mandatory Email Collection -->
-                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                        <label id="labelEmail" class="block text-sm font-semibold text-slate-800 mb-1">3. Imel ou (Obligatwa pou resevwa resi a) *</label>
-                        <input type="email" id="userEmail" required placeholder="oumenm@gmail.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" />
-                        <p id="emailHelp" class="text-xs text-slate-500 mt-1">N ap voye konfimasyon ak resepte rechaj la sou imel sa a.</p>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-blue-500/25 transition flex items-center justify-center gap-2 text-lg">
-                        <span>Peye & Voye Rechaj Kounye A</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- ==================== REFERRAL $5 SECTION ==================== -->
-        <section id="referral" class="mt-16 bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-8 shadow-xl">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div>
-                    <span id="refBadge" class="bg-blue-500/20 text-blue-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-blue-400/30">Pwogram Envitasyon</span>
-                    <h2 id="refTitle" class="text-2xl font-bold mt-2">Jwenn $5 pou chak envitasyon!</h2>
-                    <p id="refDesc" class="text-slate-300 text-sm mt-1 max-w-lg">Anvizaje BerdSend bay zanmi w ak fanmi w! W ap resevwa $5 nan balans ou pou chak moun ki klike sou lyen w lan pou li enskri epi fè premye rechaj li.</p>
-                </div>
-                <div class="w-full md:w-auto flex flex-col gap-2">
-                    <div class="flex items-center gap-2 bg-white/10 p-2 rounded-xl border border-white/10">
-                        <input type="text" readonly value="https://berdsend.com/ref?user=jean123" id="refLink" class="bg-transparent text-sm px-2 text-slate-200 outline-none w-full md:w-56 font-mono" />
-                        <button onclick="copyRefLink()" id="copyBtn" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition shrink-0">Kopye</button>
-                    </div>
-                    <span id="copyMsg" class="text-xs text-green-400 hidden text-center">Lyen an kopye ak siksè!</span>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ==================== COOKIE BANNER ==================== -->
-    <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 text-white p-4 sm:p-5 z-50 shadow-2xl transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-blue-600/20 rounded-xl text-blue-400 border border-blue-500/30 shrink-0">
-                    <i data-lucide="cookie" class="w-6 h-6"></i>
-                </div>
-                <p id="cookieText" class="text-sm text-slate-300">Nou itilize bonbon (cookies) pou amelyore eksperyans ou sou sit la epi asire sekirite tranzaksyon yo.</p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0 w-full md:w-auto justify-end">
-                <button onclick="handleCookie('customize')" id="cookieCustomBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">Chwazi</button>
-                <button onclick="handleCookie('reject')" id="cookieRejectBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 transition">Rejte</button>
-                <button onclick="handleCookie('accept')" id="cookieAcceptBtn" class="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition">Aksepte</button>
-            </div>
-        </div>
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+    
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">
+        Voye Rechaj Telefòn Toupatou
+      </h1>
+      <p class="text-slate-600 text-base max-w-xl mx-auto">
+        Voye minutes ak done entènèt byen rapid sou pi bon rezo yo atravè lemond.
+      </p>
     </div>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="bg-white border-t border-slate-200 mt-20 py-8">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
-            <p>© 2026 BerdSend LLC. Tout dwa rezève.</p>
-            <div class="flex flex-wrap justify-center gap-6 font-medium text-slate-600">
-                <a href="blog.html" class="hover:text-blue-600 transition">Blog</a>
-                <a href="about.html" class="hover:text-blue-600 transition">About</a>
-                <a href="faq.html" class="hover:text-blue-600 transition">FAQ</a>
-                <a href="privacy.html" class="hover:text-blue-600 transition">Privacy</a>
-                <a href="terms.html" class="hover:text-blue-600 transition">Terms</a>
+    <!-- MAIN TAB CONTAINER -->
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+      
+      <!-- TABS SELECTOR -->
+      <div class="flex border-b border-slate-200 bg-slate-50">
+        <button class="flex-1 py-3.5 px-4 text-center font-bold text-blue-600 border-b-2 border-blue-600 bg-white flex items-center justify-center gap-2 text-sm">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          <span>Rechaj Telefòn</span>
+        </button>
+
+        <button disabled class="flex-1 py-3.5 px-4 text-center font-medium text-slate-400 bg-slate-100 flex items-center justify-center gap-2 cursor-not-allowed text-sm">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Transfè Lajan</span>
+          <span class="bg-slate-200 text-slate-600 text-[10px] px-2 py-0.5 rounded-full font-semibold">Pako disponib</span>
+        </button>
+      </div>
+
+      <!-- RECHARGE FORM CONTENT -->
+      <div class="p-6 sm:p-8">
+        <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-5">
+          
+          <!-- Step 1: Origin & Destination Countries -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Origin Country (Kote w ye a) -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">
+                Kote w ye a (Peyi Orijin) *
+              </label>
+              <select id="originCountry" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                <option value="US">🇺🇸 Estazini (USA)</option>
+                <option value="CA">🇨🇦 Kanada</option>
+                <option value="BR">🇧🇷 Brezil</option>
+
+                <option value="FR">🇫🇷 Lafrans</option>
+                <option value="CL">🇨🇱 Chili</option>
+                <option value="DR">🇩🇴 Repiblik Dominiken</option>
+                <option value="HT">🇭🇹 Ayiti</option>
+              </select>
             </div>
+
+            <!-- Destination Country (Kote rechaj la ap ale a) -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">
+                Peyi kote rechaj la ap ale a *
+              </label>
+              <select id="destCountry" onchange="updateOperators()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm font-semibold text-blue-600">
+                <option value="HT">🇭🇹 Ayiti (+509)</option>
+                <option value="DR">🇩🇴 Repiblik Dominiken (+1)</option>
+                <option value="US">🇺🇸 Estazini (+1)</option>
+                <option value="BR">🇧🇷 Brezil (+55)</option>
+                <option value="JM">🇯🇲 Jamayik (+1)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Step 2: Operator & Phone Number -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Operator Selection -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">
+                Chwazi Operatè a *
+              </label>
+              <select id="operatorSelect" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm font-medium">
+                <!-- Dynamically filled by JS -->
+              </select>
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">
+                Nimewo Telefòn *
+              </label>
+              <input 
+                type="tel" 
+                id="phoneNumber" 
+                required 
+                placeholder="37000000" 
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 font-mono text-sm outline-none"
+              />
+            </div>
+
+          </div>
+
+          <!-- Step 3: Custom Amount Selection -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">
+              Montan ou vle voye a (USD $) *
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-bold">$</span>
+              <input 
+                type="number" 
+                id="customAmount" 
+                min="1" 
+                step="0.5" 
+                placeholder="Mete montan an (eg: 15.00)" 
+                required 
+                class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm font-bold text-slate-800"
+              />
+            </div>
+          </div>
+
+          <!-- Step 4: Mandatory Email -->
+          <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100">
+            <label class="block text-xs font-semibold text-slate-800 mb-1">
+              Imel ou (Obligatwa pou resevwa resi a) *
+            </label>
+            <input 
+              type="email" 
+              id="userEmail" 
+              required 
+              placeholder="oumenm@gmail.com" 
+              class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-base">
+            <span>Peye & Voye Rechaj Kounye A</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+
+    <!-- REFERRAL SECTION -->
+    <section id="referral" class="mt-12 bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-2xl p-6 shadow-lg">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-blue-400/30">
+            Pwogram Envitasyon
+          </span>
+          <h2 class="text-xl font-bold mt-1.5">Jwenn $5 pou chak envitasyon!</h2>
+          <p class="text-slate-300 text-xs mt-0.5 max-w-md">
+            Pataje BerdSend ak zanmi w! Ou jwenn $5 pou chak moun ki enskri epi fè yon rechaj ak lyen w lan.
+          </p>
         </div>
-    </footer>
+        
+        <div class="w-full md:w-auto flex flex-col gap-1.5">
+          <div class="flex items-center gap-2 bg-white/10 p-1.5 rounded-xl border border-white/10">
+            <input 
+              type="text" 
+              readonly 
+              value="https://berdsend.com/ref?user=jean123" 
+              id="refLink"
+              class="bg-transparent text-xs px-2 text-slate-200 outline-none w-full md:w-48 font-mono"
+            />
+            <button onclick="copyRefLink()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shrink-0">
+              Kopye
+            </button>
+          </div>
+          <span id="copyMsg" class="text-[11px] text-green-400 hidden text-center">Lyen an kopye!</span>
+        </div>
+      </div>
+    </section>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
-    <script>
-        // Initialize icons
-        lucide.createIcons();
+  </main>
 
-        // Translations Dictionary
-        const translations = {
-            ht: {
-                pageTitle: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
-                navRecharge: "Rechaj Telefòn",
-                navTransfer: "Transfè Lajan",
-                badgeUnavailable: "Pako disponib",
-                navReferral: "Pwogram $5 Referal",
-                loginText: "Konekte",
-                heroTitle: "Voye Rechaj Telefòn Nenpòt Ki Lè",
-                heroSubtitle: "Voye minutes ak data sou Digicel, Natcom ak plis pase 150+ rezo nan mond lan byen rapid.",
-                tabRecharge: "Rechaj Telefòn",
-                tabTransfer: "Transfè Lajan",
-                labelPhone: "1. Nimewo Telefòn ki pral resevwa rechaj la *",
-                phoneHelp: "Antre nimewo Digicel oswa Natcom san kòd peyi a (+509).",
-                labelAmount: "2. Chwazi Montan Rechaj la *",
-                labelEmail: "3. Imel ou (Obligatwa pou resevwa resi a) *",
-                emailHelp: "N ap voye konfimasyon ak resepte rechaj la sou imel sa a.",
-                submitText: "Peye & Voye Rechaj Kounye A",
-                refBadge: "Pwogram Envitasyon",
-                refTitle: "Jwenn $5 pou chak envitasyon!",
-                refDesc: "Anvizaje BerdSend bay zanmi w ak fanmi w! W ap resevwa $5 nan balans ou pou chak moun ki klike sou lyen w lan pou li enskri epi fè premye rechaj li.",
-                copyText: "Kopye",
-                copySuccess: "Lyen an kopye ak siksè!",
-                cookieText: "Nou itilize bonbon (cookies) pou amelyore eksperyans ou sou sit la epi asire sekirite tranzaksyon yo.",
-                cookieCustom: "Chwazi",
-                cookieReject: "Rejte",
-                cookieAccept: "Aksepte"
-            },
-            fr: {
-                pageTitle: "BerdSend - Recharge Téléphone & Transfert d'Argent",
-                navRecharge: "Recharge Téléphone",
-                navTransfer: "Transfert d'Argent",
-                badgeUnavailable: "Bientôt disponible",
-                navReferral: "Programme de Parrainage 5$",
-                loginText: "Connexion",
-                heroTitle: "Envoyez du Crédit Téléphone à Tout Moment",
-                heroSubtitle: "Envoyez minutes et data sur Digicel, Natcom et plus de 150+ réseaux dans le monde rapidement.",
-                tabRecharge: "Recharge Téléphone",
-                tabTransfer: "Transfert d'Argent",
-                labelPhone: "1. Numéro de téléphone destinataire *",
-                phoneHelp: "Entrez le numéro Digicel ou Natcom sans l'indicatif (+509).",
-                labelAmount: "2. Choisissez le Montant de Recharge *",
-                labelEmail: "3. Votre email (Obligatoire pour le reçu) *",
-                emailHelp: "Nous enverrons la confirmation et le reçu de recharge à cet email.",
-                submitText: "Payer & Envoyer la Recharge",
-                refBadge: "Programme de Parrainage",
-                refTitle: "Gagnez 5$ par invitation !",
-                refDesc: "Partagez BerdSend avec vos amis et votre famille ! Vous recevrez 5$ dans votre solde pour chaque personne qui s'inscrit et effectue sa première recharge via votre lien.",
-                copyText: "Copier",
-                copySuccess: "Lien copié avec succès !",
-                cookieText: "Nous utilisons des cookies pour améliorer votre expérience sur le site et assurer la sécurité des transactions.",
-                cookieCustom: "Personnaliser",
-                cookieReject: "Refuser",
-                cookieAccept: "Accepter"
-            },
-            en: {
-                pageTitle: "BerdSend - Phone Top-Up & Money Transfer",
-                navRecharge: "Phone Top-Up",
-                navTransfer: "Money Transfer",
-                badgeUnavailable: "Coming Soon",
-                navReferral: "$5 Referral Program",
-                loginText: "Login",
-                heroTitle: "Send Phone Top-Up Anytime",
-                heroSubtitle: "Fast and secure mobile recharges for Digicel, Natcom and over 150+ networks worldwide.",
-                tabRecharge: "Phone Top-Up",
-                tabTransfer: "Money Transfer",
-                labelPhone: "1. Recipient Phone Number *",
-                phoneHelp: "Enter Digicel or Natcom number without country code (+509).",
-                labelAmount: "2. Choose Top-Up Amount *",
-                labelEmail: "3. Your Email (Required for receipt) *",
-                emailHelp: "We will send the recharge confirmation and receipt to this email.",
-                submitText: "Pay & Send Top-Up Now",
-                refBadge: "Referral Program",
-                refTitle: "Earn $5 per invitation!",
-                refDesc: "Introduce BerdSend to your friends and family! You will receive $5 in your balance for each person who signs up and makes their first top-up via your link.",
-                copyText: "Copy",
-                copySuccess: "Link successfully copied!",
-                cookieText: "We use cookies to improve your browsing experience and ensure transaction security.",
-                cookieCustom: "Customize",
-                cookieReject: "Reject",
-                cookieAccept: "Accept"
-            }
-        };
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 w-full">
+    <div class="max-w-7xl mx-auto px-4 text-center text-slate-500 text-xs">
+      <p>© 2026 BerdSend LLC. Tout dwa rezève.</p>
+    </div>
+  </footer>
 
-        // Change Language Function
-        function changeLanguage(lang) {
-            const t = translations[lang];
-            if (!t) return;
+  <!-- ==================== LOGIN MODAL ==================== -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
+      <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="text-lg font-bold text-slate-900 mb-4">Konekte sou BerdSend</h3>
+      <form onsubmit="event.preventDefault(); alert('Koneksyon reyisi!'); toggleModal(false);" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Imel</label>
+          <input type="email" required placeholder="nom@example.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Modpas</label>
+          <input type="password" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 outline-none text-sm focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm transition">
+          Konekte
+        </button>
+      </form>
+    </div>
+  </div>
 
-            document.getElementById('pageTitle').innerText = t.pageTitle;
-            document.getElementById('navRecharge').innerText = t.navRecharge;
-            document.getElementById('navTransfer').innerText = t.navTransfer;
-            document.getElementById('badgeUnavailable').innerText = t.badgeUnavailable;
-            document.getElementById('navReferral').innerText = t.navReferral;
-            document.getElementById('loginText').innerText = t.loginText;
-            document.getElementById('heroTitle').innerText = t.heroTitle;
-            document.getElementById('heroSubtitle').innerText = t.heroSubtitle;
-            document.getElementById('tabRecharge').innerText = t.tabRecharge;
-            document.getElementById('tabTransfer').innerText = t.tabTransfer;
-            document.getElementById('labelPhone').innerText = t.labelPhone;
-            document.getElementById('phoneHelp').innerText = t.phoneHelp;
-            document.getElementById('labelAmount').innerText = t.labelAmount;
-            document.getElementById('labelEmail').innerText = t.labelEmail;
-            document.getElementById('emailHelp').innerText = t.emailHelp;
-            document.getElementById('submitBtn').querySelector('span').innerText = t.submitText;
-            document.getElementById('refBadge').innerText = t.refBadge;
-            document.getElementById('refTitle').innerText = t.refTitle;
-            document.getElementById('refDesc').innerText = t.refDesc;
-            document.getElementById('copyBtn').innerText = t.copyText;
-            document.getElementById('copyMsg').innerText = t.copySuccess;
-            document.getElementById('cookieText').innerText = t.cookieText;
-            document.getElementById('cookieCustomBtn').innerText = t.cookieCustom;
-            document.getElementById('cookieRejectBtn').innerText = t.cookieReject;
-            document.getElementById('cookieAcceptBtn').innerText = t.cookieAccept;
-        }
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    lucide.createIcons();
 
-        // Amount Selection Logic
-        function selectAmount(amount) {
-            document.getElementById('selectedAmount').value = amount;
-            document.querySelectorAll('.amount-btn').forEach(btn => {
-                btn.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-600');
-                btn.classList.add('border-slate-200', 'text-slate-700');
-            });
-            event.target.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-600');
-        }
+    // Database operatè yo pa peyi
+    const operatorsByCountry = {
+      HT: ["Digicel Ayiti", "Natcom"],
+      DR: ["Claro", "Viva", "Altice"],
+      US: ["AT&T", "T-Mobile", "Verizon", "Cricket"],
+      BR: ["Vivo", "Claro Brasil", "TIM"],
+      JM: ["Digicel Jamaica", "Flow Jamaica"]
+    };
 
-        // Submit Recharge Form Handler
-        function handleRechargeSubmit(e) {
-            e.preventDefault();
-            const phone = document.getElementById('phoneNumber').value;
-            const amount = document.getElementById('selectedAmount').value;
-            const email = document.getElementById('userEmail').value;
-            if(!email) {
-                alert("Imel la obligatwa!");
-                return;
-            }
-            alert(`Demann rechaj voye!\n\nNimewo: +509 ${phone}\nMontan: $${amount}\nImel: ${email}`);
-        }
+    // Mizajou Operatè yo selon peyi destinasyon an
+    function updateOperators() {
+      const dest = document.getElementById('destCountry').value;
+      const opSelect = document.getElementById('operatorSelect');
+      opSelect.innerHTML = '';
 
-        // Copy Referral Link Logic
-        function copyRefLink() {
-            const linkInput = document.getElementById('refLink');
-            linkInput.select();
-            navigator.clipboard.writeText(linkInput.value);
-            const msg = document.getElementById('copyMsg');
-            msg.classList.remove('hidden');
-            setTimeout(() => msg.classList.add('hidden'), 3000);
-        }
+      const operators = operatorsByCountry[dest] || ["Operatè Jeneral"];
+      operators.forEach(op => {
+        const option = document.createElement('option');
+        option.value = op;
+        option.textContent = op;
+        opSelect.appendChild(option);
+      });
+    }
 
-        // Cookie Banner Handler
-        function handleCookie(action) {
-            const banner = document.getElementById('cookieBanner');
-            banner.style.transform = 'translateY(100%)';
-            setTimeout(() => banner.style.display = 'none', 300);
-            if(action === 'customize') {
-                alert("Ou ka chwazi preferans bonbon ou yo nan paj Paramèt la.");
-            }
-        }
-    </script>
+    // Toggle Modal Login
+    function toggleModal(show) {
+      const modal = document.getElementById('loginModal');
+      if (show) modal.classList.remove('hidden');
+      else modal.classList.add('hidden');
+    }
+
+    // Handlers
+    function handleRechargeSubmit(e) {
+      e.preventDefault();
+      const origin = document.getElementById('originCountry').value;
+      const dest = document.getElementById('destCountry').value;
+      const operator = document.getElementById('operatorSelect').value;
+      const phone = document.getElementById('phoneNumber').value;
+      const amount = document.getElementById('customAmount').value;
+      const email = document.getElementById('userEmail').value;
+
+      alert(`Tranzaksyon an sou pye!\n\nDe: ${origin} ➔ Pou: ${dest}\nOperatè: ${operator}\nNimewo: ${phone}\nMontan: $${amount} USD\nImel: ${email}`);
+    }
+
+    function copyRefLink() {
+      const linkInput = document.getElementById('refLink');
+      linkInput.select();
+      document.execCommand('copy');
+      const msg = document.getElementById('copyMsg');
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 3000);
+    }
+
+    // Initialize operators on load
+    updateOperators();
+  </script>
+
 </body>
 </html>
