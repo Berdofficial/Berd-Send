@@ -12,16 +12,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         .badge-disabled { background-color: #f3f4f6; color: #9ca3af; cursor: not-allowed; }
+        
+        /* Nouvo stil pou lis peyi yo: Bel fon gradyan, bel font, san fon blan dounwa */
         .country-select-custom {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: #ffffff;
             border: 1px solid #334155;
             border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
         }
         .country-select-custom:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+        .country-select-custom optgroup {
+            background: #0f172a;
+            color: #60a5fa;
+            font-weight: bold;
+            font-style: normal;
+        }
+        .country-select-custom option {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 8px;
         }
     </style>
 </head>
@@ -30,7 +48,7 @@
     <!-- ==================== HEADER / NAVIGATION ==================== -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo (Pwen 7: Pi piti sou telefòn, nòmal sou òdinatè) -->
+            <!-- Logo -->
             <div class="flex items-center gap-2 sm:gap-3">
                 <a href="/" class="flex items-center gap-1.5 sm:gap-2">
                     <img src="logo.jpg" alt="BerdSend Logo" class="h-8 w-8 sm:h-10 sm:w-auto rounded-lg object-cover" onerror="this.src='https://via.placeholder.com/40?text=BS'" />
@@ -50,7 +68,6 @@
 
             <!-- Right Side: Language Selector & Auth -->
             <div class="flex items-center gap-2 sm:gap-4">
-                <!-- Pwen 1: 5 Lang ki tradui tout paj la -->
                 <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-100 text-slate-700 text-xs sm:text-sm font-medium py-1.5 px-2 sm:px-3 rounded-lg border border-slate-200 outline-none cursor-pointer">
                     <option value="ht">🇭🇹 Kreyòl</option>
                     <option value="fr">🇫🇷 Français</option>
@@ -65,7 +82,7 @@
                         <i data-lucide="user" class="w-4 h-4"></i>
                         <span id="loginText">Konekte</span>
                     </button>
-                    <!-- Avatar (Visible after login) -->
+                    <!-- Avatar -->
                     <div id="userAvatarContainer" class="hidden flex items-center gap-2 cursor-pointer" onclick="openProfileModal()">
                         <img id="userAvatarImg" src="" alt="Avatar" class="w-9 h-9 rounded-full border-2 border-blue-600 object-cover" />
                     </div>
@@ -81,7 +98,7 @@
             <p id="heroSubtitle" class="text-slate-600 text-lg max-w-xl mx-auto">Voye minutes ak data sou pi bon rezo nan Karayib la, Amerik Latin ak Afrik byen rapid.</p>
         </div>
 
-        <!-- MAIN TAB CONTAINER (Kenbe Transfer ak Recharge ansanm) -->
+        <!-- MAIN TAB CONTAINER -->
         <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
             <!-- TABS SELECTOR -->
             <div class="flex border-b border-slate-200 bg-slate-50">
@@ -100,11 +117,11 @@
             <div class="p-6 sm:p-8">
                 <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)" class="space-y-6">
                     
-                    <!-- Peyi Orijin ak Destinasyon -->
+                    <!-- Peyi Orijin ak Destinasyon (Itilize country-select-custom pou bèl estil ak san fon blan) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label id="labelOrigin" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Orijin *</label>
-                            <select id="originCountry" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base">
+                            <select id="originCountry" class="w-full country-select-custom">
                                 <option value="US">🇺🇸 Etazini (USA)</option>
                                 <option value="CA">🇨🇦 Kanada</option>
                                 <option value="FR">🇫🇷 Lafrans</option>
@@ -116,7 +133,7 @@
                         </div>
                         <div>
                             <label id="labelDest" class="block text-sm font-semibold text-slate-700 mb-2">Peyi Destinasyon *</label>
-                            <select id="destCountry" onchange="updateOperators()" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base font-semibold text-blue-600">
+                            <select id="destCountry" onchange="onDestinationChange()" class="w-full country-select-custom font-semibold text-blue-400">
                                 <optgroup label="Karayib">
                                     <option value="HT">🇭🇹 Ayiti (+509)</option>
                                     <option value="DO">🇩🇴 Repiblik Dominiken (+1)</option>
@@ -153,32 +170,55 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label id="labelOperator" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Operatè a *</label>
-                            <select id="operatorSelect" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base font-medium"></select>
+                            <select id="operatorSelect" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base font-medium bg-white"></select>
                         </div>
                         <div>
                             <label id="labelPhone" class="block text-sm font-semibold text-slate-700 mb-2">Nimewo Telefòn *</label>
-                            <input type="tel" id="phoneNumber" required placeholder="37000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 text-lg font-mono outline-none" />
+                            <input type="tel" id="phoneNumber" required placeholder="37000000" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 text-lg font-mono outline-none bg-white" />
                         </div>
                     </div>
 
                     <!-- Imel Obligatwa pandan tranzaksyon an -->
                     <div>
                         <label id="labelTxEmail" class="block text-sm font-semibold text-slate-700 mb-2">Imel pou Resi a ak Suivi Tranzaksyon an *</label>
-                        <input type="email" id="txEmail" required placeholder="imel@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base" />
+                        <input type="email" id="txEmail" required placeholder="imel@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-base bg-white" />
                     </div>
 
-                    <!-- Step 3: Amount Selection -->
+                    <!-- Montan Rechaj la selon monnen peyi a (Etazini, Brezil, Lafrans, Chili, ak tout lòt yo) -->
                     <div>
-                        <label id="labelAmount" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Montan Rechaj la (USD $) *</label>
-                        <div class="grid grid-cols-3 gap-3">
-                            <button type="button" onclick="selectAmount(5)" class="amount-btn border-2 border-blue-600 bg-blue-50 text-blue-600 rounded-xl py-3 text-center font-bold"> $5.00 </button>
-                            <button type="button" onclick="selectAmount(10)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $10.00 </button>
-                            <button type="button" onclick="selectAmount(20)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700"> $20.00 </button>
+                        <label id="labelAmount" class="block text-sm font-semibold text-slate-700 mb-2">Chwazi Montan Rechaj la *</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <button type="button" onclick="selectAmountOption(0)" class="amount-btn border-2 border-blue-600 bg-blue-50 text-blue-600 rounded-xl py-3 text-center font-bold text-sm">
+                                <span id="amtBtn1">5$</span>
+                            </button>
+                            <button type="button" onclick="selectAmountOption(1)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700 text-sm">
+                                <span id="amtBtn2">10$</span>
+                            </button>
+                            <button type="button" onclick="selectAmountOption(2)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700 text-sm">
+                                <span id="amtBtn3">15$</span>
+                            </button>
+                            <button type="button" onclick="selectAmountOption(3)" class="amount-btn border-2 border-slate-200 rounded-xl py-3 text-center hover:border-blue-500 font-bold text-slate-700 text-sm">
+                                <span id="amtBtn4">20$</span>
+                            </button>
                         </div>
                         <input type="hidden" id="selectedAmount" value="5" />
                     </div>
 
-                    <!-- Itilize Bonis Balans la (si kliyan an genyen l) -->
+                    <!-- Chan pou moun nan ka wè konbyen kòb moun destinasyon an ap resevwa (byen kalkile) -->
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="info" class="w-6 h-6 text-blue-600 shrink-0"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-blue-900" id="recipientReceiveTitle">Moun destinasyon an ap resevwa:</h4>
+                                <p class="text-xs text-blue-700" id="recipientReceiveDesc">Kalkil ekivalans egzak la baze sou monnen lokal la ak tarif operatè a.</p>
+                            </div>
+                        </div>
+                        <div id="recipientReceiveAmount" class="text-lg font-extrabold text-blue-600 font-mono">
+                            5.00 USD
+                        </div>
+                    </div>
+
+                    <!-- Itilize Bonis Balans la -->
                     <div id="bonusPaymentOption" class="hidden bg-emerald-50 p-4 rounded-xl border border-emerald-200 flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <i data-lucide="gift" class="w-6 h-6 text-emerald-600"></i>
@@ -188,6 +228,14 @@
                             </div>
                         </div>
                         <input type="checkbox" id="useBonusCheck" class="w-5 h-5 text-emerald-600 rounded cursor-pointer" />
+                    </div>
+
+                    <!-- Bwat pou koche dako ak terms BerdSend yo ak link terms la -->
+                    <div class="flex items-start gap-3 pt-2">
+                        <input type="checkbox" id="termsCheck" required class="mt-1 w-5 h-5 text-blue-600 rounded cursor-pointer shrink-0" />
+                        <label for="termsCheck" id="labelTermsCheck" class="text-xs text-slate-600 leading-relaxed">
+                            Mwen aksepte tout <a href="terms.html" target="_blank" class="text-blue-600 font-semibold underline hover:text-blue-800">Term ak Kondisyon BerdSend yo</a> pou finalize tranzaksyon sa a an tout sekirite.
+                        </label>
                     </div>
 
                     <!-- Submit Button -->
@@ -352,7 +400,8 @@
                     <div class="flex justify-between"><span class="text-slate-500">Destinasyon:</span> <span id="rDest" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Operatè:</span> <span id="rOperator" class="font-semibold"></span></div>
                     <div class="flex justify-between"><span class="text-slate-500">Nimewo:</span> <span id="rPhone" class="font-mono font-bold"></span></div>
-                    <div class="flex justify-between border-t pt-2 text-sm"><span class="font-bold text-slate-700">Total Peye:</span> <span id="rAmount" class="font-bold text-blue-600"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Montan Peye:</span> <span id="rAmount" class="font-bold text-blue-600"></span></div>
+                    <div class="flex justify-between border-t pt-2 text-sm"><span class="font-bold text-slate-700">Resi Destinasyon:</span> <span id="rReceive" class="font-bold text-emerald-600"></span></div>
                 </div>
             </div>
 
@@ -381,7 +430,7 @@
     <script>
         lucide.createIcons();
 
-        // 1. Operatè pa Peyi Destinasyon (Karayib, Amerik Latin, Afrik)
+        // Operatè pa Peyi Destinasyon
         const operatorsByCountry = {
             HT: ["Digicel Ayiti", "Natcom"],
             DO: ["Claro Dominican Republic", "Altice", "Viva"],
@@ -407,6 +456,22 @@
             MA: ["Maroc Telecom", "Orange Maroc", "Inwi"]
         };
 
+        // Konfigirasyon Monnen ak Taks pou chak Peyi Orijin / Destinasyon
+        // Bay to ekivalans ak senbòl pou Etazini ($), Brezil (Reais), Lafrans (Euro), Chili & lòt peyi ki sèvi ak Peso (Peso ekivalans dola)
+        const currencyConfigs = {
+            US: { symbol: "$", rate: 1.0, name: "USD" },
+            CA: { symbol: "CA$", rate: 1.38, name: "CAD" },
+            FR: { symbol: "€", rate: 0.92, name: "EUR" },
+            BR: { symbol: "R$", rate: 5.50, name: "BRL" },
+            CL: { symbol: "CLP$", rate: 950.0, name: "CLP" },
+            DO: { symbol: "DOP$", rate: 60.0, name: "DOP" },
+            HT: { symbol: "HTG", rate: 132.0, name: "HTG" },
+            CO: { symbol: "COP$", rate: 4100.0, name: "COP" },
+            MX: { symbol: "MXN$", rate: 18.5, name: "MXN" },
+            AR: { symbol: "ARS$", rate: 900.0, name: "ARS" },
+            PE: { symbol: "S/", rate: 3.75, name: "PEN" }
+        };
+
         function updateOperators() {
             const dest = document.getElementById('destCountry').value;
             const opSelect = document.getElementById('operatorSelect');
@@ -419,9 +484,88 @@
                 opSelect.appendChild(opt);
             });
         }
-        updateOperators();
 
-        // 2. Diksyonè 5 Lang yo
+        // Fonksyon pou mete ajou bouton montan yo selon peyi orijin ak monnen an
+        function updateAmountButtons() {
+            const origin = document.getElementById('originCountry').value;
+            const config = currencyConfigs[origin] || currencyConfigs['US'];
+            
+            // Valè de baz an USD: 5$, 10$, 15$, 20$
+            const baseValues = [5, 10, 15, 20];
+
+            document.getElementById('amtBtn1').textContent = formatCurrency(baseValues[0], config);
+            document.getElementById('amtBtn2').textContent = formatCurrency(baseValues[1], config);
+            document.getElementById('amtBtn3').textContent = formatCurrency(baseValues[2], config);
+            document.getElementById('amtBtn4').textContent = formatCurrency(baseValues[3], config);
+
+            // Mete tou valè aktyèl ki seleksyone a
+            updateRecipientCalculation();
+        }
+
+        function formatCurrency(usdAmount, config) {
+            const converted = usdAmount * config.rate;
+            if (config.rate === 1.0) {
+                return `${config.symbol}${usdAmount}.00`;
+            } else if (config.rate > 10) {
+                return `${config.symbol}${Math.round(converted).toLocaleString()}`;
+            } else {
+                return `${config.symbol}${converted.toFixed(2)}`;
+            }
+        }
+
+        function onDestinationChange() {
+            updateOperators();
+            updateRecipientCalculation();
+        }
+
+        function selectAmountOption(index) {
+            const baseValues = [5, 10, 15, 20];
+            const selectedUSD = baseValues[index];
+            document.getElementById('selectedAmount').value = selectedUSD;
+
+            const buttons = document.querySelectorAll('.amount-btn');
+            buttons.forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-600');
+                    btn.classList.remove('border-slate-200', 'text-slate-700');
+                } else {
+                    btn.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-600');
+                    btn.classList.add('border-slate-200', 'text-slate-700');
+                }
+            });
+
+            updateRecipientCalculation();
+        }
+
+        // Kalkile epi afiche konbyen kòb moun destinasyon an ap resevwa nan monnen pa l
+        function updateRecipientCalculation() {
+            const usdAmount = parseFloat(document.getElementById('selectedAmount').value) || 5;
+            const destCountry = document.getElementById('destCountry').value;
+            
+            // Si peyi destinasyon an gen yon konfigirasyon espesyal monnen (eg: Chili CLP, Dominiken DOP, htg, elatriye)
+            const destConfig = currencyConfigs[destCountry] || currencyConfigs['US'];
+            const receivedVal = usdAmount * destConfig.rate;
+
+            let formattedReceive = "";
+            if (destConfig.rate === 1.0) {
+                formattedReceive = `${destConfig.symbol}${usdAmount.toFixed(2)} USD`;
+            } else if (destConfig.rate > 10) {
+                formattedReceive = `${Math.round(receivedVal).toLocaleString()} ${destConfig.name} (≈ $${usdAmount.toFixed(2)} USD)`;
+            } else {
+                formattedReceive = `${destConfig.symbol}${receivedVal.toFixed(2)} ${destConfig.name} (≈ $${usdAmount.toFixed(2)} USD)`;
+            }
+
+            document.getElementById('recipientReceiveAmount').innerText = formattedReceive;
+        }
+
+        // Koute chanjman sou peyi orijin pou ajou monnen yo
+        document.getElementById('originCountry').addEventListener('change', updateAmountButtons);
+        
+        // Inisyalize okòmansman
+        updateOperators();
+        updateAmountButtons();
+
+        // Diksyonè 5 Lang yo
         const translations = {
             ht: {
                 pageTitle: "BerdSend - Rechaj Telefòn ak Transfè Lajan",
@@ -439,7 +583,10 @@
                 labelOperator: "Chwazi Operatè a *",
                 labelPhone: "Nimewo Telefòn *",
                 labelTxEmail: "Imel pou Resi a ak Suivi Tranzaksyon an *",
-                labelAmount: "Chwazi Montan Rechaj la (USD $) *",
+                labelAmount: "Chwazi Montan Rechaj la *",
+                recipientReceiveTitle: "Moun destinasyon an ap resevwa:",
+                recipientReceiveDesc: "Kalkil ekivalans egzak la baze sou monnen lokal la ak tarif operatè a.",
+                labelTermsCheck: "Mwen aksepte tout <a href='terms.html' target='_blank' class='text-blue-600 font-semibold underline hover:text-blue-800'>Term ak Kondisyon BerdSend yo</a> pou finalize tranzaksyon sa a an tout sekirite.",
                 submitText: "Peye & Voye Rechaj Kounye A",
                 refBadge: "Pwogram Envitasyon",
                 refTitle: "Jwenn $5 pou chak envitasyon!",
@@ -468,7 +615,10 @@
                 labelOperator: "Select Operator *",
                 labelPhone: "Phone Number *",
                 labelTxEmail: "Email for Receipt and Transaction Tracking *",
-                labelAmount: "Top-Up Amount (USD $) *",
+                labelAmount: "Select Top-Up Amount *",
+                recipientReceiveTitle: "Recipient will receive:",
+                recipientReceiveDesc: "Exact equivalent calculation based on local currency and operator rates.",
+                labelTermsCheck: "I accept all <a href='terms.html' target='_blank' class='text-blue-600 font-semibold underline hover:text-blue-800'>BerdSend Terms and Conditions</a> to safely finalize this transaction.",
                 submitText: "Pay & Send Top-Up Now",
                 refBadge: "Referral Program",
                 refTitle: "Earn $5 per invitation!",
@@ -497,7 +647,10 @@
                 labelOperator: "Seleccionar Operador *",
                 labelPhone: "Número de Teléfono *",
                 labelTxEmail: "Correo para Recibo y Seguimiento de Transacción *",
-                labelAmount: "Monto de Recarga (USD $) *",
+                labelAmount: "Seleccionar Monto de Recarga *",
+                recipientReceiveTitle: "El destinatario recibirá:",
+                recipientReceiveDesc: "Cálculo exacto de equivalencia según la moneda local y tarifas del operador.",
+                labelTermsCheck: "Acepto los <a href='terms.html' target='_blank' class='text-blue-600 font-semibold underline hover:text-blue-800'>Términos y Condiciones de BerdSend</a> para finalizar esta transacción de forma segura.",
                 submitText: "Pagar y Enviar Recarga",
                 refBadge: "Programa de Referidos",
                 refTitle: "¡Gana $5 por cada invitación!",
@@ -526,7 +679,10 @@
                 labelOperator: "Sélectionner l'Opérateur *",
                 labelPhone: "Numéro de Téléphone *",
                 labelTxEmail: "Email pour le Reçu et le Suivi de Transaction *",
-                labelAmount: "Montant de Recharge (USD $) *",
+                labelAmount: "Sélectionner le Montant de Recharge *",
+                recipientReceiveTitle: "Le destinataire recevra :",
+                recipientReceiveDesc: "Calcul exact de l'équivalence basé sur la monnaie locale et les tarifs opérateur.",
+                labelTermsCheck: "J'accepte tous les <a href='terms.html' target='_blank' class='text-blue-600 font-semibold underline hover:text-blue-800'>Termes et Conditions de BerdSend</a> pour finaliser cette transaction en toute sécurité.",
                 submitText: "Payer & Envoyer la Recharge",
                 refBadge: "Programme de Parrainage",
                 refTitle: "Gagnez 5$ par invitation !",
@@ -555,7 +711,10 @@
                 labelOperator: "Selecionar Operadora *",
                 labelPhone: "Número de Telefone *",
                 labelTxEmail: "E-mail para o Recibo e Acompanhamento da Transação *",
-                labelAmount: "Valor da Recarga (USD $) *",
+                labelAmount: "Selecionar o Valor da Recarga *",
+                recipientReceiveTitle: "O destinatário receberá:",
+                recipientReceiveDesc: "Cálculo exato de equivalência com base na moeda local e taxas da operadora.",
+                labelTermsCheck: "Aceito todos os <a href='terms.html' target='_blank' class='text-blue-600 font-semibold underline hover:text-blue-800'>Termos e Condições da BerdSend</a> para concluir esta transação com segurança.",
                 submitText: "Pagar e Enviar Recarga",
                 refBadge: "Programa de Indicação",
                 refTitle: "Ganhe $5 por indicação!",
@@ -589,6 +748,9 @@
             document.getElementById('labelPhone').innerText = t.labelPhone;
             document.getElementById('labelTxEmail').innerText = t.labelTxEmail;
             document.getElementById('labelAmount').innerText = t.labelAmount;
+            document.getElementById('recipientReceiveTitle').innerText = t.recipientReceiveTitle;
+            document.getElementById('recipientReceiveDesc').innerText = t.recipientReceiveDesc;
+            document.getElementById('labelTermsCheck').innerHTML = t.labelTermsCheck;
             document.getElementById('submitBtn').querySelector('span').innerText = t.submitText;
             document.getElementById('refBadge').innerText = t.refBadge;
             document.getElementById('refTitle').innerText = t.refTitle;
@@ -602,7 +764,7 @@
             document.getElementById('downloadReceiptText').innerText = t.downloadReceiptText;
         }
 
-        // 3. Cookie Modal Controls
+        // Cookie Modal Controls
         function handleCookieAction(action) {
             document.getElementById('cookieBanner').style.transform = 'translateY(100%)';
             setTimeout(() => document.getElementById('cookieBanner').style.display = 'none', 300);
@@ -614,7 +776,7 @@
             handleCookieAction('accept');
         }
 
-        // 5. Auth Modal Controls & User Validation
+        // Auth Modal Controls & User Validation
         let registeredUsers = JSON.parse(localStorage.getItem('berd_users') || '[]');
         let currentUser = JSON.parse(localStorage.getItem('berd_current') || 'null');
 
@@ -735,6 +897,13 @@
         // Submit Recharge & PDF Receipt
         function handleRechargeSubmit(e) {
             e.preventDefault();
+            
+            const termsChecked = document.getElementById('termsCheck').checked;
+            if (!termsChecked) {
+                alert("Ou dwe aksepte Term ak Kondisyon BerdSend yo anvan ou kontinye!");
+                return;
+            }
+
             const dest = document.getElementById('destCountry').value;
             const operator = document.getElementById('operatorSelect').value;
             const phone = document.getElementById('phoneNumber').value;
@@ -749,12 +918,17 @@
                 alert("Tranzaksyon an fèt avèk siksè nan balans bonis ou!");
             }
 
+            const origin = document.getElementById('originCountry').value;
+            const config = currencyConfigs[origin] || currencyConfigs['US'];
+            const formattedAmountPaid = formatCurrency(amount, config);
+
             document.getElementById('rDate').innerText = new Date().toLocaleString();
             document.getElementById('rEmail').innerText = txEmail;
             document.getElementById('rDest').innerText = dest;
             document.getElementById('rOperator').innerText = operator;
             document.getElementById('rPhone').innerText = phone;
-            document.getElementById('rAmount').innerText = `$${amount.toFixed(2)} USD`;
+            document.getElementById('rAmount').innerText = formattedAmountPaid;
+            document.getElementById('rReceive').innerText = document.getElementById('recipientReceiveAmount').innerText;
 
             document.getElementById('receiptModal').classList.remove('hidden');
         }
@@ -771,15 +945,6 @@
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             html2pdf().from(element).set(opt).save();
-        }
-
-        function selectAmount(amt) {
-            document.getElementById('selectedAmount').value = amt;
-            document.querySelectorAll('.amount-btn').forEach(btn => {
-                btn.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-600');
-                btn.classList.add('border-slate-200', 'text-slate-700');
-            });
-            event.target.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-600');
         }
 
         function copyRefLink() {
