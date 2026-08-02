@@ -108,7 +108,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label id="labelOrigin" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Peyi Orijin *</label>
-                <select id="originCountry" onchange="updateCurrenciesAndAmounts()" class="w-full px-4 py-3.5 rounded-2xl border border-slate-300 bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base shadow-sm">
+                <select id="originCountry" class="w-full px-4 py-3.5 rounded-2xl border border-slate-300 bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base shadow-sm">
                   <option value="US">🇺🇸 Etazini (USD $)</option>
                   <option value="CA">🇨🇦 Kanada (CAD $)</option>
                   <option value="FR">🇫🇷 Lafrans (EUR €)</option>
@@ -157,13 +157,13 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label id="labelPhone" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Nimewo Telefòn *</label>
-                <input type="tel" id="phoneNumber" required placeholder="37000000" onblur="autoDetectOperator()" class="w-full px-4 py-3.5 rounded-2xl border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-mono outline-none shadow-sm" />
+                <input type="tel" id="phoneNumber" required placeholder="37000000" oninput="autoDetectOperator()" class="w-full px-4 py-3.5 rounded-2xl border border-slate-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-mono outline-none shadow-sm" />
                 <span id="autoDetectStatus" class="text-xs text-blue-600 font-medium mt-1 block"></span>
               </div>
               <div>
                 <label id="labelOperator" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Chwazi Operatè a *</label>
                 <select id="operatorSelect" onchange="renderOperatorOptions()" class="w-full px-4 py-3.5 rounded-2xl border border-slate-300 bg-white font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-base shadow-sm">
-                  <option value="">Avanse chwazi nimerik lan...</option>
+                  <option value="">Ape chaje operatè yo...</option>
                 </select>
               </div>
             </div>
@@ -273,13 +273,14 @@
     </div>
   </footer>
 
-  <!-- JAVASCRIPT AK KONEKSYON RELOADLY API -->
+  <!-- JAVASCRIPT AK KONEKSYON API RELOADLY -->
   <script>
     lucide.createIcons();
 
     let currentOperatorsList = [];
+    let autoDetectTimer = null;
 
-    // 1. Rale Operatè yo nan Reloadly Backend
+    // 1. Rale Operatè yo nan Backend Reloadly
     async function loadReloadlyOperators() {
       const countryCode = document.getElementById('destCountry').value;
       const opSelect = document.getElementById('operatorSelect');
@@ -289,7 +290,7 @@
         const res = await fetch(`/api/reloadly?action=getOperators&countryCode=${countryCode}`);
         const data = await res.json();
         
-        if (data && Array.isArray(data)) {
+        if (data && Array.isArray(data) && data.length > 0) {
           currentOperatorsList = data;
           opSelect.innerHTML = '';
           data.forEach(op => {
@@ -308,29 +309,35 @@
       }
     }
 
-    // 2. Auto-Detect Operatè pa Nimewo Telefòn
-    async function autoDetectOperator() {
-      const phone = document.getElementById('phoneNumber').value;
+    // 2. Auto-Detect Operatè pa Nimewo Telefòn (Debounced)
+    function autoDetectOperator() {
+      clearTimeout(autoDetectTimer);
+      const phone = document.getElementById('phoneNumber').value.trim();
       const countryCode = document.getElementById('destCountry').value;
       const statusSpan = document.getElementById('autoDetectStatus');
 
-      if (phone.length < 7) return;
+      if (phone.length < 7) {
+        statusSpan.textContent = '';
+        return;
+      }
 
-      statusSpan.textContent = 'Ape detekte operatè...';
-      try {
-        const res = await fetch(`/api/reloadly?action=autoDetect&phone=${phone}&countryCode=${countryCode}`);
-        const op = await res.json();
+      autoDetectTimer = setTimeout(async () => {
+        statusSpan.textContent = 'Ape detekte operatè...';
+        try {
+          const res = await fetch(`/api/reloadly?action=autoDetect&phone=${phone}&countryCode=${countryCode}`);
+          const op = await res.json();
 
-        if (op && op.operatorId) {
-          document.getElementById('operatorSelect').value = op.operatorId;
-          statusSpan.textContent = `Operatè detekte: ${op.name}`;
-          renderOperatorOptions();
-        } else {
+          if (op && op.operatorId) {
+            document.getElementById('operatorSelect').value = op.operatorId;
+            statusSpan.textContent = `Operatè detekte: ${op.name}`;
+            renderOperatorOptions();
+          } else {
+            statusSpan.textContent = '';
+          }
+        } catch (e) {
           statusSpan.textContent = '';
         }
-      } catch (e) {
-        statusSpan.textContent = '';
-      }
+      }, 500);
     }
 
     // 3. Afiche Pake/Montan selon Operatè Seleksyone a
@@ -346,32 +353,45 @@
       document.getElementById('selectedOperatorId').value = selectedOp.operatorId;
 
       // Si operatè a mande yon lis Pake Fiks (Fixed Amounts)
-      if (selectedOp.denominationType === 'FIXED') {
-        selectedOp.fixedAmounts.forEach(amt => {
+      if (selectedOp.denominationType === 'FIXED' && selectedOp.fixedAmounts) {
+        selectedOp.fixedAmounts.forEach((amt, idx) => {
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'py-3 px-4 rounded-xl border border-slate-200 bg-white hover:border-blue-600 font-bold text-slate-800 transition shadow-sm';
+          btn.className = `py-3 px-4 rounded-xl border border-slate-200 bg-white hover:border-blue-600 font-bold text-slate-800 transition shadow-sm ${idx === 0 ? 'border-blue-600 bg-blue-50/50' : ''}`;
           btn.textContent = `$${amt} USD`;
           btn.onclick = () => {
+            document.querySelectorAll('#amountButtonsContainer button').forEach(b => b.classList.remove('border-blue-600', 'bg-blue-50/50'));
+            btn.classList.add('border-blue-600', 'bg-blue-50/50');
             document.getElementById('selectedAmount').value = amt;
             receiveDisplay.textContent = `$${amt} ${selectedOp.destinationCurrencyCode || 'USD'}`;
           };
           container.appendChild(btn);
         });
+        // Select first automatically
+        if (selectedOp.fixedAmounts.length > 0) {
+          document.getElementById('selectedAmount').value = selectedOp.fixedAmounts[0];
+          receiveDisplay.textContent = `$${selectedOp.fixedAmounts[0]} ${selectedOp.destinationCurrencyCode || 'USD'}`;
+        }
       } else {
-        // Range Top-up (Nenpòt montan ant Min ak Max)
+        // Range Top-up (Montan estanda)
         const amounts = [5, 10, 15, 20, 25, 50];
-        amounts.forEach(amt => {
+        amounts.forEach((amt, idx) => {
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'py-3 px-4 rounded-xl border border-slate-200 bg-white hover:border-blue-600 font-bold text-slate-800 transition shadow-sm';
+          btn.className = `py-3 px-4 rounded-xl border border-slate-200 bg-white hover:border-blue-600 font-bold text-slate-800 transition shadow-sm ${idx === 0 ? 'border-blue-600 bg-blue-50/50' : ''}`;
           btn.textContent = `$${amt} USD`;
           btn.onclick = () => {
+            document.querySelectorAll('#amountButtonsContainer button').forEach(b => b.classList.remove('border-blue-600', 'bg-blue-50/50'));
+            btn.classList.add('border-blue-600', 'bg-blue-50/50');
             document.getElementById('selectedAmount').value = amt;
-            receiveDisplay.textContent = `$${amt * (selectedOp.fx?.rate || 1)} ${selectedOp.destinationCurrencyCode || ''}`;
+            const fxRate = selectedOp.fx?.rate || 1;
+            receiveDisplay.textContent = `${(amt * fxRate).toFixed(2)} ${selectedOp.destinationCurrencyCode || ''}`;
           };
           container.appendChild(btn);
         });
+        document.getElementById('selectedAmount').value = 5;
+        const fxRate = selectedOp.fx?.rate || 1;
+        receiveDisplay.textContent = `${(5 * fxRate).toFixed(2)} ${selectedOp.destinationCurrencyCode || ''}`;
       }
     }
 
@@ -401,7 +421,7 @@
           document.getElementById('rDate').textContent = new Date().toLocaleString();
           document.getElementById('rTxId').textContent = result.transactionId || 'BS-99823';
           document.getElementById('rDest').textContent = payload.countryCode;
-          document.getElementById('rOperator').textContent = document.getElementById('operatorSelect').selectedOptions[0].text;
+          document.getElementById('rOperator').textContent = document.getElementById('operatorSelect').selectedOptions[0]?.text || '';
           document.getElementById('rPhone').textContent = payload.recipientPhone;
           document.getElementById('rReceived').textContent = document.getElementById('receiveDisplay').textContent;
           document.getElementById('rAmount').textContent = `$${payload.amount} USD`;
@@ -421,6 +441,20 @@
 
     function closeReceiptModal() {
       document.getElementById('receiptModal').classList.add('hidden');
+    }
+
+    function copyRefLink() {
+      const copyText = document.getElementById("refLink");
+      copyText.select();
+      navigator.clipboard.writeText(copyText.value);
+      const msg = document.getElementById("copyMsg");
+      msg.classList.remove("hidden");
+      setTimeout(() => msg.classList.add("hidden"), 3000);
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById('receiptContent');
+      html2pdf().from(element).save('Resi_BerdSend.pdf');
     }
 
     // Chaje operatè yo depi paj la louvri
