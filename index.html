@@ -202,7 +202,6 @@
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
     }
 
-    // APÈL SOUMISYON BAY API VERCEL LA
     async function processPaymentWithAPI() {
       const phoneInput = document.getElementById('phoneNumber').value.trim();
       if (!selectedCountryCode || !phoneInput || selectedAmountUSD <= 0) {
@@ -212,14 +211,13 @@
 
       const btnPay = document.getElementById('btnPay');
       btnPay.disabled = true;
-      btnPay.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> N ap kòmande peyman an...`;
+      btnPay.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> N ap prepare paj peyman an...`;
 
       const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
       const fullPhone = countryObj.dialCode + phoneInput.replace(/\D/g, '');
       const totalUSD = (selectedAmountUSD + selectedFeeUSD).toFixed(2);
 
       try {
-        // Nou voye done yo nan API Vercel la
         const response = await fetch('/api/pay', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -234,19 +232,19 @@
 
         const result = await response.json();
 
-        // Si Vercel ak Square retounen yon lyen dinamik ak montan fiks la
-        if (result.checkoutUrl || result.url) {
-          window.location.href = result.checkoutUrl || result.url;
+        if (result.success && result.url) {
+          window.location.href = result.url;
         } else {
-          alert(result.message || "Echèk nan kreyasyon tranzaksyon an. Tanpri re-eseye.");
+          alert(result.error || "Echèk nan kreyasyon tranzaksyon an. Tanpri re-eseye.");
+          btnPay.disabled = false;
+          btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
         }
       } catch (err) {
         console.error("Erè API:", err);
         alert("Gen yon ti pwoblèm rezo oswa API. Tanpri re-eseye.");
+        btnPay.disabled = false;
+        btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
       }
-
-      btnPay.disabled = false;
-      btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
     }
 
     window.onload = () => {
