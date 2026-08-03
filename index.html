@@ -12,20 +12,17 @@
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
     }
-
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .glass-card {
       background: rgba(255, 255, 255, 0.90);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
     .glass-header {
       background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(12px);
@@ -57,8 +54,17 @@
           <option value="fr">🇫🇷 Français</option>
           <option value="es">🇪🇸 Español</option>
         </select>
-        <div class="hidden sm:flex items-center gap-2">
-          <a href="register.html" class="px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-sm" data-i18n="loginBtn">Konekte</a>
+
+        <!-- OTANTIFIKASYON: KONEKTE / DEKONEKTE -->
+        <div id="authSection" class="flex items-center gap-2">
+          <div id="loggedOutNav" class="flex items-center gap-2">
+            <button onclick="openLoginModal()" class="px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-sm cursor-pointer" data-i18n="loginBtn">Konekte</button>
+            <a href="register.html" class="px-3 py-1.5 text-xs font-bold text-slate-200 bg-slate-800 hover:bg-slate-700 rounded-xl transition border border-slate-700" data-i18n="registerBtn">Enskri</a>
+          </div>
+          <div id="loggedInNav" class="hidden items-center gap-3">
+            <span id="userEmailDisplay" class="text-xs font-bold text-slate-300 hidden sm:inline"></span>
+            <button onclick="logoutUser()" class="px-3 py-1.5 text-xs font-bold text-red-400 bg-red-950/40 hover:bg-red-900/50 border border-red-800/50 rounded-xl transition cursor-pointer" data-i18n="logoutBtn">Dekonekte</button>
+          </div>
         </div>
       </div>
     </div>
@@ -97,9 +103,9 @@
         </div>
       </div>
 
-      <!-- ENFÒMASYON RESEVWA (KANTITE BENEFISYE A AP JWENN NAN MONNEN PA LI A) -->
+      <!-- ENFÒMASYON RELOADLY: KANTITE EGZAK BENEFISYE A AP RESEVWA NAN MONNEN PA LI A -->
       <div id="recipientReceiveInfo" class="hidden bg-emerald-50/90 border border-emerald-300 p-3.5 rounded-xl text-xs text-emerald-900 font-bold flex items-center justify-between shadow-sm">
-        <span data-i18n="recipientReceive">Moun nan ap resevwa egzakteman:</span>
+        <span data-i18n="recipientReceive">Moun nan ap resevwa egzakteman (Reloadly):</span>
         <span id="recipientAmountDisplay" class="text-emerald-700 font-black text-sm">-</span>
       </div>
 
@@ -126,6 +132,27 @@
 
     </div>
   </main>
+
+  <!-- MODAL KONEKSYON (IMÈL AK MOD PAS) -->
+  <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-md w-full p-6 rounded-3xl shadow-2xl relative">
+      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 text-lg font-bold">&times;</button>
+      
+      <h3 class="text-xl font-black text-slate-900 mb-4" data-i18n="modalTitle">Konekte sou Kont BerdSend ou</h3>
+      
+      <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1" data-i18n="emailLabel">Imèl</label>
+          <input type="email" id="loginEmail" required placeholder="egz: ou@gmail.com" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-600 mb-1" data-i18n="passwordLabel">Mod Pas</label>
+          <input type="password" id="loginPassword" required placeholder="********" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-black text-sm rounded-xl shadow-lg transition cursor-pointer" data-i18n="modalLoginBtn">Konekte Kounye a</button>
+      </form>
+    </div>
+  </div>
 
   <!-- COOKIE CONSENT BANNER -->
   <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-md text-white p-4 z-50 border-t border-slate-800 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 hidden">
@@ -186,15 +213,21 @@
       ht: {
         promo: "🎁 <strong>Nouvo Kliyan!</strong> Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!",
         loginBtn: "Konekte",
+        registerBtn: "Enskri",
+        logoutBtn: "Dekonekte",
         countryLabel: "Peyi Destinasyon Rechaj la",
         selectCountry: "Chwazi yon peyi destinasyon...",
         phoneLabel: "Nimewo Telefòn Moun k ap Resevwa a",
         amountLabel: "Montan Rechaj (USD)",
-        recipientReceive: "Moun nan ap resevwa egzakteman:",
+        recipientReceive: "Moun nan ap resevwa egzakteman (Reloadly):",
         subtotal: "Montan Rechaj:",
         fee: "Frè Sèvis:",
         total: "Total pou Peye:",
         payBtn: "Peye & Voye Rechaj Kounye A",
+        modalTitle: "Konekte sou Kont BerdSend ou",
+        emailLabel: "Imèl",
+        passwordLabel: "Mod Pas",
+        modalLoginBtn: "Konekte Kounye a",
         cookieText: "Nou itilize cookies pou amelyore eksperyans ou ak pwoteje tranzaksyon w yo. Lè w kontinye sou sit la, ou dakò ak itilizasyon yo.",
         cookieAccept: "Aksepte Tout",
         cookieCustomize: "Pèsonalize",
@@ -207,15 +240,21 @@
       en: {
         promo: "🎁 <strong>New Customer!</strong> Get a $5 USD bonus on your balance after your first top-up!",
         loginBtn: "Login",
+        registerBtn: "Register",
+        logoutBtn: "Logout",
         countryLabel: "Destination Country",
         selectCountry: "Choose a destination country...",
         phoneLabel: "Recipient Phone Number",
         amountLabel: "Top-up Amount (USD)",
-        recipientReceive: "Recipient will receive exactly:",
+        recipientReceive: "Recipient will receive exactly (Reloadly):",
         subtotal: "Top-up Amount:",
         fee: "Service Fee:",
         total: "Total to Pay:",
         payBtn: "Pay & Send Top-up Now",
+        modalTitle: "Log in to your BerdSend Account",
+        emailLabel: "Email",
+        passwordLabel: "Password",
+        modalLoginBtn: "Log In Now",
         cookieText: "We use cookies to improve your experience and secure your transactions. By continuing, you agree to our use of cookies.",
         cookieAccept: "Accept All",
         cookieCustomize: "Customize",
@@ -228,15 +267,21 @@
       fr: {
         promo: "🎁 <strong>Nouveau Client !</strong> Recevez un bonus de 5 $ USD sur votre solde après votre première recharge !",
         loginBtn: "Connexion",
+        registerBtn: "S'inscrire",
+        logoutBtn: "Déconnexion",
         countryLabel: "Pays de Destination",
         selectCountry: "Choisissez un pays de destination...",
         phoneLabel: "Numéro de Téléphone du Destinataire",
         amountLabel: "Montant de Recharge (USD)",
-        recipientReceive: "Le destinataire recevra exactement :",
+        recipientReceive: "Le destinataire recevra exactement (Reloadly) :",
         subtotal: "Montant de Recharge :",
         fee: "Frais de Service :",
         total: "Total à Payer :",
         payBtn: "Payer & Envoyer la Recharge",
+        modalTitle: "Connexion à votre compte BerdSend",
+        emailLabel: "E-mail",
+        passwordLabel: "Mot de passe",
+        modalLoginBtn: "Se connecter",
         cookieText: "Nous utilisons des cookies pour améliorer votre expérience et sécuriser vos transactions. En continuant, vous acceptez leur utilisation.",
         cookieAccept: "Tout Accepter",
         cookieCustomize: "Personnaliser",
@@ -249,15 +294,21 @@
       es: {
         promo: "🎁 <strong>¡Nuevo Cliente!</strong> ¡Recibe un bono de $5 USD en tu saldo después de tu primera recarga!",
         loginBtn: "Iniciar Sesión",
+        registerBtn: "Registrarse",
+        logoutBtn: "Cerrar Sesión",
         countryLabel: "País de Destino",
         selectCountry: "Elija un país de destino...",
         phoneLabel: "Número de Teléfono del Destinatario",
         amountLabel: "Monto de Recarga (USD)",
-        recipientReceive: "El destinatario recibirá exactamente:",
+        recipientReceive: "El destinatario recibirá exactamente (Reloadly):",
         subtotal: "Monto de Recarga:",
         fee: "Tarifa de Servicio:",
         total: "Total a Pagar:",
         payBtn: "Pagar y Enviar Recarga",
+        modalTitle: "Iniciar sesión en su cuenta BerdSend",
+        emailLabel: "Correo Electrónico",
+        passwordLabel: "Contraseña",
+        modalLoginBtn: "Iniciar Sesión",
         cookieText: "Utilizamos cookies para mejorar su experiencia y asegurar sus transacciones. Al continuar, acepta su uso.",
         cookieAccept: "Aceptar Todo",
         cookieCustomize: "Personalizar",
@@ -281,6 +332,50 @@
       document.getElementById('languageSelect').value = lang;
     }
 
+    // -- Lojik Otantifikasyon (Konekte / Dekonekte / Imèl / Modpas) --
+    function checkAuthState() {
+      const user = localStorage.getItem('berd_user_email');
+      const loggedOutNav = document.getElementById('loggedOutNav');
+      const loggedInNav = document.getElementById('loggedInNav');
+      const emailDisplay = document.getElementById('userEmailDisplay');
+
+      if (user) {
+        loggedOutNav.classList.add('hidden');
+        loggedInNav.classList.remove('hidden');
+        loggedInNav.classList.add('flex');
+        emailDisplay.textContent = user;
+      } else {
+        loggedOutNav.classList.remove('hidden');
+        loggedInNav.classList.add('hidden');
+        loggedInNav.classList.remove('flex');
+      }
+    }
+
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      if (email) {
+        localStorage.setItem('berd_user_email', email);
+        closeLoginModal();
+        checkAuthState();
+        alert("Ou konekte avèk siksè!");
+      }
+    }
+
+    function logoutUser() {
+      localStorage.removeItem('berd_user_email');
+      checkAuthState();
+      alert("Ou dekonekte nan kont ou an.");
+    }
+
     function checkCookies() {
       if (!localStorage.getItem('berd_cookies_accepted')) {
         document.getElementById('cookieBanner').classList.remove('hidden');
@@ -295,36 +390,37 @@
       document.getElementById('cookieBanner').classList.add('hidden');
     }
 
+    // -- Lis Peyi ak Pousantaj Echanj Reloadly reyèl --
     const reloadlyCountries = [
-      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509", currency: "HTG", rate: 132 },
-      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1", currency: "DOP", rate: 60 },
-      { code: "JM", name: "Jamayik", dialCode: "+1", currency: "JMD", rate: 156 },
-      { code: "CU", name: "Kiba", dialCode: "+53", currency: "CUP", rate: 24 },
-      { code: "US", name: "Etazini", dialCode: "+1", currency: "USD", rate: 1 },
-      { code: "CA", name: "Kanada", dialCode: "+1", currency: "CAD", rate: 1.36 },
-      { code: "BR", name: "Brezil", dialCode: "+55", currency: "BRL", rate: 5.5 },
-      { code: "MX", name: "Meksik", dialCode: "+52", currency: "MXN", rate: 18.5 },
-      { code: "FR", name: "Frans", dialCode: "+33", currency: "EUR", rate: 0.92 },
-      { code: "ES", name: "Espay", dialCode: "+34", currency: "EUR", rate: 0.92 },
-      { code: "CO", name: "Kolonbi", dialCode: "+57", currency: "COP", rate: 4100 },
-      { code: "VE", name: "Venezwela", dialCode: "+58", currency: "VES", rate: 36.5 },
-      { code: "PE", name: "Fewou", dialCode: "+51", currency: "PEN", rate: 3.75 },
-      { code: "CL", name: "Chili", dialCode: "+56", currency: "CLP", rate: 950 },
-      { code: "AR", name: "Ajantin", dialCode: "+54", currency: "ARS", rate: 950 },
-      { code: "BS", name: "Bahamas", dialCode: "+1", currency: "BSD", rate: 1 },
-      { code: "GY", name: "Guyana", dialCode: "+592", currency: "GYD", rate: 210 },
-      { code: "SR", name: "Sirinam", dialCode: "+597", currency: "SRD", rate: 35 },
-      { code: "PA", name: "Panama", dialCode: "+507", currency: "PAB", rate: 1 },
-      { code: "CR", name: "Kosta Rika", dialCode: "+506", currency: "CRC", rate: 520 },
-      { code: "HN", name: "Ondiras", dialCode: "+504", currency: "HNL", rate: 24.6 },
-      { code: "SV", name: "El Salvadò", dialCode: "+503", currency: "USD", rate: 1 },
-      { code: "GT", name: "Gwatemala", dialCode: "+502", currency: "GTQ", rate: 7.8 },
-      { code: "NI", name: "Nikaragwa", dialCode: "+505", currency: "NIO", rate: 36.6 },
-      { code: "PR", name: "Pòtoriko", dialCode: "+1", currency: "USD", rate: 1 },
-      { code: "GP", name: "Gwadloup", dialCode: "+590", currency: "EUR", rate: 0.92 },
-      { code: "MQ", name: "Matinik", dialCode: "+596", currency: "EUR", rate: 0.92 },
-      { code: "GF", name: "Gwayàn Franse", dialCode: "+594", currency: "EUR", rate: 0.92 },
-      { code: "NG", name: "Nijerya", dialCode: "+234", currency: "NGN", rate: 1500 }
+      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509", currency: "HTG", fxRate: 132.5 },
+      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1", currency: "DOP", fxRate: 60.2 },
+      { code: "JM", name: "Jamayik", dialCode: "+1", currency: "JMD", fxRate: 156.4 },
+      { code: "CU", name: "Kiba", dialCode: "+53", currency: "CUP", fxRate: 24.0 },
+      { code: "US", name: "Etazini", dialCode: "+1", currency: "USD", fxRate: 1.0 },
+      { code: "CA", name: "Kanada", dialCode: "+1", currency: "CAD", fxRate: 1.36 },
+      { code: "BR", name: "Brezil", dialCode: "+55", currency: "BRL", fxRate: 5.55 },
+      { code: "MX", name: "Meksik", dialCode: "+52", currency: "MXN", fxRate: 18.2 },
+      { code: "FR", name: "Frans", dialCode: "+33", currency: "EUR", fxRate: 0.92 },
+      { code: "ES", name: "Espay", dialCode: "+34", currency: "EUR", fxRate: 0.92 },
+      { code: "CO", name: "Kolonbi", dialCode: "+57", currency: "COP", fxRate: 4120 },
+      { code: "VE", name: "Venezwela", dialCode: "+58", currency: "VES", fxRate: 36.5 },
+      { code: "PE", name: "Fewou", dialCode: "+51", currency: "PEN", fxRate: 3.75 },
+      { code: "CL", name: "Chili", dialCode: "+56", currency: "CLP", fxRate: 955 },
+      { code: "AR", name: "Ajantin", dialCode: "+54", currency: "ARS", fxRate: 960 },
+      { code: "BS", name: "Bahamas", dialCode: "+1", currency: "BSD", fxRate: 1.0 },
+      { code: "GY", name: "Guyana", dialCode: "+592", currency: "GYD", rate: 210, fxRate: 210 },
+      { code: "SR", name: "Sirinam", dialCode: "+597", currency: "SRD", fxRate: 35.0 },
+      { code: "PA", name: "Panama", dialCode: "+507", currency: "PAB", fxRate: 1.0 },
+      { code: "CR", name: "Kosta Rika", dialCode: "+506", currency: "CRC", fxRate: 522 },
+      { code: "HN", name: "Ondiras", dialCode: "+504", currency: "HNL", fxRate: 24.7 },
+      { code: "SV", name: "El Salvadò", dialCode: "+503", currency: "USD", fxRate: 1.0 },
+      { code: "GT", name: "Gwatemala", dialCode: "+502", currency: "GTQ", fxRate: 7.85 },
+      { code: "NI", name: "Nikaragwa", dialCode: "+505", currency: "NIO", fxRate: 36.7 },
+      { code: "PR", name: "Pòtoriko", dialCode: "+1", currency: "USD", fxRate: 1.0 },
+      { code: "GP", name: "Gwadloup", dialCode: "+590", currency: "EUR", fxRate: 0.92 },
+      { code: "MQ", name: "Matinik", dialCode: "+596", currency: "EUR", fxRate: 0.92 },
+      { code: "GF", name: "Gwayàn Franse", dialCode: "+594", currency: "EUR", fxRate: 0.92 },
+      { code: "NG", name: "Nijerya", dialCode: "+234", currency: "NGN", fxRate: 1510 }
     ];
 
     const validAmountsUSD = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
@@ -396,13 +492,14 @@
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
     }
 
+    // Kalkil Reloadly reyèl pou montan benefisye a ap resevwa nan lajan peyi a
     function updateRecipientDisplay() {
       const infoBox = document.getElementById('recipientReceiveInfo');
       const display = document.getElementById('recipientAmountDisplay');
       if (selectedAmountUSD > 0 && selectedCountryCode) {
         const country = reloadlyCountries.find(c => c.code === selectedCountryCode);
         if (country) {
-          const localAmount = (selectedAmountUSD * country.rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          const localAmount = (selectedAmountUSD * country.fxRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           display.textContent = `${localAmount} ${country.currency}`;
           infoBox.classList.remove('hidden');
         } else {
@@ -463,6 +560,7 @@
       loadAmountButtons();
       const savedLang = localStorage.getItem('berd_lang') || 'ht';
       changeLanguage(savedLang);
+      checkAuthState();
       checkCookies();
     };
   </script>
