@@ -1,45 +1,57 @@
-async function processPaymentWithAPI() {
-      const phoneInput = document.getElementById('phoneNumber').value.trim();
-      if (!selectedCountryCode || !phoneInput || selectedAmountUSD <= 0) {
-        alert("Tanpri ranpli tout enfòmasyon yo byen (Peyi, Telefòn, Montan).");
-        return;
-      }
+import { Client, Environment } from 'square';
 
-      const btnPay = document.getElementById('btnPay');
-      btnPay.disabled = true;
-      btnPay.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> N ap prepare paj peyman an...`;
+export default async function handler(req, res) {
+  // Pèmèt CORS pou asire navigatè a ka pale ak API a
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
-      const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
-      const fullPhone = countryObj.dialCode + phoneInput.replace(/\D/g, '');
-      const totalUSD = (selectedAmountUSD + selectedFeeUSD).toFixed(2);
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-      try {
-        const response = await fetch('/api/pay', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            phone: fullPhone,
-            countryCode: selectedCountryCode,
-            amountUSD: selectedAmountUSD,
-            feeUSD: selectedFeeUSD,
-            totalUSD: totalUSD
-          })
-        });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, error: 'Method Not Allowed' });
+  }
 
-        const result = await response.json();
-
-        // Si Vercel ak Square kreye lyen an, nou voye kliyan an sou Square Checkout la
-        if (result.success && result.url) {
-          window.location.href = result.url;
-        } else {
-          alert(result.error || "Echèk nan kreyasyon lyen an. Tanpri re-eseye.");
-          btnPay.disabled = false;
-          btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
-        }
-      } catch (err) {
-        console.error("Erè API:", err);
-        alert("Gen yon ti pwoblèm rezo oswa API. Tanpri re-eseye.");
-        btnPay.disabled = false;
-        btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
-      }
+  try {
+    const { totalUSD, phone, countryCode, amountUSD } = req.body;
+    
+    if (!totalUSD || !phone) {
+      return res.status(400).json({ success: false, error: 'Done ki manke nan demann lan.' });
     }
+
+    const client = new Client({
+      accessToken: process.env.SQUARE_ACCESS_TOKEN,
+      environment: Environment.Production,
+    });
+
+    const amountInCents = Math.round(parseFloat(totalUSD) * 100);
+
+    const response = await client.checkoutApi.createPaymentLink({
+      quickPay: {
+        name: `Rechaj Mobil (${countryCode}) - ${phone}`,
+        priceMoney: {
+          amount: BigInt(amountInCents),
+          currency: 'USD',
+        },
+        locationId: process.env.SQUARE_LOCATION_ID,
+      },
+      description: `BerdSend Top-up pou nimewo ${phone} ($${amountUSD} USD + Frè)`,
+    });
+
+    return res.status(200).json({
+      success: true,
+      url: response.result.paymentLink.url
+    });
+
+  } catch (error) {
+    console.error('Erè Square API:', error);
+    return res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Gen yon erè nan sèvè a.' 
+    });
+  }
+}
