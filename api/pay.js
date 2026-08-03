@@ -1,15 +1,13 @@
 import { Client, Environment } from 'square';
 
 export default async function handler(req, res) {
-  // Pèmèt CORS pou asire navigatè a ka pale ak API a
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
@@ -20,7 +18,7 @@ export default async function handler(req, res) {
     const { totalUSD, phone, countryCode, amountUSD } = req.body;
     
     if (!totalUSD || !phone) {
-      return res.status(400).json({ success: false, error: 'Done ki manke nan demann lan.' });
+      return res.status(400).json({ success: false, error: 'Done ki manke.' });
     }
 
     const client = new Client({
@@ -30,16 +28,24 @@ export default async function handler(req, res) {
 
     const amountInCents = Math.round(parseFloat(totalUSD) * 100);
 
+    // Nou itilize estrikti ofisyèl Square Checkout API a
     const response = await client.checkoutApi.createPaymentLink({
-      quickPay: {
-        name: `Rechaj Mobil (${countryCode}) - ${phone}`,
-        priceMoney: {
-          amount: BigInt(amountInCents),
-          currency: 'USD',
-        },
+      order: {
         locationId: process.env.SQUARE_LOCATION_ID,
+        lineItems: [
+          {
+            name: `Rechaj Mobil (${countryCode}) - ${phone}`,
+            quantity: '1',
+            basePriceMoney: {
+              amount: BigInt(amountInCents),
+              currency: 'USD',
+            },
+          },
+        ],
       },
-      description: `BerdSend Top-up pou nimewo ${phone} ($${amountUSD} USD + Frè)`,
+      checkoutOptions: {
+        redirectUrl: 'https://berdsend.vercel.app/success.html',
+      },
     });
 
     return res.status(200).json({
@@ -51,7 +57,7 @@ export default async function handler(req, res) {
     console.error('Erè Square API:', error);
     return res.status(500).json({ 
       success: false, 
-      error: error.message || 'Gen yon erè nan sèvè a.' 
+      error: error.errors ? error.errors[0].detail : error.message 
     });
   }
 }
