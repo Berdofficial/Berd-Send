@@ -144,7 +144,7 @@
           <span id="summaryFee">$0.00 USD</span>
         </div>
         
-        <!-- MONTAN DESTINATÈ AP RESEVWA (NAN MONNEN PEYI DESTINASYON AN VIA RELOADLY) -->
+        <!-- MONTAN DESTINATÈ AP RESEVWA -->
         <div class="flex justify-between items-center text-xs font-bold text-emerald-700 bg-emerald-50 p-3 rounded-xl border border-emerald-200 my-2 shadow-sm">
           <span class="flex items-center gap-1.5">
             <i class="fa-solid fa-hand-holding-dollar text-emerald-600 text-sm"></i>
@@ -204,7 +204,6 @@
   </footer>
 
   <script>
-    // LIS KONPLÈ 30 PEYI RELOADLY YO
     const reloadlyCountries = [
       { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509" },
       { code: "DO", name: "Repiblik Dominiken", dialCode: "+1" },
@@ -238,7 +237,6 @@
       { code: "PH", name: "Filipin", dialCode: "+63" }
     ];
 
-    // TRADIKSYON POU TOUT LANG YO
     const translations = {
       ht: {
         promoTitle: "Nouvo Kliyan!",
@@ -291,84 +289,6 @@
         footerPrivacy: "Privacy Policy",
         footerRefund: "Refund Policy",
         footerFollowUs: "Follow Us"
-      },
-      fr: {
-        promoTitle: "Nouveau Client !",
-        promoDesc: "Recevez 5 $ USD de bonus sur votre solde après votre première recharge !",
-        btnLogin: "Connexion",
-        btnRegister: "S'inscrire",
-        tabRecharge: "Recharge Mobile",
-        tabTransfer: "Transfert d'Argent",
-        transferTitle: "Service Non Disponible",
-        transferDesc: "Nous travaillons pour vous offrir le service de transfert d'argent très bientôt. Merci pour votre patience !",
-        lblCountry: "Pays de Destination",
-        optSelectCountry: "Sélectionnez un pays...",
-        lblPhone: "Numéro du Destinataire",
-        lblAmount: "Montant de la Recharge (USD)",
-        lblSubtotal: "Montant Recharge :",
-        lblFee: "Frais de Service (Max 5 $) :",
-        lblRecipientReceives: "Le Destinataire Reçoit :",
-        lblTotal: "Total à Payer :",
-        btnPay: "Payer & Envoyer Maintenant",
-        footerAbout: "La plateforme la plus rapide et sécurisée pour la recharge mobile et le transfert d'argent.",
-        footerQuickLinks: "Liens Rapides",
-        footerContact: "Contactez-nous",
-        footerLegal: "Légal & Confidentialité",
-        footerPrivacy: "Politique de Confidentialité",
-        footerRefund: "Politique de Remboursement",
-        footerFollowUs: "Suivez-nous"
-      },
-      es: {
-        promoTitle: "¡Nuevo Cliente!",
-        promoDesc: "¡Obtén $5 USD de bono en tu saldo después de tu primera recarga!",
-        btnLogin: "Iniciar Sesión",
-        btnRegister: "Registrarse",
-        tabRecharge: "Recarga Móvil",
-        tabTransfer: "Transferencia de Dinero",
-        transferTitle: "Servicio No Disponible Actualmente",
-        transferDesc: "Estamos trabajando para ofrecerte el servicio de transferencia muy pronto. ¡Gracias por tu paciencia!",
-        lblCountry: "País de Destino",
-        optSelectCountry: "Selecciona un país de destino...",
-        lblPhone: "Número del Destinatario",
-        lblAmount: "Monto de Recarga (USD)",
-        lblSubtotal: "Monto de Recarga:",
-        lblFee: "Tarifa de Servicio (Máx $5):",
-        lblRecipientReceives: "El Destinatario Recibe:",
-        lblTotal: "Total a Pagar:",
-        btnPay: "Pagar y Enviar Ahora",
-        footerAbout: "La plataforma más rápida y segura para recargas móviles y transferencias internacionales.",
-        footerQuickLinks: "Enlaces Rápidos",
-        footerContact: "Contáctanos",
-        footerLegal: "Legal y Privacidad",
-        footerPrivacy: "Política de Privacidad",
-        footerRefund: "Política de Reembolso",
-        footerFollowUs: "Síguenos"
-      },
-      pt: {
-        promoTitle: "Novo Cliente!",
-        promoDesc: "Receba $5 USD de bônus no seu saldo após a sua primeira recarga!",
-        btnLogin: "Entrar",
-        btnRegister: "Cadastrar",
-        tabRecharge: "Recarga Móvel",
-        tabTransfer: "Transferência de Dinheiro",
-        transferTitle: "Serviço Indisponível No Momento",
-        transferDesc: "Estamos trabalhando para disponibilizar transferências em breve. Obrigado pela paciência!",
-        lblCountry: "País de Destino",
-        optSelectCountry: "Selecione um país...",
-        lblPhone: "Número do Destinatário",
-        lblAmount: "Valor da Recarga (USD)",
-        lblSubtotal: "Valor da Recarga:",
-        lblFee: "Taxa de Serviço (Máx $5):",
-        lblRecipientReceives: "O Destinatário Recebe:",
-        lblTotal: "Total a Pagar:",
-        btnPay: "Pagar & Enviar Agora",
-        footerAbout: "A plataforma mais rápida e segura para recargas móveis e transferências internacionais.",
-        footerQuickLinks: "Links Rápidos",
-        footerContact: "Fale Conosco",
-        footerLegal: "Legal e Privacidade",
-        footerPrivacy: "Política de Privacidade",
-        footerRefund: "Política de Reembolso",
-        footerFollowUs: "Siga-nos"
       }
     };
 
@@ -477,16 +397,12 @@
       const operatorNameText = document.getElementById('operatorNameText');
 
       if (!selectedCountryCode || rawPhone.length < 7 || selectedAmountUSD <= 0) {
-        if (selectedAmountUSD > 0) {
-          recipientEl.textContent = "Antre nimewo telefòn pou wè to an...";
-        } else {
-          recipientEl.textContent = "---";
-        }
+        recipientEl.textContent = selectedAmountUSD > 0 ? "Antre nimewo telefòn..." : "---";
         operatorBadge.classList.add('hidden');
         return;
       }
 
-      recipientEl.textContent = "N ap jwenn to Reloadly...";
+      recipientEl.textContent = "Kalkil an kour...";
 
       fetchTimeout = setTimeout(async () => {
         try {
@@ -520,16 +436,15 @@
               return;
             }
           }
-          // Si pa gen API Vercel, pa kite l make echèk si nimewo a an antre
-          recipientEl.textContent = "Antre pou kalkile nèt";
+          recipientEl.textContent = "To disponib nan konfimasyon";
         } catch (e) {
           console.error("Erè API:", e);
-          recipientEl.textContent = "Kalkil an kour...";
+          recipientEl.textContent = "Prè pou rechaj";
         }
       }, 600);
     }
 
-    // FONKSYON PEYMAN KI TRAVAY TOU DE FASO (API VERCEL OSWA PHP/PAGE REDIRECT)
+    // SUBMIT PAYMENT PROCESSED DIRECTLY VIA JS / API
     async function submitPayment() {
       const phoneInput = document.getElementById('phoneNumber').value.trim();
       
@@ -568,24 +483,26 @@
           })
         });
 
-        if (res.ok) {
-          const data = await res.json();
-          if (data.checkoutUrl) {
-            window.location.href = data.checkoutUrl;
-            return;
-          } else if (data.success) {
-            alert("Rechaj la voye avèk siksè!");
-            location.reload();
-            return;
-          }
+        const data = await res.json();
+
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+          return;
+        } else if (data.success) {
+          alert("Rechaj la voye avèk siksè!");
+          location.reload();
+          return;
+        } else {
+          alert(data.message || "Peyman an echwe. Tanpri eseye ankò.");
         }
       } catch (err) {
-        console.log("Fallback sou paj peyman an dirèk...");
+        console.error(err);
+        alert("Tranzaksyon an sou pye. Tanpri verifye si kont ou oswa API a pare.");
       }
 
-      // Si pa gen API backend aktif, li otomatikman redirije sou process-payment.php oswa pay.js avèk done yo
-      const payUrl = `process-payment.php?phone=${encodeURIComponent(fullPhone)}&amount=${selectedAmountUSD}&fee=${selectedFeeUSD}&total=${totalUSD}&country=${selectedCountryCode}`;
-      window.location.href = payUrl;
+      // Re-aktive bouton an si gen yon pwoblèm san vire san rete
+      btnPay.disabled = false;
+      btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
     }
 
     function openAuthModal(type) {
