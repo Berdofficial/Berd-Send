@@ -37,27 +37,31 @@
 <body class="text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white">
 
   <!-- BANNYÈ PWOMOSYON -->
-  <div id="promoBanner" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center relative flex justify-center items-center gap-2 shadow-md">
-    <span>🎁 <strong data-i18n="promoTitle">Nouvèl Kliyan!</strong> <span data-i18n="promoDesc">Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!</span></span>
-    <button onclick="document.getElementById('promoBanner').remove()" class="ml-4 text-white/80 hover:text-white font-bold">&times;</button>
+  <div id="promoBanner" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white text-[11px] sm:text-sm font-medium py-2 px-3 text-center relative flex justify-center items-center gap-1.5 shadow-md">
+    <span>🎁 <strong data-i18n="promoTitle">Nouvo Kliyan!</strong> <span data-i18n="promoDesc">Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!</span></span>
+    <button onclick="document.getElementById('promoBanner').remove()" class="ml-2 text-white/80 hover:text-white font-bold">&times;</button>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER OPTIMIZE POU MOBIL AK KOMPITYÈ -->
   <header class="glass-header sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="logo.jpg" alt="BerdSend Logo" class="h-10 w-10 rounded-xl object-cover border border-white/20 shadow-sm" onerror="this.style.display='none'">
-        <span class="text-2xl font-black text-white tracking-tight">Berd<span class="text-blue-400">Send</span></span>
+    <div class="max-w-6xl mx-auto px-2.5 sm:px-4 h-16 flex items-center justify-between gap-1 sm:gap-4">
+      
+      <!-- LOGO -->
+      <a href="index.html" class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <img src="logo.jpg" alt="BerdSend Logo" class="h-8 w-8 sm:h-10 sm:w-10 rounded-xl object-cover border border-white/20 shadow-sm" onerror="this.style.display='none'">
+        <span class="text-lg sm:text-2xl font-black text-white tracking-tight">Berd<span class="text-blue-400">Send</span></span>
       </a>
 
-      <div class="flex items-center gap-3">
-        <div id="userLocationBadge" class="hidden sm:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-xl font-bold">
+      <!-- ELEMENTS AK BOUTON NAN HEADER LA -->
+      <div class="flex items-center gap-1.5 sm:gap-3">
+        
+        <div id="userLocationBadge" class="hidden md:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-xl font-bold">
           <i class="fa-solid fa-location-dot text-emerald-400"></i>
           <span id="userDetectedCountry">...</span>
         </div>
 
         <!-- SELECTÈ LANG -->
-        <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-xs font-semibold px-2 py-1.5 focus:outline-none cursor-pointer">
+        <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-[11px] sm:text-xs font-semibold px-1.5 sm:px-2 py-1 sm:py-1.5 focus:outline-none cursor-pointer max-w-[110px] sm:max-w-none">
           <option value="ht">🇭🇹 Haitian Creole</option>
           <option value="en">🇺🇸 English</option>
           <option value="fr">🇫🇷 Français</option>
@@ -65,10 +69,12 @@
           <option value="es">🇪🇸 Español</option>
         </select>
 
-        <div id="authButtonsOut" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" data-i18n="btnLogin" class="text-xs font-bold text-slate-200 hover:text-white px-3 py-1.5 rounded-xl border border-slate-700 hover:border-slate-500 transition">Konekte</button>
-          <button onclick="openAuthModal('register')" data-i18n="btnRegister" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-xl transition shadow-lg shadow-blue-600/30">Kreye Kont</button>
+        <!-- BOUTON AUTH -->
+        <div id="authButtonsOut" class="flex items-center gap-1 sm:gap-2">
+          <button onclick="openAuthModal('login')" data-i18n="btnLogin" class="text-[11px] sm:text-xs font-bold text-slate-200 hover:text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700 hover:border-slate-500 transition whitespace-nowrap">Konekte</button>
+          <button onclick="openAuthModal('register')" data-i18n="btnRegister" class="text-[11px] sm:text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl transition shadow-lg shadow-blue-600/30 whitespace-nowrap">Kreye Kont</button>
         </div>
+
       </div>
     </div>
   </header>
@@ -125,7 +131,7 @@
         </div>
       </div>
 
-      <!-- REZIME PEYMAN -->
+      <!-- REZIME PEYMAN AK MONTAN MOUN AN AP RESEVWA -->
       <div class="border-t border-slate-200 pt-4 space-y-2">
         <div class="flex justify-between text-xs font-semibold text-slate-600">
           <span data-i18n="lblSubtotal">Montan Rechaj:</span>
@@ -135,6 +141,16 @@
           <span data-i18n="lblFee">Frè Sèvis (Max $5):</span>
           <span id="summaryFee">$0.00 USD</span>
         </div>
+        
+        <!-- MONTAN DESTINATÈ AP RESEVWA -->
+        <div class="flex justify-between items-center text-xs font-bold text-emerald-700 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200 my-2">
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-hand-holding-dollar text-emerald-600"></i>
+            <span data-i18n="lblRecipientReceives">Moun an ap resevwa:</span>
+          </span>
+          <span id="summaryRecipientReceives" class="text-sm font-extrabold text-emerald-700">---</span>
+        </div>
+
         <div class="flex justify-between text-sm font-black text-slate-900 pt-1 border-t border-slate-200">
           <span data-i18n="lblTotal">Total pou Peye:</span>
           <span id="summaryTotal" class="text-blue-600 text-base">$0.00 USD</span>
@@ -148,7 +164,7 @@
     </div>
   </main>
 
-  <!-- BANNER COOKIES & PRIVACY -->
+  <!-- BANNER COOKIES -->
   <div id="cookieBanner" class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 text-white p-4 z-50 transition-all duration-300">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="text-xs text-slate-300">
@@ -240,7 +256,7 @@
     </div>
   </div>
 
-  <!-- FOOTER KONPLÈ -->
+  <!-- FOOTER -->
   <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800/80 mt-12">
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-xs">
       <div>
@@ -279,10 +295,10 @@
   </footer>
 
   <script>
-    // DIKSYONÈ TRADIKSYON POU TOUT SIT LA
+    // DIKSYONÈ TRADIKSYON
     const i18n = {
       ht: {
-        promoTitle: "Nouvèl Kliyan!",
+        promoTitle: "Nouvo Kliyan!",
         promoDesc: "Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!",
         btnLogin: "Konekte",
         btnRegister: "Kreye Kont",
@@ -297,6 +313,7 @@
         lblAmount: "Montan Rechaj (USD)",
         lblSubtotal: "Montan Rechaj:",
         lblFee: "Frè Sèvis (Max $5):",
+        lblRecipientReceives: "Moun an ap resevwa:",
         lblTotal: "Total pou Peye:",
         btnPay: "Peye & Voye Rechaj Kounye A",
         lblEmail: "Email / Non Itilizatè",
@@ -345,6 +362,7 @@
         lblAmount: "Top-up Amount (USD)",
         lblSubtotal: "Recharge Amount:",
         lblFee: "Service Fee (Max $5):",
+        lblRecipientReceives: "Recipient receives:",
         lblTotal: "Total to Pay:",
         btnPay: "Pay & Send Top-up Now",
         lblEmail: "Email / Username",
@@ -353,23 +371,23 @@
         btnLoginSubmit: "Log In to Your Account",
         btnRegisterSubmit: "Create My Account",
         cookieTitle: "We use Cookies & Privacy Options",
-        cookieDesc: "To enhance your experience on BerdSend, we use cookies. You can accept all or customize data shared.",
+        cookieDesc: "To enhance your experience on BerdSend, we use cookies.",
         btnCookieCustomize: "Customize Data",
         btnCookieAccept: "Accept All",
         cookieModalTitle: "Customize Your Data",
-        cookieModalSub: "Choose options for data processing on our platform.",
-        cookieEssential: "Essential Cookies (Service)",
-        cookieEssentialDesc: "Required for mobile recharge and account security.",
+        cookieModalSub: "Choose options for data processing.",
+        cookieEssential: "Essential Cookies",
+        cookieEssentialDesc: "Required for mobile recharge.",
         cookieAnalytics: "Analytics & Performance",
-        cookieAnalyticsDesc: "Helps us understand usage to improve features.",
+        cookieAnalyticsDesc: "Helps us improve features.",
         cookieMarketing: "Personalization & Promo",
-        cookieMarketingDesc: "Enables tailor-made discounts and special offers.",
+        cookieMarketingDesc: "Tailor-made offers.",
         btnSaveCookies: "Save My Preferences",
-        footerDesc: "Fast, secure international mobile recharge service with best market exchange rates.",
+        footerDesc: "Fast, secure international mobile recharge service.",
         footerCompany: "Company",
         footerSupport: "Support & Legal",
         footerPayments: "Secure Payments",
-        footerPaymentsDesc: "We accept credit card payments processed securely via Square.",
+        footerPaymentsDesc: "We accept credit card payments processed via Square.",
         linkAbout: "About Us",
         linkBlog: "Blog",
         linkContact: "Contact Us",
@@ -393,6 +411,7 @@
         lblAmount: "Montant (USD)",
         lblSubtotal: "Montant Recharge :",
         lblFee: "Frais de Service :",
+        lblRecipientReceives: "Le destinataire reçoit :",
         lblTotal: "Total à Payer :",
         btnPay: "Payer & Envoyer",
         lblEmail: "E-mail",
@@ -405,25 +424,25 @@
         btnCookieCustomize: "Personnaliser",
         btnCookieAccept: "Tout Accepter",
         cookieModalTitle: "Personnaliser vos Données",
-        cookieModalSub: "Sélectionnez vos choix de confidentialité.",
+        cookieModalSub: "Sélectionnez vos choix.",
         cookieEssential: "Cookies Essentiels",
-        cookieEssentialDesc: "Nécessaires pour le service et la sécurité.",
+        cookieEssentialDesc: "Nécessaires pour le service.",
         cookieAnalytics: "Statistiques et Performance",
-        cookieAnalyticsDesc: "Permet d'améliorer l'expérience utilisateur.",
+        cookieAnalyticsDesc: "Améliore l'expérience.",
         cookieMarketing: "Promotions & Offres",
-        cookieMarketingDesc: "Permet de vous proposer des réductions ciblées.",
+        cookieMarketingDesc: "Réductions ciblées.",
         btnSaveCookies: "Enregistrer mes Choix",
-        footerDesc: "Service de recharge mobile international rapide et sécurisé.",
+        footerDesc: "Service de recharge mobile international rapide.",
         footerCompany: "Entreprise",
         footerSupport: "Support & Légal",
         footerPayments: "Paiements Sécurisés",
-        footerPaymentsDesc: "Nous acceptons les cartes bancaires via Square.",
+        footerPaymentsDesc: "Paiements via Square.",
         linkAbout: "À Propos",
         linkBlog: "Blog",
         linkContact: "Contactez-nous",
         linkFaq: "FAQ",
         linkPrivacy: "Confidentialité",
-        linkTerms: "Conditions d'Utilisation"
+        linkTerms: "Conditions"
       },
       es: {
         promoTitle: "¡Nuevo Cliente!",
@@ -433,7 +452,7 @@
         tabRecharge: "Recarga Móvil",
         tabTransfer: "Transferencia",
         transferTitle: "Servicio No Disponible Actualmente",
-        transferDesc: "Estamos trabajando para ofrecerte transferencias de dinero muy pronto.",
+        transferDesc: "Estamos trabajando para ofrecerte transferencias pronto.",
         lblCountry: "País de Destino",
         optSelectCountry: "Selecciona un país...",
         lblPhone: "Número de Teléfono",
@@ -441,6 +460,7 @@
         lblAmount: "Monto de Recarga (USD)",
         lblSubtotal: "Monto de Recarga:",
         lblFee: "Tarifa de Servicio:",
+        lblRecipientReceives: "El destinatario recibe:",
         lblTotal: "Total a Pagar:",
         btnPay: "Pagar y Enviar Ahora",
         lblEmail: "Correo Electrónico",
@@ -449,23 +469,23 @@
         btnLoginSubmit: "Iniciar Sesión",
         btnRegisterSubmit: "Crear Mi Cuenta",
         cookieTitle: "Cookies y Privacidad",
-        cookieDesc: "Usamos cookies para mejorar tu experiencia en BerdSend.",
+        cookieDesc: "Usamos cookies para mejorar tu experiencia.",
         btnCookieCustomize: "Personalizar Datos",
         btnCookieAccept: "Aceptar Todo",
         cookieModalTitle: "Personaliza tus Datos",
         cookieModalSub: "Selecciona las opciones de privacidad.",
         cookieEssential: "Cookies Esenciales",
-        cookieEssentialDesc: "Requeridas para el servicio y la seguridad.",
+        cookieEssentialDesc: "Requeridas para el servicio.",
         cookieAnalytics: "Análisis y Rendimiento",
-        cookieAnalyticsDesc: "Nos ayuda a mejorar la plataforma.",
+        cookieAnalyticsDesc: "Nos ayuda a mejorar.",
         cookieMarketing: "Personalización y Ofertas",
-        cookieMarketingDesc: "Nos permite enviarte descuentos exclusivos.",
+        cookieMarketingDesc: "Descuentos exclusivos.",
         btnSaveCookies: "Guardar Preferencias",
-        footerDesc: "Servicio rápido y seguro de recargas móviles internacionales.",
+        footerDesc: "Servicio rápido de recargas internacionales.",
         footerCompany: "Compañía",
         footerSupport: "Soporte y Legal",
         footerPayments: "Pagos Seguros",
-        footerPaymentsDesc: "Aceptamos tarjetas procesadas de forma segura con Square.",
+        footerPaymentsDesc: "Pagos seguros procesados con Square.",
         linkAbout: "Nosotros",
         linkBlog: "Blog",
         linkContact: "Contacto",
@@ -481,7 +501,7 @@
         tabRecharge: "Recarga Celular",
         tabTransfer: "Transferência",
         transferTitle: "Serviço Indisponível no Momento",
-        transferDesc: "Em breve teremos o serviço de transferência de dinheiro.",
+        transferDesc: "Em breve teremos o serviço de transferência.",
         lblCountry: "País de Destino",
         optSelectCountry: "Selecione um país...",
         lblPhone: "Número de Telefone",
@@ -489,6 +509,7 @@
         lblAmount: "Valor da Recarga (USD)",
         lblSubtotal: "Valor da Recarga:",
         lblFee: "Taxa de Serviço:",
+        lblRecipientReceives: "O destinatário recebe:",
         lblTotal: "Total a Pagar:",
         btnPay: "Pagar e Enviar Agora",
         lblEmail: "E-mail",
@@ -497,23 +518,23 @@
         btnLoginSubmit: "Entrar na Conta",
         btnRegisterSubmit: "Criar Minha Conta",
         cookieTitle: "Cookies e Privacidade",
-        cookieDesc: "Usamos cookies para melhorar sua experiência na plataforma.",
+        cookieDesc: "Usamos cookies para melhorar sua experiência.",
         btnCookieCustomize: "Personalizar Dados",
         btnCookieAccept: "Aceitar Tudo",
         cookieModalTitle: "Personalize Seus Dados",
         cookieModalSub: "Escolha suas opções de privacidade.",
         cookieEssential: "Cookies Essenciais",
-        cookieEssentialDesc: "Necessários para o serviço e segurança.",
+        cookieEssentialDesc: "Necessários para o serviço.",
         cookieAnalytics: "Análise e Desempenho",
-        cookieAnalyticsDesc: "Ajuda a melhorar nossas funcionalidades.",
+        cookieAnalyticsDesc: "Ajuda a melhorar funcionalidades.",
         cookieMarketing: "Personalização e Ofertas",
-        cookieMarketingDesc: "Permite enviar desconfos e ofertas especiais.",
+        cookieMarketingDesc: "Permite enviar descontos.",
         btnSaveCookies: "Salvar Preferências",
-        footerDesc: "Serviço rápido e seguro de recarga celular internacional.",
+        footerDesc: "Serviço rápido de recarga celular internacional.",
         footerCompany: "Empresa",
         footerSupport: "Suporte e Legal",
         footerPayments: "Pagamentos Seguros",
-        footerPaymentsDesc: "Aceitamos cartões com processamento seguro via Square.",
+        footerPaymentsDesc: "Processamento seguro via Square.",
         linkAbout: "Sobre Nós",
         linkBlog: "Blog",
         linkContact: "Contato",
@@ -523,53 +544,46 @@
       }
     };
 
-    // LIS PEYI (KARAYIB, AFRIK, AMERIK DI SID)
+    // LIS PEYI AK TO DECHANJ APROKSIMATIF POU RESEVWA (ESTIMATION)
     const reloadlyCountries = [
-      // KARAYIB AK AMERIK NÒ
-      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509" },
-      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1" },
-      { code: "JM", name: "Jamayik", dialCode: "+1" },
-      { code: "CU", name: "Kiba", dialCode: "+53" },
-      { code: "US", name: "Etazini", dialCode: "+1" },
-      { code: "CA", name: "Kanada", dialCode: "+1" },
-
-      // AMERIK DI SID AK SANTRA
-      { code: "BR", name: "Brezil", dialCode: "+55" },
-      { code: "MX", name: "Meksik", dialCode: "+52" },
-      { code: "CO", name: "Kolonbi", dialCode: "+57" },
-      { code: "CL", name: "Chili", dialCode: "+56" },
-      { code: "AR", name: "Ajantin", dialCode: "+54" },
-      { code: "PE", name: "Perou", dialCode: "+51" },
-      { code: "VE", name: "Venezyela", dialCode: "+58" },
-      { code: "EC", name: "Ekwatè", dialCode: "+593" },
-      { code: "GT", name: "Gwatemala", dialCode: "+502" },
-
-      // AFRIK
-      { code: "NG", name: "Nijerya", dialCode: "+234" },
-      { code: "GH", name: "Gana", dialCode: "+233" },
-      { code: "CI", name: "Kòt d'Ivwà (Ivory Coast)", dialCode: "+225" },
-      { code: "SN", name: "Senegal", dialCode: "+221" },
-      { code: "CM", name: "Kamewoun", dialCode: "+237" },
-      { code: "KE", name: "Kenya", dialCode: "+254" },
-      { code: "ZA", name: "Afrik di Sid", dialCode: "+27" },
-      { code: "CD", name: "Kongo (RDC)", dialCode: "+243" },
-      { code: "MA", name: "Maròk", dialCode: "+212" },
-      { code: "GN", name: "Gine", dialCode: "+224" },
-      { code: "TG", name: "Togo", dialCode: "+228" },
-      { code: "BJ", name: "Benen", dialCode: "+229" },
-      { code: "ML", name: "Mali", dialCode: "+223" },
-
-      // Ewòp
-      { code: "FR", name: "Frans", dialCode: "+33" },
-      { code: "ES", name: "Espay", dialCode: "+34" },
-      { code: "PT", name: "Pòtigal", dialCode: "+351" }
+      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509", currency: "HTG", rate: 131.50 },
+      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1", currency: "DOP", rate: 59.20 },
+      { code: "JM", name: "Jamayik", dialCode: "+1", currency: "JMD", rate: 155.00 },
+      { code: "CU", name: "Kiba", dialCode: "+53", currency: "CUP", rate: 24.00 },
+      { code: "US", name: "Etazini", dialCode: "+1", currency: "USD", rate: 1.00 },
+      { code: "CA", name: "Kanada", dialCode: "+1", currency: "CAD", rate: 1.35 },
+      { code: "BR", name: "Brezil", dialCode: "+55", currency: "BRL", rate: 5.10 },
+      { code: "MX", name: "Meksik", dialCode: "+52", currency: "MXN", rate: 16.80 },
+      { code: "CO", name: "Kolonbi", dialCode: "+57", currency: "COP", rate: 3850.00 },
+      { code: "CL", name: "Chili", dialCode: "+56", currency: "CLP", rate: 930.00 },
+      { code: "AR", name: "Ajantin", dialCode: "+54", currency: "ARS", rate: 880.00 },
+      { code: "PE", name: "Perou", dialCode: "+51", currency: "PEN", rate: 3.70 },
+      { code: "VE", name: "Venezyela", dialCode: "+58", currency: "VES", rate: 36.50 },
+      { code: "EC", name: "Ekwatè", dialCode: "+593", currency: "USD", rate: 1.00 },
+      { code: "GT", name: "Gwatemala", dialCode: "+502", currency: "GTQ", rate: 7.75 },
+      { code: "NG", name: "Nijerya", dialCode: "+234", currency: "NGN", rate: 1400.00 },
+      { code: "GH", name: "Gana", dialCode: "+233", currency: "GHS", rate: 13.80 },
+      { code: "CI", name: "Kòt d'Ivwà (Ivory Coast)", dialCode: "+225", currency: "XOF", rate: 605.00 },
+      { code: "SN", name: "Senegal", dialCode: "+221", currency: "XOF", rate: 605.00 },
+      { code: "CM", name: "Kamewoun", dialCode: "+237", currency: "XAF", rate: 605.00 },
+      { code: "KE", name: "Kenya", dialCode: "+254", currency: "KES", rate: 132.00 },
+      { code: "ZA", name: "Afrik di Sid", dialCode: "+27", currency: "ZAR", rate: 18.50 },
+      { code: "CD", name: "Kongo (RDC)", dialCode: "+243", currency: "CDF", rate: 2750.00 },
+      { code: "MA", name: "Maròk", dialCode: "+212", currency: "MAD", rate: 10.00 },
+      { code: "GN", name: "Gine", dialCode: "+224", currency: "GNF", rate: 8550.00 },
+      { code: "TG", name: "Togo", dialCode: "+228", currency: "XOF", rate: 605.00 },
+      { code: "BJ", name: "Benen", dialCode: "+229", currency: "XOF", rate: 605.00 },
+      { code: "ML", name: "Mali", dialCode: "+223", currency: "XOF", rate: 605.00 },
+      { code: "FR", name: "Frans", dialCode: "+33", currency: "EUR", rate: 0.92 },
+      { code: "ES", name: "Espay", dialCode: "+34", currency: "EUR", rate: 0.92 },
+      { code: "PT", name: "Pòtigal", dialCode: "+351", currency: "EUR", rate: 0.92 }
     ];
 
     const validAmountsUSD = [5, 15, 20, 25, 30, 35, 40, 45, 50];
     let selectedAmountUSD = 0;
     let selectedFeeUSD = 0;
+    let selectedCountryObj = null;
 
-    // FONKSYON POU CHANJE LANG OTOMATIKMAN
     function changeLanguage(langCode) {
       const dict = i18n[langCode] || i18n['ht'];
       document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -597,6 +611,7 @@
 
     function onCountryChange(countryCode) {
       const country = reloadlyCountries.find(c => c.code === countryCode);
+      selectedCountryObj = country || null;
       const badge = document.getElementById('phoneCodeBadge');
       if (country) {
         badge.textContent = country.dialCode;
@@ -605,6 +620,7 @@
         badge.textContent = "+---";
         badge.classList.remove('bg-blue-100', 'text-blue-700');
       }
+      calculateTotalCost();
     }
 
     function loadAmountButtons() {
@@ -661,6 +677,17 @@
       document.getElementById('summarySubtotal').textContent = `$${selectedAmountUSD.toFixed(2)} USD`;
       document.getElementById('summaryFee').textContent = `$${selectedFeeUSD.toFixed(2)} USD`;
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
+
+      // Kalkil ak afichaj sa destinatè a ap resevwa
+      const recipientEl = document.getElementById('summaryRecipientReceives');
+      if (selectedCountryObj && selectedAmountUSD > 0) {
+        const localAmount = selectedAmountUSD * selectedCountryObj.rate;
+        recipientEl.textContent = `≈ ${localAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${selectedCountryObj.currency}`;
+      } else if (selectedAmountUSD > 0) {
+        recipientEl.textContent = `$${selectedAmountUSD.toFixed(2)} USD`;
+      } else {
+        recipientEl.textContent = '---';
+      }
     }
 
     function switchTab(tab) {
