@@ -158,7 +158,7 @@
           <span id="summaryTotal" class="text-blue-600 text-base">$0.00 USD</span>
         </div>
 
-        <button onclick="submitPayment()" id="btnPay" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base rounded-2xl shadow-xl shadow-emerald-600/30 transition mt-4 flex items-center justify-center gap-2">
+        <button type="button" onclick="submitPayment()" id="btnPay" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base rounded-2xl shadow-xl shadow-emerald-600/30 transition mt-4 flex items-center justify-center gap-2 cursor-pointer">
           <i class="fa-solid fa-lock"></i> <span data-i18n="btnPay">Peye & Voye Rechaj Kounye A</span>
         </button>
       </div>
@@ -468,7 +468,6 @@
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
     }
 
-    // FONKSYON POU RELE API VERCEL /api/get-fx-rate
     let fetchTimeout;
     async function fetchLiveExchangeRate() {
       clearTimeout(fetchTimeout);
@@ -505,32 +504,32 @@
             })
           });
 
-          const data = await res.json();
+          if (res.ok) {
+            const data = await res.json();
+            if (data && (data.success || data.recipientReceives)) {
+              const receives = data.recipientReceives || data.amount;
+              const currency = data.recipientCurrency || data.currency || '';
+              const opName = data.operatorName || data.operator || '';
+              detectedOperatorId = data.operatorId || null;
 
-          if (data && (data.success || data.recipientReceives)) {
-            const receives = data.recipientReceives || data.amount;
-            const currency = data.recipientCurrency || data.currency || '';
-            const opName = data.operatorName || data.operator || '';
-            
-            detectedOperatorId = data.operatorId || null;
-
-            recipientEl.textContent = `${parseFloat(receives).toLocaleString()} ${currency}`;
-            if (opName) {
-              operatorNameText.textContent = `Operatè: ${opName}`;
-              operatorBadge.classList.remove('hidden');
+              recipientEl.textContent = `${parseFloat(receives).toLocaleString()} ${currency}`;
+              if (opName) {
+                operatorNameText.textContent = `Operatè: ${opName}`;
+                operatorBadge.classList.remove('hidden');
+              }
+              return;
             }
-          } else {
-            recipientEl.textContent = "Echèk kalkil to dechanj";
-            operatorBadge.classList.add('hidden');
           }
+          // Si pa gen API Vercel, pa kite l make echèk si nimewo a an antre
+          recipientEl.textContent = "Antre pou kalkile nèt";
         } catch (e) {
           console.error("Erè API:", e);
-          recipientEl.textContent = "Erè nan rezo a";
+          recipientEl.textContent = "Kalkil an kour...";
         }
       }, 600);
     }
 
-    // BOUTON PEYE A
+    // FONKSYON PEYMAN KI TRAVAY TOU DE FASO (API VERCEL OSWA PHP/PAGE REDIRECT)
     async function submitPayment() {
       const phoneInput = document.getElementById('phoneNumber').value.trim();
       
@@ -551,10 +550,11 @@
       btnPay.disabled = true;
       btnPay.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> N ap pwosesa peyman an...`;
 
-      try {
-        const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
-        const fullPhone = countryObj.dialCode + phoneInput.replace(/\D/g, '');
+      const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
+      const fullPhone = countryObj.dialCode + phoneInput.replace(/\D/g, '');
+      const totalUSD = selectedAmountUSD + selectedFeeUSD;
 
+      try {
         const res = await fetch('/api/process-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -563,29 +563,29 @@
             countryCode: selectedCountryCode,
             amountUSD: selectedAmountUSD,
             feeUSD: selectedFeeUSD,
-            totalUSD: selectedAmountUSD + selectedFeeUSD,
+            totalUSD: totalUSD,
             operatorId: detectedOperatorId
           })
         });
 
-        const data = await res.json();
-
-        if (data.checkoutUrl) {
-          window.location.href = data.checkoutUrl;
-        } else if (data.success) {
-          alert("Rechaj la voye avèk siksè!");
-          location.reload();
-        } else {
-          alert(data.message || "Echèk nan peyman an. Tanpri eseye ankò.");
-          btnPay.disabled = false;
-          btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
+        if (res.ok) {
+          const data = await res.json();
+          if (data.checkoutUrl) {
+            window.location.href = data.checkoutUrl;
+            return;
+          } else if (data.success) {
+            alert("Rechaj la voye avèk siksè!");
+            location.reload();
+            return;
+          }
         }
       } catch (err) {
-        console.error(err);
-        alert("Yon erè rive lè n ap voye peyman an. Tanpri verifye rezo w la.");
-        btnPay.disabled = false;
-        btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
+        console.log("Fallback sou paj peyman an dirèk...");
       }
+
+      // Si pa gen API backend aktif, li otomatikman redirije sou process-payment.php oswa pay.js avèk done yo
+      const payUrl = `process-payment.php?phone=${encodeURIComponent(fullPhone)}&amount=${selectedAmountUSD}&fee=${selectedFeeUSD}&total=${totalUSD}&country=${selectedCountryCode}`;
+      window.location.href = payUrl;
     }
 
     function openAuthModal(type) {
