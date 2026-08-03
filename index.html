@@ -54,13 +54,11 @@
 
       <!-- ELEMENTS AK BOUTON -->
       <div class="flex items-center gap-1.5 sm:gap-3">
-        
         <div id="userLocationBadge" class="hidden md:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-xl font-bold">
           <i class="fa-solid fa-location-dot text-emerald-400"></i>
           <span id="userDetectedCountry">Oland / Etazini</span>
         </div>
 
-        <!-- SELECTÈ LANG -->
         <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-[11px] sm:text-xs font-semibold px-1.5 sm:px-2 py-1 sm:py-1.5 focus:outline-none cursor-pointer max-w-[110px] sm:max-w-none">
           <option value="ht">🇭🇹 Haitian Creole</option>
           <option value="en">🇺🇸 English</option>
@@ -69,12 +67,10 @@
           <option value="es">🇪🇸 Español</option>
         </select>
 
-        <!-- BOUTON AUTH -->
         <div id="authButtonsOut" class="flex items-center gap-1 sm:gap-2">
           <button onclick="openAuthModal('login')" data-i18n="btnLogin" class="text-[11px] sm:text-xs font-bold text-slate-200 hover:text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700 hover:border-slate-500 transition whitespace-nowrap">Konekte</button>
           <button onclick="openAuthModal('register')" data-i18n="btnRegister" class="text-[11px] sm:text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl transition shadow-lg shadow-blue-600/30 whitespace-nowrap">Kreye Kont</button>
         </div>
-
       </div>
     </div>
   </header>
@@ -99,7 +95,7 @@
     <!-- SEKSYON RECHAJ MOBIL -->
     <div id="sectionRecharge" class="glass-card p-6 rounded-3xl shadow-2xl space-y-6">
       
-      <!-- PEYI DESTINASYON (LIS 30 PEYI) -->
+      <!-- PEYI DESTINASYON -->
       <div>
         <label class="block text-xs font-bold uppercase text-slate-600 mb-1" data-i18n="lblCountry">Peyi Destinasyon Rechaj la</label>
         <select id="countrySelect" onchange="onCountryChange(this.value)" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -114,17 +110,13 @@
           <span id="phoneCodeBadge" class="p-3 bg-slate-200/90 border border-slate-300 rounded-xl font-bold text-slate-800 text-sm flex items-center min-w-[70px] justify-center shadow-inner">
             +---
           </span>
-          <input type="tel" id="phoneNumber" oninput="fetchLiveExchangeRate()" placeholder="Ekz: 37001234" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
+          <input type="tel" id="phoneNumber" placeholder="Ekz: 37001234" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
-        <p id="operatorBadge" class="text-xs text-blue-600 font-bold mt-1.5 hidden flex items-center gap-1.5">
-          <i class="fa-solid fa-signal"></i> <span id="operatorNameText">---</span>
-        </p>
       </div>
 
-      <!-- MONTAN (5 RIVE 50, SANS $10) -->
+      <!-- MONTAN -->
       <div>
         <label class="block text-xs font-bold uppercase text-slate-600 mb-2" data-i18n="lblAmount">Montan Rechaj (USD)</label>
-
         <div id="amountButtonsContainer" class="grid grid-cols-3 gap-2 mb-3"></div>
 
         <div class="mt-2">
@@ -133,7 +125,7 @@
         </div>
       </div>
 
-      <!-- REZIME PEYMAN AK MONTAN MOUN AN AP RESEVWA AN MONNEN LOKAL -->
+      <!-- REZIME PEYMAN -->
       <div class="border-t border-slate-200 pt-4 space-y-2">
         <div class="flex justify-between text-xs font-semibold text-slate-600">
           <span data-i18n="lblSubtotal">Montan Rechaj:</span>
@@ -143,22 +135,13 @@
           <span data-i18n="lblFee">Frè Sèvis (Max $5):</span>
           <span id="summaryFee">$0.00 USD</span>
         </div>
-        
-        <!-- MONTAN DESTINATÈ AP RESEVWA -->
-        <div class="flex justify-between items-center text-xs font-bold text-emerald-700 bg-emerald-50 p-3 rounded-xl border border-emerald-200 my-2 shadow-sm">
-          <span class="flex items-center gap-1.5">
-            <i class="fa-solid fa-hand-holding-dollar text-emerald-600 text-sm"></i>
-            <span data-i18n="lblRecipientReceives">Moun an ap resevwa:</span>
-          </span>
-          <span id="summaryRecipientReceives" class="text-base font-black text-emerald-700">---</span>
-        </div>
 
         <div class="flex justify-between text-sm font-black text-slate-900 pt-1 border-t border-slate-200">
           <span data-i18n="lblTotal">Total pou Peye:</span>
           <span id="summaryTotal" class="text-blue-600 text-base">$0.00 USD</span>
         </div>
 
-        <button type="button" onclick="submitPayment()" id="btnPay" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base rounded-2xl shadow-xl shadow-emerald-600/30 transition mt-4 flex items-center justify-center gap-2 cursor-pointer">
+        <button type="button" onclick="processVercelPayment()" id="btnPay" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base rounded-2xl shadow-xl shadow-emerald-600/30 transition mt-4 flex items-center justify-center gap-2 cursor-pointer">
           <i class="fa-solid fa-lock"></i> <span data-i18n="btnPay">Peye & Voye Rechaj Kounye A</span>
         </button>
       </div>
@@ -215,98 +198,15 @@
       { code: "MX", name: "Meksik", dialCode: "+52" },
       { code: "FR", name: "Frans", dialCode: "+33" },
       { code: "CO", name: "Kolonbi", dialCode: "+57" },
-      { code: "AR", name: "Ajantin", dialCode: "+54" },
-      { code: "CL", name: "Chili", dialCode: "+56" },
-      { code: "PE", name: "Pewou", dialCode: "+51" },
-      { code: "VE", name: "Venezyela", dialCode: "+58" },
-      { code: "EC", name: "Ekwatè", dialCode: "+593" },
-      { code: "GT", name: "Gwatemala", dialCode: "+502" },
-      { code: "HN", name: "Ondiras", dialCode: "+504" },
-      { code: "SV", name: "El Salvadò", dialCode: "+503" },
-      { code: "NI", name: "Nikaragwa", dialCode: "+505" },
-      { code: "CR", name: "Kostarika", dialCode: "+506" },
-      { code: "PA", name: "Panama", dialCode: "+507" },
-      { code: "NG", name: "Nijerya", dialCode: "+234" },
-      { code: "GH", name: "Gana", dialCode: "+233" },
-      { code: "SN", name: "Senegal", dialCode: "+221" },
-      { code: "CM", name: "Kamewoun", dialCode: "+237" },
-      { code: "CI", name: "Kòt d'Ivwa", dialCode: "+225" },
-      { code: "ZA", name: "Afrik di Sid", dialCode: "+27" },
       { code: "ES", name: "Espay", dialCode: "+34" },
       { code: "PT", name: "Pòtigal", dialCode: "+351" },
       { code: "PH", name: "Filipin", dialCode: "+63" }
     ];
 
-    const translations = {
-      ht: {
-        promoTitle: "Nouvo Kliyan!",
-        promoDesc: "Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!",
-        btnLogin: "Konekte",
-        btnRegister: "Kreye Kont",
-        tabRecharge: "Rechaj Mobil",
-        tabTransfer: "Transfè Denye",
-        transferTitle: "Sèvis Sa A Pa Disponib Kounye A",
-        transferDesc: "N ap travay pou nou pote sèvis transfè denye a ba ou trè byento. Mèsi pou pasyans ou!",
-        lblCountry: "Peyi Destinasyon Rechaj la",
-        optSelectCountry: "Chwazi yon peyi destinasyon...",
-        lblPhone: "Nimewo Telefòn Moun k ap Resevwa a",
-        lblAmount: "Montan Rechaj (USD)",
-        lblSubtotal: "Montan Rechaj:",
-        lblFee: "Frè Sèvis (Max $5):",
-        lblRecipientReceives: "Moun an ap resevwa:",
-        lblTotal: "Total pou Peye:",
-        btnPay: "Peye & Voye Rechaj Kounye A",
-        footerAbout: "Platfòm ki pi rapid epi ki pi ansekirite pou voye rechaj mobil ak transfè entènasyonal toupatou nan mond lan.",
-        footerQuickLinks: "Lyen Rapid",
-        footerContact: "Kontakte Nou",
-        footerLegal: "Legal ak Konfidansyalite",
-        footerPrivacy: "Règleman Konfidansyalite",
-        footerRefund: "Politik Ranbousman",
-        footerFollowUs: "Swiv Nou"
-      },
-      en: {
-        promoTitle: "New Customer!",
-        promoDesc: "Get a $5 USD bonus on your balance after your first top-up!",
-        btnLogin: "Login",
-        btnRegister: "Register",
-        tabRecharge: "Mobile Recharge",
-        tabTransfer: "Money Transfer",
-        transferTitle: "Service Currently Unavailable",
-        transferDesc: "We are working to bring money transfer services to you very soon. Thank you for your patience!",
-        lblCountry: "Destination Country",
-        optSelectCountry: "Select a destination country...",
-        lblPhone: "Recipient Phone Number",
-        lblAmount: "Recharge Amount (USD)",
-        lblSubtotal: "Recharge Amount:",
-        lblFee: "Service Fee (Max $5):",
-        lblRecipientReceives: "Recipient Receives:",
-        lblTotal: "Total to Pay:",
-        btnPay: "Pay & Send Recharge Now",
-        footerAbout: "The fastest and most secure platform for mobile recharge and international transfers worldwide.",
-        footerQuickLinks: "Quick Links",
-        footerContact: "Contact Us",
-        footerLegal: "Legal & Privacy",
-        footerPrivacy: "Privacy Policy",
-        footerRefund: "Refund Policy",
-        footerFollowUs: "Follow Us"
-      }
-    };
-
     const validAmountsUSD = [5, 15, 20, 25, 30, 35, 40, 45, 50];
     let selectedAmountUSD = 0;
     let selectedFeeUSD = 0;
     let selectedCountryCode = "";
-    let detectedOperatorId = null;
-
-    function changeLanguage(lang) {
-      const dict = translations[lang] || translations.ht;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-          el.textContent = dict[key];
-        }
-      });
-    }
 
     function populateDestinationCountries() {
       const select = document.getElementById('countrySelect');
@@ -323,12 +223,7 @@
       selectedCountryCode = countryCode;
       const country = reloadlyCountries.find(c => c.code === countryCode);
       const badge = document.getElementById('phoneCodeBadge');
-      if (country) {
-        badge.textContent = country.dialCode;
-      } else {
-        badge.textContent = "+---";
-      }
-      fetchLiveExchangeRate();
+      badge.textContent = country ? country.dialCode : "+---";
     }
 
     function loadAmountButtons() {
@@ -360,26 +255,14 @@
       selectedAmountUSD = amt;
       selectedFeeUSD = fee;
       updateSummaryDisplay();
-      fetchLiveExchangeRate();
     }
 
     function handleCustomAmount() {
       document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-500/20'));
       const val = parseFloat(document.getElementById('customAmount').value);
-      const errEl = document.getElementById('amountError');
-      
-      if (val === 10) {
-        errEl.textContent = "Opsyon $10 USD pa disponib.";
-        errEl.classList.remove('hidden');
-        selectedAmountUSD = 0;
-        selectedFeeUSD = 0;
-      } else {
-        errEl.classList.add('hidden');
-        selectedAmountUSD = val || 0;
-        selectedFeeUSD = calculateFee(selectedAmountUSD);
-      }
+      selectedAmountUSD = val || 0;
+      selectedFeeUSD = calculateFee(selectedAmountUSD);
       updateSummaryDisplay();
-      fetchLiveExchangeRate();
     }
 
     function updateSummaryDisplay() {
@@ -388,64 +271,8 @@
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
     }
 
-    let fetchTimeout;
-    async function fetchLiveExchangeRate() {
-      clearTimeout(fetchTimeout);
-      const rawPhone = document.getElementById('phoneNumber').value.trim();
-      const recipientEl = document.getElementById('summaryRecipientReceives');
-      const operatorBadge = document.getElementById('operatorBadge');
-      const operatorNameText = document.getElementById('operatorNameText');
-
-      if (!selectedCountryCode || rawPhone.length < 7 || selectedAmountUSD <= 0) {
-        recipientEl.textContent = selectedAmountUSD > 0 ? "Antre nimewo telefòn..." : "---";
-        operatorBadge.classList.add('hidden');
-        return;
-      }
-
-      recipientEl.textContent = "Kalkil an kour...";
-
-      fetchTimeout = setTimeout(async () => {
-        try {
-          const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
-          const cleanDialCode = countryObj ? countryObj.dialCode.replace('+', '') : '';
-          const fullPhone = cleanDialCode + rawPhone.replace(/\D/g, '');
-
-          const res = await fetch('/api/get-fx-rate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              phone: fullPhone,
-              countryCode: selectedCountryCode,
-              amountUSD: selectedAmountUSD
-            })
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            if (data && (data.success || data.recipientReceives)) {
-              const receives = data.recipientReceives || data.amount;
-              const currency = data.recipientCurrency || data.currency || '';
-              const opName = data.operatorName || data.operator || '';
-              detectedOperatorId = data.operatorId || null;
-
-              recipientEl.textContent = `${parseFloat(receives).toLocaleString()} ${currency}`;
-              if (opName) {
-                operatorNameText.textContent = `Operatè: ${opName}`;
-                operatorBadge.classList.remove('hidden');
-              }
-              return;
-            }
-          }
-          recipientEl.textContent = "To disponib nan konfimasyon";
-        } catch (e) {
-          console.error("Erè API:", e);
-          recipientEl.textContent = "Prè pou rechaj";
-        }
-      }, 600);
-    }
-
-    // SUBMIT PAYMENT PROCESSED DIRECTLY VIA JS / API
-    async function submitPayment() {
+    // VOYE DONÈ YO BAY API VERCEL OU AN (`pay.js` O SWA `/api/pay`)
+    async function processVercelPayment() {
       const phoneInput = document.getElementById('phoneNumber').value.trim();
       
       if (!selectedCountryCode) {
@@ -467,10 +294,11 @@
 
       const countryObj = reloadlyCountries.find(c => c.code === selectedCountryCode);
       const fullPhone = countryObj.dialCode + phoneInput.replace(/\D/g, '');
-      const totalUSD = selectedAmountUSD + selectedFeeUSD;
+      const totalUSD = (selectedAmountUSD + selectedFeeUSD).toFixed(2);
 
       try {
-        const res = await fetch('/api/process-payment', {
+        // Apèl dirèk sou API Serverless Vercel
+        const response = await fetch('/api/pay', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -478,54 +306,27 @@
             countryCode: selectedCountryCode,
             amountUSD: selectedAmountUSD,
             feeUSD: selectedFeeUSD,
-            totalUSD: totalUSD,
-            operatorId: detectedOperatorId
+            totalUSD: totalUSD
           })
         });
 
-        const data = await res.json();
+        const result = await response.json();
 
-        if (data.checkoutUrl) {
-          window.location.href = data.checkoutUrl;
-          return;
-        } else if (data.success) {
-          alert("Rechaj la voye avèk siksè!");
+        if (result.url || result.checkoutUrl) {
+          window.location.href = result.url || result.checkoutUrl;
+        } else if (result.success) {
+          alert("Rechaj la efèktue ak siksè!");
           location.reload();
-          return;
         } else {
-          alert(data.message || "Peyman an echwe. Tanpri eseye ankò.");
+          alert(result.message || "Tranzaksyon an te gen yon pwoblèm. Tanpri eseye ankò.");
         }
       } catch (err) {
-        console.error(err);
-        alert("Tranzaksyon an sou pye. Tanpri verifye si kont ou oswa API a pare.");
+        console.error("Erè Vercel API:", err);
+        alert("Gen yon erè nan rezo a oswa API Vercel la. Tanpri re-eseye.");
       }
 
-      // Re-aktive bouton an si gen yon pwoblèm san vire san rete
       btnPay.disabled = false;
       btnPay.innerHTML = `<i class="fa-solid fa-lock"></i> Peye & Voye Rechaj Kounye A`;
-    }
-
-    function openAuthModal(type) {
-      alert(type === 'login' ? "Paj koneksyon an ap louvri..." : "Paj enskripsyon an ap louvri...");
-    }
-
-    function switchTab(tab) {
-      const rechargeSec = document.getElementById('sectionRecharge');
-      const transferSec = document.getElementById('sectionTransfer');
-      const tabRecharge = document.getElementById('tabRecharge');
-      const tabTransfer = document.getElementById('tabTransfer');
-
-      if (tab === 'recharge') {
-        rechargeSec.classList.remove('hidden');
-        transferSec.classList.add('hidden');
-        tabRecharge.className = "flex-1 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white shadow-lg shadow-blue-600/30 transition";
-        tabTransfer.className = "flex-1 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition";
-      } else {
-        rechargeSec.classList.add('hidden');
-        transferSec.classList.remove('hidden');
-        tabTransfer.className = "flex-1 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white shadow-lg shadow-blue-600/30 transition";
-        tabRecharge.className = "flex-1 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition";
-      }
     }
 
     window.onload = () => {
