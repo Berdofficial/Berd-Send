@@ -4,6 +4,6 @@
   "description": "BerdSend Payment Backend",
   "dependencies": {
     "cloudinary": "^2.5.1",
-    "square": "^25.0.0"
+    "square": "^34.0.0"
   }
 }
