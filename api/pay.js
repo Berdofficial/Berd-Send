@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     const { totalUSD, phone, countryCode, amountUSD } = req.body;
     
     if (!totalUSD || !phone) {
-      return res.status(400).json({ success: false, error: 'Done ki manke.' });
+      return res.status(400).json({ success: false, error: 'Done ki manke nan demann lan.' });
     }
 
     const client = new Client({
@@ -27,25 +27,18 @@ export default async function handler(req, res) {
     });
 
     const amountInCents = Math.round(parseFloat(totalUSD) * 100);
+    const locationId = process.env.SQUARE_LOCATION_ID ? process.env.SQUARE_LOCATION_ID.trim() : '';
 
-    // Nou itilize estrikti ofisyèl Square Checkout API a
     const response = await client.checkoutApi.createPaymentLink({
-      order: {
-        locationId: process.env.SQUARE_LOCATION_ID,
-        lineItems: [
-          {
-            name: `Rechaj Mobil (${countryCode}) - ${phone}`,
-            quantity: '1',
-            basePriceMoney: {
-              amount: BigInt(amountInCents),
-              currency: 'USD',
-            },
-          },
-        ],
+      quickPay: {
+        name: `Rechaj Mobil (${countryCode}) - ${phone}`,
+        priceMoney: {
+          amount: BigInt(amountInCents),
+          currency: 'USD',
+        },
+        locationId: locationId,
       },
-      checkoutOptions: {
-        redirectUrl: 'https://berdsend.vercel.app/success.html',
-      },
+      description: `BerdSend Top-up pou nimewo ${phone} ($${amountUSD} USD + Frè)`,
     });
 
     return res.status(200).json({
@@ -55,9 +48,10 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Erè Square API:', error);
+    const errorMsg = error.errors ? error.errors.map(e => e.detail).join(', ') : error.message;
     return res.status(500).json({ 
       success: false, 
-      error: error.errors ? error.errors[0].detail : error.message 
+      error: errorMsg || 'Gen yon erè nan sèvè a.' 
     });
   }
 }
