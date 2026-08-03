@@ -44,14 +44,14 @@
 
   <!-- HEADER -->
   <header class="glass-header sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-2.5 sm:px-4 h-16 flex items-center justify-between gap-1 sm:gap-4">
-      <a href="index.html" class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-        <img src="logo.jpg" alt="BerdSend Logo" class="h-8 w-8 sm:h-10 sm:w-10 rounded-xl object-cover border border-white/20 shadow-sm" onerror="this.style.display='none'">
-        <span class="text-lg sm:text-2xl font-black text-white tracking-tight">Berd<span class="text-blue-400">Send</span></span>
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="logo.jpg" alt="BerdSend Logo" class="h-10 w-10 rounded-xl object-cover border border-white/20 shadow-sm" onerror="this.style.display='none'">
+        <span class="text-2xl font-black text-white tracking-tight">Berd<span class="text-blue-400">Send</span></span>
       </a>
 
-      <div class="flex items-center gap-1.5 sm:gap-3">
-        <select id="languageSelect" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-[11px] sm:text-xs font-semibold px-1.5 sm:px-2 py-1 sm:py-1.5 focus:outline-none cursor-pointer">
+      <div class="flex items-center gap-3">
+        <select id="languageSelect" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-xs font-semibold px-2 py-1.5 focus:outline-none cursor-pointer">
           <option value="ht">🇭🇹 Haitian Creole</option>
           <option value="en">🇺🇸 English</option>
           <option value="fr">🇫🇷 Français</option>
@@ -61,14 +61,14 @@
     </div>
   </header>
 
-  <!-- KONTNI PWINSIPAL -->
+  <!-- KONTNI PWENSIPAL -->
   <main class="max-w-xl mx-auto px-4 py-8 w-full flex-grow">
     <div class="glass-card p-6 rounded-3xl shadow-2xl space-y-6">
       
       <!-- PEYI DESTINASYON -->
       <div>
         <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Peyi Destinasyon Rechaj la</label>
-        <select id="countrySelect" onchange="onCountryChange(this.value)" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
+        <select id="countrySelect" onchange="onCountryChange(this.value)" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
           <option value="">Chwazi yon peyi destinasyon...</option>
         </select>
       </div>
@@ -92,6 +92,12 @@
         <div class="mt-2">
           <input type="number" id="customAmount" placeholder="Antre yon montan pèsonalize (Min $5, Max $50)" min="5" max="50" oninput="handleCustomAmount()" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
+      </div>
+
+      <!-- ENFÒMASYON RESEVWA (RELOADLY PREVIEW) -->
+      <div id="recipientReceiveInfo" class="hidden bg-blue-50/80 border border-blue-200 p-3 rounded-xl text-xs text-blue-900 font-semibold flex items-center justify-between">
+        <span>Moun nan ap resevwa approx:</span>
+        <span id="recipientAmountDisplay" class="text-blue-700 font-bold text-sm">-</span>
       </div>
 
       <!-- REZIME PEYMAN -->
@@ -118,22 +124,82 @@
     </div>
   </main>
 
-  <footer class="bg-slate-950 text-slate-400 py-6 text-center text-xs">
-    &copy; 2026 BerdSend LLC. Tout dwa rezeve.
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800 text-xs">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-left">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <img src="logo.jpg" alt="Logo" class="h-7 w-7 rounded-lg object-cover" onerror="this.style.display='none'">
+          <span class="text-lg font-black text-white">Berd<span class="text-blue-400">Send</span></span>
+        </div>
+        <p class="text-slate-400 text-xs leading-relaxed">Sèvis transfè ak rechaj mobil entènasyonal ki pi rapid, san danje epi fyab pou dyaspora a.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 uppercase text-[11px] tracking-wider">Lyen Rapid</h4>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="hover:text-white transition">Akèy</a></li>
+          <li><a href="about.html" class="hover:text-white transition">Konsènan Nou</a></li>
+          <li><a href="contact.html" class="hover:text-white transition">Kontak</a></li>
+          <li><a href="faq.html" class="hover:text-white transition">Kesyon yo Poze Souvan (FAQ)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 uppercase text-[11px] tracking-wider">Legal</h4>
+        <ul class="space-y-2">
+          <li><a href="terms.html" class="hover:text-white transition">Kondisyon Itilizasyon</a></li>
+          <li><a href="privacy.html" class="hover:text-white transition">Politik Konfidansyalite</a></li>
+          <li><a href="refund.html" class="hover:text-white transition">Politik Ranbousman</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-bold mb-3 uppercase text-[11px] tracking-wider">Sipò ak Sekirite</h4>
+        <p class="text-slate-400 text-xs mb-2">Peman ou yo pwoteje pa chifreman avanse ak Square.</p>
+        <div class="flex gap-3 text-lg text-white mt-3">
+          <i class="fa-brands fa-cc-visa text-blue-400"></i>
+          <i class="fa-brands fa-cc-mastercard text-red-400"></i>
+          <i class="fa-brands fa-cc-amex text-cyan-400"></i>
+          <i class="fa-solid fa-lock text-emerald-400"></i>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 border-t border-slate-900 pt-6 text-center text-slate-500">
+      &copy; 2026 BerdSend LLC. Tout dwa rezeve.
+    </div>
   </footer>
 
   <script>
+    // 30 Peyi yo pou konplè
     const reloadlyCountries = [
-      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509" },
-      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1" },
-      { code: "JM", name: "Jamayik", dialCode: "+1" },
-      { code: "CU", name: "Kiba", dialCode: "+53" },
-      { code: "US", name: "Etazini", dialCode: "+1" },
-      { code: "CA", name: "Kanada", dialCode: "+1" },
-      { code: "BR", name: "Brezil", dialCode: "+55" },
-      { code: "MX", name: "Meksik", dialCode: "+52" },
-      { code: "FR", name: "Frans", dialCode: "+33" },
-      { code: "ES", name: "Espay", dialCode: "+34" }
+      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509", currency: "HTG" },
+      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1", currency: "DOP" },
+      { code: "JM", name: "Jamayik", dialCode: "+1", currency: "JMD" },
+      { code: "CU", name: "Kiba", dialCode: "+53", currency: "CUP" },
+      { code: "US", name: "Etazini", dialCode: "+1", currency: "USD" },
+      { code: "CA", name: "Kanada", dialCode: "+1", currency: "CAD" },
+      { code: "BR", name: "Brezil", dialCode: "+55", currency: "BRL" },
+      { code: "MX", name: "Meksik", dialCode: "+52", currency: "MXN" },
+      { code: "FR", name: "Frans", dialCode: "+33", currency: "EUR" },
+      { code: "ES", name: "Espay", dialCode: "+34", currency: "EUR" },
+      { code: "CO", name: "Kolonbi", dialCode: "+57", currency: "COP" },
+      { code: "VE", name: "Venezwela", dialCode: "+58", currency: "VES" },
+      { code: "PE", name: "Fewou", dialCode: "+51", currency: "PEN" },
+      { code: "CL", name: "Chili", dialCode: "+56", currency: "CLP" },
+      { code: "AR", name: "Ajantin", dialCode: "+54", currency: "ARS" },
+      { code: "BS", name: " Bahamas", dialCode: "+1", currency: "BSD" },
+      { code: "GY", name: "Guyana", dialCode: "+592", currency: "GYD" },
+      { code: "SR", name: "Sirinam", dialCode: "+597", currency: "SRD" },
+      { code: "JM", name: "Jamayik", dialCode: "+1", currency: "JMD" },
+      { code: "PA", name: "Panama", dialCode: "+507", currency: "PAB" },
+      { code: "CR", name: "Kosta Rika", dialCode: "+506", currency: "CRC" },
+      { code: "HN", name: "Ondiras", dialCode: "+504", currency: "HNL" },
+      { code: "SV", name: "El Salvadò", dialCode: "+503", currency: "USD" },
+      { code: "GT", name: "Gwatemala", dialCode: "+502", currency: "GTQ" },
+      { code: "NI", name: "Nikaragwa", dialCode: "+505", currency: "NIO" },
+      { code: "PR", name: "Pòtoriko", dialCode: "+1", currency: "USD" },
+      { code: "GP", name: "Gwadloup", dialCode: "+590", currency: "EUR" },
+      { code: "MQ", name: "Matinik", dialCode: "+596", currency: "EUR" },
+      { code: "GF", name: "Gwayàn Franse", dialCode: "+594", currency: "EUR" },
+      { code: "NG", name: " Nijerya", dialCode: "+234", currency: "NGN" }
     ];
 
     const validAmountsUSD = [5, 15, 20, 25, 30, 35, 40, 45, 50];
@@ -155,6 +221,7 @@
       selectedCountryCode = countryCode;
       const country = reloadlyCountries.find(c => c.code === countryCode);
       document.getElementById('phoneCodeBadge').textContent = country ? country.dialCode : "+---";
+      updateRecipientDisplay();
     }
 
     function loadAmountButtons() {
@@ -164,7 +231,7 @@
         const fee = calculateFee(amt);
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'amount-btn p-3 rounded-2xl border border-slate-200 bg-white hover:border-blue-500 flex flex-col items-center justify-center transition shadow-sm';
+        btn.className = 'amount-btn p-3 rounded-2xl border border-slate-200 bg-white hover:border-blue-500 flex flex-col items-center justify-center transition shadow-sm cursor-pointer';
         btn.innerHTML = `<span class="text-sm font-extrabold text-slate-900">$${amt} USD</span><span class="text-[10px] font-bold text-slate-400">+ $${fee} frè</span>`;
         btn.onclick = () => selectFixedAmount(amt, fee, btn);
         container.appendChild(btn);
@@ -186,6 +253,7 @@
       selectedAmountUSD = amt;
       selectedFeeUSD = fee;
       updateSummaryDisplay();
+      updateRecipientDisplay();
     }
 
     function handleCustomAmount() {
@@ -194,12 +262,32 @@
       selectedAmountUSD = val || 0;
       selectedFeeUSD = calculateFee(selectedAmountUSD);
       updateSummaryDisplay();
+      updateRecipientDisplay();
     }
 
     function updateSummaryDisplay() {
       document.getElementById('summarySubtotal').textContent = `$${selectedAmountUSD.toFixed(2)} USD`;
       document.getElementById('summaryFee').textContent = `$${selectedFeeUSD.toFixed(2)} USD`;
       document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
+    }
+
+    function updateRecipientDisplay() {
+      const infoBox = document.getElementById('recipientReceiveInfo');
+      const display = document.getElementById('recipientAmountDisplay');
+      if (selectedAmountUSD > 0 && selectedCountryCode) {
+        const country = reloadlyCountries.find(c => c.code === selectedCountryCode);
+        let rate = 1;
+        // Apèsi pousantaj echanj senp pou montan k ap resevwa a
+        if (selectedCountryCode === 'HT') rate = 132; // Egzanp pousantaj HTG
+        else if (selectedCountryCode === 'DO') rate = 60; // DOP
+        else if (selectedCountryCode === 'CU') rate = 24; // CUP
+        
+        const localAmount = (selectedAmountUSD * rate).toFixed(2);
+        display.textContent = `${localAmount} ${country ? country.currency : 'USD'}`;
+        infoBox.classList.remove('hidden');
+      } else {
+        infoBox.classList.add('hidden');
+      }
     }
 
     async function processPaymentWithAPI() {
