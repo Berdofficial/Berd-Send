@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* GRADIENT BG ANIME */
     body {
       background: linear-gradient(-45deg, #0f172a, #1e1b4b, #1e293b, #0f172a);
       background-size: 400% 400%;
@@ -20,7 +19,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* GLASSMORPHISM */
     .glass-card {
       background: rgba(255, 255, 255, 0.90);
       backdrop-filter: blur(16px);
@@ -40,11 +38,11 @@
 
   <!-- BANNYÈ PWOMOSYON -->
   <div id="promoBanner" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center relative flex justify-center items-center gap-2 shadow-md">
-    <span>🎁 <strong>Nouvèl Kliyan!</strong> Resevwa <strong>$5 USD bonus</strong> sou balans ou apre premye rechaj ou!</span>
+    <span>🎁 <strong data-i18n="promoTitle">Nouvèl Kliyan!</strong> <span data-i18n="promoDesc">Resevwa $5 USD bonus sou balans ou apre premye rechaj ou!</span></span>
     <button onclick="document.getElementById('promoBanner').remove()" class="ml-4 text-white/80 hover:text-white font-bold">&times;</button>
   </div>
 
-  <!-- HEADER AK LOGO AK MENI AUTH -->
+  <!-- HEADER -->
   <header class="glass-header sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-3">
@@ -53,10 +51,9 @@
       </a>
 
       <div class="flex items-center gap-3">
-        <!-- DETEKSYON PEYI ITILIZATÈ -->
         <div id="userLocationBadge" class="hidden sm:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-xl font-bold">
           <i class="fa-solid fa-location-dot text-emerald-400"></i>
-          <span id="userDetectedCountry">Nou la...</span>
+          <span id="userDetectedCountry">...</span>
         </div>
 
         <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-slate-800/80 border border-slate-700 text-white rounded-xl text-xs font-semibold px-2 py-1.5 focus:outline-none">
@@ -68,254 +65,152 @@
         </select>
 
         <div id="authButtonsOut" class="flex items-center gap-2">
-          <button onclick="openAuthModal('login')" class="text-xs font-bold text-slate-200 hover:text-white px-3 py-1.5 rounded-xl border border-slate-700 hover:border-slate-500 transition">Konekte</button>
-          <button onclick="openAuthModal('register')" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-xl transition shadow-lg shadow-blue-600/30">Kreye Kont</button>
-        </div>
-
-        <div id="userMenuIn" class="hidden relative">
-          <button onclick="toggleUserDropdown()" class="flex items-center gap-2 bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded-xl font-bold text-xs text-white hover:bg-slate-700 transition">
-            <i class="fa-solid fa-user-circle text-blue-400 text-sm"></i>
-            <span id="displayUserName">Mwen</span>
-            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
-          </button>
-          <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 py-2 z-50 text-white">
-            <a href="#" onclick="openAccountSettings()" class="block px-4 py-2 text-xs font-semibold hover:bg-slate-800"><i class="fa-solid fa-gear mr-2 text-blue-400"></i>Paramèt Kont</a>
-            <button onclick="logoutUser()" class="w-full text-left px-4 py-2 text-xs font-semibold text-rose-400 hover:bg-slate-800"><i class="fa-solid fa-right-from-bracket mr-2"></i>Dekonekte</button>
-          </div>
+          <button onclick="openAuthModal('login')" data-i18n="btnLogin" class="text-xs font-bold text-slate-200 hover:text-white px-3 py-1.5 rounded-xl border border-slate-700 hover:border-slate-500 transition">Konekte</button>
+          <button onclick="openAuthModal('register')" data-i18n="btnRegister" class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-xl transition shadow-lg shadow-blue-600/30">Kreye Kont</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- PWINSIPAL KONTNI -->
+  <!-- KONTNI PWINSIPAL -->
   <main class="max-w-xl mx-auto px-4 py-8 w-full flex-grow">
 
     <div class="flex bg-slate-900/60 p-1.5 rounded-2xl mb-6 border border-white/10 backdrop-blur-md">
-      <button id="tabRecharge" onclick="switchTab('recharge')" class="flex-1 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white shadow-lg shadow-blue-600/30 transition">Rechaj Mobil</button>
-      <button id="tabTransfer" onclick="switchTab('transfer')" class="flex-1 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition">Transfè Denye</button>
+      <button id="tabRecharge" onclick="switchTab('recharge')" data-i18n="tabRecharge" class="flex-1 py-2.5 rounded-xl font-bold text-sm bg-blue-600 text-white shadow-lg shadow-blue-600/30 transition">Rechaj Mobil</button>
+      <button id="tabTransfer" onclick="switchTab('transfer')" data-i18n="tabTransfer" class="flex-1 py-2.5 rounded-xl font-bold text-sm text-slate-300 hover:text-white transition">Transfè Denye</button>
     </div>
 
-    <!-- SEKSYON TRANSFÈ -->
-    <div id="sectionTransfer" class="hidden glass-card p-6 rounded-3xl shadow-2xl text-center py-12">
-      <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-      </div>
-      <h3 class="text-lg font-bold text-slate-900 mb-2">Sèvis Sa A Pa Dwa Disponib Yo Kounye A</h3>
-      <p class="text-sm text-slate-600">N ap travay pou nou pote sèvis transfè denye a ba ou trè byento. Mèsi pou pasyans ou!</p>
-    </div>
-
-    <!-- SEKSYON RECHAJ MOBIL -->
+    <!-- RECHAJ MOBIL -->
     <div id="sectionRecharge" class="glass-card p-6 rounded-3xl shadow-2xl space-y-6">
       
-      <!-- PEYI DESTINASYON (LIS RELOADLY) -->
       <div>
-        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Peyi Destinasyon Rechaj la</label>
+        <label class="block text-xs font-bold uppercase text-slate-600 mb-1" data-i18n="lblCountry">Peyi Destinasyon Rechaj la</label>
         <select id="countrySelect" onchange="onCountryChange(this.value)" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
-          <option value="">Chwazi yon peyi destinasyon...</option>
+          <option value="" data-i18n="optSelectCountry">Chwazi yon peyi destinasyon...</option>
         </select>
       </div>
 
-      <!-- NIMOWO TELEFÒN AK KÒD PEYI OTOMATIK -->
       <div>
-        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Nimewo Telefòn Moun k ap Resevwa a</label>
+        <label class="block text-xs font-bold uppercase text-slate-600 mb-1" data-i18n="lblPhone">Nimewo Telefòn Moun k ap Resevwa a</label>
         <div class="flex gap-2">
           <span id="phoneCodeBadge" class="p-3 bg-slate-200/90 border border-slate-300 rounded-xl font-bold text-slate-800 text-sm flex items-center min-w-[70px] justify-center shadow-inner">
             +---
           </span>
           <input type="tel" id="phoneNumber" placeholder="Sazi nimewo an san kòd peyi a" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
-        <p class="text-[11px] text-slate-500 mt-1 font-medium"><i class="fa-solid fa-circle-info mr-1 text-blue-500"></i> Kòd peyi a ap fikse otomatikman selon peyi ou chwazi anwo a.</p>
+        <p class="text-[11px] text-slate-500 mt-1 font-medium"><i class="fa-solid fa-circle-info mr-1 text-blue-500"></i> <span data-i18n="phoneCodeHint">Kòd peyi a ap fikse otomatikman selon peyi ou chwazi anwo a.</span></p>
       </div>
 
-      <!-- MONTAN KI DISPONIB SEGON PEYI KLIYAN AN -->
+      <!-- SELEKSYON MONTAN (5 PA 5 RIVE 50, SANS $10) -->
       <div>
-        <div class="flex justify-between items-center mb-2">
-          <label class="block text-xs font-bold uppercase text-slate-600">Montan Rechaj (Deviz lokal ou)</label>
-          <span id="currencyNotice" class="text-xs font-bold text-blue-600"></span>
-        </div>
+        <label class="block text-xs font-bold uppercase text-slate-600 mb-2" data-i18n="lblAmount">Montan Rechaj (USD)</label>
 
-        <div id="amountButtonsContainer" class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3"></div>
+        <div id="amountButtonsContainer" class="grid grid-cols-3 gap-2 mb-3"></div>
 
         <div class="mt-2">
-          <input type="number" id="customAmount" placeholder="Antre yon montan pèsonalize" min="1" max="50" oninput="handleCustomAmount()" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
+          <input type="number" id="customAmount" placeholder="Antre yon montan pèsonalize (Min $5, Max $50)" min="5" max="50" oninput="handleCustomAmount()" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
           <p id="amountError" class="text-xs text-rose-500 font-bold mt-1 hidden"></p>
         </div>
       </div>
 
-      <!-- KÒD PWOMO -->
-      <div>
-        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Kòd Pwomksyon (Opsyonèl)</label>
-        <div class="flex gap-2">
-          <input type="text" id="promoCode" placeholder="TAPE KÒD PA W LA" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-xs uppercase bg-white/90 focus:ring-2 focus:ring-blue-500 outline-none">
-          <button type="button" onclick="validatePromoCode()" class="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">Aplike</button>
-        </div>
-      </div>
-
-      <!-- REZIME KONTWÒL PEYMAN -->
+      <!-- REZIME PEYMAN -->
       <div class="border-t border-slate-200 pt-4 space-y-2">
         <div class="flex justify-between text-xs font-semibold text-slate-600">
-          <span>Montan Rechaj:</span>
+          <span data-i18n="lblSubtotal">Montan Rechaj:</span>
           <span id="summarySubtotal">$0.00 USD</span>
         </div>
         <div class="flex justify-between text-xs font-semibold text-slate-600">
-          <span>Frè Sèvis (Max $5):</span>
+          <span data-i18n="lblFee">Frè Sèvis (Max $5):</span>
           <span id="summaryFee">$0.00 USD</span>
         </div>
         <div class="flex justify-between text-sm font-black text-slate-900 pt-1 border-t border-slate-200">
-          <span>Total pou Peye:</span>
+          <span data-i18n="lblTotal">Total pou Peye:</span>
           <span id="summaryTotal" class="text-blue-600 text-base">$0.00 USD</span>
         </div>
 
         <button onclick="submitPayment()" id="btnPay" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base rounded-2xl shadow-xl shadow-emerald-600/30 transition mt-4 flex items-center justify-center gap-2">
-          <i class="fa-solid fa-lock"></i> <span>Peye & Voye Rechaj Kounye A</span>
+          <i class="fa-solid fa-lock"></i> <span data-i18n="btnPay">Peye & Voye Rechaj Kounye A</span>
         </button>
       </div>
 
     </div>
   </main>
 
-  <!-- MODAL AUTH -->
-  <div id="authModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
-      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+  <!-- BANNER COOKIES & PRIVACY -->
+  <div id="cookieBanner" class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 text-white p-4 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-xs text-slate-300">
+        <p class="font-bold text-sm text-white mb-1"><i class="fa-solid fa-cookie-bite text-amber-400 mr-2"></i> Nou itilize Cookies & Done Entènèt</p>
+        <p>Pou amelyore eksperyans ou sou BerdSend, nou itilize cookies. Ou ka aksepte tout oswa pèsonalize ki done ou vle pataje avèk nou.</p>
+      </div>
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <button onclick="openCookieCustomizer()" class="flex-1 md:flex-initial text-xs px-3 py-2 border border-slate-600 hover:border-slate-400 font-bold rounded-xl text-slate-300 hover:text-white transition">Pèsonalize Done</button>
+        <button onclick="acceptAllCookies()" class="flex-1 md:flex-initial text-xs px-4 py-2 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl text-white shadow-lg transition">Aksepte Tout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PÈSONALIZE COOKIES & DONE -->
+  <div id="cookieModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative text-slate-800">
+      <button onclick="closeCookieModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
       
-      <div class="flex border-b border-slate-200 mb-6">
-        <button id="tabAuthLogin" onclick="switchAuthTab('login')" class="flex-1 py-3 text-sm font-bold border-b-2 border-blue-600 text-blue-600">Konekte</button>
-        <button id="tabAuthRegister" onclick="switchAuthTab('register')" class="flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600">Kreye Kont</button>
+      <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fa-solid fa-sliders text-blue-600"></i> Pèsonalize Done Ou Yo</h3>
+      <p class="text-xs text-slate-600 mb-6">Chwazi ki opsyon ou daprè pou nou rasanble pou fonksyonman sit la.</p>
+
+      <div class="space-y-4">
+        <!-- ESSENTIAL (MANDATORY) -->
+        <div class="flex items-center justify-between p-3 bg-slate-100 rounded-2xl">
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Cookies Obligatwa (Sèvis)</h4>
+            <p class="text-[11px] text-slate-500">Nesesè pou rechaj la ak sekirite kont ou.</p>
+          </div>
+          <input type="checkbox" checked disabled class="w-4 h-4 accent-blue-600 rounded">
+        </div>
+
+        <!-- ANALYTICS -->
+        <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Analitiks ak Pèfòmans</h4>
+            <p class="text-[11px] text-slate-500">Ède nou konprann kijan ou itilize sit la pou nou ka amelyore l.</p>
+          </div>
+          <input type="checkbox" id="cookieAnalytics" checked class="w-4 h-4 accent-blue-600 rounded">
+        </div>
+
+        <!-- MARKETING -->
+        <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Pèsonalizasyon ak Pwomosyon</h4>
+            <p class="text-[11px] text-slate-500">Pèmèt nou ba ou bonis ak rabè ki fèt presizeman pou ou.</p>
+          </div>
+          <input type="checkbox" id="cookieMarketing" class="w-4 h-4 accent-blue-600 rounded">
+        </div>
       </div>
 
-      <form id="formLogin" onsubmit="handleLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Email / Non Itilizatè</label>
-          <input type="email" id="loginEmail" required placeholder="nom@example.com" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Mòdpas</label>
-          <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-xl text-sm transition">Konekte Sou Kont Ou</button>
-      </form>
-
-      <form id="formRegister" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Non Konplè</label>
-          <input type="text" id="regFullName" required placeholder="Jean Baptiste" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Email</label>
-          <input type="email" id="regEmail" required placeholder="nom@example.com" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Mòdpas</label>
-          <input type="password" id="regPassword" required placeholder="••••••••" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Konfòme Mòdpas</label>
-          <input type="password" id="regConfirmPassword" required placeholder="••••••••" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-sm outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-sm transition">Kreye Kont Mwen</button>
-      </form>
+      <button onclick="saveCookiePreferences()" class="w-full mt-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition">Sove Preferans Mwen Yo</button>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800/80 mt-12">
     <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-500">
-      &copy; 2026 BerdSend LLC. Tout dwa rezeve. Sèvis Rechaj Mobil Reloadly Integration.
+      &copy; 2026 BerdSend LLC. Tout dwa rezeve.
     </div>
   </footer>
 
   <script>
-    // LIS KONPLÈ PEYI RELOADLY AK KÒD PEYI
-    const reloadlyCountries = [
-      // KARAYIB AK AMERIK LATIN
-      { code: "HT", name: "Ayiti (Haiti)", dialCode: "+509" },
-      { code: "DO", name: "Repiblik Dominiken", dialCode: "+1" },
-      { code: "JM", name: "Jamayik", dialCode: "+1" },
-      { code: "CU", name: "Kiba", dialCode: "+53" },
-      { code: "BR", name: "Brezil", dialCode: "+55" },
-      { code: "MX", name: "Meksik", dialCode: "+52" },
-      { code: "CO", name: "Kolonbi", dialCode: "+57" },
-      { code: "CL", name: "Chili", dialCode: "+56" },
-      { code: "AR", name: "Ajantin", dialCode: "+54" },
-      { code: "PE", name: "Perou", dialCode: "+51" },
-      { code: "VE", name: "Venezyela", dialCode: "+58" },
-      
-      // AFRIK
-      { code: "NG", name: "Nijerya", dialCode: "+234" },
-      { code: "GH", name: "Gana", dialCode: "+233" },
-      { code: "CI", name: "Kòt d'Ivwà (Ivory Coast)", dialCode: "+225" },
-      { code: "SN", name: "Senegal", dialCode: "+221" },
-      { code: "CM", name: "Kamewoun", dialCode: "+237" },
-      { code: "KE", name: "Kenya", dialCode: "+254" },
-      { code: "ZA", name: "Afrik di Sid", dialCode: "+27" },
-      { code: "CD", name: "Kongo (RDC)", dialCode: "+243" },
-      { code: "MA", name: "Maròk", dialCode: "+212" },
+    // LIST MONTAN DE 5 A 50 (SANS $10)
+    const validAmountsUSD = [5, 15, 20, 25, 30, 35, 40, 45, 50];
 
-      // AMERIK DI NÒ AK EWÒP
-      { code: "US", name: "Etazini", dialCode: "+1" },
-      { code: "CA", name: "Kanada", dialCode: "+1" },
-      { code: "FR", name: "Frans", dialCode: "+33" },
-      { code: "ES", name: "Espay", dialCode: "+34" },
-      { code: "PT", name: "Pòtigal", dialCode: "+351" }
-    ];
-
-    let userCountryCode = "US"; // Default
     let selectedAmountUSD = 0;
     let selectedFeeUSD = 0;
 
-    // DETEKTE PEYI ITILIZATÈ A (IP GEOLOCATION API)
-    async function detectUserCountry() {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        if (data && data.country_code) {
-          userCountryCode = data.country_code;
-          document.getElementById('userDetectedCountry').textContent = `${data.country_name} (${data.currency})`;
-          document.getElementById('userLocationBadge').classList.remove('hidden');
-        }
-      } catch (err) {
-        console.log("Sèvis deteksyon IP pa disponib, n ap itilize valè pa defo.");
-      }
-      loadAmountButtons();
-    }
-
-    // RANPLI SELECTÈ PEYI DESTINASYON YO
-    function populateDestinationCountries() {
-      const select = document.getElementById('countrySelect');
-      select.innerHTML = '<option value="">Chwazi yon peyi destinasyon...</option>';
-      
-      // Triye peyi yo pa lòd alfabetik
-      reloadlyCountries.sort((a, b) => a.name.localeCompare(b.name));
-
-      reloadlyCountries.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c.code;
-        opt.textContent = `${c.name} (${c.dialCode})`;
-        select.appendChild(opt);
-      });
-    }
-
-    // CHANGER KÒD PEYI OTOMATIK LÈ PEYI A CHWAZI
-    function onCountryChange(countryCode) {
-      const country = reloadlyCountries.find(c => c.code === countryCode);
-      const badge = document.getElementById('phoneCodeBadge');
-      if (country) {
-        badge.textContent = country.dialCode;
-        badge.classList.add('bg-blue-100', 'text-blue-700');
-      } else {
-        badge.textContent = "+---";
-        badge.classList.remove('bg-blue-100', 'text-blue-700');
-      }
-    }
-
-    // METE MONTAN VOYE YO PARAPÒ AK PEYI/DEVIZ ITILIZATÈ A
+    // AFFICHER BOUTON MONTAN YO
     function loadAmountButtons() {
-      const amountsUSD = [5, 10, 15, 20, 25, 50];
       const container = document.getElementById('amountButtonsContainer');
       container.innerHTML = '';
 
-      amountsUSD.forEach((amt) => {
+      validAmountsUSD.forEach((amt) => {
         const fee = calculateFee(amt);
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -346,44 +241,61 @@
     function handleCustomAmount() {
       document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('border-blue-600', 'bg-blue-50', 'ring-2', 'ring-blue-500/20'));
       const val = parseFloat(document.getElementById('customAmount').value);
-      selectedAmountUSD = val || 0;
-      selectedFeeUSD = calculateFee(selectedAmountUSD);
+      
+      // ANPECHE $10 NAN SIZI PÈSONALIZE A SI LI TAPEE
+      const errEl = document.getElementById('amountError');
+      if (val === 10) {
+        errEl.textContent = "Opsyon $10 USD pa disponib. Tanpri chwazi yon lòt montan (ekz: $5, $15, $20...).";
+        errEl.classList.remove('hidden');
+        selectedAmountUSD = 0;
+        selectedFeeUSD = 0;
+      } else {
+        errEl.classList.add('hidden');
+        selectedAmountUSD = val || 0;
+        selectedFeeUSD = calculateFee(selectedAmountUSD);
+      }
       calculateTotalCost();
     }
 
     function calculateTotalCost() {
-      let total = selectedAmountUSD + selectedFeeUSD;
       document.getElementById('summarySubtotal').textContent = `$${selectedAmountUSD.toFixed(2)} USD`;
       document.getElementById('summaryFee').textContent = `$${selectedFeeUSD.toFixed(2)} USD`;
-      document.getElementById('summaryTotal').textContent = `$${total.toFixed(2)} USD`;
+      document.getElementById('summaryTotal').textContent = `$${(selectedAmountUSD + selectedFeeUSD).toFixed(2)} USD`;
     }
 
-    // AUTH & TABS MANAGEMENT
-    function openAuthModal(type) { document.getElementById('authModal').classList.remove('hidden'); switchAuthTab(type); }
-    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
-    function switchAuthTab(type) {
-      if(type==='login') {
-        document.getElementById('formLogin').classList.remove('hidden');
-        document.getElementById('formRegister').classList.add('hidden');
-      } else {
-        document.getElementById('formLogin').classList.add('hidden');
-        document.getElementById('formRegister').classList.remove('hidden');
-      }
+    // COOKIE MANAGEMENT
+    function acceptAllCookies() {
+      localStorage.setItem('berdsend_cookies', JSON.stringify({ essential: true, analytics: true, marketing: true }));
+      document.getElementById('cookieBanner').classList.add('hidden');
     }
 
-    function switchTab(tab) {
-      if (tab === 'recharge') {
-        document.getElementById('sectionRecharge').classList.remove('hidden');
-        document.getElementById('sectionTransfer').classList.add('hidden');
-      } else {
-        document.getElementById('sectionRecharge').classList.add('hidden');
-        document.getElementById('sectionTransfer').classList.remove('hidden');
+    function openCookieCustomizer() {
+      document.getElementById('cookieModal').classList.remove('hidden');
+    }
+
+    function closeCookieModal() {
+      document.getElementById('cookieModal').classList.add('hidden');
+    }
+
+    function saveCookiePreferences() {
+      const analytics = document.getElementById('cookieAnalytics').checked;
+      const marketing = document.getElementById('cookieMarketing').checked;
+      localStorage.setItem('berdsend_cookies', JSON.stringify({ essential: true, analytics, marketing }));
+      closeCookieModal();
+      document.getElementById('cookieBanner').classList.add('hidden');
+    }
+
+    // VERIFY IF COOKIES PREFERENCES WERE ALREADY SAVED
+    function checkCookieConsent() {
+      const consent = localStorage.getItem('berdsend_cookies');
+      if (consent) {
+        document.getElementById('cookieBanner').classList.add('hidden');
       }
     }
 
     window.onload = () => {
-      detectUserCountry();
-      populateDestinationCountries();
+      loadAmountButtons();
+      checkCookieConsent();
     };
   </script>
 </body>
