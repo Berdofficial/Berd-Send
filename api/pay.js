@@ -15,21 +15,26 @@ async function getReloadlyToken() {
   return data.access_token;
 }
 
-// Fonksyon pou jwenn Operator ID otomatikman sou Reloadly apati nimewo telefòn lan
-async function getOperatorId(accessToken, phone, countryCode) {
-  try {
-    const res = await fetch(`https://topups.reloadly.com/operators/phone/${phone}/${countryCode || 'DO'}`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept': 'application/com.reloadly.topups-v1+json'
-      }
-    });
-    const data = await res.json();
-    return data.operatorId ? parseInt(data.operatorId) : null;
-  } catch (err) {
-    console.error('Erè pou jwenn Operator ID:', err);
-    return null;
+// Fonksyon pou detekte Operator ID rapid dapre kòd peyi a oswa nimewo a
+function getOperatorIdByPhone(phone, countryCode) {
+  const cleanPhone = phone.replace(/\D/g, '');
+  
+  // Repiblik Dominiken (+1)
+  if (countryCode === 'DO' || cleanPhone.startsWith('1809') || cleanPhone.startsWith('1829') || cleanPhone.startsWith('1849')) {
+    // Ou ka chanje sa selon operatè ou vle a (Claro DO an jeneral se yon bon chwa oswa nou ka mete l dinamik)
+    return 139; // Egzanp: Claro Dominican Republic (oswa Orange/Altice)
   }
+  
+  // Ayiti (+509) - Digicel oswa Natcom
+  if (countryCode === 'HT' || cleanPhone.startsWith('509')) {
+    if (cleanPhone.startsWith('5093') || cleanPhone.startsWith('5094')) {
+      return 355; // Digicel Haiti (Egzanp ID)
+    } else {
+      return 356; // Natcom Haiti (Egzanp ID)
+    }
+  }
+
+  return null;
 }
 
 export default async function handler(req, res) {
@@ -87,7 +92,6 @@ export default async function handler(req, res) {
       if (payment.status === 'COMPLETED') {
         const note = payment.note || '';
         
-        // Ekstraksyon done ki te pase an sekrè nan deskripsyon an
         const phoneMatch = note.match(/PHONE:([+\d]+)/);
         const amountMatch = note.match(/AMOUNT:([\d.]+)/);
         const ccMatch = note.match(/CC:([A-Z]+)/);
@@ -99,15 +103,14 @@ export default async function handler(req, res) {
 
           const accessToken = await getReloadlyToken();
           
-          // Jwenn Operator ID a otomatikman pou nimewo sa a
-          const operatorId = await getOperatorId(accessToken, phone, countryCode);
+          // Jwenn operator ID a dirèkteman san rete
+          const operatorId = getOperatorIdByPhone(phone, countryCode);
 
           if (!operatorId) {
             console.error('Echèk: Pa jwenn operatorId pou nimewo sa a.');
             return res.status(400).json({ success: false, error: 'Operator not found' });
           }
 
-          // Voye demann lan sou Reloadly Airtime API
           const reloadlyRes = await fetch('https://topups.reloadly.com/topups', {
             method: 'POST',
             headers: {
