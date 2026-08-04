@@ -1,4 +1,3 @@
-import { Client, Environment } from 'square';
 import fetch from 'node-fetch';
 
 async function getReloadlyToken() {
@@ -25,48 +24,55 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // --- 1. KREYE LYEN PEYMAN SQUARE (Fòma ki te konn pase byen an) ---
+  // --- 1. KREYE LYEN PEYMAN SQUARE (Itilize Fetch dirèk pou pa gen erè rezo) ---
   if (req.method === 'POST' && req.body.phone && req.body.totalUSD) {
     try {
       const { totalUSD, phone, countryCode, amountUSD } = req.body;
-      
-      const client = new Client({
-        accessToken: process.env.SQUARE_ACCESS_TOKEN,
-        environment: Environment.Production,
-      });
-
       const amountInCents = Math.round(parseFloat(totalUSD) * 100);
       const locationId = process.env.SQUARE_LOCATION_ID ? process.env.SQUARE_LOCATION_ID.trim() : '';
 
-      const response = await client.checkoutApi.createPaymentLink({
-        quickPay: {
-          name: `Rechaj Mobil (${countryCode}) - ${phone}`,
-          priceMoney: {
-            amount: BigInt(amountInCents),
-            currency: 'USD',
-          },
-          locationId: locationId,
+      const squareRes = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.SQUARE_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json',
+          'Square-Version': '2024-01-18'
         },
-        description: `PHONE:${phone}|AMOUNT:${amountUSD}|CC:${countryCode}`,
-        redirectUrl: `https://berdsend.com/success.html?phone=${phone}&amount=${amountUSD}&country=${countryCode}`
+        body: JSON.stringify({
+          quick_pay: {
+            name: `Rechaj Mobil (${countryCode}) - ${phone}`,
+            price_money: {
+              amount: amountInCents,
+              currency: 'USD'
+            },
+            location_id: locationId
+          },
+          description: `PHONE:${phone}|AMOUNT:${amountUSD}|CC:${countryCode}`,
+          redirect_url: `https://berdsend.com/success.html?phone=${phone}&amount=${amountUSD}&country=${countryCode}`
+        })
       });
+
+      const squareData = await squareRes.json();
+
+      if (!squareRes.ok) {
+        console.error('Erè Square API:', squareData);
+        return res.status(500).json({ success: false, error: squareData.errors?.[0]?.detail || 'Erè nan koneksyon Square' });
+      }
 
       return res.status(200).json({
         success: true,
-        url: response.result.paymentLink.url
+        url: squareData.payment_link.url
       });
 
     } catch (error) {
-      console.error('Erè Square API:', error);
-      const errorMsg = error.errors ? error.errors.map(e => e.detail).join(', ') : error.message;
-      return res.status(500).json({ success: false, error: errorMsg || 'Gen yon erè nan sèvè a.' });
+      console.error('Erè rezo API:', error);
+      return res.status(500).json({ success: false, error: 'Gen yon erè nan rezo a.' });
     }
   }
 
-  // --- 2. WEBHOOK: Lè Square voye konfimasyon peman an ---
+  // --- 2. WEBHOOK: Lè peman an fini sou Square ---
   if (req.method === 'POST') {
     try {
-      // Reponn Square imedyatman pou l pa bay erè rezo
       res.status(200).json({ received: true });
 
       const event = req.body;
@@ -75,7 +81,6 @@ export default async function handler(req, res) {
         if (payment && payment.status === 'COMPLETED') {
           const note = payment.note || '';
           
-          // Li itilize menm kle yo egzakteman (PHONE, AMOUNT, CC)
           const phoneMatch = note.match(/PHONE:([+\d]+)/);
           const amountMatch = note.match(/AMOUNT:([\d.]+)/);
           const ccMatch = note.match(/CC:([A-Z]+)/);
@@ -85,9 +90,7 @@ export default async function handler(req, res) {
             const amountUSD = parseFloat(amountMatch[1]);
             const countryCode = ccMatch ? ccMatch[1] : 'DO';
 
-            // Chwazi Operator ID a (pa egzanp 139 pou Repiblik Dominiken, 355 pou Ayiti)
-            const operatorId = countryCode === 'DO' ? 139 : 355; 
-
+            const operatorId = countryCode === 'DO' ? 139 : 355;
             const accessToken = await getReloadlyToken();
 
             await fetch('https://topups.reloadly.com/topups', {
