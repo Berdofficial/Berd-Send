@@ -63,55 +63,57 @@ export default async function handler(req, res) {
     }
   }
 
-  // --- 2. WEBHOOK: Lè peman an konfime sou Square (payment.updated) ---
-  if (req.method === 'POST' && req.body.type === 'payment.updated') {
+  // --- 2. WEBHOOK: Lè peman an konfime sou Square ---
+  if (req.method === 'POST') {
     try {
-      const payment = req.body.data.object.payment;
-      if (payment.status === 'COMPLETED') {
-        const note = payment.note || '';
-        
-        const phoneMatch = note.match(/PHONE:([+\d]+)/);
-        const amountMatch = note.match(/AMOUNT:([\d.]+)/);
-        const ccMatch = note.match(/CC:([A-Z]+)/);
+      // Nou asire n l ap reponn Square tousuit avan l fè lòt travay la pou evite timeout
+      res.status(200).json({ received: true });
 
-        if (phoneMatch && amountMatch) {
-          const phone = phoneMatch[1];
-          const amountUSD = parseFloat(amountMatch[1]);
-          const countryCode = ccMatch ? ccMatch[1] : 'DO';
+      const event = req.body;
+      if (event && event.type === 'payment.updated') {
+        const payment = event.data?.object?.payment;
+        if (payment && payment.status === 'COMPLETED') {
+          const note = payment.note || '';
+          
+          const phoneMatch = note.match(/PHONE:([+\d]+)/);
+          const amountMatch = note.match(/AMOUNT:([\d.]+)/);
+          const ccMatch = note.match(/CC:([A-Z]+)/);
 
-          // Itilize Operator ID dirèk la (139 pou Repiblik Dominiken / Claro kòm egzanp)
-          // Ou ka adapte l si se pou yon lòt peyi
-          const operatorId = countryCode === 'DO' ? 139 : 355; 
+          if (phoneMatch && amountMatch) {
+            const phone = phoneMatch[1];
+            const amountUSD = parseFloat(amountMatch[1]);
+            const countryCode = ccMatch ? ccMatch[1] : 'DO';
 
-          const accessToken = await getReloadlyToken();
+            // ID Operatè dirèk (egzanp: 139 pou Claro Repiblik Dominiken)
+            const operatorId = countryCode === 'DO' ? 139 : 355;
 
-          const reloadlyRes = await fetch('https://topups.reloadly.com/topups', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-              'Accept': 'application/com.reloadly.topups-v1+json'
-            },
-            body: JSON.stringify({
-              operatorId: operatorId,
-              amount: amountUSD,
-              useLocalAmount: false,
-              recipientPhone: {
-                countryCode: countryCode,
-                number: phone.replace(/\D/g, '')
+            const accessToken = await getReloadlyToken();
+
+            await fetch('https://topups.reloadly.com/topups', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/com.reloadly.topups-v1+json'
               },
-              customIdentifier: `BERD-${Date.now()}`
-            })
-          });
-
-          const reloadlyData = await reloadlyRes.json();
-          console.log("Repons Reloadly Airtime:", reloadlyData);
+              body: JSON.stringify({
+                operatorId: operatorId,
+                amount: amountUSD,
+                useLocalAmount: false,
+                recipientPhone: {
+                  countryCode: countryCode,
+                  number: phone.replace(/\D/g, '')
+                },
+                customIdentifier: `BERD-${Date.now()}`
+              })
+            });
+          }
         }
       }
-      return res.status(200).json({ received: true });
+      return;
     } catch (err) {
       console.error("Erè nan Webhook la:", err);
-      return res.status(500).json({ success: false });
+      return;
     }
   }
 
