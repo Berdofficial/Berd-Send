@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // --- 1. KREYE LYEN PEYMAN SQUARE ---
+  // --- 1. KREYE LYEN PEYMAN SQUARE (Sa a dwe retounen url la rapid pou front-end la) ---
   if (req.method === 'POST' && req.body.phone && req.body.totalUSD) {
     try {
       const { totalUSD, phone, countryCode, amountUSD } = req.body;
@@ -63,10 +63,10 @@ export default async function handler(req, res) {
     }
   }
 
-  // --- 2. WEBHOOK: Lè peman an konfime sou Square ---
+  // --- 2. WEBHOOK: Lè Square voye siyal peman an fini ---
   if (req.method === 'POST') {
     try {
-      // Nou asire n l ap reponn Square tousuit avan l fè lòt travay la pou evite timeout
+      // Reponn Square imedyatman pou l pa bloke
       res.status(200).json({ received: true });
 
       const event = req.body;
@@ -84,9 +84,7 @@ export default async function handler(req, res) {
             const amountUSD = parseFloat(amountMatch[1]);
             const countryCode = ccMatch ? ccMatch[1] : 'DO';
 
-            // ID Operatè dirèk (egzanp: 139 pou Claro Repiblik Dominiken)
             const operatorId = countryCode === 'DO' ? 139 : 355;
-
             const accessToken = await getReloadlyToken();
 
             await fetch('https://topups.reloadly.com/topups', {
