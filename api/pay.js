@@ -1,7 +1,6 @@
 import { Client, Environment } from 'square';
 import fetch from 'node-fetch';
 
-// Fonksyon pou jwenn yon Token otantifikasyon nan men Reloadly
 async function getReloadlyToken() {
   const response = await fetch('https://auth.reloadly.com/oauth/token', {
     method: 'POST',
@@ -16,6 +15,23 @@ async function getReloadlyToken() {
   return data.access_token;
 }
 
+// Fonksyon pou jwenn Operator ID otomatikman sou Reloadly apati nimewo telefòn lan
+async function getOperatorId(accessToken, phone, countryCode) {
+  try {
+    const res = await fetch(`https://topups.reloadly.com/operators/phone/${phone}/${countryCode || 'DO'}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Accept': 'application/com.reloadly.topups-v1+json'
+      }
+    });
+    const data = await res.json();
+    return data.operatorId ? parseInt(data.operatorId) : null;
+  } catch (err) {
+    console.error('Erè pou jwenn Operator ID:', err);
+    return null;
+  }
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,7 +42,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // --- 1. SI SE DEMANN POU KREYE PEYMAN (Soti nan Frontend la) ---
+  // --- 1. KREYE LYEN PEYMAN SQUARE ---
   if (req.method === 'POST' && req.body.phone && req.body.totalUSD) {
     try {
       const { totalUSD, phone, countryCode, amountUSD } = req.body;
@@ -39,7 +55,6 @@ export default async function handler(req, res) {
       const amountInCents = Math.round(parseFloat(totalUSD) * 100);
       const locationId = process.env.SQUARE_LOCATION_ID ? process.env.SQUARE_LOCATION_ID.trim() : '';
 
-      // Nou mete metadata nan lyen an pou n ka kenbe nimewo a ak montan an lè peman an ap retounen
       const response = await client.checkoutApi.createPaymentLink({
         quickPay: {
           name: `Rechaj Mobil (${countryCode}) - ${phone}`,
@@ -49,8 +64,8 @@ export default async function handler(req, res) {
           },
           locationId: locationId,
         },
-        description: `BerdSend Top-up pou nimewo ${phone} ($${amountUSD} USD + Frè)`,
-        redirectUrl: `${process.env.FRONTEND_URL}/success.html?phone=${phone}&amount=${amountUSD}&country=${countryCode}`
+        description: `PHONE:${phone}|AMOUNT:${amountUSD}|CC:${countryCode}`,
+        redirectUrl: `https://berdsend.com/success.html?phone=${phone}&amount=${amountUSD}&country=${countryCode}`
       });
 
       return res.status(200).json({
@@ -65,22 +80,32 @@ export default async function handler(req, res) {
     }
   }
 
-  // --- 2. WEBHOOK: Lè Square voye konfimasyon peman an fèt (Payment Succeeded) ---
+  // --- 2. WEBHOOK: Lè peman an fini sou Square (payment.updated) ---
   if (req.method === 'POST' && req.body.type === 'payment.updated') {
     try {
       const payment = req.body.data.object.payment;
       if (payment.status === 'COMPLETED') {
         const note = payment.note || '';
-        // Eseye jwenn nimewo ak montan ki te mete nan deskripsyon an
-        const phoneMatch = note.match(/nimewo\s+([+\d]+)/);
-        const amountMatch = note.match(/\$([\d.]+)\s+USD/);
+        
+        // Ekstraksyon done ki te pase an sekrè nan deskripsyon an
+        const phoneMatch = note.match(/PHONE:([+\d]+)/);
+        const amountMatch = note.match(/AMOUNT:([\d.]+)/);
+        const ccMatch = note.match(/CC:([A-Z]+)/);
 
         if (phoneMatch && amountMatch) {
           const phone = phoneMatch[1];
           const amountUSD = parseFloat(amountMatch[1]);
+          const countryCode = ccMatch ? ccMatch[1] : 'DO';
 
-          // Pran Token Reloadly a
           const accessToken = await getReloadlyToken();
+          
+          // Jwenn Operator ID a otomatikman pou nimewo sa a
+          const operatorId = await getOperatorId(accessToken, phone, countryCode);
+
+          if (!operatorId) {
+            console.error('Echèk: Pa jwenn operatorId pou nimewo sa a.');
+            return res.status(400).json({ success: false, error: 'Operator not found' });
+          }
 
           // Voye demann lan sou Reloadly Airtime API
           const reloadlyRes = await fetch('https://topups.reloadly.com/topups', {
@@ -91,11 +116,11 @@ export default async function handler(req, res) {
               'Accept': 'application/com.reloadly.topups-v1+json'
             },
             body: JSON.stringify({
-              operatorId: 0, // Ou ka jwenn operatorId otomatikman selon nimewo a anvan, oswa mete l isit la
+              operatorId: operatorId,
               amount: amountUSD,
               useLocalAmount: false,
               recipientPhone: {
-                countryCode: phone.startsWith('+') ? phone.substring(1, 3) : 'DO', // Ajiste selon peyi w la
+                countryCode: countryCode,
                 number: phone.replace(/\D/g, '')
               },
               customIdentifier: `BERD-${Date.now()}`
