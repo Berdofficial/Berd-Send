@@ -1,19 +1,5 @@
 import fetch from 'node-fetch';
 
-async function getReloadlyToken() {
-  const response = await fetch('https://auth.reloadly.com/oauth/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      client_id: process.env.RELOADLY_CLIENT_ID,
-      client_secret: process.env.RELOADLY_CLIENT_SECRET,
-      audience: 'https://topups.reloadly.com'
-    })
-  });
-  const data = await response.json();
-  return data.access_token;
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -29,16 +15,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { totalUSD, phone, countryCode, amountUSD } = req.body;
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const { totalUSD, phone, countryCode, amountUSD } = body || {};
 
     if (!phone || !totalUSD) {
-      return res.status(400).json({ success: false, error: 'Done ki manke.' });
+      return res.status(400).json({ success: false, error: 'Done ki manke nan demann lan.' });
     }
 
     const amountInCents = Math.round(parseFloat(totalUSD) * 100);
     const locationId = process.env.SQUARE_LOCATION_ID ? process.env.SQUARE_LOCATION_ID.trim() : '';
 
-    // Demann dirèk sou Square API pou kreye lyen an
     const squareRes = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
       method: 'POST',
       headers: {
