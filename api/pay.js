@@ -15,28 +15,6 @@ async function getReloadlyToken() {
   return data.access_token;
 }
 
-// Fonksyon pou detekte Operator ID rapid dapre kòd peyi a oswa nimewo a
-function getOperatorIdByPhone(phone, countryCode) {
-  const cleanPhone = phone.replace(/\D/g, '');
-  
-  // Repiblik Dominiken (+1)
-  if (countryCode === 'DO' || cleanPhone.startsWith('1809') || cleanPhone.startsWith('1829') || cleanPhone.startsWith('1849')) {
-    // Ou ka chanje sa selon operatè ou vle a (Claro DO an jeneral se yon bon chwa oswa nou ka mete l dinamik)
-    return 139; // Egzanp: Claro Dominican Republic (oswa Orange/Altice)
-  }
-  
-  // Ayiti (+509) - Digicel oswa Natcom
-  if (countryCode === 'HT' || cleanPhone.startsWith('509')) {
-    if (cleanPhone.startsWith('5093') || cleanPhone.startsWith('5094')) {
-      return 355; // Digicel Haiti (Egzanp ID)
-    } else {
-      return 356; // Natcom Haiti (Egzanp ID)
-    }
-  }
-
-  return null;
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -85,7 +63,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // --- 2. WEBHOOK: Lè peman an fini sou Square (payment.updated) ---
+  // --- 2. WEBHOOK: Lè peman an konfime sou Square (payment.updated) ---
   if (req.method === 'POST' && req.body.type === 'payment.updated') {
     try {
       const payment = req.body.data.object.payment;
@@ -101,15 +79,11 @@ export default async function handler(req, res) {
           const amountUSD = parseFloat(amountMatch[1]);
           const countryCode = ccMatch ? ccMatch[1] : 'DO';
 
-          const accessToken = await getReloadlyToken();
-          
-          // Jwenn operator ID a dirèkteman san rete
-          const operatorId = getOperatorIdByPhone(phone, countryCode);
+          // Itilize Operator ID dirèk la (139 pou Repiblik Dominiken / Claro kòm egzanp)
+          // Ou ka adapte l si se pou yon lòt peyi
+          const operatorId = countryCode === 'DO' ? 139 : 355; 
 
-          if (!operatorId) {
-            console.error('Echèk: Pa jwenn operatorId pou nimewo sa a.');
-            return res.status(400).json({ success: false, error: 'Operator not found' });
-          }
+          const accessToken = await getReloadlyToken();
 
           const reloadlyRes = await fetch('https://topups.reloadly.com/topups', {
             method: 'POST',
